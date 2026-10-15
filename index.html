@@ -1,10 +1,9 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>KEC Project Controls Dashboard</title>
+<title>TEST · KEC Project Controls Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -2482,7 +2481,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('#accOut')){ e.preventDefault(); try{ sessionStorage.removeItem('kec_dash_tok'); }catch(x){} location.reload(); }
   if(t.closest('#accGo')){ e.preventDefault(); accSubmit(); } });
 document.addEventListener('keydown',function(e){ if(e.key==='Enter'&&e.target&&e.target.id==='accPass'){ e.preventDefault(); accSubmit(); } });
-var LIVE={ relay:'https://kec-delivery-dashboard.mohd2018me.workers.dev',
+var LIVE={ relay:'https://kec-dashboard-test.mohd2018me.workers.dev',
   sources:[ /* the progress workbook first, then the contracts database: the same order as loading them by hand */
     {name:'KEC_Delivery Dashboard live DataBase.xlsx',url:'https://madinahkec-my.sharepoint.com/:x:/p/mhamdy/IQB62QjbG4U0TrWnckJB3XdWAWWapl3LsBYNHpURYyRbAiA?e=zK3tRe'},
     {name:'Contracts Database Rv.01.xlsm',url:'https://madinahkec-my.sharepoint.com/:x:/p/melfeki/IQAivjfr3H7YTpOvizFJBFziAQWwRZr0m5qRWh52mwN8brs?e=BkxU5M'} ] };
@@ -3090,7 +3089,6 @@ if(LANG==='ar') setLang('ar');
 })();
 
 </script>
+<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION</div>
 </body>
 </html>
-
-</body></html>
