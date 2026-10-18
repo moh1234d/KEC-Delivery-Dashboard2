@@ -861,7 +861,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 @media (max-width:600px){#usrModal .um{padding:16px 14px}#usrModal table,#usrModal tbody,#usrModal tr,#usrModal td{display:block;width:auto}#usrModal thead{display:none}#usrModal tr{border-bottom:1px solid #e1e7f5;padding:8px 0}#usrModal td{border:0;padding:3px 0}}
 </style>
 </head>
-<body>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V205</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2790,10 +2790,10 @@ function E(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return
 function gen(){ var a='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789', n=12, r=new Uint8Array(n), o=''; (window.crypto||window.msCrypto).getRandomValues(r); for(var i=0;i<n;i++) o+=a[r[i]%a.length]; return o; }
 function projs(){ var o=[]; try{ model.projects.forEach(function(p,k){ o.push([String(k),String(p&&p.name||k)+(p&&p.cluster?' · '+p.cluster:'')]); }); }catch(e){} return o.sort(function(a,b){ return a[0]<b[0]?-1:1; }); }
 function isAdm(u){ return u.projects==='*'&&u.pages==='*'&&!(u.hide&&u.hide.length); }
-function summ(u){ if(isAdm(u)) return '<span class="um-tag a">Administrator</span>';
+function summ(u){ if(isAdm(u)) return '<span class="um-tag a">Administrator</span> <span class="um-tag">AI assistant</span>';
   var p=u.projects==='*'?'<span class="um-tag">All projects</span>':(u.projects.length?u.projects.map(function(c){ return '<span class="um-tag">'+E(c)+'</span>'; }).join(''):'<span class="um-tag">No projects</span>');
   var g=u.pages==='*'?'':'<br><small>Pages: '+(u.pages.length?u.pages.map(function(x){ return E(x); }).join(', '):'none')+'</small>';
-  var h=(u.hide&&u.hide.length)?'<br><small>Hidden: '+u.hide.map(E).join(', ')+'</small>':''; return p+g+h; }
+  var h=(u.hide&&u.hide.length)?'<br><small>Hidden: '+u.hide.map(E).join(', ')+'</small>':''; return p+(u.ai?' <span class="um-tag a">AI assistant</span>':'')+g+h; }
 function box(){ var m=document.getElementById('usrModal'); if(!m){ m=document.createElement('div'); m.id='usrModal'; m.innerHTML='<div class="um" id="usrBox"></div>'; document.body.appendChild(m);
   m.addEventListener('click',function(e){ if(e.target===m&&!UM.dirty) close(); }); m.addEventListener('click',onClick); } return m; }
 function msg(t,cls){ var x=document.getElementById('usrMsg'); if(x){ x.className='um-msg '+(cls||'e'); x.textContent=t; x.style.display=t?'block':'none'; } }
@@ -2809,26 +2809,27 @@ function drawEdit(i){ var u=i<0?{name:'',projects:[],pages:'*',hide:[],isNew:tru
   b.innerHTML='<h3>'+(i<0?'Add user':'Edit '+E(u.name))+'</h3><p class="um-sub">Choose what this person can see.</p>'+
    '<label>Name</label><input type="text" id="umName" value="'+E(u.name)+'" maxlength="60" placeholder="e.g. Ahmed Ali">'+
    '<label>Access level</label><div class="um-chk"><label><input type="radio" name="umLvl" value="admin"'+(full?' checked':'')+'> Administrator: all projects, all pages, finance visible, AI assistant and this screen</label><label><input type="radio" name="umLvl" value="custom"'+(full?'':' checked')+'> Custom: pick projects and pages below</label></div>'+
-   '<div id="umCustom"'+(full?' style="display:none"':'')+'><label>Projects</label><div class="um-chk" id="umPj">'+pj+'</div><label>Pages</label><div class="um-chk" id="umPg">'+pg+'</div><label><input type="checkbox" id="umHide"'+((u.hide||[]).indexOf('finance')>=0?' checked':'')+'> Hide money figures (SAR amounts)</label></div>'+
+   '<div id="umCustom"'+(full?' style="display:none"':'')+'><label>Projects</label><div class="um-chk" id="umPj">'+pj+'</div><label>Pages</label><div class="um-chk" id="umPg">'+pg+'</div><label><input type="checkbox" id="umHide"'+((u.hide||[]).indexOf('finance')>=0?' checked':'')+'> Hide money figures (SAR amounts)</label><label><input type="checkbox" id="umAi"'+(u.ai?' checked':'')+'> Allow the AI assistant (typing and voice). It only uses the projects and pages this person can see. Not available when money figures are hidden.</label></div>'+
    '<label>Passcode'+(i<0?'':' (leave empty to keep the current one)')+'</label><div class="um-row" style="margin-top:0"><input type="text" id="umPass" style="flex:1;min-width:180px" autocomplete="off" value="'+E(u.newPass||'')+'" placeholder="at least 8 characters"><button class="um-b" data-um="gen">Generate</button></div>'+
    '<div id="usrMsg" class="um-msg" style="display:none"></div><div class="um-row"><span style="flex:1"></span><button class="um-b" data-um="back">Back</button><button class="um-b p" data-um="ok" data-i="'+i+'">Done</button></div>';
-  UM.edit=i; var lv=b.querySelectorAll('input[name=umLvl]'); for(var k=0;k<lv.length;k++) lv[k].addEventListener('change',function(){ document.getElementById('umCustom').style.display=this.value==='custom'?'block':'none'; }); }
+  UM.edit=i; var lv=b.querySelectorAll('input[name=umLvl]'); for(var k=0;k<lv.length;k++) lv[k].addEventListener('change',function(){ document.getElementById('umCustom').style.display=this.value==='custom'?'block':'none'; });
+  var hh=document.getElementById('umHide'), aa=document.getElementById('umAi'); var syn=function(){ if(hh.checked){ aa.checked=false; aa.disabled=true; } else aa.disabled=false; }; if(hh) hh.addEventListener('change',syn); syn(); }
 function applyEdit(i){ var name=(document.getElementById('umName').value||'').trim(), pass=(document.getElementById('umPass').value||'').trim(), lvl=document.querySelector('input[name=umLvl]:checked').value;
   if(!name) return msg('Enter a name.'); if(UM.list.some(function(x,k){ return k!==i&&x.name.toLowerCase()===name.toLowerCase(); })) return msg('Another user already has that name.');
   var u=i<0?{isNew:true}:UM.list[i]; if(i>=0&&!u.orig) u.orig=u.name; u.name=name;
-  if(lvl==='admin'){ u.projects='*'; u.pages='*'; u.hide=[]; }
+  if(lvl==='admin'){ u.projects='*'; u.pages='*'; u.hide=[]; u.ai=true; }
   else { var pj=[].slice.call(document.querySelectorAll('.um-p:checked')).map(function(c){ return c.value; }), pg=[].slice.call(document.querySelectorAll('.um-g:checked')).map(function(c){ return c.value; });
     if(!pj.length) return msg('Pick at least one project.'); if(!pg.length) return msg('Pick at least one page.');
-    u.projects=(pj.length===projs().length)?'*':pj; u.pages=(pg.length===PAGES.length)?'*':pg; u.hide=document.getElementById('umHide').checked?['finance']:[]; }
+    u.projects=(pj.length===projs().length)?'*':pj; u.pages=(pg.length===PAGES.length)?'*':pg; u.hide=document.getElementById('umHide').checked?['finance']:[]; u.ai=!u.hide.length&&document.getElementById('umAi').checked; }
   if(pass){ if(pass.length<8) return msg('The passcode needs at least 8 characters.'); u.newPass=pass; } else if(i<0) return msg('Give the new user a passcode (use Generate).');
   if(i<0) UM.list.push(u); UM.dirty=true; drawList(); }
 async function load(){ var b=document.getElementById('usrBox'); b.innerHTML='<h3>Users and passcodes</h3><p class="um-sub">Loading…</p>'; UM.dirty=false; UM.fresh=[];
-  try{ var j=await accCall('GET','/users'); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[]}; }); drawList(); }
+  try{ var j=await accCall('GET','/users'); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai}; }); drawList(); }
   catch(e){ b.innerHTML='<h3>Users and passcodes</h3><div class="um-msg e">'+E((e&&e.message)||'Could not load the users.')+'</div><div class="um-row"><button class="um-b" data-um="close">Close</button></div>'; } }
 async function save(){ if(!UM.dirty) return; var btn=document.querySelector('[data-um=save]'); if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
-  var payload=UM.list.map(function(u){ return {name:u.name,orig:u.orig||u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],newPass:u.newPass||''}; });
+  var payload=UM.list.map(function(u){ return {name:u.name,orig:u.orig||u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai,newPass:u.newPass||''}; });
   var fresh=UM.list.filter(function(u){ return u.newPass; }).map(function(u){ return {name:u.name,pass:u.newPass}; });
-  try{ var j=await accCall('PUT','/users',{users:payload},30000); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[]}; }); UM.dirty=false; UM.fresh=fresh; drawList(); }
+  try{ var j=await accCall('PUT','/users',{users:payload},30000); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai}; }); UM.dirty=false; UM.fresh=fresh; drawList(); }
   catch(e){ drawList(); msg((e&&e.message)||'Could not save.'); } }
 function onClick(e){ var t=e.target.closest&&e.target.closest('[data-um]'); if(!t) return; var a=t.getAttribute('data-um'), i=parseInt(t.getAttribute('data-i'),10);
   if(a==='close') close(); else if(a==='add') drawEdit(-1); else if(a==='edit') drawEdit(i); else if(a==='back') drawList();
@@ -2840,10 +2841,10 @@ function onClick(e){ var t=e.target.closest&&e.target.closest('[data-um]'); if(!
 document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.target.closest('#usrBtn')){ box().classList.add('on'); UM.open=true; load(); } });
 })();
 
-function aiShow(){ var ok=!!(ACC.need&&ACC.user&&ACC.user.admin); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
+function aiShow(){ var adm=!!(ACC.need&&ACC.user&&ACC.user.admin), ok=!!(ACC.need&&ACC.user&&(ACC.user.admin||ACC.user.ai)); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
-  var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!ok;
-  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!ok;
+  var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm;
+  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm;
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
   if(!model||!model.rows||!model.rows.length) return '';
@@ -2872,7 +2873,7 @@ function aiDigest(){
   L('Packages "At risk"',now.filter(function(d){ return d.status==='red'; }),function(d){ return nm(d)+' | SPI '+(d.spi==null?'-':d.spi.toFixed(2))+' | delay '+(d.delay==null?'-':d.delay)+' d | actual '+pc(d.act)+'% vs planned '+pc(d.plan)+'%'; });
   L('Packages "Watch"',now.filter(function(d){ return d.status==='amber'; }),function(d){ return nm(d)+' | SPI '+(d.spi==null?'-':d.spi.toFixed(2))+' | delay '+(d.delay==null?'-':d.delay)+' d | actual '+pc(d.act)+'% vs planned '+pc(d.plan)+'%'; });
   L('Packages forecast to finish LATER than planned (delay days > 0, largest first)',now.filter(function(d){ return d.delay>0; }).sort(function(a,b){ return b.delay-a.delay; }),function(d){ return nm(d)+' | planned finish '+d2(d.pf)+' | forecast '+d2(d.ff)+' | +'+d.delay+' d'; });
-  var ctr=(contracts||[]).filter(function(c){ var p=model.projects.get(c.code); return p&&(p.stage||'')==='Construction'; });
+  var ctr=(!accPageOk('contracts')?[]:contracts||[]).filter(function(c){ var p=model.projects.get(c.code); return p&&(p.stage||'')==='Construction'; });
   var hasExp=!!(ctr.length&&ctr.some(function(c){ return c.rcomp||c.exs; }));
   o.push(hasExp?'NOTE ON CONTRACT DATES: contract expiry information IS available below in the section CONTRACT EXPIRY (taken from the Contracts sheet: revised completion date and expiry status). Use that section for "expired", "expiring" or "valid" contracts. The lists of packages past their planned finish are a different thing (progress schedule, not contract validity); do not mix them up.':'NOTE ON CONTRACT DATES: the loaded data has NO contract expiry or validity date. The only contract-related dates are each package\'s planned finish and forecast finish. If asked about "expired", "overdue" or "ended" contracts, say clearly that the data has no legal expiry date, then answer with the two lists below (planned finish already passed, not complete; planned finish within 60 days) and name them as such.');
   var pastPF=now.filter(function(d){ return d.pf&&d.pf<=cut&&d.status!=='done'; }).sort(function(a,b){ return dayDiff(b.pf,cut)-dayDiff(a.pf,cut); });
@@ -2902,7 +2903,7 @@ function aiDigest(){
     CL('Contracts EXPIRED (revised completion date passed, not closed)','Expired');
     CL('Contracts expiring WITHIN 3 MONTHS','Expire within 3 months');
     CL('Contracts expiring WITHIN 6 MONTHS (after 3 months)','Expire within 6 months'); }
-  var con=(cur.con||[]).filter(function(c){ return c.d<=cut; }); if(con.length){ var ld=con.reduce(function(m,c){ return c.d>m?c.d:m; },'');
+  var con=accPageOk('issues')?accRows(cur.con||[],'code').filter(function(c){ return c.d<=cut; }):[]; if(con.length){ var ld=con.reduce(function(m,c){ return c.d>m?c.d:m; },'');
     o.push('AREAS OF CONCERN logged on '+d2(ld)+' (project code | package | concern | impact | suggested action):');
     con.filter(function(c){ return c.d===ld; }).forEach(function(c){ o.push([c.code,c.pkg||'-',String(c.concern||'').slice(0,220),c.impact||'-',String(c.action||'').slice(0,160)].join(' | ')); }); }
   return o.join('\n');
@@ -3778,6 +3779,5 @@ if(LANG==='ar') setLang('ar');
     if(tip) tip.style.display='none'; });
 })();
 </script>
-<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V204</div>
 </body>
 </html>
