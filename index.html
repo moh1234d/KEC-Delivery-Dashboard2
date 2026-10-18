@@ -814,6 +814,27 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 @media (max-width:600px){.aim .ait.cards{display:block;min-width:0}.aim .ait.cards thead{display:none}.aim .ait.cards tbody,.aim .ait.cards tr{display:block}.aim .ait.cards tr{padding:7px 10px;border-top:1px solid rgba(255,255,255,.1)}.aim .ait.cards tr:first-child{border-top:0}.aim .ait.cards td{display:flex;justify-content:space-between;gap:12px;padding:3px 0;border:0;background:none!important;font-size:12px;text-align:end}.aim .ait.cards td::before{content:attr(data-l);color:#f7dc9a;font-weight:600;font-size:11px;text-align:start;flex:none}.aim .ait.cards td:first-child{display:block;text-align:start;font-size:13px;font-weight:700;padding-bottom:5px}.aim .ait.cards td:first-child::before{display:none}}
 @media (max-width:600px){.aim .ait{min-width:0}.aim .ait th,.aim .ait td{padding:6px 5px;font-size:10.5px;white-space:normal;overflow-wrap:normal;word-break:normal}.aim .ait th{letter-spacing:0;font-size:10.5px}.aim .aich{padding:1px 6px;font-size:10px}}
 </style>
+<style id="introMob">
+@media (pointer:coarse),(max-width:900px){
+#intro .stage,#intro .world,#intro .gnd,#intro .glow,#intro .scan{display:none!important}
+#intro .layer{transform:none!important}
+#intro .layer.bw{display:none!important}
+#intro .layer.col i{position:absolute!important;inset:0!important;transform:none!important;opacity:0;background-size:cover;background-position:center;animation:mIn 1s ease-out both!important}
+#intro .layer.col i:nth-child(1){animation-delay:.2s!important}
+#intro .layer.col i:nth-child(2){animation-delay:1.5s!important}
+#intro .layer.col i:nth-child(3){animation-delay:2.8s!important}
+#intro .layer.col i:nth-child(4){animation-delay:4.1s!important}
+@keyframes mIn{from{opacity:0}to{opacity:1}}
+#intro .layer::after{background:radial-gradient(90% 80% at 50% 45%,rgba(11,31,77,.38),rgba(8,20,58,.86))!important}
+#intro.out{animation:mOut .6s ease-out forwards!important;transform:none!important}
+@keyframes mOut{from{opacity:1}to{opacity:0;visibility:hidden}}
+#intro .glass{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(9,24,66,.62)!important}
+#intro .hero,#intro .panel,#intro .tilt{transform-style:flat!important;-webkit-transform-style:flat!important}
+#intro .tilt{transform:none!important;transition:none!important}
+#intro .plate{transform:none!important;animation:inFade .8s 1.9s forwards!important}
+#intro .panel{transform:none!important;animation:inFade .8s 1.6s forwards!important}
+}
+</style>
 </head>
 <body>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
@@ -3673,6 +3694,6 @@ if(LANG==='ar') setLang('ar');
     if(tip) tip.style.display='none'; });
 })();
 </script>
-<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V196</div>
+<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V202</div>
 </body>
 </html>
