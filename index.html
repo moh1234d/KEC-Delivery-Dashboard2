@@ -835,6 +835,31 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 #intro .panel{transform:none!important;animation:inFade .8s 1.6s forwards!important}
 }
 </style>
+<style id="usrCss">
+#usrModal{position:fixed;inset:0;z-index:1500;background:rgba(5,11,32,.62);display:none;align-items:flex-start;justify-content:center;padding:4vh 12px;overflow:auto}
+#usrModal.on{display:flex}
+#usrModal .um{background:#fff;color:#14213d;width:100%;max-width:760px;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.45);padding:20px 22px 22px;font:14px/1.45 Inter,Arial,sans-serif}
+#usrModal h3{margin:0 0 4px;font-size:19px;color:#0b1f4d}
+#usrModal .um-sub{margin:0 0 14px;color:#5b6784;font-size:12.5px}
+#usrModal table{width:100%;border-collapse:collapse;margin:8px 0}
+#usrModal th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5b6784;padding:6px 8px;border-bottom:1px solid #dfe5f2}
+#usrModal td{padding:9px 8px;border-bottom:1px solid #eef1f8;vertical-align:middle}
+#usrModal .um-tag{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;background:#e8eefc;color:#1d3f8f;margin:1px 3px 1px 0}
+#usrModal .um-tag.a{background:#fdf0d5;color:#8a5a00}
+#usrModal .um-b{border:1px solid #c9d3ea;background:#fff;border-radius:9px;padding:6px 11px;font:600 12.5px Inter,Arial,sans-serif;color:#0b1f4d;cursor:pointer;margin:2px 3px 2px 0}
+#usrModal .um-b.p{background:#0b1f4d;color:#fff;border-color:#0b1f4d}
+#usrModal .um-b.d{color:#b3261e;border-color:#efc3bf}
+#usrModal .um-b:disabled{opacity:.5;cursor:default}
+#usrModal .um-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+#usrModal label{display:block;font-size:12px;font-weight:700;color:#3a4766;margin:12px 0 4px}
+#usrModal input[type=text]{width:100%;box-sizing:border-box;border:1px solid #c9d3ea;border-radius:9px;padding:9px 11px;font:14px Inter,Arial,sans-serif}
+#usrModal .um-chk{display:flex;flex-wrap:wrap;gap:6px 14px;max-height:170px;overflow:auto;border:1px solid #e1e7f5;border-radius:10px;padding:9px 11px}
+#usrModal .um-chk label{display:flex;align-items:center;gap:6px;margin:0;font-weight:500;font-size:13px;color:#14213d}
+#usrModal .um-msg{margin:10px 0 0;padding:9px 12px;border-radius:10px;font-size:13px}
+#usrModal .um-msg.e{background:#fdecea;color:#8c1d18}#usrModal .um-msg.o{background:#e7f6ec;color:#17613a}
+#usrModal .um-pw{font:700 14px ui-monospace,Menlo,Consolas,monospace;background:#f3f6fd;border-radius:7px;padding:3px 8px}
+@media (max-width:600px){#usrModal .um{padding:16px 14px}#usrModal table,#usrModal tbody,#usrModal tr,#usrModal td{display:block;width:auto}#usrModal thead{display:none}#usrModal tr{border-bottom:1px solid #e1e7f5;padding:8px 0}#usrModal td{border:0;padding:3px 0}}
+</style>
 </head>
 <body>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
@@ -877,6 +902,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
         <input type="file" id="file" accept=".xlsx,.xls,.xlsm" multiple hidden>
         <input type="file" id="fileC" accept=".xlsx,.xls,.xlsm" hidden>
         <div class="ag">
+          <button class="btn ghost" id="usrBtn" type="button" hidden title="Add, edit or remove users and reset passcodes (administrators only)">Users</button>
           <button class="btn ghost" id="ctrBtn" type="button" title="Upload the contracts database (Contracts sheet) to refresh contracts, vendors and costs">Update contracts</button>
         </div>
         <span class="vsep"></span>
@@ -2758,9 +2784,66 @@ async function aiLogExport(){
   finally{ b.textContent=old; b.disabled=false; }
 }
 document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.target.closest('#aiLogBtn')) aiLogExport(); });
+(function(){
+var UM={list:[],open:false,edit:-1,dirty:false,fresh:[]}, PAGES=[['overview','Overview'],['progress','Progress detail'],['contracts','Contracts & financial'],['trends','Trends'],['issues','Challenges'],['notes','Data notes']];
+function E(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function gen(){ var a='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789', n=12, r=new Uint8Array(n), o=''; (window.crypto||window.msCrypto).getRandomValues(r); for(var i=0;i<n;i++) o+=a[r[i]%a.length]; return o; }
+function projs(){ var o=[]; try{ model.projects.forEach(function(p,k){ o.push([String(k),String(p&&p.name||k)+(p&&p.cluster?' · '+p.cluster:'')]); }); }catch(e){} return o.sort(function(a,b){ return a[0]<b[0]?-1:1; }); }
+function isAdm(u){ return u.projects==='*'&&u.pages==='*'&&!(u.hide&&u.hide.length); }
+function summ(u){ if(isAdm(u)) return '<span class="um-tag a">Administrator</span>';
+  var p=u.projects==='*'?'<span class="um-tag">All projects</span>':(u.projects.length?u.projects.map(function(c){ return '<span class="um-tag">'+E(c)+'</span>'; }).join(''):'<span class="um-tag">No projects</span>');
+  var g=u.pages==='*'?'':'<br><small>Pages: '+(u.pages.length?u.pages.map(function(x){ return E(x); }).join(', '):'none')+'</small>';
+  var h=(u.hide&&u.hide.length)?'<br><small>Hidden: '+u.hide.map(E).join(', ')+'</small>':''; return p+g+h; }
+function box(){ var m=document.getElementById('usrModal'); if(!m){ m=document.createElement('div'); m.id='usrModal'; m.innerHTML='<div class="um" id="usrBox"></div>'; document.body.appendChild(m);
+  m.addEventListener('click',function(e){ if(e.target===m&&!UM.dirty) close(); }); m.addEventListener('click',onClick); } return m; }
+function msg(t,cls){ var x=document.getElementById('usrMsg'); if(x){ x.className='um-msg '+(cls||'e'); x.textContent=t; x.style.display=t?'block':'none'; } }
+function close(){ UM.open=false; var m=document.getElementById('usrModal'); if(m) m.classList.remove('on'); }
+function drawList(){ var b=document.getElementById('usrBox'); var rows=UM.list.map(function(u,i){ return '<tr><td><b>'+E(u.name)+'</b>'+(u.newPass?' <span class="um-tag a">new passcode</span>':'')+(u.isNew?' <span class="um-tag">new</span>':'')+'</td><td>'+summ(u)+'</td><td><button class="um-b" data-um="edit" data-i="'+i+'">Edit</button><button class="um-b" data-um="reset" data-i="'+i+'">New passcode</button><button class="um-b d" data-um="del" data-i="'+i+'">Delete</button></td></tr>'; }).join('');
+  b.innerHTML='<h3>Users and passcodes</h3><p class="um-sub">Everyone signs in with their own passcode. Passcodes are stored scrambled, so they cannot be read back: if someone forgets theirs, give them a new one. Changes apply at their next sign-in.</p>'+
+    '<table><thead><tr><th>Name</th><th>Access</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>'+
+    '<div class="um-row"><button class="um-b" data-um="add">+ Add user</button><span style="flex:1"></span><button class="um-b" data-um="close">'+(UM.dirty?'Cancel':'Close')+'</button><button class="um-b p" data-um="save"'+(UM.dirty?'':' disabled')+'>Save changes</button></div><div id="usrMsg" class="um-msg" style="display:none"></div>'+drawFresh(); }
+function drawFresh(){ if(!UM.fresh.length) return ''; return '<div class="um-msg o" style="margin-top:14px"><b>Saved.</b> Copy these passcodes now and send them to each person. They cannot be shown again.<table style="margin-top:8px"><tbody>'+UM.fresh.map(function(f){ return '<tr><td><b>'+E(f.name)+'</b></td><td><span class="um-pw">'+E(f.pass)+'</span></td><td><button class="um-b" data-um="copy" data-t="'+E(f.name+': '+f.pass)+'">Copy</button></td></tr>'; }).join('')+'</tbody></table></div>'; }
+function drawEdit(i){ var u=i<0?{name:'',projects:[],pages:'*',hide:[],isNew:true}:UM.list[i], b=document.getElementById('usrBox'), full=isAdm(u)&&!u.isNew||(u.isNew&&false), allP=u.projects==='*', allG=u.pages==='*';
+  var pj=projs().map(function(p){ var on=allP||(u.projects.indexOf(p[0])>=0); return '<label><input type="checkbox" class="um-p" value="'+E(p[0])+'"'+(on?' checked':'')+'> '+E(p[1])+' <small style="color:#7a859f">('+E(p[0])+')</small></label>'; }).join('');
+  var pg=PAGES.map(function(p){ var on=allG||(u.pages.indexOf(p[0])>=0); return '<label><input type="checkbox" class="um-g" value="'+p[0]+'"'+(on?' checked':'')+'> '+p[1]+'</label>'; }).join('');
+  b.innerHTML='<h3>'+(i<0?'Add user':'Edit '+E(u.name))+'</h3><p class="um-sub">Choose what this person can see.</p>'+
+   '<label>Name</label><input type="text" id="umName" value="'+E(u.name)+'" maxlength="60" placeholder="e.g. Ahmed Ali">'+
+   '<label>Access level</label><div class="um-chk"><label><input type="radio" name="umLvl" value="admin"'+(full?' checked':'')+'> Administrator: all projects, all pages, finance visible, AI assistant and this screen</label><label><input type="radio" name="umLvl" value="custom"'+(full?'':' checked')+'> Custom: pick projects and pages below</label></div>'+
+   '<div id="umCustom"'+(full?' style="display:none"':'')+'><label>Projects</label><div class="um-chk" id="umPj">'+pj+'</div><label>Pages</label><div class="um-chk" id="umPg">'+pg+'</div><label><input type="checkbox" id="umHide"'+((u.hide||[]).indexOf('finance')>=0?' checked':'')+'> Hide money figures (SAR amounts)</label></div>'+
+   '<label>Passcode'+(i<0?'':' (leave empty to keep the current one)')+'</label><div class="um-row" style="margin-top:0"><input type="text" id="umPass" style="flex:1;min-width:180px" autocomplete="off" value="'+E(u.newPass||'')+'" placeholder="at least 8 characters"><button class="um-b" data-um="gen">Generate</button></div>'+
+   '<div id="usrMsg" class="um-msg" style="display:none"></div><div class="um-row"><span style="flex:1"></span><button class="um-b" data-um="back">Back</button><button class="um-b p" data-um="ok" data-i="'+i+'">Done</button></div>';
+  UM.edit=i; var lv=b.querySelectorAll('input[name=umLvl]'); for(var k=0;k<lv.length;k++) lv[k].addEventListener('change',function(){ document.getElementById('umCustom').style.display=this.value==='custom'?'block':'none'; }); }
+function applyEdit(i){ var name=(document.getElementById('umName').value||'').trim(), pass=(document.getElementById('umPass').value||'').trim(), lvl=document.querySelector('input[name=umLvl]:checked').value;
+  if(!name) return msg('Enter a name.'); if(UM.list.some(function(x,k){ return k!==i&&x.name.toLowerCase()===name.toLowerCase(); })) return msg('Another user already has that name.');
+  var u=i<0?{isNew:true}:UM.list[i]; if(i>=0&&!u.orig) u.orig=u.name; u.name=name;
+  if(lvl==='admin'){ u.projects='*'; u.pages='*'; u.hide=[]; }
+  else { var pj=[].slice.call(document.querySelectorAll('.um-p:checked')).map(function(c){ return c.value; }), pg=[].slice.call(document.querySelectorAll('.um-g:checked')).map(function(c){ return c.value; });
+    if(!pj.length) return msg('Pick at least one project.'); if(!pg.length) return msg('Pick at least one page.');
+    u.projects=(pj.length===projs().length)?'*':pj; u.pages=(pg.length===PAGES.length)?'*':pg; u.hide=document.getElementById('umHide').checked?['finance']:[]; }
+  if(pass){ if(pass.length<8) return msg('The passcode needs at least 8 characters.'); u.newPass=pass; } else if(i<0) return msg('Give the new user a passcode (use Generate).');
+  if(i<0) UM.list.push(u); UM.dirty=true; drawList(); }
+async function load(){ var b=document.getElementById('usrBox'); b.innerHTML='<h3>Users and passcodes</h3><p class="um-sub">Loading…</p>'; UM.dirty=false; UM.fresh=[];
+  try{ var j=await accCall('GET','/users'); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[]}; }); drawList(); }
+  catch(e){ b.innerHTML='<h3>Users and passcodes</h3><div class="um-msg e">'+E((e&&e.message)||'Could not load the users.')+'</div><div class="um-row"><button class="um-b" data-um="close">Close</button></div>'; } }
+async function save(){ if(!UM.dirty) return; var btn=document.querySelector('[data-um=save]'); if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
+  var payload=UM.list.map(function(u){ return {name:u.name,orig:u.orig||u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],newPass:u.newPass||''}; });
+  var fresh=UM.list.filter(function(u){ return u.newPass; }).map(function(u){ return {name:u.name,pass:u.newPass}; });
+  try{ var j=await accCall('PUT','/users',{users:payload},30000); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[]}; }); UM.dirty=false; UM.fresh=fresh; drawList(); }
+  catch(e){ drawList(); msg((e&&e.message)||'Could not save.'); } }
+function onClick(e){ var t=e.target.closest&&e.target.closest('[data-um]'); if(!t) return; var a=t.getAttribute('data-um'), i=parseInt(t.getAttribute('data-i'),10);
+  if(a==='close') close(); else if(a==='add') drawEdit(-1); else if(a==='edit') drawEdit(i); else if(a==='back') drawList();
+  else if(a==='ok') applyEdit(i); else if(a==='gen'){ document.getElementById('umPass').value=gen(); }
+  else if(a==='reset'){ UM.list[i].newPass=gen(); if(!UM.list[i].orig) UM.list[i].orig=UM.list[i].name; UM.dirty=true; drawList(); msg('A new passcode was generated for '+UM.list[i].name+'. Press Save changes, then copy it.','o'); }
+  else if(a==='del'){ if(UM.list.length<2) return msg('You cannot delete the last user.'); if(!UM.list[i].isNew&&UM.list[i].name===(ACC.user&&ACC.user.name)) return msg('You cannot delete the account you are signed in with.'); UM.list.splice(i,1); UM.dirty=true; drawList(); }
+  else if(a==='save') save();
+  else if(a==='copy'){ var v=t.getAttribute('data-t'); try{ navigator.clipboard.writeText(v); t.textContent='Copied'; }catch(x){ t.textContent='Select and copy'; } } }
+document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.target.closest('#usrBtn')){ box().classList.add('on'); UM.open=true; load(); } });
+})();
+
 function aiShow(){ var ok=!!(ACC.need&&ACC.user&&ACC.user.admin); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
   var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!ok;
+  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!ok;
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
   if(!model||!model.rows||!model.rows.length) return '';
@@ -3695,6 +3778,6 @@ if(LANG==='ar') setLang('ar');
     if(tip) tip.style.display='none'; });
 })();
 </script>
-<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V203</div>
+<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V204</div>
 </body>
 </html>
