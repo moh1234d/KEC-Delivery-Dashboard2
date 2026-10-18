@@ -814,6 +814,19 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 @media (max-width:600px){.aim .ait.cards{display:block;min-width:0}.aim .ait.cards thead{display:none}.aim .ait.cards tbody,.aim .ait.cards tr{display:block}.aim .ait.cards tr{padding:7px 10px;border-top:1px solid rgba(255,255,255,.1)}.aim .ait.cards tr:first-child{border-top:0}.aim .ait.cards td{display:flex;justify-content:space-between;gap:12px;padding:3px 0;border:0;background:none!important;font-size:12px;text-align:end}.aim .ait.cards td::before{content:attr(data-l);color:#f7dc9a;font-weight:600;font-size:11px;text-align:start;flex:none}.aim .ait.cards td:first-child{display:block;text-align:start;font-size:13px;font-weight:700;padding-bottom:5px}.aim .ait.cards td:first-child::before{display:none}}
 @media (max-width:600px){.aim .ait{min-width:0}.aim .ait th,.aim .ait td{padding:6px 5px;font-size:10.5px;white-space:normal;overflow-wrap:normal;word-break:normal}.aim .ait th{letter-spacing:0;font-size:10.5px}.aim .aich{padding:1px 6px;font-size:10px}}
 </style>
+<style id="introMob">
+@media (pointer:coarse),(max-width:900px){
+#intro .stage,#intro .world,#intro .gnd,#intro .glow{display:none!important}
+#intro .hero,#intro .panel,#intro .tilt{transform-style:flat!important;-webkit-transform-style:flat!important}
+#intro .tilt{transform:none!important;transition:none!important}
+#intro .glass{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(9,24,66,.8)!important}
+#intro .layer{transform:none!important;will-change:opacity}
+#intro .layer i{will-change:opacity,transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+#intro .plate{transform:none!important;opacity:0;animation:inFade .8s 1.9s forwards!important;box-shadow:0 10px 30px rgba(0,0,0,.35)!important}
+#intro .panel{transform:none!important;opacity:0;animation:inFade .8s 1.6s forwards!important}
+#intro h2,#intro .sub{transform:none!important}
+}
+</style>
 </head>
 <body>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
