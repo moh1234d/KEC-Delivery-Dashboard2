@@ -2789,7 +2789,8 @@ function aiDigest(){
   L('Packages "At risk"',now.filter(function(d){ return d.status==='red'; }),function(d){ return nm(d)+' | SPI '+(d.spi==null?'-':d.spi.toFixed(2))+' | delay '+(d.delay==null?'-':d.delay)+' d | actual '+pc(d.act)+'% vs planned '+pc(d.plan)+'%'; });
   L('Packages "Watch"',now.filter(function(d){ return d.status==='amber'; }),function(d){ return nm(d)+' | SPI '+(d.spi==null?'-':d.spi.toFixed(2))+' | delay '+(d.delay==null?'-':d.delay)+' d | actual '+pc(d.act)+'% vs planned '+pc(d.plan)+'%'; });
   L('Packages forecast to finish LATER than planned (delay days > 0, largest first)',now.filter(function(d){ return d.delay>0; }).sort(function(a,b){ return b.delay-a.delay; }),function(d){ return nm(d)+' | planned finish '+d2(d.pf)+' | forecast '+d2(d.ff)+' | +'+d.delay+' d'; });
-  var hasExp=!!(contracts&&contracts.some(function(c){ return c.rcomp||c.exs; }));
+  var ctr=(contracts||[]).filter(function(c){ var p=model.projects.get(c.code); return p&&(p.stage||'')==='Construction'; });
+  var hasExp=!!(ctr.length&&ctr.some(function(c){ return c.rcomp||c.exs; }));
   o.push(hasExp?'NOTE ON CONTRACT DATES: contract expiry information IS available below in the section CONTRACT EXPIRY (taken from the Contracts sheet: revised completion date and expiry status). Use that section for "expired", "expiring" or "valid" contracts. The lists of packages past their planned finish are a different thing (progress schedule, not contract validity); do not mix them up.':'NOTE ON CONTRACT DATES: the loaded data has NO contract expiry or validity date. The only contract-related dates are each package\'s planned finish and forecast finish. If asked about "expired", "overdue" or "ended" contracts, say clearly that the data has no legal expiry date, then answer with the two lists below (planned finish already passed, not complete; planned finish within 60 days) and name them as such.');
   var pastPF=now.filter(function(d){ return d.pf&&d.pf<=cut&&d.status!=='done'; }).sort(function(a,b){ return dayDiff(b.pf,cut)-dayDiff(a.pf,cut); });
   var cnN=function(arr){ var k={}; arr.forEach(function(d){ if(d.cno) k[d.cno]=1; }); return Object.keys(k).length; };
@@ -2805,12 +2806,12 @@ function aiDigest(){
   Object.keys(byP).sort().forEach(function(c){ var p=byP[c]; ['rv','pv','ev','gc','n'].forEach(function(k){ tt[k]+=p[k]; });
     o.push([c,p.n,m2(p.rv),m2(p.pv),m2(p.ev),m2(p.gc),pc(p.rv?p.pv/p.rv:0),pc(p.rv?p.ev/p.rv:0),pc(p.rv?p.gc/p.rv:0),p.pv>0?(p.ev/p.pv).toFixed(2):'-'].join(' | ')); });
   o.push(['ALL PROJECTS',tt.n,m2(tt.rv),m2(tt.pv),m2(tt.ev),m2(tt.gc),pc(tt.rv?tt.pv/tt.rv:0),pc(tt.rv?tt.ev/tt.rv:0),pc(tt.rv?tt.gc/tt.rv:0),tt.pv>0?(tt.ev/tt.pv).toFixed(2):'-'].join(' | '));
-  if(contracts&&contracts.length){ o.push('AWARDED CONTRACTS, construction stage (contract no | project code | vendor | contract name | project share of revised value SAR M):');
-    contracts.forEach(function(c){ o.push([c.cno,c.code,c.vendor,String(c.name||'').slice(0,70),m2(c.shrv)].join(' | ')); }); }
+  if(ctr.length){ o.push('AWARDED CONTRACTS, construction stage (contract no | project code | vendor | contract name | project share of revised value SAR M):');
+    ctr.forEach(function(c){ o.push([c.cno,c.code,c.vendor,String(c.name||'').slice(0,70),m2(c.shrv)].join(' | ')); }); }
   if(hasExp){
     var cl=function(c){ var t=String(c.exs||'').toLowerCase(); if(/closed/.test(t)) return 'Closed'; if(/expired/.test(t)) return 'Expired'; if(/three/.test(t)) return 'Expire within 3 months'; if(/six months/.test(t)&&/within/.test(t)) return 'Expire within 6 months'; if(/valid/.test(t)) return 'Valid more than 6 months';
       if(!c.rcomp) return 'No date'; var dd=dayDiff(cut,c.rcomp); return dd<0?'Expired':dd<=92?'Expire within 3 months':dd<=183?'Expire within 6 months':'Valid more than 6 months'; };
-    var byC={}; contracts.forEach(function(c){ var k=c.cno; if(!byC[k]) byC[k]={c:c,codes:[],sh:0}; byC[k].codes.push(c.code); byC[k].sh+=c.shrv; });
+    var byC={}; ctr.forEach(function(c){ var k=c.cno; if(!byC[k]) byC[k]={c:c,codes:[],sh:0}; byC[k].codes.push(c.code); byC[k].sh+=c.shrv; });
     var cs=Object.keys(byC).map(function(k){ var e=byC[k]; e.cls=cl(e.c); return e; });
     var cnt={}; cs.forEach(function(e){ cnt[e.cls]=(cnt[e.cls]||0)+1; });
     o.push('CONTRACT EXPIRY (construction-stage contracts only, each distinct contract number counted once; status is the "Expiry status" from the Contracts sheet, with days counted from the cut-off '+d2(cut)+' to the contract revised completion date): '+cs.length+' contracts. Counts: '+Object.keys(cnt).map(function(k){ return cnt[k]+' '+k; }).join(', ')+'.');
@@ -3694,6 +3695,6 @@ if(LANG==='ar') setLang('ar');
     if(tip) tip.style.display='none'; });
 })();
 </script>
-<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V202</div>
+<div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V203</div>
 </body>
 </html>
