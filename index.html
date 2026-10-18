@@ -2900,6 +2900,16 @@ function voMic(){
   if(VO.mode==='server'&&VO.canS) return voServer(); if(VO.canB) return voBrowser(); if(VO.canS) return voServer();
   aiAdd('e',esc(S.micUnsupported));
 }
+function voMerge(parts){ var acc='';
+  parts.forEach(function(p){ var t=String(p||'').replace(/\s+/g,' ').trim(); if(!t) return;
+    if(!acc){ acc=t; return; }
+    var a=acc.toLowerCase(), l=t.toLowerCase();
+    if(l.indexOf(a)===0){ acc=t; return; }
+    if(a.slice(-l.length)===l||(l.length>5&&a.indexOf(l)>=0)) return;
+    var k=Math.min(a.length,l.length); while(k>2&&a.slice(-k)!==l.slice(0,k)) k--; if(k>2&&a.slice(-k)===l.slice(0,k)){ acc+=t.slice(k); return; }
+    acc+=' '+t; });
+  var w=acc.split(' '), n, i, ok=true; while(ok){ ok=false; for(n=Math.floor(w.length/2);n>=2&&!ok;n--){ for(i=0;i+2*n<=w.length;i++){ if(w.slice(i,i+n).join(' ').toLowerCase()===w.slice(i+n,i+2*n).join(' ').toLowerCase()){ w.splice(i+n,n); ok=true; break; } } } }
+  return w.join(' '); }
 function voBrowser(again){
   if(!again){ VO.manual=false; VO.t0=Date.now(); }
   var inp=document.getElementById('aiIn'), r=new VO.SR(); VO.rec=r; r.lang=aiL()==='ar'?'ar-SA':'en-US'; r.interimResults=true; r.continuous=true; r.maxAlternatives=1;
@@ -2908,8 +2918,8 @@ function voBrowser(again){
   r.onstart=function(){ VO.on=true; voBusyUI(true); voWave(true,aiS().listening); };
   r.onspeechstart=function(){ clearTimeout(quiet); };
   r.onspeechend=function(){ if(gotAny) arm(); };
-  r.onresult=function(e){ gotAny=true; fin=''; var interim=''; for(var i=0;i<e.results.length;i++){ var tx=e.results[i][0].transcript; if(e.results[i].isFinal) fin+=tx+' '; else interim+=tx; } arm();
-    inp.value=(base?base+' ':'')+voFixCodes((fin+interim).trim()); };
+  r.onresult=function(e){ gotAny=true; var parts=[]; for(var i=0;i<e.results.length;i++) parts.push(e.results[i][0].transcript); fin=voMerge(parts); var interim=''; arm();
+    inp.value=voMerge([(base?base+' ':'')+voFixCodes((fin+interim).trim())]); };
   r.onerror=function(e){ var er=e&&e.error, S=aiS();
     if(er!=='no-speech'&&er!=='aborted') bad=true;
     if(er==='not-allowed') { aiAdd('e',esc(S.micBlocked)); }
