@@ -937,9 +937,14 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
  body.rptp #rptRoot .rp-rsl{transform:none!important}
  body.rptp{background:#fff!important}
 }
+.rp-hint{background:#fff6dd;color:#6b4a00;padding:8px 16px;font-size:13px}
+.rp-editing .rp-ed{outline:1px dashed rgba(200,150,62,.9);outline-offset:2px;cursor:text;display:inline-block;min-width:14px;border-radius:2px}
+.rp-editing .rp-ed:hover,.rp-editing .rp-ed:focus{outline:2px solid #c8963e;background:rgba(200,150,62,.12)}
+.rp-rsl .rp-note{position:absolute;left:56px;right:150px;bottom:26px;font:italic 400 16px Carlito,Calibri,Arial,sans-serif;color:#4a566a}
+.rp-editing .rp-note .rp-ed:empty:before{content:"Add a note for this slide…";color:#9aa3b2}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V214</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V215</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2970,7 +2975,7 @@ document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.
 })();
 /* ===== Admin report: Construction Projects Progress Summary (slides, printed to PDF) ===== */
 (function(){
-var RP={cfg:null,ph:{},srv:true,dirty:false,mode:'view',loaded:false,msg:'',busy:false,confirm:''};
+var RP={cfg:null,ph:{},srv:true,dirty:false,mode:'view',loaded:false,msg:'',busy:false,confirm:'',ed:false,ov:{cut:null,v:{}}};
 var uid=function(){ return Math.random().toString(36).slice(2,10)+Date.now().toString(36); };
 var cutIso=function(){ return model&&model.snaps&&model.snaps.length?model.snaps[model.snaps.length-1]:null; };
 var P2=function(a){ return a; };
@@ -2988,18 +2993,24 @@ function dd(cut){ return d2(cut).replace(/^(\d)\s/,'0$1 '); }
 function pool(cut){ return rowsAt(cut).map(function(r){ return derive(r,cut); }); }
 function cardRows(P,c){ var set=(c.pk||[]).map(function(x){ return String(x).toLowerCase(); }); return P.filter(function(r){ return r.code===c.code&&(!set.length||set.indexOf(String(r.pkg).toLowerCase())>=0); }); }
 function bw(v){ return Math.max(0,Math.min(1,v||0))*100; }
+/* text edits made in the preview apply to this PDF only (kept while the page is open, for this data date); the dashboard data is never changed */
+function ov(k,d){ var v=RP.ov.v[k]; return v==null?d:v; }
+function ed(k,d){ return '<span class="rp-ed" data-ek="'+esc(k)+'"'+(RP.ed?' contenteditable="true" spellcheck="false"':'')+'>'+esc(ov(k,d))+'</span>'; }
+function numOf(str){ var x=parseFloat(String(str).replace(/[^0-9.\-]/g,'')); return isFinite(x)?Math.max(0,Math.min(100,x)):null; }
 function rcard(c,P,cut){
-  var rr=cardRows(P,c), t=esc(c.t||'');
-  if(!rr.length) return '<div class="rp-rc rp-em"><h4>'+t+'</h4><p>No progress data for this card at this cut-off.</p></div>';
+  var rr=cardRows(P,c), K='c:'+c.id+':', T=ed(K+'t',c.t||'');
+  if(!rr.length) return '<div class="rp-rc rp-em"><h4>'+T+'</h4><p>'+ed(K+'empty','No progress data for this card at this cut-off.')+'</p></div>';
   var a=agg(rr,cut,true), gap=(a.act-a.plan)*100, started=a.pv>0||a.ev>0, dl=dayDiff(a.pf,a.ff), zero=Math.abs(gap)<0.005;
-  var h='<div class="rp-rc"><h4>'+t+'</h4>'+
-    '<div class="rp-rr"><span>Planned</span><div class="rp-rt"><i style="width:'+bw(a.plan)+'%;background:#a9b6c8"></i></div><b>'+pct(a.plan)+'</b></div>'+
-    '<div class="rp-rr"><span>Actual</span><div class="rp-rt"><i style="width:'+bw(a.act)+'%;background:#14304f"></i></div><b>'+pct(a.act)+'</b></div>'+
-    '<div class="rp-rv"><span>Variance</span><b class="'+(zero?'rp-z':gap>0?'rp-ps':'')+'">'+(zero?'0.00':sgn(gap,2,''))+'</b></div>';
-  if(started&&a.act>=0.9999&&a.ff&&a.ff<=cut) h+='<div class="rp-dl rp-g">Completed</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+fd(a.pf)+'</b>Planned</div><div><b>'+fd(a.ff)+'</b>Actual completion</div></div>';
-  else if(!started) h+='<div class="rp-nf">'+((!a.pf&&!a.ff)?'No finish dates reported':'Not started yet'+(a.start?' · planned start '+fd(a.start):''))+'</div>';
-  else if(dl===0) h+='<div class="rp-dl rp-n">On plan</div><div class="rp-tg"></div><div class="rp-ctr"><b>'+fd(a.pf)+'</b>Planned = Forecast</div>';
-  else h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+(dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+fd(a.pf)+'</b>Planned</div><div><b>'+fd(a.ff)+'</b>Forecast</div></div>';
+  var wp=numOf(ov(K+'plan',null)), wa=numOf(ov(K+'act',null));
+  var vt=ov(K+'var',zero?'0.00':sgn(gap,2,'')), vcls=(RP.ov.v[K+'var']!=null)?(/^[−-]/.test(vt)?'':/^\+/.test(vt)?'rp-ps':'rp-z'):(zero?'rp-z':gap>0?'rp-ps':'');
+  var h='<div class="rp-rc"><h4>'+T+'</h4>'+
+    '<div class="rp-rr"><span>Planned</span><div class="rp-rt"><i style="width:'+(wp!=null?wp:bw(a.plan))+'%;background:#a9b6c8"></i></div><b>'+ed(K+'plan',pct(a.plan))+'</b></div>'+
+    '<div class="rp-rr"><span>Actual</span><div class="rp-rt"><i style="width:'+(wa!=null?wa:bw(a.act))+'%;background:#14304f"></i></div><b>'+ed(K+'act',pct(a.act))+'</b></div>'+
+    '<div class="rp-rv"><span>Variance</span><b class="'+vcls+'">'+ed(K+'var',zero?'0.00':sgn(gap,2,''))+'</b></div>';
+  if(started&&a.act>=0.9999&&a.ff&&a.ff<=cut) h+='<div class="rp-dl rp-g">'+ed(K+'dl','Completed')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Actual completion</div></div>';
+  else if(!started) h+='<div class="rp-nf">'+ed(K+'dl',(!a.pf&&!a.ff)?'No finish dates reported':'Not started yet'+(a.start?' · planned start '+fd(a.start):''))+'</div>';
+  else if(dl===0) h+='<div class="rp-dl rp-n">'+ed(K+'dl','On plan')+'</div><div class="rp-tg"></div><div class="rp-ctr"><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned = Forecast</div>';
+  else h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+ed(K+'dl',dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Forecast</div></div>';
   return h+'</div>';
 }
 /* ----- photos: the layout adapts to 1, 2, 3 or 4 photos ----- */
@@ -3015,7 +3026,7 @@ function phHtml(list,lay){
 }
 function cover(){
   var bars=[[20,44,108],[76,54,166],[140,44,137],[194,64,225],[268,44,147],[322,54,98]];
-  return '<div class="rp-cv" style="position:absolute;inset:0"><div class="rp-cvbar"></div><div class="rp-cvk">'+esc(RP.cfg.kicker||'')+'</div><div class="rp-cvt">'+esc(RP.cfg.title||'')+'</div><div class="rp-cvd">Data date: '+esc(dd(RP.cut))+'</div>'+
+  return '<div class="rp-cv" style="position:absolute;inset:0"><div class="rp-cvbar"></div><div class="rp-cvk">'+ed('cover:kicker',RP.cfg.kicker||'')+'</div><div class="rp-cvt">'+ed('cover:title',RP.cfg.title||'')+'</div><div class="rp-cvd">Data date: '+ed('cover:date',dd(RP.cut))+'</div>'+
     '<svg class="rp-cvg" width="380" height="240" viewBox="0 0 380 240" fill="none" stroke="#c8963e" stroke-width="1.4">'+bars.map(function(b){ return '<rect x="'+b[0]+'" y="'+(231-b[2])+'" width="'+b[1]+'" height="'+b[2]+'"/>'; }).join('')+'<line x1="0" y1="232" x2="380" y2="232"/></svg></div>';
 }
 function slide(s,i,N,P,cut){
@@ -3023,17 +3034,23 @@ function slide(s,i,N,P,cut){
   if(s.layout==='rows') inner='<div class="rp-fb rp-rows">'+cards.map(function(c){ return '<div class="rp-rw">'+rcard(c,P,cut)+'<div style="flex:1;min-width:0">'+phHtml(c.ph,'rows')+'</div></div>'; }).join('')+'</div>';
   else if(s.layout==='cols') inner='<div class="rp-fb rp-cols">'+cards.map(function(c){ return '<div class="rp-cc">'+rcard(c,P,cut)+'<div class="rp-col-ph">'+phHtml(c.ph,'cols')+'</div></div>'; }).join('')+'</div>';
   else inner='<div class="rp-fb rp-side"><div class="rp-cl" style="grid-template-columns:'+(cards.length>=3?'repeat(2,262px)':'300px')+'">'+cards.map(function(c){ return rcard(c,P,cut); }).join('')+'</div><div style="flex:1;min-width:0;padding-top:6px">'+phHtml(s.ph,'side')+'</div></div>';
-  return (s.title?'<div class="rp-st">'+esc(s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+esc(s.frame||'')+'</div>'+inner+'</div><div class="rp-pn">'+(i+1)+' / '+N+'</div>';
+  var nk='s:'+s.id+':note', note=ov(nk,'');
+  return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+'</div>'+inner+'</div>'+((RP.ed||note)?'<div class="rp-note">'+ed(nk,'')+'</div>':'')+'<div class="rp-pn">'+(i+1)+' / '+N+'</div>';
 }
 /* ----- window ----- */
 function ensure(){
   var r=document.getElementById('rptRoot'); if(r) return r;
   r=document.createElement('div'); r.id='rptRoot';
-  r.innerHTML='<div class="rp-rbar"><b>Progress report<small id="rptSub"></small></b><button class="rp-rb" data-r="mode" id="rptMode">Setup</button><button class="rp-rb" data-r="save" id="rptSave" hidden>Save settings</button><button class="rp-rb rp-p" data-r="pdf" id="rptPdf">Download PDF</button><button class="rp-rb" data-r="close">Close</button></div><div class="rp-rbody" id="rptBody"></div><div class="rp-rsetup" id="rptSetup" hidden></div>';
+  r.innerHTML='<div class="rp-rbar"><b>Progress report<small id="rptSub"></small></b><button class="rp-rb" data-r="edit" id="rptEdit">Edit text</button><button class="rp-rb" data-r="rst" id="rptRst" hidden>Reset edits</button><button class="rp-rb" data-r="mode" id="rptMode">Setup</button><button class="rp-rb" data-r="save" id="rptSave" hidden>Save settings</button><button class="rp-rb rp-p" data-r="pdf" id="rptPdf">Download PDF</button><button class="rp-rb" data-r="close">Close</button></div><div class="rp-hint" id="rptHint" hidden>Click any text on a slide to change it, then press Download PDF. Edits are for this PDF only: the dashboard data is not changed. To change photos, titles or cards, use Setup.</div><div class="rp-rbody" id="rptBody"></div><div class="rp-rsetup" id="rptSetup" hidden></div>';
   document.body.appendChild(r);
   r.addEventListener('click',onClick); r.addEventListener('input',onInput); r.addEventListener('change',onChange);
   window.addEventListener('resize',function(){ if(r.classList.contains('on')&&RP.mode==='view') drawView(); });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&r.classList.contains('on')&&!document.body.classList.contains('rptp')) close(); });
+  document.addEventListener('keydown',function(e){
+    var t=e.target, inEd=t&&t.getAttribute&&t.getAttribute('data-ek');
+    if(inEd&&e.key==='Enter'){ e.preventDefault(); t.blur(); return; }
+    if(e.key==='Escape'&&r.classList.contains('on')&&!document.body.classList.contains('rptp')){ if(inEd){ t.blur(); return; } close(); } });
+  r.addEventListener('paste',function(e){ var t=e.target; if(t&&t.getAttribute&&t.getAttribute('data-ek')){ e.preventDefault(); var x=(e.clipboardData||window.clipboardData).getData('text/plain').replace(/\s+/g,' '); document.execCommand('insertText',false,x); } });
+  r.addEventListener('focusout',function(e){ var t=e.target, k=t&&t.getAttribute&&t.getAttribute('data-ek'); if(!k) return; var m=/^c:.*:(plan|act)$/.exec(k); if(m){ var row=t.closest('.rp-rr'), i=row&&row.querySelector('.rp-rt i'), n=numOf(t.textContent); if(i&&n!=null) i.style.width=n+'%'; } if(/^c:.*:var$/.test(k)&&t.parentNode){ var vx=t.textContent.trim(); t.parentNode.className=/^[−-]/.test(vx)?'':/^\+/.test(vx)?'rp-ps':'rp-z'; } });
   return r;
 }
 function drawView(){
@@ -3042,11 +3059,12 @@ function drawView(){
   var wrap=function(h,extra){ return '<div class="rp-rs" style="width:'+w+'px;height:'+(720*sc)+'px"><div class="rp-rsl'+(extra||'')+'" style="transform:scale('+sc+')">'+h+'</div></div>'; };
   body.innerHTML=wrap(cover())+sl.map(function(s,i){ return wrap(slide(s,i,sl.length,P,cut),s.title?'':' rp-nt'); }).join('');
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+(RP.dirty?' · unsaved settings':'');
+  body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!Object.keys(RP.ov.v).length; var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
 }
 function setMode(m){
   RP.mode=m; var b=document.getElementById('rptBody'), s=document.getElementById('rptSetup');
   b.hidden=m!=='view'; s.hidden=m!=='setup';
-  document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=m!=='setup'; document.getElementById('rptPdf').hidden=m!=='view';
+  document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=m!=='setup'; document.getElementById('rptPdf').hidden=m!=='view'; document.getElementById('rptEdit').hidden=m!=='view'; if(m!=='view'){ document.getElementById('rptRst').hidden=true; document.getElementById('rptHint').hidden=true; }
   if(m==='view') drawView(); else drawSetup();
 }
 async function fetchPhotos(){
@@ -3064,13 +3082,14 @@ async function load(){
   RP.loaded=true;
 }
 async function open(){
-  var r=ensure(); r.classList.add('on'); RP.cut=cutIso(); RP.mode='view';
+  var r=ensure(); r.classList.add('on'); RP.cut=cutIso(); RP.mode='view'; if(RP.ov.cut!==RP.cut) RP.ov={cut:RP.cut,v:{}};
   if(!RP.cut){ document.getElementById('rptBody').innerHTML='<p style="color:#fff;padding:20px">Load the progress data first.</p>'; return; }
   if(!RP.loaded) await load();
   setMode('view'); fetchPhotos();
 }
 function close(){ var r=document.getElementById('rptRoot'); if(r) r.classList.remove('on'); }
 function pdf(){
+  RP.ed=false; if(document.activeElement&&document.activeElement.blur) document.activeElement.blur();
   if(RP.mode!=='view') setMode('view'); drawView();
   var st=document.createElement('style'); st.id='rptPageStyle'; st.textContent='@page{size:1280px 720px;margin:0}'; document.head.appendChild(st);
   document.body.classList.add('rptp');
@@ -3115,7 +3134,8 @@ function slideOf(t){ return RP.cfg.slides[+t.getAttribute('data-s')]; }
 function cardOf(t){ var s=slideOf(t); return s&&s.cards[+t.getAttribute('data-c')]; }
 function dirty(){ RP.dirty=true; }
 function onInput(e){
-  var t=e.target, f=t.getAttribute&&t.getAttribute('data-f'); if(!f||t.type==='checkbox'||t.type==='file') return;
+  var t=e.target, ek=t.getAttribute&&t.getAttribute('data-ek'); if(ek){ RP.ov.v[ek]=t.textContent; var rs=document.getElementById('rptRst'); if(rs) rs.hidden=false; return; }
+  var f=t.getAttribute&&t.getAttribute('data-f'); if(!f||t.type==='checkbox'||t.type==='file') return;
   if(f==='kicker'||f==='title') RP.cfg[f]=t.value;
   else if(f==='s.title') slideOf(t).title=t.value; else if(f==='s.frame') slideOf(t).frame=t.value;
   else if(f==='c.t') cardOf(t).t=t.value;
@@ -3152,6 +3172,8 @@ function onClick(e){
   if(a==='close') return close();
   if(a==='mode') return setMode(RP.mode==='view'?'setup':'view');
   if(a==='pdf') return pdf();
+  if(a==='edit'){ RP.ed=!RP.ed; return drawView(); }
+  if(a==='rst'){ RP.ov={cut:RP.cut,v:{}}; return drawView(); }
   if(a==='save') return save();
   var S=RP.cfg.slides, si=+t.getAttribute('data-s'), ci=+t.getAttribute('data-c'), s=S[si];
   if(a==='reset'){ if(RP.confirm!=='reset'){ RP.confirm='reset'; return drawSetup(); } RP.confirm=''; RP.cfg=defCfg(); dirty(); RP.msg='The standard layout is back. Photos are not attached to it yet.'; return drawSetup(); }
