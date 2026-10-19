@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TEST · KEC Project Controls Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   box-sizing:border-box;
@@ -860,8 +860,86 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 #usrModal .um-pw{font:700 14px ui-monospace,Menlo,Consolas,monospace;background:#f3f6fd;border-radius:7px;padding:3px 8px}
 @media (max-width:600px){#usrModal .um{padding:16px 14px}#usrModal table,#usrModal tbody,#usrModal tr,#usrModal td{display:block;width:auto}#usrModal thead{display:none}#usrModal tr{border-bottom:1px solid #e1e7f5;padding:8px 0}#usrModal td{border:0;padding:3px 0}}
 </style>
+<style id="rptCss">
+#rptRoot{position:fixed;inset:0;z-index:1400;background:#2a2d33;display:none;flex-direction:column;font:14px/1.4 Inter,Arial,sans-serif;color:#14213d}
+#rptRoot.on{display:flex}
+#rptRoot .rp-rbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:#0b1f4d;color:#fff}
+#rptRoot .rp-rbar b{font-size:15px;margin-right:auto}
+#rptRoot .rp-rbar small{opacity:.7;font-weight:400;margin-left:8px}
+#rptRoot .rp-rb{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:8px;padding:7px 12px;font:600 13px Inter,Arial,sans-serif;cursor:pointer}
+#rptRoot .rp-rb:hover{background:rgba(255,255,255,.2)}#rptRoot .rp-rb.rp-p{background:#c8963e;border-color:#c8963e;color:#1b1b1b}#rptRoot .rp-rb[disabled]{opacity:.5;cursor:default}
+#rptRoot .rp-rbody{flex:1;overflow:auto;padding:18px 12px 40px}
+#rptRoot .rp-rs{margin:0 auto 18px;position:relative;box-shadow:0 8px 30px rgba(0,0,0,.45);overflow:hidden;background:#f3efe7}
+#rptRoot .rp-rsl{width:1280px;height:720px;transform-origin:0 0;position:absolute;left:0;top:0;font-family:Carlito,Calibri,'Segoe UI',Arial,sans-serif;color:#14304f;background:#f3efe7;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.rp-rsl .rp-cv{background:#3b3937;color:#f4efe6}
+.rp-rsl .rp-cvbar{position:absolute;left:84px;top:168px;width:84px;height:6px;background:#c8963e}
+.rp-rsl .rp-cvk{position:absolute;left:84px;top:208px;font:700 15px Carlito,Calibri,Arial,sans-serif;letter-spacing:.2em;color:#c8963e;text-transform:uppercase}
+.rp-rsl .rp-cvt{position:absolute;left:84px;top:236px;width:760px;font:400 76px/1.1 'Playfair Display',Georgia,serif;color:#f4efe6}
+.rp-rsl .rp-cvd{position:absolute;left:84px;bottom:62px;font:700 18px Carlito,Calibri,Arial,sans-serif;color:#f4efe6}
+.rp-rsl .rp-cvg{position:absolute;right:70px;bottom:64px}
+.rp-rsl .rp-st{position:absolute;left:56px;top:30px;font:400 46px/1.1 'Playfair Display',Georgia,serif;color:#14304f}
+.rp-rsl .rp-fr{position:absolute;left:56px;right:56px;top:112px;bottom:88px;border:3px solid #bdbdbd;padding:14px 24px 18px;display:flex;flex-direction:column;box-sizing:border-box}
+.rp-rsl.rp-nt .rp-fr{top:60px;bottom:70px}
+.rp-rsl .rp-fl{font:700 22px Carlito,Calibri,Arial,sans-serif;color:#111;margin-bottom:10px}
+.rp-rsl .rp-pn{position:absolute;right:56px;bottom:34px;font:400 16px Carlito,Calibri,Arial,sans-serif;color:#8a8a8a}
+.rp-rsl .rp-fb{flex:1;min-height:0;display:flex;gap:20px}
+.rp-rsl .rp-fb.rp-rows{flex-direction:column;gap:16px}.rp-rsl .rp-fb.rp-rows .rp-rw{flex:1;min-height:0;display:flex;gap:18px;align-items:stretch}
+.rp-rsl .rp-fb.rp-rows .rp-rw .rp-rc{width:300px;flex:none;align-self:center}
+.rp-rsl .rp-fb.rp-side .rp-cl{flex:none;display:grid;gap:14px;align-content:start;padding-top:0}
+.rp-rsl .rp-fb.rp-cols{gap:22px}.rp-rsl .rp-fb.rp-cols .rp-cc{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
+.rp-rsl .rp-col-ph{flex:1;min-height:0}
+.rp-rsl .rp-ph{display:grid;gap:10px;width:100%;height:100%}
+.rp-rsl .rp-ph>div{background:#fff;border-radius:14px;padding:3px;box-sizing:border-box;min-height:0;min-width:0;box-shadow:0 0 0 1px rgba(0,0,0,.05)}
+.rp-rsl .rp-ph img{width:100%;height:100%;object-fit:cover;border-radius:11px;display:block}
+.rp-rsl .rp-ph .rp-ld{width:100%;height:100%;border-radius:11px;background:#e6e1d6}
+.rp-rsl .rp-rc{background:#fff;border-radius:8px;border-top:3px solid #14304f;box-shadow:0 1px 5px rgba(0,0,0,.10);padding:8px 14px 10px;font-size:14px;box-sizing:border-box}
+.rp-rsl .rp-rc h4{margin:0 0 5px;text-align:left;font:700 16px Carlito,Calibri,Arial,sans-serif;color:#14304f}
+.rp-rsl .rp-rc .rp-rr{display:flex;align-items:center;gap:8px;margin:2px 0;font-size:14px;color:#4a566a}
+.rp-rsl .rp-rc .rp-rr span:first-child{width:62px;text-align:right;flex:none}
+.rp-rsl .rp-rc .rp-rt{flex:1;height:11px;position:relative}.rp-rsl .rp-rc .rp-rt i{display:block;height:100%}
+.rp-rsl .rp-rc .rp-rr b{width:54px;text-align:right;flex:none;color:#14304f;font-size:14px}
+.rp-rsl .rp-rc .rp-rv{display:flex;justify-content:space-between;border-bottom:1px solid #d8d3c8;padding:3px 0 6px;margin-top:4px;color:#4a566a;font-size:14px}
+.rp-rsl .rp-rc .rp-rv b{color:#b5402a}.rp-rsl .rp-rc .rp-rv b.rp-z{color:#14304f}.rp-rsl .rp-rc .rp-rv b.rp-ps{color:#2f8f5b}
+.rp-rsl .rp-rc .rp-dl{text-align:center;font-weight:700;color:#b5402a;margin:6px 0 3px;font-size:14px}.rp-rsl .rp-rc .rp-dl.rp-g{color:#2f8f5b}.rp-rsl .rp-rc .rp-dl.rp-n{color:#6b7587;font-weight:400}
+.rp-rsl .rp-rc .rp-tl{position:relative;height:16px;margin:0 6px}
+.rp-rsl .rp-rc .rp-tl:before{content:"";position:absolute;left:8px;right:8px;top:7px;height:3px;background:#c8963e}
+.rp-rsl .rp-rc .rp-tl u{position:absolute;top:1px;width:13px;height:13px;border-radius:50%;box-sizing:border-box}
+.rp-rsl .rp-rc .rp-tl u.rp-o{left:0;background:#fff;border:3px solid #14304f}.rp-rsl .rp-rc .rp-tl u.rp-f{right:0;background:#c8963e;border:2px solid #c8963e}
+.rp-rsl .rp-rc .rp-td{display:flex;justify-content:space-between;font-size:13px;color:#6b7587;margin-top:3px;line-height:1.2}
+.rp-rsl .rp-rc .rp-td div:last-child{text-align:right}.rp-rsl .rp-rc .rp-td b{display:block;color:#14304f}
+.rp-rsl .rp-rc .rp-ctr{text-align:center;font-size:14px;color:#6b7587;margin-top:2px;line-height:1.3}.rp-rsl .rp-rc .rp-ctr b{display:block;color:#14304f}
+.rp-rsl .rp-rc .rp-tg{width:16px;height:16px;border-radius:50%;border:3px solid #14304f;margin:4px auto 3px;box-sizing:border-box;position:relative;background:#fff}.rp-rsl .rp-rc .rp-tg:after{content:"";position:absolute;inset:2px;border-radius:50%;background:#c8963e}
+.rp-rsl .rp-rc .rp-nf{font-size:14px;color:#6b7587;margin-top:10px}
+.rp-rsl .rp-rc.rp-em{opacity:.75}.rp-rsl .rp-rc.rp-em p{margin:4px 0 0;color:#6b7587;font-size:14px}
+/* setup */
+#rptRoot .rp-rsetup{flex:1;overflow:auto;padding:16px;background:#eef0f4}
+#rptRoot .rp-rsetup .rp-bx{background:#fff;border:1px solid #d5d9e2;border-radius:12px;padding:12px 14px;margin:0 auto 12px;max-width:980px}
+#rptRoot .rp-rsetup h5{margin:0 0 8px;font-size:14px;color:#0b1f4d}
+#rptRoot .rp-rsetup label{display:block;font-size:12px;font-weight:600;color:#5b6784;margin:8px 0 3px}
+#rptRoot .rp-rsetup input[type=text],#rptRoot .rp-rsetup select{width:100%;box-sizing:border-box;border:1px solid #c7cddb;border-radius:8px;padding:7px 9px;font:14px Inter,Arial,sans-serif;background:#fff}
+#rptRoot .rp-rsetup .rp-g2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+#rptRoot .rp-rsetup .rp-cd{border:1px solid #dde1ea;border-radius:10px;padding:8px 10px;margin-top:10px;background:#fafbfd}
+#rptRoot .rp-rsetup .rp-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
+#rptRoot .rp-rsetup .rp-sb{border:1px solid #c7cddb;background:#fff;border-radius:7px;padding:5px 9px;font:600 12px Inter,Arial,sans-serif;cursor:pointer;color:#0b1f4d}
+#rptRoot .rp-rsetup .rp-sb.rp-d{color:#a3321f;border-color:#e2b4aa}#rptRoot .rp-rsetup .rp-sb.rp-p{background:#0b1f4d;color:#fff;border-color:#0b1f4d}
+#rptRoot .rp-rsetup .rp-th{position:relative;width:74px;height:54px;border-radius:8px;overflow:hidden;border:1px solid #c7cddb}
+#rptRoot .rp-rsetup .rp-th img{width:100%;height:100%;object-fit:cover}#rptRoot .rp-rsetup .rp-th button{position:absolute;right:3px;top:3px;border:0;background:rgba(0,0,0,.65);color:#fff;border-radius:50%;width:18px;height:18px;min-width:0;min-height:0;padding:0;margin:0;cursor:pointer;font-size:10px;line-height:18px;text-align:center}
+#rptRoot .rp-rsetup .rp-pk{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:13px}#rptRoot .rp-rsetup .rp-pk label{display:inline-flex;gap:5px;align-items:center;font-weight:400;color:#14213d;margin:0}
+#rptRoot .rp-rsetup .rp-msg{font-size:13px;margin:8px auto;max-width:980px;padding:8px 12px;border-radius:8px;background:#fff6dd;color:#6b4a00}
+#rptPageStyle{display:none}
+@media (max-width:700px){#rptRoot .rp-rsetup .rp-g2{grid-template-columns:1fr}}
+@media print{
+ body.rptp>*{display:none!important}
+ body.rptp>#rptRoot{display:block!important;position:static!important;background:#fff!important;overflow:visible!important;height:auto!important}
+ body.rptp #rptRoot .rp-rbar,body.rptp #rptRoot .rp-rsetup{display:none!important}
+ body.rptp #rptRoot .rp-rbody{overflow:visible!important;padding:0!important}
+ body.rptp #rptRoot .rp-rs{width:1280px!important;height:720px!important;margin:0!important;box-shadow:none!important;break-after:page;page-break-after:always;overflow:hidden;position:relative}
+ body.rptp #rptRoot .rp-rsl{transform:none!important}
+ body.rptp{background:#fff!important}
+}
+</style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V211</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V212</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -903,6 +981,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
         <input type="file" id="fileC" accept=".xlsx,.xls,.xlsm" hidden>
         <div class="ag">
           <button class="btn ghost" id="usrBtn" type="button" hidden title="Add, edit or remove users and reset passcodes (administrators only)">Users</button>
+          <button class="btn ghost" id="rptBtn" type="button" hidden title="Construction progress report for management: slides with progress cards and site photos, saved as a PDF (administrators only)">Report</button>
           <button class="btn ghost" id="ctrBtn" type="button" title="Upload the contracts database (Contracts sheet) to refresh contracts, vendors and costs">Update contracts</button>
         </div>
         <span class="vsep"></span>
@@ -2889,11 +2968,210 @@ function onClick(e){ var t=e.target.closest&&e.target.closest('[data-um]'); if(!
   else if(a==='copy'){ var v=t.getAttribute('data-t'); try{ navigator.clipboard.writeText(v); t.textContent='Copied'; }catch(x){ t.textContent='Select and copy'; } } }
 document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.target.closest('#usrBtn')){ box().classList.add('on'); UM.open=true; load(); } });
 })();
+/* ===== Admin report: Construction Projects Progress Summary (slides, printed to PDF) ===== */
+(function(){
+var RP={cfg:null,ph:{},srv:true,dirty:false,mode:'view',loaded:false,msg:'',busy:false,confirm:''};
+var uid=function(){ return Math.random().toString(36).slice(2,10)+Date.now().toString(36); };
+var cutIso=function(){ return model&&model.snaps&&model.snaps.length?model.snaps[model.snaps.length-1]:null; };
+var P2=function(a){ return a; };
+function defCfg(){
+  var C=function(t,code,pk){ return {id:uid(),t:t,code:code,pk:pk||[],ph:[]}; };
+  return {v:1,kicker:'Executive progress review',title:'Construction Projects Progress Summary',slides:[
+    {id:uid(),title:'Al-Aliya Projects',frame:'Cluster A',layout:'rows',cards:[C('Plot 142','AL-142'),C('Plot 128 & 129','AL-128/129')],ph:[]},
+    {id:uid(),title:'Al-Aliya Projects',frame:'Cluster D',layout:'side',cards:[C('PH 1 (Plots 133, 134, 136)','AL-D',['Plot 133','Plot 134','Plot 136']),C('PH 2 (Plot 138)','AL-D',['Plot 138']),C('PH 3 (Plots 135, 137, 144)','AL-D',['Plot 135','Plot 137','Plot 144']),C('CL-D Overall summary','AL-D')],ph:[]},
+    {id:uid(),title:'Al-Aliya Projects',frame:'Cluster D Ph 2',layout:'side',cards:[C('Plots 148, 149, 150','AL-D2',['Plot 148','Plot 149','Plot 150']),C('Plot 093 (Nursery Plot)','AL-D2',['Plot 093'])],ph:[]},
+    {id:uid(),title:'',frame:'Multaqa Projects',layout:'cols',cards:[C('Mall','HB-Mall'),C('Hilton Hotel Tower','HB-HH'),C('Residence Tower','HB-RT')],ph:[]},
+    {id:uid(),title:'',frame:'Misk Schools',layout:'side',cards:[C('Skeleton','N03-RSD',['Structure & Embedded Works']),C('MEP & Finishing','N03-RSD',['MEP & Finishing'])],ph:[]}]};
+}
+function dd(cut){ return d2(cut).replace(/^(\d)\s/,'0$1 '); }
+/* ----- data: same numbers as the dashboard's overview cards ----- */
+function pool(cut){ return rowsAt(cut).map(function(r){ return derive(r,cut); }); }
+function cardRows(P,c){ var set=(c.pk||[]).map(function(x){ return String(x).toLowerCase(); }); return P.filter(function(r){ return r.code===c.code&&(!set.length||set.indexOf(String(r.pkg).toLowerCase())>=0); }); }
+function bw(v){ return Math.max(0,Math.min(1,v||0))*100; }
+function rcard(c,P,cut){
+  var rr=cardRows(P,c), t=esc(c.t||'');
+  if(!rr.length) return '<div class="rp-rc rp-em"><h4>'+t+'</h4><p>No progress data for this card at this cut-off.</p></div>';
+  var a=agg(rr,cut,true), gap=(a.act-a.plan)*100, started=a.pv>0||a.ev>0, dl=dayDiff(a.pf,a.ff), zero=Math.abs(gap)<0.005;
+  var h='<div class="rp-rc"><h4>'+t+'</h4>'+
+    '<div class="rp-rr"><span>Planned</span><div class="rp-rt"><i style="width:'+bw(a.plan)+'%;background:#a9b6c8"></i></div><b>'+pct(a.plan)+'</b></div>'+
+    '<div class="rp-rr"><span>Actual</span><div class="rp-rt"><i style="width:'+bw(a.act)+'%;background:#14304f"></i></div><b>'+pct(a.act)+'</b></div>'+
+    '<div class="rp-rv"><span>Variance</span><b class="'+(zero?'rp-z':gap>0?'rp-ps':'')+'">'+(zero?'0.00':sgn(gap,2,''))+'</b></div>';
+  if(started&&a.act>=0.9999) h+='<div class="rp-dl rp-g">Completed</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+fd(a.pf)+'</b>Planned</div><div><b>'+fd(a.ff)+'</b>Actual completion</div></div>';
+  else if(!started) h+='<div class="rp-nf">'+((!a.pf&&!a.ff)?'No finish dates reported':'Not started yet'+(a.start?' · planned start '+fd(a.start):''))+'</div>';
+  else if(dl===0) h+='<div class="rp-dl rp-n">On plan</div><div class="rp-tg"></div><div class="rp-ctr"><b>'+fd(a.pf)+'</b>Planned = Forecast</div>';
+  else h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+(dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+fd(a.pf)+'</b>Planned</div><div><b>'+fd(a.ff)+'</b>Forecast</div></div>';
+  return h+'</div>';
+}
+/* ----- photos: the layout adapts to 1, 2, 3 or 4 photos ----- */
+function phHtml(list,lay){
+  list=(list||[]).slice(0,4); var n=list.length; if(!n) return '';
+  var cell=function(p,x){ var d=RP.ph[p.id]; return '<div'+(x?' style="'+x+'"':'')+'>'+(d?'<img alt="" src="'+d+'">':'<div class="rp-ld"></div>')+'</div>'; };
+  var por=list[0].h>list[0].w, st, big=false;
+  if(n===1) st='grid-template-columns:1fr;grid-template-rows:1fr';
+  else if(n===2) st=(lay==='rows'||por)?'grid-template-columns:1fr 1fr;grid-template-rows:1fr':'grid-template-columns:1fr;grid-template-rows:1fr 1fr';
+  else if(n===3){ if(lay==='rows'||por) st='grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr'; else { st='grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr'; big=true; } }
+  else st=lay==='rows'?'grid-template-columns:repeat(4,1fr);grid-template-rows:1fr':'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr';
+  return '<div class="rp-ph" style="'+st+'">'+list.map(function(p,i){ return cell(p,big&&i===0?'grid-row:1 / span 2':''); }).join('')+'</div>';
+}
+function cover(){
+  var bars=[[20,44,108],[76,54,166],[140,44,137],[194,64,225],[268,44,147],[322,54,98]];
+  return '<div class="rp-cv" style="position:absolute;inset:0"><div class="rp-cvbar"></div><div class="rp-cvk">'+esc(RP.cfg.kicker||'')+'</div><div class="rp-cvt">'+esc(RP.cfg.title||'')+'</div><div class="rp-cvd">Data date: '+esc(dd(RP.cut))+'</div>'+
+    '<svg class="rp-cvg" width="380" height="240" viewBox="0 0 380 240" fill="none" stroke="#c8963e" stroke-width="1.4">'+bars.map(function(b){ return '<rect x="'+b[0]+'" y="'+(231-b[2])+'" width="'+b[1]+'" height="'+b[2]+'"/>'; }).join('')+'<line x1="0" y1="232" x2="380" y2="232"/></svg></div>';
+}
+function slide(s,i,N,P,cut){
+  var cards=(s.cards||[]), inner;
+  if(s.layout==='rows') inner='<div class="rp-fb rp-rows">'+cards.map(function(c){ return '<div class="rp-rw">'+rcard(c,P,cut)+'<div style="flex:1;min-width:0">'+phHtml(c.ph,'rows')+'</div></div>'; }).join('')+'</div>';
+  else if(s.layout==='cols') inner='<div class="rp-fb rp-cols">'+cards.map(function(c){ return '<div class="rp-cc">'+rcard(c,P,cut)+'<div class="rp-col-ph">'+phHtml(c.ph,'cols')+'</div></div>'; }).join('')+'</div>';
+  else inner='<div class="rp-fb rp-side"><div class="rp-cl" style="grid-template-columns:'+(cards.length>=3?'repeat(2,262px)':'300px')+'">'+cards.map(function(c){ return rcard(c,P,cut); }).join('')+'</div><div style="flex:1;min-width:0;padding-top:6px">'+phHtml(s.ph,'side')+'</div></div>';
+  return (s.title?'<div class="rp-st">'+esc(s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+esc(s.frame||'')+'</div>'+inner+'</div><div class="rp-pn">'+(i+1)+' / '+N+'</div>';
+}
+/* ----- window ----- */
+function ensure(){
+  var r=document.getElementById('rptRoot'); if(r) return r;
+  r=document.createElement('div'); r.id='rptRoot';
+  r.innerHTML='<div class="rp-rbar"><b>Progress report<small id="rptSub"></small></b><button class="rp-rb" data-r="mode" id="rptMode">Setup</button><button class="rp-rb" data-r="save" id="rptSave" hidden>Save settings</button><button class="rp-rb rp-p" data-r="pdf" id="rptPdf">Download PDF</button><button class="rp-rb" data-r="close">Close</button></div><div class="rp-rbody" id="rptBody"></div><div class="rp-rsetup" id="rptSetup" hidden></div>';
+  document.body.appendChild(r);
+  r.addEventListener('click',onClick); r.addEventListener('input',onInput); r.addEventListener('change',onChange);
+  window.addEventListener('resize',function(){ if(r.classList.contains('on')&&RP.mode==='view') drawView(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&r.classList.contains('on')&&!document.body.classList.contains('rptp')) close(); });
+  return r;
+}
+function drawView(){
+  var body=document.getElementById('rptBody'); if(!RP.cfg) return;
+  var cut=RP.cut, P=pool(cut), sl=RP.cfg.slides||[], w=Math.min(1280,Math.max(320,body.clientWidth-24)), sc=w/1280;
+  var wrap=function(h,extra){ return '<div class="rp-rs" style="width:'+w+'px;height:'+(720*sc)+'px"><div class="rp-rsl'+(extra||'')+'" style="transform:scale('+sc+')">'+h+'</div></div>'; };
+  body.innerHTML=wrap(cover())+sl.map(function(s,i){ return wrap(slide(s,i,sl.length,P,cut),s.title?'':' rp-nt'); }).join('');
+  document.getElementById('rptSub').textContent=' · data date '+dd(cut)+(RP.dirty?' · unsaved settings':'');
+}
+function setMode(m){
+  RP.mode=m; var b=document.getElementById('rptBody'), s=document.getElementById('rptSetup');
+  b.hidden=m!=='view'; s.hidden=m!=='setup';
+  document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=m!=='setup'; document.getElementById('rptPdf').hidden=m!=='view';
+  if(m==='view') drawView(); else drawSetup();
+}
+async function fetchPhotos(){
+  var ids=[]; var add=function(l){ (l||[]).forEach(function(p){ if(p&&p.id&&!RP.ph[p.id]&&ids.indexOf(p.id)<0) ids.push(p.id); }); };
+  (RP.cfg.slides||[]).forEach(function(s){ add(s.ph); (s.cards||[]).forEach(function(c){ add(c.ph); }); });
+  for(var i=0;i<ids.length;i+=4){
+    try{ var j=await accCall('GET','/report-photos?ids='+ids.slice(i,i+4).join(','),null,30000); Object.keys(j.photos||{}).forEach(function(k){ RP.ph[k]=j.photos[k]; }); }catch(e){ RP.msg='Some photos could not be loaded.'; }
+    if(RP.mode==='view') drawView();
+  }
+}
+async function load(){
+  RP.msg='';
+  try{ var j=await accCall('GET','/report'); RP.srv=true; RP.cfg=(j.cfg&&Array.isArray(j.cfg.slides))?j.cfg:defCfg(); if(!j.cfg) RP.dirty=false; }
+  catch(e){ RP.srv=false; RP.cfg=RP.cfg||defCfg(); RP.msg='The relay (Cloudflare worker) does not support the report yet, so settings and photos can only be kept until this page is closed. Deploy relay V17.'; }
+  RP.loaded=true;
+}
+async function open(){
+  var r=ensure(); r.classList.add('on'); RP.cut=cutIso(); RP.mode='view';
+  if(!RP.cut){ document.getElementById('rptBody').innerHTML='<p style="color:#fff;padding:20px">Load the progress data first.</p>'; return; }
+  if(!RP.loaded) await load();
+  setMode('view'); fetchPhotos();
+}
+function close(){ var r=document.getElementById('rptRoot'); if(r) r.classList.remove('on'); }
+function pdf(){
+  if(RP.mode!=='view') setMode('view'); drawView();
+  var st=document.createElement('style'); st.id='rptPageStyle'; st.textContent='@page{size:1280px 720px;margin:0}'; document.head.appendChild(st);
+  document.body.classList.add('rptp');
+  var done=function(){ document.body.classList.remove('rptp'); var x=document.getElementById('rptPageStyle'); if(x) x.remove(); window.removeEventListener('afterprint',done); };
+  window.addEventListener('afterprint',done);
+  setTimeout(function(){ window.print(); },200);
+}
+async function save(){
+  var b=document.getElementById('rptSave'); b.disabled=true; b.textContent='Saving…';
+  try{ await accCall('PUT','/report',{cfg:RP.cfg},30000); RP.dirty=false; RP.msg='Saved. The report layout and photos stay in the dashboard for the next time.'; }
+  catch(e){ RP.msg=(e&&e.message)||'Could not save.'; }
+  b.disabled=false; b.textContent='Save settings'; drawSetup();
+}
+/* ----- setup screen ----- */
+function pkgsOf(code){ var m={}, o=[]; (model.rows||[]).forEach(function(r){ if(r.code===code&&!m[r.pkg]){ m[r.pkg]=1; o.push(r.pkg); } }); return o; }
+function thumbs(list,s,c){
+  return (list||[]).map(function(p,i){ return '<div class="rp-th">'+(RP.ph[p.id]?'<img alt="" src="'+RP.ph[p.id]+'">':'')+'<button data-r="prem" data-s="'+s+'" data-c="'+c+'" data-i="'+i+'" title="Remove">✕</button></div>'; }).join('')+
+    ((list||[]).length<4?'<label class="rp-sb" style="margin:0">+ Add photos<input type="file" accept="image/*" multiple hidden data-r="file" data-s="'+s+'" data-c="'+c+'"></label>':'<small style="color:#5b6784">4 photos (maximum)</small>');
+}
+function drawSetup(){
+  var el=document.getElementById('rptSetup'), c0=RP.cfg, projs=Array.from(model.projects.keys()).sort();
+  var opt=function(sel){ return projs.map(function(c){ return '<option value="'+esc(c)+'"'+(c===sel?' selected':'')+'>'+esc(pname(c))+' ('+esc(c)+')</option>'; }).join(''); };
+  var h=(RP.msg?'<div class="rp-msg">'+esc(RP.msg)+'</div>':'')+
+   '<div class="rp-bx"><h5>Cover page</h5><div class="rp-g2"><div><label>Small heading</label><input type="text" data-f="kicker" value="'+esc(c0.kicker||'')+'"></div><div style="grid-column:span 2"><label>Title</label><input type="text" data-f="title" value="'+esc(c0.title||'')+'"></div></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The data date follows the latest cut-off in the dashboard ('+esc(dd(cutIso()))+').</p></div>';
+  c0.slides.forEach(function(s,si){
+    h+='<div class="rp-bx"><h5>Slide '+(si+1)+'</h5><div class="rp-g2"><div><label>Page title (optional)</label><input type="text" data-f="s.title" data-s="'+si+'" value="'+esc(s.title||'')+'"></div><div><label>Frame label</label><input type="text" data-f="s.frame" data-s="'+si+'" value="'+esc(s.frame||'')+'"></div>'+
+     '<div><label>Arrangement</label><select data-f="s.layout" data-s="'+si+'"><option value="side"'+(s.layout==='side'?' selected':'')+'>Cards on the left, photos together on the right</option><option value="rows"'+(s.layout==='rows'?' selected':'')+'>One row per card, with its photos beside it</option><option value="cols"'+(s.layout==='cols'?' selected':'')+'>Cards across, each with its photos below</option></select></div></div>';
+    (s.cards||[]).forEach(function(c,ci){
+      var all=pkgsOf(c.code), set=(c.pk||[]);
+      h+='<div class="rp-cd"><div class="rp-g2"><div><label>Card title</label><input type="text" data-f="c.t" data-s="'+si+'" data-c="'+ci+'" value="'+esc(c.t||'')+'"></div><div style="grid-column:span 2"><label>Project</label><select data-f="c.code" data-s="'+si+'" data-c="'+ci+'">'+opt(c.code)+'</select></div></div>'+
+       '<details style="margin-top:6px"><summary style="cursor:pointer;font-size:13px;color:#0b1f4d">Packages: '+(set.length?esc(set.join(', ')):'all packages of the project')+'</summary><div class="rp-pk">'+all.map(function(p){ return '<label><input type="checkbox" data-f="c.pk" data-s="'+si+'" data-c="'+ci+'" value="'+esc(p)+'"'+(set.indexOf(p)>=0?' checked':'')+'> '+esc(p)+'</label>'; }).join('')+'</div><small style="color:#5b6784">Tick nothing to include every package of the project.</small></details>'+
+       (s.layout!=='side'?'<div class="rp-row"><b style="font-size:12px;color:#5b6784">Photos</b>'+thumbs(c.ph,si,ci)+'</div>':'')+
+       '<div class="rp-row"><button class="rp-sb" data-r="cup" data-s="'+si+'" data-c="'+ci+'">↑</button><button class="rp-sb" data-r="cdn" data-s="'+si+'" data-c="'+ci+'">↓</button><button class="rp-sb rp-d" data-r="cdel" data-s="'+si+'" data-c="'+ci+'">Remove card</button></div></div>';
+    });
+    h+=(s.layout==='side'?'<div class="rp-row"><b style="font-size:12px;color:#5b6784">Photos for this slide</b>'+thumbs(s.ph,si,-1)+'</div>':'')+
+     '<div class="rp-row"><button class="rp-sb" data-r="cadd" data-s="'+si+'">+ Add card</button><span style="flex:1"></span><button class="rp-sb" data-r="sup" data-s="'+si+'">Slide ↑</button><button class="rp-sb" data-r="sdn" data-s="'+si+'">Slide ↓</button><button class="rp-sb rp-d" data-r="sdel" data-s="'+si+'">Remove slide</button></div></div>';
+  });
+  h+='<div class="rp-bx"><div class="rp-row" style="margin:0"><button class="rp-sb" data-r="sadd">+ Add slide</button><span style="flex:1"></span><button class="rp-sb rp-d" data-r="reset">'+(RP.confirm==='reset'?'Click again to confirm':'Reset to the standard layout')+'</button></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Up to four photos per card or slide. The report resizes and arranges them to fit however many you add. Photos are resized in your browser and stored in the dashboard\'s private storage (administrators only).</p></div>';
+  el.innerHTML=h;
+}
+function slideOf(t){ return RP.cfg.slides[+t.getAttribute('data-s')]; }
+function cardOf(t){ var s=slideOf(t); return s&&s.cards[+t.getAttribute('data-c')]; }
+function dirty(){ RP.dirty=true; }
+function onInput(e){
+  var t=e.target, f=t.getAttribute&&t.getAttribute('data-f'); if(!f||t.type==='checkbox'||t.type==='file') return;
+  if(f==='kicker'||f==='title') RP.cfg[f]=t.value;
+  else if(f==='s.title') slideOf(t).title=t.value; else if(f==='s.frame') slideOf(t).frame=t.value;
+  else if(f==='c.t') cardOf(t).t=t.value;
+  else if(f==='s.layout'){ slideOf(t).layout=t.value; dirty(); return drawSetup(); }
+  else if(f==='c.code'){ var c=cardOf(t); c.code=t.value; c.pk=[]; dirty(); return drawSetup(); }
+  dirty();
+}
+function onChange(e){
+  var t=e.target, f=t.getAttribute&&t.getAttribute('data-f');
+  if(f==='c.pk'){ var c=cardOf(t); c.pk=[].slice.call(t.closest('.rp-pk').querySelectorAll('input:checked')).map(function(x){ return x.value; }); dirty(); drawSetup(); }
+  else if(t.getAttribute&&t.getAttribute('data-r')==='file') addPhotos(t);
+}
+function shrink(file){
+  return new Promise(function(res,rej){ var u=URL.createObjectURL(file), im=new Image();
+    im.onload=function(){ var s=Math.min(1,1400/Math.max(im.width,im.height)), w=Math.round(im.width*s), h=Math.round(im.height*s), cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h);
+      var q=.84, d; do{ d=cv.toDataURL('image/jpeg',q); q-=.08; }while(d.length>850000&&q>.3); URL.revokeObjectURL(u); res({data:d,w:w,h:h}); };
+    im.onerror=function(){ URL.revokeObjectURL(u); rej(new Error('Could not read '+file.name)); }; im.src=u; });
+}
+async function addPhotos(inp){
+  var s=slideOf(inp), ci=+inp.getAttribute('data-c'), tgt=ci>=0?s.cards[ci]:s; tgt.ph=tgt.ph||[];
+  var files=[].slice.call(inp.files||[]).slice(0,4-tgt.ph.length); if(!files.length) return;
+  RP.msg='Adding '+files.length+' photo'+(files.length>1?'s':'')+'…'; drawSetup(); var bad=0, local=0;
+  for(var i=0;i<files.length;i++){
+    try{ var o=await shrink(files[i]), id=uid(); RP.ph[id]=o.data; tgt.ph.push({id:id,w:o.w,h:o.h}); dirty();
+      try{ await accCall('PUT','/report-photo',{id:id,data:o.data},30000); }catch(e){ local++; RP.msg=(e&&e.message)||''; } }
+    catch(e){ bad++; }
+  }
+  RP.msg=(bad?bad+' file'+(bad>1?'s':'')+' could not be read. ':'')+(local?'Some photos could not be stored in the dashboard ('+(RP.msg||'relay not updated')+'); they are kept only until this page is closed. ':'')+(!bad&&!local?'Photos added. Press Save settings to keep this arrangement.':'');
+  drawSetup();
+}
+function mv(a,i,d){ var j=i+d; if(j<0||j>=a.length) return; var x=a[i]; a[i]=a[j]; a[j]=x; }
+function onClick(e){
+  var t=e.target.closest&&e.target.closest('[data-r]'); if(!t||t.tagName==='INPUT') return; var a=t.getAttribute('data-r');
+  if(a==='close') return close();
+  if(a==='mode') return setMode(RP.mode==='view'?'setup':'view');
+  if(a==='pdf') return pdf();
+  if(a==='save') return save();
+  var S=RP.cfg.slides, si=+t.getAttribute('data-s'), ci=+t.getAttribute('data-c'), s=S[si];
+  if(a==='reset'){ if(RP.confirm!=='reset'){ RP.confirm='reset'; return drawSetup(); } RP.confirm=''; RP.cfg=defCfg(); dirty(); RP.msg='The standard layout is back. Photos are not attached to it yet.'; return drawSetup(); }
+  RP.confirm='';
+  if(a==='sadd') S.push({id:uid(),title:'',frame:'New slide',layout:'side',cards:[],ph:[]});
+  else if(a==='sup') mv(S,si,-1); else if(a==='sdn') mv(S,si,1); else if(a==='sdel') S.splice(si,1);
+  else if(a==='cadd') s.cards.push({id:uid(),t:'New card',code:Array.from(model.projects.keys()).sort()[0],pk:[],ph:[]});
+  else if(a==='cup') mv(s.cards,ci,-1); else if(a==='cdn') mv(s.cards,ci,1); else if(a==='cdel') s.cards.splice(ci,1);
+  else if(a==='prem'){ var tgt=ci>=0?s.cards[ci]:s, i=+t.getAttribute('data-i'), p=tgt.ph[i]; if(p){ tgt.ph.splice(i,1); delete RP.ph[p.id]; accCall('PUT','/report-photo',{id:p.id,data:null},15000).catch(function(){}); } }
+  else return;
+  dirty(); drawSetup();
+}
+document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.target.closest('#rptBtn')) open(); });
+})();
+
 
 function aiShow(){ var adm=!!(ACC.need&&ACC.user&&ACC.user.admin), ok=!!(ACC.need&&ACC.user&&(ACC.user.admin||ACC.user.ai)); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
   var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm;
-  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm;
+  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm;
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
   if(!model||!model.rows||!model.rows.length) return '';
