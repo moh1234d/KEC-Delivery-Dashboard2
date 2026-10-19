@@ -861,7 +861,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 @media (max-width:600px){#usrModal .um{padding:16px 14px}#usrModal table,#usrModal tbody,#usrModal tr,#usrModal td{display:block;width:auto}#usrModal thead{display:none}#usrModal tr{border-bottom:1px solid #e1e7f5;padding:8px 0}#usrModal td{border:0;padding:3px 0}}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V205</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V206</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1180,7 +1180,7 @@ function normCosts(objs){
     var ct=String(g(o,'cost type')==null?'':g(o,'cost type')).trim().toLowerCase(); if(ct!=='hard'&&ct!=='soft') return;
     var cv=num(g(o,'contract value'))||0, vo=num(g(o,'approved vos'))||0, sh=num(g(o,'project share of contract %')); if(sh==null) sh=1;
     var rvv=num(g(o,'revised contract value')), shrv=num(g(o,'project share of rv. contract value')); if(shrv==null) shrv=(rvv!=null?rvv:cv+vo)*sh;
-    out.push({lc:id.toLowerCase(),cost:ct,shrv:shrv,cno:(function(){ var r=String(g(o,'cnt #')||g(o,'cnt %')||'').trim(); return r||null; })()});
+    out.push({lc:id.toLowerCase(),cost:ct,shrv:shrv,cvs:cv*sh,vos:vo*sh,stg:String(g(o,'stage')==null?'':g(o,'stage')).trim().toLowerCase(),cno:(function(){ var r=String(g(o,'cnt #')||g(o,'cnt %')||'').trim(); return r||null; })()});
   });
   return out;
 }
@@ -2892,6 +2892,15 @@ function aiDigest(){
   o.push(['ALL PROJECTS',tt.n,m2(tt.rv),m2(tt.pv),m2(tt.ev),m2(tt.gc),pc(tt.rv?tt.pv/tt.rv:0),pc(tt.rv?tt.ev/tt.rv:0),pc(tt.rv?tt.gc/tt.rv:0),tt.pv>0?(tt.ev/tt.pv).toFixed(2):'-'].join(' | '));
   if(ctr.length){ o.push('AWARDED CONTRACTS, construction stage (contract no | project code | vendor | contract name | project share of revised value SAR M):');
     ctr.forEach(function(c){ o.push([c.cno,c.code,c.vendor,String(c.name||'').slice(0,70),m2(c.shrv)].join(' | ')); }); }
+  if(accPageOk('contracts')&&costs&&costs.length){
+    var CT={}, TT={hard:{cv:0,vo:0,rv:0,n:0},soft:{cv:0,vo:0,rv:0,n:0}};
+    costs.forEach(function(x){ var t=x.cost, e=CT[x.lc]||(CT[x.lc]={hard:{cv:0,vo:0,rv:0,n:0},soft:{cv:0,vo:0,rv:0,n:0}}); [e[t],TT[t]].forEach(function(z){ z.cv+=x.cvs||0; z.vo+=x.vos||0; z.rv+=x.shrv||0; z.n++; }); });
+    o.push('COST TYPE OF AWARDED CONTRACTS (from the Costs sheet, "Cost Type" column: Hard, Soft; all stages, i.e. design, construction, overhead, sales, operation; values are the project share, SAR M; revised = the revised contract value in the sheet, which includes approved VOs). Use this section for any question on hard cost, soft cost, awarded value or approved VOs. The construction-stage list below is a different cut and is not split by cost type.');
+    o.push('TOTAL HARD COST awarded: contract value '+m2(TT.hard.cv)+' | approved VOs '+m2(TT.hard.vo)+' | revised (including VOs) '+m2(TT.hard.rv)+' | '+TT.hard.n+' lines');
+    o.push('TOTAL SOFT COST awarded: contract value '+m2(TT.soft.cv)+' | approved VOs '+m2(TT.soft.vo)+' | revised (including VOs) '+m2(TT.soft.rv)+' | '+TT.soft.n+' lines');
+    o.push('By project (project code | project name | hard contract value | hard approved VOs | hard revised incl. VOs | soft contract value | soft approved VOs | soft revised incl. VOs):');
+    Object.keys(CT).forEach(function(lc){ var p=null, pk=lc; model.projects.forEach(function(v,k){ if(String(k).toLowerCase()===lc){ p=v; pk=k; } }); var e=CT[lc];
+      o.push([pk,p?String(p.name||'').replace(/\s*\|\s*/g,' - '):'',m2(e.hard.cv),m2(e.hard.vo),m2(e.hard.rv),m2(e.soft.cv),m2(e.soft.vo),m2(e.soft.rv)].join(' | ')); }); }
   if(hasExp){
     var cl=function(c){ var t=String(c.exs||'').toLowerCase(); if(/closed/.test(t)) return 'Closed'; if(/expired/.test(t)) return 'Expired'; if(/three/.test(t)) return 'Expire within 3 months'; if(/six months/.test(t)&&/within/.test(t)) return 'Expire within 6 months'; if(/valid/.test(t)) return 'Valid more than 6 months';
       if(!c.rcomp) return 'No date'; var dd=dayDiff(cut,c.rcomp); return dd<0?'Expired':dd<=92?'Expire within 3 months':dd<=183?'Expire within 6 months':'Valid more than 6 months'; };
