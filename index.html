@@ -939,7 +939,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V213</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V214</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3009,7 +3009,7 @@ function phHtml(list,lay){
   var por=list[0].h>list[0].w, st, big=false;
   if(n===1) st='grid-template-columns:1fr;grid-template-rows:1fr';
   else if(n===2) st=(lay==='rows'||por)?'grid-template-columns:1fr 1fr;grid-template-rows:1fr':'grid-template-columns:1fr;grid-template-rows:1fr 1fr';
-  else if(n===3){ if(lay==='rows'||por) st='grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr'; else { st='grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr'; big=true; } }
+  else if(n===3){ st='grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr'; big=true; }
   else st=lay==='rows'?'grid-template-columns:repeat(4,1fr);grid-template-rows:1fr':'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr';
   return '<div class="rp-ph" style="'+st+'">'+list.map(function(p,i){ return cell(p,big&&i===0?'grid-row:1 / span 2':''); }).join('')+'</div>';
 }
