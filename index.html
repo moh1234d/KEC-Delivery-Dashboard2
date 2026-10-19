@@ -861,7 +861,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 @media (max-width:600px){#usrModal .um{padding:16px 14px}#usrModal table,#usrModal tbody,#usrModal tr,#usrModal td{display:block;width:auto}#usrModal thead{display:none}#usrModal tr{border-bottom:1px solid #e1e7f5;padding:8px 0}#usrModal td{border:0;padding:3px 0}}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V208</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V209</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2838,7 +2838,7 @@ var UM={list:[],open:false,edit:-1,dirty:false,fresh:[]}, PAGES=[['overview','Ov
 function E(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 function gen(){ var a='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789', n=12, r=new Uint8Array(n), o=''; (window.crypto||window.msCrypto).getRandomValues(r); for(var i=0;i<n;i++) o+=a[r[i]%a.length]; return o; }
 function projs(){ var o=[]; try{ model.projects.forEach(function(p,k){ o.push([String(k),String(p&&p.name||k)+(p&&p.cluster?' · '+p.cluster:'')]); }); }catch(e){} return o.sort(function(a,b){ return a[0]<b[0]?-1:1; }); }
-function isAdm(u){ return u.projects==='*'&&u.pages==='*'&&!(u.hide&&u.hide.length); }
+function isAdm(u){ return u.admin===true; }
 function summ(u){ if(isAdm(u)) return '<span class="um-tag a">Administrator</span> <span class="um-tag">AI assistant</span>';
   var p=u.projects==='*'?'<span class="um-tag">All projects</span>':(u.projects.length?u.projects.map(function(c){ return '<span class="um-tag">'+E(c)+'</span>'; }).join(''):'<span class="um-tag">No projects</span>');
   var g=u.pages==='*'?'':'<br><small>Pages: '+(u.pages.length?u.pages.map(function(x){ return E(x); }).join(', '):'none')+'</small>';
@@ -2852,7 +2852,7 @@ function drawList(){ var b=document.getElementById('usrBox'); var rows=UM.list.m
     '<table><thead><tr><th>Name</th><th>Access</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>'+
     '<div class="um-row"><button class="um-b" data-um="add">+ Add user</button><span style="flex:1"></span><button class="um-b" data-um="close">'+(UM.dirty?'Cancel':'Close')+'</button><button class="um-b p" data-um="save"'+(UM.dirty?'':' disabled')+'>Save changes</button></div><div id="usrMsg" class="um-msg" style="display:none"></div>'+drawFresh(); }
 function drawFresh(){ if(!UM.fresh.length) return ''; return '<div class="um-msg o" style="margin-top:14px"><b>Saved.</b> Copy these passcodes now and send them to each person. They cannot be shown again.<table style="margin-top:8px"><tbody>'+UM.fresh.map(function(f){ return '<tr><td><b>'+E(f.name)+'</b></td><td><span class="um-pw">'+E(f.pass)+'</span></td><td><button class="um-b" data-um="copy" data-t="'+E(f.name+': '+f.pass)+'">Copy</button></td></tr>'; }).join('')+'</tbody></table></div>'; }
-function drawEdit(i){ var u=i<0?{name:'',projects:[],pages:'*',hide:[],isNew:true}:UM.list[i], b=document.getElementById('usrBox'), full=isAdm(u)&&!u.isNew||(u.isNew&&false), allP=u.projects==='*', allG=u.pages==='*';
+function drawEdit(i){ var u=i<0?{name:'',projects:[],pages:'*',hide:[],isNew:true}:UM.list[i], b=document.getElementById('usrBox'), full=isAdm(u), allP=u.projects==='*', allG=u.pages==='*';
   var pj=projs().map(function(p){ var on=allP||(u.projects.indexOf(p[0])>=0); return '<label><input type="checkbox" class="um-p" value="'+E(p[0])+'"'+(on?' checked':'')+'> '+E(p[1])+' <small style="color:#7a859f">('+E(p[0])+')</small></label>'; }).join('');
   var pg=PAGES.map(function(p){ var on=allG||(u.pages.indexOf(p[0])>=0); return '<label><input type="checkbox" class="um-g" value="'+p[0]+'"'+(on?' checked':'')+'> '+p[1]+'</label>'; }).join('');
   b.innerHTML='<h3>'+(i<0?'Add user':'Edit '+E(u.name))+'</h3><p class="um-sub">Choose what this person can see.</p>'+
@@ -2866,19 +2866,19 @@ function drawEdit(i){ var u=i<0?{name:'',projects:[],pages:'*',hide:[],isNew:tru
 function applyEdit(i){ var name=(document.getElementById('umName').value||'').trim(), pass=(document.getElementById('umPass').value||'').trim(), lvl=document.querySelector('input[name=umLvl]:checked').value;
   if(!name) return msg('Enter a name.'); if(UM.list.some(function(x,k){ return k!==i&&x.name.toLowerCase()===name.toLowerCase(); })) return msg('Another user already has that name.');
   var u=i<0?{isNew:true}:UM.list[i]; if(i>=0&&!u.orig) u.orig=u.name; u.name=name;
-  if(lvl==='admin'){ u.projects='*'; u.pages='*'; u.hide=[]; u.ai=true; }
-  else { var pj=[].slice.call(document.querySelectorAll('.um-p:checked')).map(function(c){ return c.value; }), pg=[].slice.call(document.querySelectorAll('.um-g:checked')).map(function(c){ return c.value; });
+  if(lvl==='admin'){ u.admin=true; u.projects='*'; u.pages='*'; u.hide=[]; u.ai=true; }
+  else { u.admin=false; var pj=[].slice.call(document.querySelectorAll('.um-p:checked')).map(function(c){ return c.value; }), pg=[].slice.call(document.querySelectorAll('.um-g:checked')).map(function(c){ return c.value; });
     if(!pj.length) return msg('Pick at least one project.'); if(!pg.length) return msg('Pick at least one page.');
     u.projects=(pj.length===projs().length)?'*':pj; u.pages=(pg.length===PAGES.length)?'*':pg; u.hide=document.getElementById('umHide').checked?['finance']:[]; u.ai=!u.hide.length&&document.getElementById('umAi').checked; }
   if(pass){ if(pass.length<8) return msg('The passcode needs at least 8 characters.'); u.newPass=pass; } else if(i<0) return msg('Give the new user a passcode (use Generate).');
   if(i<0) UM.list.push(u); UM.dirty=true; drawList(); }
 async function load(){ var b=document.getElementById('usrBox'); b.innerHTML='<h3>Users and passcodes</h3><p class="um-sub">Loading…</p>'; UM.dirty=false; UM.fresh=[];
-  try{ var j=await accCall('GET','/users'); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai}; }); drawList(); }
+  try{ var j=await accCall('GET','/users'); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,admin:!!u.admin,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai}; }); drawList(); }
   catch(e){ b.innerHTML='<h3>Users and passcodes</h3><div class="um-msg e">'+E((e&&e.message)||'Could not load the users.')+'</div><div class="um-row"><button class="um-b" data-um="close">Close</button></div>'; } }
 async function save(){ if(!UM.dirty) return; var btn=document.querySelector('[data-um=save]'); if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
-  var payload=UM.list.map(function(u){ return {name:u.name,orig:u.orig||u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai,newPass:u.newPass||''}; });
+  var payload=UM.list.map(function(u){ return {name:u.name,orig:u.orig||u.name,admin:!!u.admin,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai,newPass:u.newPass||''}; });
   var fresh=UM.list.filter(function(u){ return u.newPass; }).map(function(u){ return {name:u.name,pass:u.newPass}; });
-  try{ var j=await accCall('PUT','/users',{users:payload},30000); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai}; }); UM.dirty=false; UM.fresh=fresh; drawList(); }
+  try{ var j=await accCall('PUT','/users',{users:payload},30000); UM.list=(j.users||[]).map(function(u){ return {name:u.name,orig:u.name,admin:!!u.admin,projects:u.projects,pages:u.pages,hide:u.hide||[],ai:!!u.ai}; }); UM.dirty=false; UM.fresh=fresh; drawList(); }
   catch(e){ drawList(); msg((e&&e.message)||'Could not save.'); } }
 function onClick(e){ var t=e.target.closest&&e.target.closest('[data-um]'); if(!t) return; var a=t.getAttribute('data-um'), i=parseInt(t.getAttribute('data-i'),10);
   if(a==='close') close(); else if(a==='add') drawEdit(-1); else if(a==='edit') drawEdit(i); else if(a==='back') drawList();
