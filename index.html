@@ -861,7 +861,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 @media (max-width:600px){#usrModal .um{padding:16px 14px}#usrModal table,#usrModal tbody,#usrModal tr,#usrModal td{display:block;width:auto}#usrModal thead{display:none}#usrModal tr{border-bottom:1px solid #e1e7f5;padding:8px 0}#usrModal td{border:0;padding:3px 0}}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V206</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V207</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1238,6 +1238,53 @@ document.addEventListener('click',function(e){ var t=e.target; if(t.closest&&t.c
 document.addEventListener('keydown',function(e){ if((e.key==='Enter'||e.key===' ')&&e.target.classList&&(e.target.classList.contains('fcc')||e.target.classList.contains('vtg')||e.target.classList.contains('vexp')||e.target.classList.contains('vall'))){ e.preventDefault(); e.target.click(); } });
 /* separate section: all hard-cost contractors, the PMC and the supervision consultant (independent of the hard-cost comparison above) */
 var PARTIES_LAST=null;
+/* styled workbook for the contractors export: ExcelJS is loaded on demand; if it cannot load, the plain SheetJS file is used instead */
+function loadExcelJS(){ return new Promise(function(res){ if(window.ExcelJS) return res(true); var sc=document.createElement('script'); sc.src='https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js'; sc.onload=function(){ res(!!window.ExcelJS); }; sc.onerror=function(){ res(false); }; document.head.appendChild(sc); setTimeout(function(){ res(!!window.ExcelJS); },12000); }); }
+async function styledBuf(o){
+  if(!(await loadExcelJS())) return null;
+  try{
+    var wb=new ExcelJS.Workbook(); wb.creator='KEC Project Controls Dashboard'; wb.created=new Date();
+    var NAVY='FF1F3A5F', GOLD='FFC8A24B', LINE='FFD5DAE3', ZEB='FFF4F6FA', TOT='FFFFF2CC';
+    var GC={'Contractors':['FFDCE9F7','FF1F4E79'],'PMC':['FFE2F1E3','FF2E6B34'],'Supervision consultant':['FFFCEBD5','FF9C5A10']};
+    var thin={style:'thin',color:{argb:LINE}}, box={top:thin,left:thin,bottom:thin,right:thin};
+    var put=function(w,src,nc,nr){ for(var r=1;r<=nr;r++) for(var c=0;c<nc;c++){ var k=XLSX.utils.encode_col(c)+r, x=src[k]; if(!x) continue; var cell=w.getCell(r,c+1);
+        cell.value=x.f?{formula:x.f,result:x.v}:x.v; if(x.z) cell.numFmt=x.z; } };
+    var head=function(w,r,n){ for(var c=1;c<=n;c++){ var h=w.getCell(r,c); h.font={name:'Calibri',size:10,bold:true,color:{argb:'FFFFFFFF'}}; h.fill={type:'pattern',pattern:'solid',fgColor:{argb:NAVY}};
+        h.alignment={vertical:'middle',horizontal:c<=(o.textCols||0)?'left':'center',wrapText:true}; h.border={top:thin,left:thin,bottom:{style:'medium',color:{argb:GOLD}},right:thin}; } w.getRow(r).height=32; };
+    /* sheet 1 */
+    var w1=wb.addWorksheet('Contracts by party',{views:[{state:'frozen',xSplit:3,ySplit:1,showGridLines:false}],properties:{tabColor:{argb:NAVY}},pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9}});
+    put(w1,o.ws,14,o.tr); o.cols.forEach(function(wd,i){ w1.getColumn(i+1).width=wd; });
+    o.textCols=5; head(w1,1,14);
+    var pk='', alt=false;
+    for(var r=o.first;r<=o.last;r++){ var g=w1.getCell(r,1).value, party=w1.getCell(r,2).value, key=g+'|'+party; if(key!==pk){ alt=!alt; pk=key; }
+      var gc=GC[g]||['FFEEEEEE','FF333333'];
+      for(var c=1;c<=14;c++){ var cl=w1.getCell(r,c); cl.border=box; cl.font={name:'Calibri',size:10,color:{argb:'FF1B1B1B'}}; cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:alt?'FFFFFFFF':ZEB}};
+        cl.alignment={vertical:'middle',horizontal:(c>=6&&c<=13)?'right':(c===4||c===14?'center':'left'),wrapText:c===5}; }
+      var a=w1.getCell(r,1); a.fill={type:'pattern',pattern:'solid',fgColor:{argb:gc[0]}}; a.font={name:'Calibri',size:10,bold:true,color:{argb:gc[1]}};
+      w1.getCell(r,2).font={name:'Calibri',size:10,bold:true,color:{argb:'FF1B1B1B'}};
+      var t=String(w1.getCell(r,14).value||'').toLowerCase(), ct=w1.getCell(r,14);
+      if(t==='hard'){ ct.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFDCE9F7'}}; ct.font={name:'Calibri',size:10,bold:true,color:{argb:'FF1F4E79'}}; ct.value='Hard'; }
+      else if(t==='soft'){ ct.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFCEBD5'}}; ct.font={name:'Calibri',size:10,bold:true,color:{argb:'FF9C5A10'}}; ct.value='Soft'; }
+      w1.getCell(r,9).font={name:'Calibri',size:10,bold:true,color:{argb:'FF1B1B1B'}};
+      w1.getRow(r).height=String(w1.getCell(r,5).value||'').length>52?30:18; }
+    for(var c2=1;c2<=14;c2++){ var tc=w1.getCell(o.tr,c2); tc.fill={type:'pattern',pattern:'solid',fgColor:{argb:TOT}}; tc.font={name:'Calibri',size:10,bold:true,color:{argb:'FF1B1B1B'}}; tc.border={top:{style:'medium',color:{argb:NAVY}},bottom:{style:'double',color:{argb:NAVY}},left:thin,right:thin}; tc.alignment={vertical:'middle',horizontal:c2>=6&&c2<=13?'right':'left'}; }
+    w1.getRow(o.tr).height=22;
+    w1.autoFilter={from:{row:1,column:1},to:{row:o.last,column:14}};
+    w1.addConditionalFormatting({ref:'L'+o.first+':L'+o.last,rules:[{type:'dataBar',cfvo:[{type:'num',value:0},{type:'num',value:1}],color:{argb:'FF5B9BD5'},gradient:true}]});
+    /* sheet 2 */
+    var w2=wb.addWorksheet('Summary',{views:[{state:'frozen',ySplit:1,showGridLines:false}],properties:{tabColor:{argb:GOLD}},pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9}});
+    put(w2,o.ss,8,o.sEnd); o.sCols.forEach(function(wd,i){ w2.getColumn(i+1).width=wd; });
+    o.textCols=1; head(w2,1,7); o.textCols=2; head(w2,o.ph,8);
+    var body=function(r,n,aligns){ var g=w2.getCell(r,1).value, gc=GC[g]||['FFEEEEEE','FF333333'];
+      for(var c=1;c<=n;c++){ var cl=w2.getCell(r,c); cl.border=box; cl.font={name:'Calibri',size:10,color:{argb:'FF1B1B1B'}}; cl.alignment={vertical:'middle',horizontal:c<=aligns?'left':'right'}; }
+      var a=w2.getCell(r,1); a.fill={type:'pattern',pattern:'solid',fgColor:{argb:gc[0]}}; a.font={name:'Calibri',size:10,bold:true,color:{argb:gc[1]}}; w2.getRow(r).height=18; };
+    for(var r2=2;r2<2+o.nG;r2++) body(r2,7,1);
+    for(var r3=o.p0;r3<=o.sEnd;r3++){ body(r3,8,2); if((r3-o.p0)%2) for(var c3=2;c3<=8;c3++) w2.getCell(r3,c3).fill={type:'pattern',pattern:'solid',fgColor:{argb:ZEB}}; }
+    w2.addConditionalFormatting({ref:'G2:G'+(1+o.nG),rules:[{type:'dataBar',cfvo:[{type:'num',value:0},{type:'num',value:1}],color:{argb:'FF5B9BD5'},gradient:true}]});
+    w2.addConditionalFormatting({ref:'H'+o.p0+':H'+o.sEnd,rules:[{type:'dataBar',cfvo:[{type:'num',value:0},{type:'num',value:1}],color:{argb:'FF5B9BD5'},gradient:true}]});
+    return await wb.xlsx.writeBuffer();
+  }catch(e){ console.warn('styled export failed',e); return null; }
+}
 async function partiesExport(){
   if(typeof XLSX==='undefined'){ toast('Excel library not loaded',true); return; }
   if(!PARTIES_LAST||!PARTIES_LAST.PX.length){ toast('Nothing to export',true); return; }
@@ -1274,8 +1321,10 @@ async function partiesExport(){
     sp('H'+row,p.rvK?p.gc/p.rvK:0,PC,'IF(SUMIFS('+rng('M')+','+rng('A')+','+A+','+rng('B')+','+B+')=0,0,F'+row+'/SUMIFS('+rng('M')+','+rng('A')+','+A+','+rng('B')+','+B+'))'); row++; });
   ss['!ref']='A1:H'+(row-1); ss['!cols']=[26,32,12,20,16,18,18,20].map(function(w){return {wch:w};});
   var proj=state.project?pname(state.project):'All projects';
-  var wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Contracts by party'); XLSX.utils.book_append_sheet(wb,ss,'Summary');
-  var buf=XLSX.write(wb,{type:'array',bookType:'xlsx'}), fn='KEC_Contractors_Consultants_'+proj.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'')+'_'+cut+'.xlsx';
+  var buf=await styledBuf({ws:ws,ss:ss,first:first,last:last,tr:tr,cols:[22,30,28,13,46,18,14,12,18,16,16,12,18,10],sCols:[26,32,12,20,16,18,18,20],ph:ph,p0:p0,sEnd:row-1,nG:PX.length});
+  var fn='KEC_Contractors_Consultants_'+proj.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'')+'_'+cut+'.xlsx';
+  if(!buf){ var wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Contracts by party'); XLSX.utils.book_append_sheet(wb,ss,'Summary');
+  buf=XLSX.write(wb,{type:'array',bookType:'xlsx'}); }
   var dl=null; try{ if(window.claude&&window.claude.use) dl=await window.claude.use('downloads'); }catch(e){}
   if(dl){ try{ await dl.save({filename:fn,data:buf}); }catch(e){ if(!e||e.code!=='declined') toast('Download unavailable here',true); } return; }
   var url=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
