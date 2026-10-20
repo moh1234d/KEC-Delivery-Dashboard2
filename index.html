@@ -959,7 +959,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-editing .rp-note .rp-ed:empty:before{content:"Add a note for this slide…";color:#9aa3b2}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V225</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V226</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1253,7 +1253,7 @@ function pkgStatus(act,pv,ev,spi,delay){
 var SEV={red:0,amber:1,green:2,pending:3,done:4};
 var STLBL={red:'At risk',amber:'Watch',green:'On track',pending:'Not started',done:'Complete'};
 /* ---------- contracts database (Contracts sheet): awarded contracts, vendors, values, scope ---------- */
-var contracts=[];
+var contracts=[], CTR_XC={pv:'',eac:''};
 function ckey(s){ var raw=String(s==null?'':s), m=/CNT\s*-?\s*(\d+)\s*(?:-\s*([A-Za-z]+))?/i.exec(raw)||/(\d+)\s*(?:-\s*([A-Za-z]+))?/.exec(raw.replace(/^\s*CNT\s*-?\s*/i,'')); return m?String(parseInt(m[1],10))+(m[2]?'-'+m[2].toUpperCase():''):String(s==null?'':s).trim().toUpperCase(); }
 function normContracts(objs){
   if(!objs||!objs.length) return [];
@@ -1262,13 +1262,15 @@ function normContracts(objs){
   var num=function(v){ if(v==null||v==='') return null; var x=typeof v==='number'?v:parseFloat(String(v).replace(/[^0-9.\-]/g,'')); return isFinite(x)?x:null; };
   var tx=function(v){ return String(v==null?'':v).replace(/\s+/g,' ').trim(); };
   var out=[];
+  var kPv=Object.keys(km).filter(function(k){ return /potential/.test(k)&&/vo|variation|change/.test(k); })[0], kEac=Object.keys(km).filter(function(k){ return /expected.*complet|estimat.*complet|forecast.*(complet|final)|\beac\b|final (contract|cost|value)/.test(k); })[0];
+  CTR_XC={pv:kPv?km[kPv]:'',eac:kEac?km[kEac]:''};
   objs.forEach(function(o){
     var id=tx(g(o,'id')); if(!id) return;
     if(tx(g(o,'stage')).toLowerCase()!=='construction') return;
     var raw=tx(g(o,'cnt #')); if(!raw) raw=tx(g(o,'cnt %')); if(!raw) raw=tx(g(o,'cnt for data lookup')).replace(/\s*\(.*$/,''); if(!raw) return;
     var cv=num(g(o,'contract value'))||0, vo=num(g(o,'approved vos'))||0, sh=num(g(o,'project share of contract %')); if(sh==null) sh=1;
     var rvv=num(g(o,'revised contract value')), shrv=num(g(o,'project share of rv. contract value')); if(shrv==null) shrv=(rvv!=null?rvv:cv+vo)*sh;
-    out.push({code:id,lc:id.toLowerCase(),cno:raw.replace(/^CNT\s*-?\s*/i,'CNT-').replace(/\s+/g,''),key:ckey(raw),vendor:tx(g(o,'vendor'))||'—',name:tx(g(o,'contract name')),scope:tx(g(o,'scope of work')),cv:cv,vo:vo,share:sh,shrv:shrv,voS:vo*sh,gc:num(g(o,'gross certified'))||0,ev:num(g(o,'earned value')),rcomp:toISO(g(o,'revised completion')||g(o,'contract end date')||g(o,'expiry date')),cdate:toISO(g(o,'contract date')),ntp:toISO(g(o,'ntp')),rem:num(g(o,'remaining duration')),exs:tx(g(o,'expiry status')||g(o,'status')),ct:(function(){ var t=tx(g(o,'cost type')).toLowerCase(); return t==='hard'||t==='soft'?t:(km['cost type']!=null?'none':undefined); })()});
+    out.push({code:id,lc:id.toLowerCase(),cno:raw.replace(/^CNT\s*-?\s*/i,'CNT-').replace(/\s+/g,''),key:ckey(raw),vendor:tx(g(o,'vendor'))||'—',name:tx(g(o,'contract name')),scope:tx(g(o,'scope of work')),cv:cv,vo:vo,share:sh,shrv:shrv,voS:vo*sh,pvoS:(kPv&&num(o[km[kPv]])!=null)?num(o[km[kPv]])*sh:null,eacS:(kEac&&num(o[km[kEac]])!=null)?num(o[km[kEac]])*sh:null,gc:num(g(o,'gross certified'))||0,ev:num(g(o,'earned value')),rcomp:toISO(g(o,'revised completion')||g(o,'contract end date')||g(o,'expiry date')),cdate:toISO(g(o,'contract date')),ntp:toISO(g(o,'ntp')),rem:num(g(o,'remaining duration')),exs:tx(g(o,'expiry status')||g(o,'status')),ct:(function(){ var t=tx(g(o,'cost type')).toLowerCase(); return t==='hard'||t==='soft'?t:(km['cost type']!=null?'none':undefined); })()});
   });
   return out;
 }
@@ -1364,13 +1366,13 @@ async function styledBuf(o){
         h.alignment={vertical:'middle',horizontal:c<=(o.textCols||0)?'left':'center',wrapText:true}; h.border={top:thin,left:thin,bottom:{style:'medium',color:{argb:GOLD}},right:thin}; } w.getRow(r).height=32; };
     /* sheet 1 */
     var w1=wb.addWorksheet('Contracts by party',{views:[{state:'frozen',xSplit:3,ySplit:1,showGridLines:false}],properties:{tabColor:{argb:NAVY}},pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9}});
-    put(w1,o.ws,14,o.tr); o.cols.forEach(function(wd,i){ w1.getColumn(i+1).width=wd; });
-    o.textCols=5; head(w1,1,14);
+    var NC=o.cols.length; put(w1,o.ws,NC,o.tr); o.cols.forEach(function(wd,i){ w1.getColumn(i+1).width=wd; });
+    o.textCols=5; head(w1,1,NC);
     var pk='', alt=false;
     for(var r=o.first;r<=o.last;r++){ var g=w1.getCell(r,1).value, party=w1.getCell(r,2).value, key=g+'|'+party; if(key!==pk){ alt=!alt; pk=key; }
       var gc=GC[g]||['FFEEEEEE','FF333333'];
-      for(var c=1;c<=14;c++){ var cl=w1.getCell(r,c); cl.border=box; cl.font={name:'Calibri',size:10,color:{argb:'FF1B1B1B'}}; cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:alt?'FFFFFFFF':ZEB}};
-        cl.alignment={vertical:'middle',horizontal:(c>=6&&c<=13)?'right':(c===4||c===14?'center':'left'),wrapText:c===5}; }
+      for(var c=1;c<=NC;c++){ var cl=w1.getCell(r,c); cl.border=box; cl.font={name:'Calibri',size:10,color:{argb:'FF1B1B1B'}}; cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:alt?'FFFFFFFF':ZEB}};
+        cl.alignment={vertical:'middle',horizontal:((c>=6&&c<=13)||c>=15)?'right':(c===4||c===14?'center':'left'),wrapText:c===5}; }
       var a=w1.getCell(r,1); a.fill={type:'pattern',pattern:'solid',fgColor:{argb:gc[0]}}; a.font={name:'Calibri',size:10,bold:true,color:{argb:gc[1]}};
       w1.getCell(r,2).font={name:'Calibri',size:10,bold:true,color:{argb:'FF1B1B1B'}};
       var t=String(w1.getCell(r,14).value||'').toLowerCase(), ct=w1.getCell(r,14);
@@ -1378,19 +1380,19 @@ async function styledBuf(o){
       else if(t==='soft'){ ct.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFCEBD5'}}; ct.font={name:'Calibri',size:10,bold:true,color:{argb:'FF9C5A10'}}; ct.value='Soft'; }
       w1.getCell(r,9).font={name:'Calibri',size:10,bold:true,color:{argb:'FF1B1B1B'}};
       w1.getRow(r).height=String(w1.getCell(r,5).value||'').length>52?30:18; }
-    for(var c2=1;c2<=14;c2++){ var tc=w1.getCell(o.tr,c2); tc.fill={type:'pattern',pattern:'solid',fgColor:{argb:TOT}}; tc.font={name:'Calibri',size:10,bold:true,color:{argb:'FF1B1B1B'}}; tc.border={top:{style:'medium',color:{argb:NAVY}},bottom:{style:'double',color:{argb:NAVY}},left:thin,right:thin}; tc.alignment={vertical:'middle',horizontal:c2>=6&&c2<=13?'right':'left'}; }
+    for(var c2=1;c2<=NC;c2++){ var tc=w1.getCell(o.tr,c2); tc.fill={type:'pattern',pattern:'solid',fgColor:{argb:TOT}}; tc.font={name:'Calibri',size:10,bold:true,color:{argb:'FF1B1B1B'}}; tc.border={top:{style:'medium',color:{argb:NAVY}},bottom:{style:'double',color:{argb:NAVY}},left:thin,right:thin}; tc.alignment={vertical:'middle',horizontal:(c2>=6&&c2<=13)||c2>=15?'right':'left'}; }
     w1.getRow(o.tr).height=22;
-    w1.autoFilter={from:{row:1,column:1},to:{row:o.last,column:14}};
+    w1.autoFilter={from:{row:1,column:1},to:{row:o.last,column:NC}};
     w1.addConditionalFormatting({ref:'L'+o.first+':L'+o.last,rules:[{type:'dataBar',cfvo:[{type:'num',value:0},{type:'num',value:1}],color:{argb:'FF5B9BD5'},gradient:true}]});
     /* sheet 2 */
     var w2=wb.addWorksheet('Summary',{views:[{state:'frozen',ySplit:1,showGridLines:false}],properties:{tabColor:{argb:GOLD}},pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9}});
-    put(w2,o.ss,8,o.sEnd); o.sCols.forEach(function(wd,i){ w2.getColumn(i+1).width=wd; });
-    o.textCols=1; head(w2,1,7); o.textCols=2; head(w2,o.ph,8);
+    var NS=o.nsg||7; put(w2,o.ss,NS+1,o.sEnd); o.sCols.forEach(function(wd,i){ w2.getColumn(i+1).width=wd; });
+    o.textCols=1; head(w2,1,NS); o.textCols=2; head(w2,o.ph,NS+1);
     var body=function(r,n,aligns){ var g=w2.getCell(r,1).value, gc=GC[g]||['FFEEEEEE','FF333333'];
       for(var c=1;c<=n;c++){ var cl=w2.getCell(r,c); cl.border=box; cl.font={name:'Calibri',size:10,color:{argb:'FF1B1B1B'}}; cl.alignment={vertical:'middle',horizontal:c<=aligns?'left':'right'}; }
       var a=w2.getCell(r,1); a.fill={type:'pattern',pattern:'solid',fgColor:{argb:gc[0]}}; a.font={name:'Calibri',size:10,bold:true,color:{argb:gc[1]}}; w2.getRow(r).height=18; };
-    for(var r2=2;r2<2+o.nG;r2++) body(r2,7,1);
-    for(var r3=o.p0;r3<=o.sEnd;r3++){ body(r3,8,2); if((r3-o.p0)%2) for(var c3=2;c3<=8;c3++) w2.getCell(r3,c3).fill={type:'pattern',pattern:'solid',fgColor:{argb:ZEB}}; }
+    for(var r2=2;r2<2+o.nG;r2++) body(r2,NS,1);
+    for(var r3=o.p0;r3<=o.sEnd;r3++){ body(r3,NS+1,2); if((r3-o.p0)%2) for(var c3=2;c3<=NS+1;c3++) w2.getCell(r3,c3).fill={type:'pattern',pattern:'solid',fgColor:{argb:ZEB}}; }
     w2.addConditionalFormatting({ref:'G2:G'+(1+o.nG),rules:[{type:'dataBar',cfvo:[{type:'num',value:0},{type:'num',value:1}],color:{argb:'FF5B9BD5'},gradient:true}]});
     w2.addConditionalFormatting({ref:'H'+o.p0+':H'+o.sEnd,rules:[{type:'dataBar',cfvo:[{type:'num',value:0},{type:'num',value:1}],color:{argb:'FF5B9BD5'},gradient:true}]});
     return await wb.xlsx.writeBuffer();
@@ -1400,39 +1402,46 @@ async function partiesExport(){
   if(typeof XLSX==='undefined'){ toast('Excel library not loaded',true); return; }
   if(!PARTIES_LAST||!PARTIES_LAST.PX.length){ toast('Nothing to export',true); return; }
   var PX=PARTIES_LAST.PX, cut=PARTIES_LAST.cut, SAR='#,##0;[Red]-#,##0', PC='0.0%';
-  var H=['Group','Party','Project','Contract No.','Scope of Work','Contract Value (project share)','Approved VOs','Project Share of Contract %','Revised Contract Value','Gross Certified','Balance to Certify','Certified % of Revised','Revised Value with certified data','Cost Type'];
+  var H=['Group','Party','Project','Contract No.','Scope of Work','Contract Value (project share)','Approved VOs','Project Share of Contract %','Revised Contract Value','Gross Certified','Balance to Certify','Certified % of Revised','Revised Value with certified data','Cost Type'], XC=CTR_XC, hasX=!!(XC.pv||XC.eac);
+  if(hasX) H.push('Potential VOs','Expected at Completion (EAC)'); else toast('The Contracts sheet has no “Potential VOs” or “Expected at completion” column, so those columns are not in this export.',true);
   var ws={}, r=2, put=function(a,v,z,f){ if(v==null||v==='') return; var c={v:v,t:typeof v==='number'?'n':'s'}; if(z) c.z=z; if(f) c.f=f; ws[a]=c; }, hd=function(sh,row,arr){ arr.forEach(function(h,i){ put(XLSX.utils.encode_col(i)+row,h); }); };
   hd(ws,1,H);
   var first=2, grpSum={}, parSum=[];
-  PX.forEach(function(g){ grpSum[g.t]={n:0,rv:0,gc:0,rvK:0,np:g.parties.length};
-    g.parties.forEach(function(p){ var ps={g:g.t,name:p.name,n:0,rv:0,gc:0,rvK:0};
+  PX.forEach(function(g){ grpSum[g.t]={n:0,rv:0,gc:0,rvK:0,pv:0,eac:0,np:g.parties.length};
+    g.parties.forEach(function(p){ var ps={g:g.t,name:p.name,n:0,rv:0,gc:0,rvK:0,pv:0,eac:0};
       p.ls.slice().sort(function(a,b){ return b.shrv-a.shrv; }).forEach(function(l){ var rv=l.shrv, vo=l.voS||0, gc=l.gcU, k=gc!=null;
         put('A'+r,g.t); put('B'+r,p.name); put('C'+r,pname(l.code)); put('D'+r,l.cno); put('E'+r,l.scope||l.name||'');
         put('F'+r,rv-vo,SAR); put('G'+r,vo,SAR); put('H'+r,l.share==null?1:l.share,PC); put('I'+r,rv,SAR,'F'+r+'+G'+r);
         if(k){ put('J'+r,gc,SAR); put('K'+r,rv-gc,SAR,'I'+r+'-J'+r); put('L'+r,rv?gc/rv:0,PC,'IF(I'+r+'=0,0,J'+r+'/I'+r+')'); put('M'+r,rv,SAR,'I'+r); }
-        put('N'+r,l.ctype||''); ps.n++; ps.rv+=rv; if(k){ ps.gc+=gc; ps.rvK+=rv; } r++; });
-      parSum.push(ps); var s=grpSum[g.t]; s.n+=ps.n; s.rv+=ps.rv; s.gc+=ps.gc; s.rvK+=ps.rvK; }); });
+        put('N'+r,l.ctype||'');
+        if(hasX){ var pvx=l.pvoS, ex=l.eacS; if(pvx!=null) put('O'+r,pvx,SAR); if(ex!=null) put('P'+r,ex,SAR); else put('P'+r,rv+(pvx||0),SAR,'I'+r+'+O'+r); ps.pv+=pvx||0; ps.eac+=(ex!=null?ex:rv+(pvx||0)); }
+        ps.n++; ps.rv+=rv; if(k){ ps.gc+=gc; ps.rvK+=rv; } r++; });
+      parSum.push(ps); var s=grpSum[g.t]; s.n+=ps.n; s.rv+=ps.rv; s.gc+=ps.gc; s.rvK+=ps.rvK; s.pv+=ps.pv; s.eac+=ps.eac; }); });
   var last=r-1, tr=r+1;
-  put('A'+tr,'TOTAL of rows shown (filter Group to total one group)'); ['F','G','I','J','K','M'].forEach(function(c){ var sum=0; for(var i=first;i<=last;i++){ var x=ws[c+i]; if(x&&typeof x.v==='number') sum+=x.v; } put(c+tr,sum,SAR,'SUBTOTAL(109,'+c+first+':'+c+last+')'); });
+  put('A'+tr,'TOTAL of rows shown (filter Group to total one group)'); ['F','G','I','J','K','M'].concat(hasX?['O','P']:[]).forEach(function(c){ var sum=0; for(var i=first;i<=last;i++){ var x=ws[c+i]; if(x&&typeof x.v==='number') sum+=x.v; } put(c+tr,sum,SAR,'SUBTOTAL(109,'+c+first+':'+c+last+')'); });
   var tJ=ws['J'+tr].v, tM=ws['M'+tr].v; put('L'+tr,tM?tJ/tM:0,PC,'IF(M'+tr+'=0,0,J'+tr+'/M'+tr+')');
-  ws['!ref']='A1:N'+tr; ws['!cols']=[22,30,28,13,46,18,14,12,18,16,16,12,18,10].map(function(w){return {wch:w};}); ws['!autofilter']={ref:'A1:N'+last};
+  var LC=hasX?'P':'N', CW=[22,30,28,13,46,18,14,12,18,16,16,12,18,10].concat(hasX?[16,20]:[]);
+  ws['!ref']='A1:'+LC+tr; ws['!cols']=CW.map(function(w){return {wch:w};}); ws['!autofilter']={ref:'A1:'+LC+last};
   /* summary: group totals, then party table, all with formulas that read the sheet above */
   var D="'Contracts by party'!", rng=function(c){ return D+'$'+c+'$'+first+':$'+c+'$'+last; }, ss={}, sp=function(a,v,z,f){ if(v==null||v==='') return; var c={v:v,t:typeof v==='number'?'n':'s'}; if(z) c.z=z; if(f) c.f=f; ss[a]=c; };
-  ['Group','Parties','Contracts','Revised Contract Value','Gross Certified','Balance to Certify','Certified % of Revised'].forEach(function(h,i){ sp(XLSX.utils.encode_col(i)+'1',h); });
+  ['Group','Parties','Contracts','Revised Contract Value','Gross Certified','Balance to Certify','Certified % of Revised'].concat(hasX?['Potential VOs','Expected at Completion (EAC)']:[]).forEach(function(h,i){ sp(XLSX.utils.encode_col(i)+'1',h); });
   var row=2, gRow={};
   PX.forEach(function(g){ var s=grpSum[g.t]; gRow[g.t]=row;
     sp('A'+row,g.t); sp('B'+row,s.np); sp('C'+row,s.n,'0','COUNTIFS('+rng('A')+',A'+row+')'); sp('D'+row,s.rv,SAR,'SUMIFS('+rng('I')+','+rng('A')+',A'+row+')'); sp('E'+row,s.gc,SAR,'SUMIFS('+rng('J')+','+rng('A')+',A'+row+')');
-    sp('F'+row,s.rvK-s.gc,SAR,'SUMIFS('+rng('K')+','+rng('A')+',A'+row+')'); sp('G'+row,s.rvK?s.gc/s.rvK:0,PC,'IF(SUMIFS('+rng('M')+','+rng('A')+',A'+row+')=0,0,E'+row+'/SUMIFS('+rng('M')+','+rng('A')+',A'+row+'))'); row++; });
-  row++; var ph=row; ['Group','Party','Contracts','Revised Contract Value','Share of Group','Gross Certified','Balance to Certify','Certified % of Revised'].forEach(function(h,i){ sp(XLSX.utils.encode_col(i)+row,h); }); row++;
+    sp('F'+row,s.rvK-s.gc,SAR,'SUMIFS('+rng('K')+','+rng('A')+',A'+row+')'); sp('G'+row,s.rvK?s.gc/s.rvK:0,PC,'IF(SUMIFS('+rng('M')+','+rng('A')+',A'+row+')=0,0,E'+row+'/SUMIFS('+rng('M')+','+rng('A')+',A'+row+'))');
+    if(hasX){ sp('H'+row,s.pv,SAR,'SUMIFS('+rng('O')+','+rng('A')+',A'+row+')'); sp('I'+row,s.eac,SAR,'SUMIFS('+rng('P')+','+rng('A')+',A'+row+')'); } row++; });
+  row++; var ph=row; ['Group','Party','Contracts','Revised Contract Value','Share of Group','Gross Certified','Balance to Certify','Certified % of Revised'].concat(hasX?['Potential VOs','Expected at Completion (EAC)']:[]).forEach(function(h,i){ sp(XLSX.utils.encode_col(i)+row,h); }); row++;
   var p0=row;
   parSum.forEach(function(p){ var A='A'+row, B='B'+row, gs=grpSum[p.g];
     sp(A,p.g); sp(B,p.name); sp('C'+row,p.n,'0','COUNTIFS('+rng('A')+','+A+','+rng('B')+','+B+')'); sp('D'+row,p.rv,SAR,'SUMIFS('+rng('I')+','+rng('A')+','+A+','+rng('B')+','+B+')');
     sp('E'+row,gs.rv?p.rv/gs.rv:0,PC,'IF(SUMIFS('+rng('I')+','+rng('A')+','+A+')=0,0,D'+row+'/SUMIFS('+rng('I')+','+rng('A')+','+A+'))');
     sp('F'+row,p.gc,SAR,'SUMIFS('+rng('J')+','+rng('A')+','+A+','+rng('B')+','+B+')'); sp('G'+row,p.rvK-p.gc,SAR,'SUMIFS('+rng('K')+','+rng('A')+','+A+','+rng('B')+','+B+')');
-    sp('H'+row,p.rvK?p.gc/p.rvK:0,PC,'IF(SUMIFS('+rng('M')+','+rng('A')+','+A+','+rng('B')+','+B+')=0,0,F'+row+'/SUMIFS('+rng('M')+','+rng('A')+','+A+','+rng('B')+','+B+'))'); row++; });
-  ss['!ref']='A1:H'+(row-1); ss['!cols']=[26,32,12,20,16,18,18,20].map(function(w){return {wch:w};});
+    sp('H'+row,p.rvK?p.gc/p.rvK:0,PC,'IF(SUMIFS('+rng('M')+','+rng('A')+','+A+','+rng('B')+','+B+')=0,0,F'+row+'/SUMIFS('+rng('M')+','+rng('A')+','+A+','+rng('B')+','+B+'))');
+    if(hasX){ sp('I'+row,p.pv,SAR,'SUMIFS('+rng('O')+','+rng('A')+','+A+','+rng('B')+','+B+')'); sp('J'+row,p.eac,SAR,'SUMIFS('+rng('P')+','+rng('A')+','+A+','+rng('B')+','+B+')'); } row++; });
+  var SW=[26,32,12,20,16,18,18,20].concat(hasX?[16,22]:[]);
+  ss['!ref']='A1:'+(hasX?'J':'H')+(row-1); ss['!cols']=SW.map(function(w){return {wch:w};});
   var proj=selList('P').length?selList('P').map(pname).join(', '):'All projects';
-  var buf=await styledBuf({ws:ws,ss:ss,first:first,last:last,tr:tr,cols:[22,30,28,13,46,18,14,12,18,16,16,12,18,10],sCols:[26,32,12,20,16,18,18,20],ph:ph,p0:p0,sEnd:row-1,nG:PX.length});
+  var buf=await styledBuf({ws:ws,ss:ss,first:first,last:last,tr:tr,cols:CW,sCols:SW,nsg:hasX?9:7,ph:ph,p0:p0,sEnd:row-1,nG:PX.length});
   var fn='KEC_Contractors_Consultants_'+proj.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'')+'_'+cut+'.xlsx';
   if(!buf){ var wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Contracts by party'); XLSX.utils.book_append_sheet(wb,ss,'Summary');
   buf=XLSX.write(wb,{type:'array',bookType:'xlsx'}); }
