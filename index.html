@@ -958,7 +958,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-editing .rp-note .rp-ed:empty:before{content:"Add a note for this slide…";color:#9aa3b2}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V223</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V224</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -978,6 +978,8 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
     <div id="accWho" class="accwho" hidden></div>
     <div id="sideCut"></div>
     <button id="printAllBtn" type="button">Print all pages (A3)</button>
+    <button id="xpBtn1" type="button" data-xp="1" title="Excel file, dark scorecard, with the cut-off date">Excel dashboard · dark scorecard</button>
+    <button id="xpBtn2" type="button" data-xp="2" title="Excel file, light project cards, with the cut-off date">Excel dashboard · light cards</button>
     <button id="notesBtn" type="button">Show data notes</button>
     <button id="dcBtn" type="button">Data warnings <span class="dcn" id="dcN">0</span></button>
     <div id="liveSt" class="livest"></div>
@@ -1785,6 +1787,320 @@ function pkgSeries(key,cut2,from){
   });
   return out.filter(function(p){ return !from||p.date>=from; });
 }
+
+/* ---------- Excel executive exports (Option 1 dark scorecard, Option 2 light cards) ---------- */
+function xpLong(iso){ if(!iso) return '—'; var p=iso.split('-'); return (+p[2])+' '+MON[+p[1]-1]+' '+p[0]; }
+function xpDt(iso){ return iso?new Date(dms(iso)):null; }
+function xpRank(p){ p=String(p||''); return /aliya/i.test(p)?0:/multaqa|hub/i.test(p)?1:/riyadh|school/i.test(p)?2:/south|infra|iwd/i.test(p)?3:4; }
+function xpPN(p){ p=String(p||''); return /^hub\b/i.test(p)?'Multaqa (Hub Project)':/^iwd$/i.test(p)?'South Infra (IWD)':p; }
+function xpData(){
+  var cut=state.cutoff;
+  var rows=rowsAt(cut).filter(inScope).map(function(r){ return derive(r,cut); });
+  var pr=rows.filter(function(r){ return HIDE_PROJ.indexOf(r.code)<0; });
+  var pg=groupBy(pr,function(r){ return prog(r.code); },true).sort(function(x,y){ return xpRank(x.name)-xpRank(y.name)||(x.name<y.name?-1:x.name>y.name?1:0); });
+  var cc=conAt(cut), cons=cc.list.filter(conInScope);
+  cons.forEach(function(c){ var rc=pcodeOf(c.code); c._pc=rc; c._pn=rc?pname(rc):(c.name||c.code); });
+  var used={};
+  var progs=pg.map(function(g){
+    var projs=groupBy(g.rows,function(r){ return r.code; },true).map(function(p){
+      var a=p.a, st=pkgStatus(a.act,a.pv,a.ev,a.spi,a.overrun), started=a.pv>0||a.ev>0;
+      var cl=cons.filter(function(c){ return c._pc===p.name; }); cl.forEach(function(c){ used[c._pc]=1; });
+      var hi=cl.filter(function(c){ return c.impact==='High'; });
+      return {code:p.name,name:pname(p.name),a:a,st:st,started:started,dl:started?dayDiff(a.pf,a.ff):0,done:started&&a.act>=0.9999,rows:p.rows,hi:hi,all:cl};
+    });
+    return {name:xpPN(g.name),a:g.a,projs:projs};
+  });
+  var other=cons.filter(function(c){ return !c._pc||!used[c._pc]; });
+  var consCodes=Array.from(model.projects.keys()).filter(function(c){ return (model.projects.get(c).stage||'')==='Construction'; });
+  var consRows=rows.filter(function(r){ return consCodes.indexOf(r.code)>=0; }), consAgg=agg(consRows);
+  var filt=!!(state.program||state.project||state.mP.length||state.contractor||state.mC.length||state.pkg||state.mK.length);
+  var nProj=filt?consCodes.filter(function(c){ return consRows.some(function(r){ return r.code===c; }); }).length:consCodes.length;
+  var sc=[]; if(state.program) sc.push(state.program);
+  if(selList('P').length) sc.push(selList('P').map(pname).join(', '));
+  if(selList('C').length) sc.push('Contractor: '+selList('C').join(', '));
+  if(selList('K').length) sc.push('Package: '+selList('K').map(function(k){ return String(k).split('|').slice(1).join('|')||k; }).join(', '));
+  return {cut:cut,cutTxt:xpLong(cut),rows:rows,progs:progs,cons:cons,other:other,consDate:cc.date,
+    scope:sc.length?sc.join(' · '):'All projects',
+    k1:String(nProj),k1s:'in construction stage',
+    k2:fm(consAgg.dbFin?consAgg.rv:consAgg.cv),k2s:consAgg.nC!=null?consAgg.nC+' contracts · '+consAgg.nV+' vendors':'construction-stage packages',
+    k3:fm(consAgg.gc),k3s:pct(consAgg.cert)+' of revised value'};
+}
+function xpCol(n){ var s=''; while(n>0){ var m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
+function xpFill(c){ return {type:'pattern',pattern:'solid',fgColor:{argb:'FF'+c}}; }
+function xpPaint(ws,r1,c1,r2,c2,hex){ for(var r=r1;r<=r2;r++) for(var c=c1;c<=c2;c++) ws.getCell(r,c).fill=xpFill(hex); }
+/* write a (merged) box: rows r1..r2, columns c1..c2 */
+function xpBox(ws,r1,c1,r2,c2,val,o){
+  o=o||{}; if(o.bg) xpPaint(ws,r1,c1,r2,c2,o.bg);
+  if(r2>r1||c2>c1) ws.mergeCells(r1,c1,r2,c2);
+  var cell=ws.getCell(r1,c1); cell.value=val;
+  cell.font={name:'Calibri',size:o.sz||10,bold:!!o.b,italic:!!o.i,color:{argb:'FF'+(o.fg||'000000')}};
+  cell.alignment={horizontal:o.h||'left',vertical:o.v||'middle',wrapText:!!o.wrap,indent:o.ind||0};
+  if(o.nf) cell.numFmt=o.nf;
+  return cell;
+}
+function xpRun(t,o){ o=o||{}; return {text:t,font:{name:'Calibri',size:o.sz||9,bold:!!o.b,italic:!!o.i,color:{argb:'FF'+(o.fg||'000000')}}}; }
+/* a bar made of narrow cells: frac filled, optional planned marker (left border of the cell where plan ends) */
+function xpBar(ws,row,c0,n,frac,plan,fillHex,trackHex,markHex){
+  var k=Math.round(clamp(frac)*n); if(frac>0&&k===0) k=1;
+  for(var i=0;i<n;i++) ws.getCell(row,c0+i).fill=xpFill(i<k?fillHex:trackHex);
+  if(plan!=null&&plan>0){ var pi=Math.round(clamp(plan)*n), b={style:'medium',color:{argb:'FF'+markHex}};
+    if(pi>=n) ws.getCell(row,c0+n-1).border={right:b}; else if(pi>=1) ws.getCell(row,c0+pi).border={left:b}; }
+}
+/* split columns c0..c1 into three card ranges separated by one gap column */
+function xpSplit3(W,c0,c1){
+  var tot=0,c; for(c=c0;c<=c1;c++) tot+=W[c];
+  var gap=W[c0+1]||2, tgt=(tot-2*gap)/3, out=[], s=c0, acc=0;
+  for(c=c0;c<=c1&&out.length<3;c++){ acc+=W[c];
+    if(acc>=tgt-0.01||c===c1){ out.push([s,c]); s=c+2; acc=0; c++; } }
+  if(out.length===3) out[2][1]=c1;
+  return out;
+}
+function xpStLbl(p){ return p.done?'Complete':!p.started?'Not started':STLBL[p.st]; }
+function xpStCol(p){ return p.done?'1F8A4C':!p.started?'6B7C93':p.st==='red'?'C0392B':p.st==='amber'?'D9822B':'1F8A4C'; }
+function xpTrim(s,n){ s=String(s||'').replace(/\s+/g,' ').trim(); return s.length>n?s.slice(0,n-1)+'…':s; }
+function xpLines(txt,cpl){ return Math.max(1,Math.ceil(String(txt).length/cpl)); }
+/* ---- extra sheets shared by both options ---- */
+function xpExtras(wb,D){
+  var HDR='0F2A4A', thin={style:'thin',color:{argb:'FFD5DAE3'}};
+  var title=function(ws,t,n){ ws.getCell('A1').value=t; ws.getCell('A1').font={name:'Calibri',size:14,bold:true,color:{argb:'FF0F2A4A'}};
+    ws.getCell('A2').value='Cut-off date: '+D.cutTxt+' · Scope: '+D.scope; ws.getCell('A2').font={name:'Calibri',size:10,bold:true,color:{argb:'FFC8963E'}}; };
+  var head=function(ws,r,labels){ labels.forEach(function(l,i){ var c=ws.getCell(r,i+1); c.value=l; c.font={name:'Calibri',size:10,bold:true,color:{argb:'FFFFFFFF'}}; c.fill=xpFill(HDR); c.alignment={vertical:'middle',wrapText:true,horizontal:i>1?'center':'left'}; }); ws.getRow(r).height=26; };
+  /* Challenges (all) */
+  var wc=wb.addWorksheet('Challenges (all)',{views:[{state:'frozen',ySplit:4,showGridLines:false}]});
+  title(wc,'Challenges · all impact levels'); wc.getCell('A3').value=(D.consDate?'Concerns log as at '+xpLong(D.consDate):'No concerns log loaded'); wc.getCell('A3').font={name:'Calibri',size:9,italic:true,color:{argb:'FF6B7C93'}};
+  head(wc,4,['Project','Package','Impact','Concern','Suggested action']); wc.columns=[{width:30},{width:22},{width:10},{width:70},{width:70}];
+  var IO={High:0,Medium:1,Low:2}, n0=0;
+  D.cons.slice().sort(function(a,b){ return (IO[a.impact]==null?9:IO[a.impact])-(IO[b.impact]==null?9:IO[b.impact])||(a._pn<b._pn?-1:a._pn>b._pn?1:0); }).forEach(function(c,i){
+    var r=5+i; n0=r; var vals=[c._pn,c.pkg||'',c.impact||'Unrated',c.concern||'',c.action||''];
+    vals.forEach(function(v,j){ var cell=wc.getCell(r,j+1); cell.value=v; cell.font={name:'Calibri',size:10,bold:j===2,color:{argb:j===2?(c.impact==='High'?'FFC0392B':c.impact==='Medium'?'FFD9822B':'FF6B7C93'):'FF1B2A3A'}};
+      cell.alignment={vertical:'top',wrapText:true,horizontal:j===2?'center':'left'}; cell.border={bottom:thin}; if(i%2) cell.fill=xpFill('F4F6FA'); });
+    wc.getRow(r).height=Math.max(16,Math.max(xpLines(vals[3],80),xpLines(vals[4],80))*13.5+3); });
+  if(n0) wc.autoFilter={from:{row:4,column:1},to:{row:n0,column:5}};
+  /* Packages */
+  var wp=wb.addWorksheet('Packages',{views:[{state:'frozen',ySplit:4,xSplit:3,showGridLines:false}]});
+  title(wp,'Packages · progress and dates');
+  head(wp,4,['Program','Project','Package','Contractor','Contract','Status','Planned','Actual','Var (pts)','Planned start','Planned finish','Forecast finish','Delay (d)','Revised value (SAR)','Certified (SAR)','Certified %']);
+  wp.columns=[{width:22},{width:30},{width:22},{width:24},{width:14},{width:12},{width:10},{width:10},{width:10},{width:12},{width:12},{width:12},{width:10},{width:16},{width:16},{width:11}];
+  var pr=[]; D.progs.forEach(function(g){ g.projs.forEach(function(p){ p.rows.forEach(function(r){ pr.push({g:g.name,p:p.name,r:r}); }); }); });
+  pr.forEach(function(e,i){ var r=5+i, x=e.r, st=(x.status==='done'?'Complete':x.status==='pending'?'Not started':STLBL[x.status]||''); 
+    var vals=[e.g,e.p,dp(x.pkg),x.ctr||'',x.cno||'',st,x.plan,x.act,(x.act-x.plan)*100,xpDt(x.ps),xpDt(x.pf),xpDt(x.ff),dayDiff(x.pf,x.ff),x.rv,x.gc,x.rv?x.gc/x.rv:0];
+    var nf=[null,null,null,null,null,null,'0.0%','0.0%','+0.0;-0.0;0.0','d-mmm-yy','d-mmm-yy','d-mmm-yy','+0;-0;0','#,##0','#,##0','0.0%'];
+    vals.forEach(function(v,j){ var cell=wp.getCell(r,j+1); cell.value=v; if(nf[j]) cell.numFmt=nf[j]; cell.font={name:'Calibri',size:10,color:{argb:'FF1B2A3A'}}; cell.alignment={vertical:'middle',horizontal:j>5?'center':'left'}; cell.border={bottom:thin}; if(i%2) cell.fill=xpFill('F4F6FA'); }); });
+  if(pr.length) wp.autoFilter={from:{row:4,column:1},to:{row:4+pr.length,column:16}};
+  /* Data (project level) */
+  var wd=wb.addWorksheet('Data',{views:[{state:'frozen',ySplit:4,showGridLines:false}]});
+  title(wd,'Data · one line per project (feeds the Project (select) sheet)');
+  head(wd,4,['Project','Program','Planned','Actual','Var (pts)','Commencement','Planned finish','Forecast finish','Delay (d)','Revised value (SAR)','Certified (SAR)','Status','High-impact concerns','Packages']);
+  wd.columns=[{width:32},{width:26},{width:10},{width:10},{width:10},{width:14},{width:14},{width:14},{width:10},{width:18},{width:16},{width:12},{width:14},{width:10}];
+  var pl=[]; D.progs.forEach(function(g){ g.projs.forEach(function(p){ pl.push({g:g.name,p:p}); }); });
+  pl.forEach(function(e,i){ var r=5+i, p=e.p, a=p.a;
+    var vals=[p.name,e.g,a.plan,a.act,(a.act-a.plan)*100,xpDt(a.start),xpDt(a.pf),xpDt(a.ff),p.dl,a.rv,a.gc,xpStLbl(p),p.hi.length,p.rows.length];
+    var nf=[null,null,'0.0%','0.0%','+0.0;-0.0;0.0','d-mmm-yy','d-mmm-yy','d-mmm-yy','+0;-0;0','#,##0','#,##0',null,'0','0'];
+    vals.forEach(function(v,j){ var cell=wd.getCell(r,j+1); cell.value=v; if(nf[j]) cell.numFmt=nf[j]; cell.font={name:'Calibri',size:10,color:{argb:'FF1B2A3A'}}; cell.alignment={vertical:'middle',horizontal:j>1?'center':'left'}; cell.border={bottom:thin}; if(i%2) cell.fill=xpFill('F4F6FA'); }); });
+  /* Project (select): pick a project, everything below follows (formulas on the Data sheet) */
+  var ws=wb.addWorksheet('Project (select)',{views:[{showGridLines:false}]}), last=4+pl.length;
+  ws.columns=[{width:3},{width:30},{width:34},{width:3},{width:30},{width:22}];
+  xpBox(ws,2,2,2,6,'Project status · select a project',{bg:HDR,fg:'FFFFFF',b:true,sz:16,ind:1}); ws.getRow(2).height=34;
+  xpBox(ws,3,2,3,6,'Cut-off date '+D.cutTxt+' · figures as exported, scope: '+D.scope,{bg:'F4F1EC',fg:'C8963E',b:true,sz:10,ind:1});
+  xpBox(ws,5,2,5,2,'Select project ▸',{b:true,sz:11,fg:'0F2A4A',h:'right'});
+  var sel=ws.getCell('C5'); sel.value=pl.length?pl[0].p.name:''; sel.font={name:'Calibri',size:13,bold:true,color:{argb:'FF0F2A4A'}}; sel.fill=xpFill('FFF8DC'); sel.border={top:{style:'medium',color:{argb:'FFC8963E'}},bottom:{style:'medium',color:{argb:'FFC8963E'}},left:{style:'medium',color:{argb:'FFC8963E'}},right:{style:'medium',color:{argb:'FFC8963E'}}};
+  if(pl.length) sel.dataValidation={type:'list',allowBlank:false,formulae:['Data!$A$5:$A$'+last],showErrorMessage:true,errorTitle:'Project',error:'Pick a project from the list.'};
+  ws.getRow(5).height=26;
+  var def=pl.length?pl[0]:null;
+  var L=[['Program','B',null,def&&def.g],['Status','L',null,def&&xpStLbl(def.p)],['Planned progress','C','0.0%',def&&def.p.a.plan],['Actual progress','D','0.0%',def&&def.p.a.act],['Variance to plan (pts)','E','+0.0;-0.0;0.0',def&&(def.p.a.act-def.p.a.plan)*100],
+    ['Commencement date','F','d-mmm-yyyy',def&&xpDt(def.p.a.start)],['Planned completion','G','d-mmm-yyyy',def&&xpDt(def.p.a.pf)],['Forecast completion','H','d-mmm-yyyy',def&&xpDt(def.p.a.ff)],['Delay (days, + = late)','I','+0;-0;0',def&&def.p.dl],
+    ['Revised contract value (SAR)','J','#,##0',def&&def.p.a.rv],['Gross certified (SAR)','K','#,##0',def&&def.p.a.gc],['Open high-impact concerns','M','0',def&&def.p.hi.length],['Packages','N','0',def&&def.p.rows.length]];
+  L.forEach(function(x,i){ var r=7+i;
+    xpBox(ws,r,2,r,2,x[0],{sz:11,fg:'4A5A6C',bg:i%2?'FFFFFF':'F4F6FA',ind:1});
+    var cell=xpBox(ws,r,3,r,3,{formula:'IFERROR(INDEX(Data!$'+x[1]+'$5:$'+x[1]+'$'+last+',MATCH($C$5,Data!$A$5:$A$'+last+',0)),"")',result:x[3]==null?'':x[3]},{sz:12,b:true,fg:'0F2A4A',bg:i%2?'FFFFFF':'F4F6FA',h:'left',nf:x[2]||undefined});
+    ws.getRow(r).height=22; });
+  var r2=7+L.length+1;
+  xpBox(ws,r2,2,r2,6,'High-impact challenges for the selected project',{bg:HDR,fg:'FFFFFF',b:true,sz:11,ind:1});
+  var hiAll=[]; pl.forEach(function(e){ e.p.hi.forEach(function(c){ hiAll.push({n:e.p.name,c:c}); }); });
+  /* the list below is a filter formula-free table: pick the project above and see the same rows on Challenges (all) filtered by project */
+  xpBox(ws,r2+1,2,r2+1,6,'Open the “Challenges (all)” sheet and filter the Project column for the full list with actions.',{i:true,sz:10,fg:'6B7C93',ind:1});
+}
+async function xpSave(wb,fn){
+  var buf=await wb.xlsx.writeBuffer(), dl=null;
+  try{ if(window.claude&&window.claude.use) dl=await window.claude.use('downloads'); }catch(e){}
+  if(dl){ try{ await dl.save({filename:fn,data:buf}); }catch(e){ if(!e||e.code!=='declined') toast('Download unavailable here',true); return false; } }
+  else{ var url=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})); var a=document.createElement('a'); a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(url); },3000); }
+  return true;
+}
+/* ---- Option 1: dark scorecard ---- */
+function xpBuild1(wb,D){
+  var BG='0C1626', PANEL='12233B', PANEL2='0F1D33', HEAD='24395A', INK='E8EEF7', MUT='8FA3BF', GOLD='C8963E', BLUE='3AA0E0', TRK='24395A', RED='E0584A', GRN='3DBE74', AMB='E9A23B';
+  var NB=20, B0=6, W=[0,1.5,34,11,9,9];
+  for(var i=0;i<NB;i++) W.push(1.6);
+  W.push(9,11,11,11,10,1.5); /* 26 var, 27 start, 28 planned finish, 29 forecast, 30 delay, 31 margin */
+  var C0=2, C1=30, LAST=31;
+  var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:8}});
+  ws.columns=W.slice(1).map(function(w){ return {width:w}; });
+  var R=1, rowsUsed=[];
+  var h=function(r,pt){ ws.getRow(r).height=pt; };
+  xpPaint(ws,1,1,400,LAST,BG); /* page background, trimmed afterwards */
+  h(1,8);
+  xpBox(ws,2,C0,3,17,'KEC Portfolio Scorecard',{bg:PANEL,fg:'FFFFFF',b:true,sz:22,v:'middle',ind:1});
+  xpBox(ws,2,18,2,C1,'CUT-OFF DATE',{bg:PANEL,fg:GOLD,b:true,sz:10,h:'right',v:'bottom',ind:1});
+  xpBox(ws,3,18,3,C1,D.cutTxt,{bg:PANEL,fg:'FFFFFF',b:true,sz:20,h:'right',v:'top',ind:1});
+  h(2,22); h(3,30);
+  xpBox(ws,4,C0,4,C1,'Prepared by Project Controls · Scope: '+D.scope+' · Progress as at '+D.cutTxt,{bg:PANEL,fg:MUT,sz:10,ind:1}); h(4,20);
+  h(5,10);
+  var sp=xpSplit3(W,C0,C1), K=[['PROJECTS UNDER CONSTRUCTION',D.k1,D.k1s,BLUE],['AWARDED CONTRACTS VALUE',D.k2,D.k2s,GOLD],['CERTIFIED AMOUNT',D.k3,D.k3s,GRN]];
+  K.forEach(function(k,i){ var a=sp[i][0], b=sp[i][1];
+    xpBox(ws,6,a,6,b,k[0],{bg:PANEL,fg:MUT,b:true,sz:9,ind:1,v:'bottom'});
+    xpBox(ws,7,a,7,b,k[1],{bg:PANEL,fg:'FFFFFF',b:true,sz:26,ind:1});
+    xpBox(ws,8,a,8,b,k[2],{bg:PANEL,fg:k[3],sz:10,ind:1,v:'top'});
+    for(var r=6;r<=8;r++) ws.getCell(r,a).border={left:{style:'thick',color:{argb:'FF'+k[3]}}}; });
+  h(6,20); h(7,38); h(8,20); h(9,12);
+  R=10;
+  var sect=function(t,sub){ xpBox(ws,R,C0,R,sub?17:C1,t,{fg:GOLD,b:true,sz:12,v:'bottom',ind:0,bg:BG}); if(sub) xpBox(ws,R,18,R,C1,sub,{fg:MUT,sz:9,h:'right',v:'bottom',bg:BG}); h(R,24); R++; };
+  var hdr=function(labels){ var cs=[[2,2],[3,3],[4,4],[5,5],[6,25],[26,26],[27,27],[28,28],[29,29],[30,30]];
+    cs.forEach(function(c,i){ xpBox(ws,R,c[0],R,c[1],labels[i],{bg:HEAD,fg:INK,b:true,sz:9,h:i>=1?'center':'left',ind:i===0?1:0}); }); h(R,20); R++; };
+  var statusPill=function(r,p){ xpBox(ws,r,3,r,3,xpStLbl(p),{bg:xpStCol(p),fg:'FFFFFF',b:true,sz:9,h:'center'}); };
+  /* 1. projects by program */
+  sect('Projects by program','Planned and actual progress are value-weighted · tick on the bar = planned %');
+  hdr(['Project','Status','Planned','Actual','Progress (blue = actual, gold tick = planned)','Var (pts)','Commence','Planned finish','Forecast','Delay']);
+  D.progs.forEach(function(g){ var a=g.a, gp=(a.act-a.plan)*100;
+    xpBox(ws,R,2,R,2,g.name+'  ·  '+g.projs.length+' project'+(g.projs.length>1?'s':''),{bg:'1B3050',fg:'FFFFFF',b:true,sz:11,ind:1});
+    xpBox(ws,R,3,R,3,fm(a.rvP),{bg:'1B3050',fg:MUT,sz:9,h:'center'});
+    xpBox(ws,R,4,R,4,a.plan,{bg:'1B3050',fg:INK,b:true,sz:10,h:'center',nf:'0.0%'}); xpBox(ws,R,5,R,5,a.act,{bg:'1B3050',fg:'FFFFFF',b:true,sz:10,h:'center',nf:'0.0%'});
+    xpPaint(ws,R,6,R,25,'1B3050'); xpBar(ws,R,B0,NB,a.act,a.plan,BLUE,TRK,GOLD);
+    xpBox(ws,R,26,R,26,gp,{bg:'1B3050',fg:gp<-0.05?RED:GRN,b:true,sz:10,h:'center',nf:'+0.0;-0.0;0.0'});
+    xpPaint(ws,R,27,R,30,'1B3050'); h(R,22); R++;
+    g.projs.forEach(function(p,i){ var q=p.a, pp=(q.act-q.plan)*100, bg=i%2?PANEL2:PANEL, c=xpStCol(p);
+      xpBox(ws,R,2,R,2,p.name,{bg:bg,fg:INK,sz:10,ind:2});
+      statusPill(R,p); xpPaint(ws,R,3,R,3,c); ws.getCell(R,3).fill=xpFill(c);
+      xpBox(ws,R,4,R,4,p.started?q.plan:null,{bg:bg,fg:MUT,sz:10,h:'center',nf:'0.0%'}); xpBox(ws,R,5,R,5,p.started?q.act:null,{bg:bg,fg:'FFFFFF',b:true,sz:10,h:'center',nf:'0.0%'});
+      xpPaint(ws,R,6,R,25,bg); if(p.started) xpBar(ws,R,B0,NB,q.act,q.plan,c==='C0392B'?RED:BLUE,TRK,GOLD); else xpBar(ws,R,B0,NB,0,null,BLUE,TRK,GOLD);
+      xpBox(ws,R,26,R,26,p.started?pp:null,{bg:bg,fg:pp<-0.05?RED:GRN,b:true,sz:10,h:'center',nf:'+0.0;-0.0;0.0'});
+      xpBox(ws,R,27,R,27,xpDt(q.start),{bg:bg,fg:MUT,sz:10,h:'center',nf:'d-mmm-yy'}); xpBox(ws,R,28,R,28,xpDt(q.pf),{bg:bg,fg:MUT,sz:10,h:'center',nf:'d-mmm-yy'});
+      xpBox(ws,R,29,R,29,xpDt(q.ff),{bg:bg,fg:INK,sz:10,h:'center',nf:'d-mmm-yy'});
+      xpBox(ws,R,30,R,30,p.done?'Complete':!p.started?'—':p.dl===0?'on plan':p.dl>0?'−'+p.dl+' d':'+'+(-p.dl)+' d early',{bg:bg,fg:p.dl>0&&!p.done?RED:GRN,b:true,sz:10,h:'center'});
+      h(R,19); R++; });
+  });
+  h(R,12); R++;
+  /* 2. planned vs actual by project */
+  sect('Planned vs actual by project','Same program order');
+  D.progs.forEach(function(g){
+    xpBox(ws,R,C0,R,C1,g.name.toUpperCase(),{bg:'1B3050',fg:GOLD,b:true,sz:10,ind:1}); h(R,18); R++;
+    g.projs.forEach(function(p){ var q=p.a, c=xpStCol(p)==='C0392B'?RED:BLUE;
+      xpBox(ws,R,2,R+1,2,p.name,{bg:PANEL,fg:INK,sz:10,ind:2,wrap:true});
+      xpBox(ws,R,3,R,3,'Planned',{bg:PANEL,fg:MUT,sz:9,h:'center'}); xpBox(ws,R+1,3,R+1,3,'Actual',{bg:PANEL,fg:MUT,sz:9,h:'center'});
+      xpBox(ws,R,4,R,5,p.started?q.plan:null,{bg:PANEL,fg:MUT,sz:10,h:'center',nf:'0.0%'}); xpBox(ws,R+1,4,R+1,5,p.started?q.act:null,{bg:PANEL,fg:'FFFFFF',b:true,sz:10,h:'center',nf:'0.0%'});
+      xpPaint(ws,R,6,R+1,30,PANEL); xpBar(ws,R,B0,NB,p.started?q.plan:0,null,'6C86AB',TRK,GOLD); xpBar(ws,R+1,B0,NB,p.started?q.act:0,null,c,TRK,GOLD);
+      xpBox(ws,R,26,R+1,30,p.started?(p.done?'Complete':p.dl===0?'On plan':p.dl>0?p.dl+' days behind · forecast '+fd(q.ff):(-p.dl)+' days early'):'Not started',{bg:PANEL,fg:p.dl>0&&!p.done?RED:MUT,sz:9,h:'center',wrap:true});
+      h(R,15); h(R+1,15); R+=2; });
+  });
+  h(R,12); R++;
+  /* 3. challenges */
+  var nH=0; D.progs.forEach(function(g){ g.projs.forEach(function(p){ nH+=p.hi.length; }); }); nH+=D.other.filter(function(c){ return c.impact==='High'; }).length;
+  sect('Challenges · high impact, by project',nH+' high-impact challenge'+(nH===1?'':'s')+(D.consDate?' · log as at '+xpLong(D.consDate):''));
+  var shown=0, put=function(name,hi,all){
+    if(!hi.length) return; xpBox(ws,R,C0,R,C1,name+'  ·  '+hi.length+' high impact',{bg:HEAD,fg:'FFFFFF',b:true,sz:10,ind:1}); h(R,18); R++;
+    hi.slice(0,2).forEach(function(c){
+      var t1=xpTrim(c.concern,260), t2=c.action?xpTrim(c.action,240):'No action recorded.';
+      xpBox(ws,R,2,R+1,2,c.pkg?xpTrim(c.pkg,42):'',{bg:PANEL,fg:MUT,sz:9,ind:2,wrap:true,v:'top'}); xpBox(ws,R,3,R+1,3,'HIGH',{bg:RED,fg:'FFFFFF',b:true,sz:9,h:'center'});
+      xpBox(ws,R,4,R,C1,t1,{bg:PANEL,fg:INK,sz:10,wrap:true,v:'top',ind:1}); xpBox(ws,R+1,4,R+1,C1,{richText:[xpRun('ACTION  ',{b:true,fg:GOLD,sz:9}),xpRun(t2,{fg:MUT,sz:9})]},{bg:PANEL,wrap:true,v:'top',ind:1});
+      h(R,xpLines(t1,100)*13.5+5); h(R+1,xpLines('ACTION  '+t2,118)*12.5+6); R+=2; shown++; });
+    if(hi.length>2){ xpBox(ws,R,C0,R,C1,'+ '+(hi.length-2)+' more high-impact on the “Challenges (all)” sheet',{bg:PANEL,fg:MUT,i:true,sz:9,ind:1}); h(R,16); R++; }
+  };
+  D.progs.forEach(function(g){ g.projs.forEach(function(p){ put(p.name,p.hi); }); });
+  var oh=D.other.filter(function(c){ return c.impact==='High'; }); if(oh.length) put('Other',oh);
+  if(!nH){ xpBox(ws,R,C0,R,C1,D.consDate?'No open high-impact challenges for this selection.':'No areas-of-concern log is loaded.',{bg:PANEL,fg:MUT,i:true,sz:10,ind:1}); h(R,22); R++; }
+  h(R,8); R++;
+  xpBox(ws,R,C0,R,C1,'KEC Project Controls Dashboard · cut-off '+D.cutTxt+' · all figures as at the cut-off date',{fg:MUT,sz:9,i:true,bg:BG}); h(R,18);
+  for(var rr=R+1;rr<=400;rr++) ws.getRow(rr).hidden=false;
+  ws.pageSetup.printArea='A1:'+xpCol(LAST)+R;
+  return ws;
+}
+/* ---- Option 2: light cards (HTML Overview format) ---- */
+function xpBuild2(wb,D){
+  var CREAM='F4F1EC', NAVY='0F2A4A', GOLD='C8963E', LINE='E3DDD2', INK='1B2A3A', MUT='6B7A8C', RED='C0392B', GRN='1F8A4C', AMB='D9822B';
+  var W=[0,1.5]; for(var k=0;k<4;k++){ W.push(9); for(var j=0;j<8;j++) W.push(2.6); W.push(8); W.push(k<3?2:1.5); }
+  var LASTC=W.length-1, C1=LASTC-1;
+  var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:8}});
+  ws.columns=W.slice(1).map(function(w){ return {width:w}; });
+  xpPaint(ws,1,1,400,LASTC,CREAM);
+  var h=function(r,pt){ ws.getRow(r).height=pt; }, base=function(i){ return 2+i*11; };
+  h(1,8);
+  xpBox(ws,2,2,3,30,'KEC Portfolio Dashboard',{bg:NAVY,fg:'FFFFFF',b:true,sz:22,ind:1});
+  xpBox(ws,2,31,2,C1,'CUT-OFF DATE',{bg:NAVY,fg:GOLD,b:true,sz:10,h:'right',v:'bottom',ind:1});
+  xpBox(ws,3,31,3,C1,D.cutTxt,{bg:NAVY,fg:'FFFFFF',b:true,sz:20,h:'right',v:'top',ind:1}); h(2,22); h(3,30);
+  xpBox(ws,4,2,4,C1,'Scope: '+D.scope+'   ·   Impact shown: High   ·   Progress as at '+D.cutTxt+'   ·   Prepared by Project Controls',{bg:NAVY,fg:'C8D3E6',sz:10,ind:1}); h(4,20);
+  h(5,10);
+  var sp=xpSplit3(W,2,C1), K=[['PROJECTS UNDER CONSTRUCTION',D.k1,D.k1s,'2A7FB8'],['AWARDED CONTRACTS VALUE',D.k2,D.k2s,GOLD],['CERTIFIED AMOUNT',D.k3,D.k3s,GRN]];
+  K.forEach(function(k,i){ var a=sp[i][0], b=sp[i][1];
+    xpBox(ws,6,a,6,b,k[0],{bg:'FFFFFF',fg:MUT,b:true,sz:9,ind:1,v:'bottom'}); xpBox(ws,7,a,7,b,k[1],{bg:'FFFFFF',fg:NAVY,b:true,sz:26,ind:1}); xpBox(ws,8,a,8,b,k[2],{bg:'FFFFFF',fg:MUT,sz:10,ind:1,v:'top'});
+    for(var r=6;r<=8;r++){ ws.getCell(r,a).border={left:{style:'thick',color:{argb:'FF'+k[3]}}}; for(var c=a;c<=b;c++){ var cell=ws.getCell(r,c), bd=cell.border||{}; bd.top=r===6?{style:'thin',color:{argb:'FF'+LINE}}:bd.top; bd.bottom=r===8?{style:'thin',color:{argb:'FF'+LINE}}:bd.bottom; if(c===b) bd.right={style:'thin',color:{argb:'FF'+LINE}}; cell.border=bd; } } });
+  h(6,20); h(7,38); h(8,20); h(9,12);
+  var R=10, imgs=[];
+  var hiTxt=function(p){ return p.hi.length?{c:xpTrim(p.hi[0].concern,170),a:p.hi[0].action?xpTrim(p.hi[0].action,130):'No action recorded.',more:p.hi.length-1}:null; };
+  /* places the cards of one program at the given card positions; returns number of rows used */
+  var place=function(g,pos,r0){
+    var rowsUsed=0, per=pos.length, chunks=[]; for(var i=0;i<g.projs.length;i+=per) chunks.push(g.projs.slice(i,i+per));
+    chunks.forEach(function(ch){ var rt=r0+rowsUsed, bandH=30;
+      ch.forEach(function(p,ix){ var b=base(pos[ix]), q=p.a, c=xpStCol(p), tx=hiTxt(p);
+        var cw=p.hi.length?'FDECEA':'EAF5EE';
+        var lines=tx?xpLines('HIGH  '+tx.c,52)+xpLines('ACTION  '+tx.a,56)+(tx.more>0?1:0):1;
+        bandH=Math.max(bandH,lines*12.5+8);
+        var edge={left:{style:'thick',color:{argb:'FF'+c}}};
+        xpPaint(ws,rt,b,rt+9,b+9,'FFFFFF');
+        xpBox(ws,rt,b,rt+1,b+5,p.name,{bg:'FFFFFF',fg:NAVY,b:true,sz:12,wrap:true,v:'top',ind:1});
+        xpBox(ws,rt+2,b,rt+2,b+5,'● '+xpStLbl(p),{bg:'FFFFFF',fg:c,b:true,sz:9,ind:1});
+        var url=null; try{ url=pjGet(p.code)||PHOTO_OVR[p.code]||''; }catch(e){}
+        if(url&&/^data:image\/(png|jpe?g)/i.test(url)){ xpPaint(ws,rt,b+6,rt+2,b+9,'FFFFFF'); ws.mergeCells(rt,b+6,rt+2,b+9); imgs.push({url:url,col:b+5,row:rt-1}); }
+        else xpBox(ws,rt,b+6,rt+2,b+9,String(p.name).replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/).slice(0,2).map(function(w){ return w.charAt(0).toUpperCase(); }).join(''),{bg:'4F7FB0',fg:'FFFFFF',b:true,sz:16,h:'center'});
+        xpBox(ws,rt+3,b,rt+3,b,'Planned',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBar(ws,rt+3,b+1,8,p.started?q.plan:0,null,'C9C0B0',LINE,GOLD); xpBox(ws,rt+3,b+9,rt+3,b+9,p.started?q.plan:null,{bg:'FFFFFF',fg:INK,sz:10,h:'right',nf:'0.0%'});
+        xpBox(ws,rt+4,b,rt+4,b,'Actual',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBar(ws,rt+4,b+1,8,p.started?q.act:0,null,'3A7BE0',LINE,GOLD); xpBox(ws,rt+4,b+9,rt+4,b+9,p.started?q.act:null,{bg:'FFFFFF',fg:INK,b:true,sz:10,h:'right',nf:'0.0%'});
+        var pp=(q.act-q.plan)*100;
+        xpBox(ws,rt+5,b,rt+5,b+4,'Variance',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBox(ws,rt+5,b+5,rt+5,b+9,p.started?pp:null,{bg:'FFFFFF',fg:pp<-0.05?RED:GRN,b:true,sz:11,h:'right',nf:'+0.00" %";-0.00" %";0.00" %"'});
+        var dtxt=p.done?'✔ Completed':!p.started?'Not started'+(q.start?' · starts '+fd(q.start):''):p.dl===0?'On plan':p.dl>0?'−'+p.dl+' days':'+'+(-p.dl)+' days early';
+        xpBox(ws,rt+6,b,rt+6,b+9,dtxt,{bg:'FFFFFF',fg:p.dl>0&&!p.done&&p.started?RED:GRN,b:true,sz:11,h:'center'});
+        for(var cc2=b;cc2<=b+9;cc2++){ var tp=ws.getCell(rt+6,cc2), bd=tp.border||{}; bd.top={style:'thin',color:{argb:'FF'+LINE}}; tp.border=bd; }
+        xpPaint(ws,rt+7,b,rt+7,b+9,'FFFFFF'); for(var s=1;s<=8;s++) ws.getCell(rt+7,b+s).fill=xpFill(s===1?NAVY:s===8?c:GOLD);
+        if(p.started){ xpBox(ws,rt+8,b,rt+8,b+4,{richText:[xpRun(fd(q.pf),{b:true,sz:10,fg:NAVY}),xpRun('\n'+(p.done?'Planned finish':'Planned'),{sz:8,fg:MUT})]},{bg:'FFFFFF',wrap:true,ind:1,v:'top'});
+          xpBox(ws,rt+8,b+5,rt+8,b+9,{richText:[xpRun(fd(q.ff),{b:true,sz:10,fg:NAVY}),xpRun('\n'+(p.done?'Actual completion':'Forecast'),{sz:8,fg:MUT})]},{bg:'FFFFFF',wrap:true,h:'right',v:'top'}); }
+        else xpPaint(ws,rt+8,b,rt+8,b+9,'FFFFFF');
+        var bandRich=tx?{richText:[xpRun('HIGH  ',{b:true,sz:9,fg:RED}),xpRun(tx.c,{sz:9,fg:INK}),xpRun('\nACTION  ',{b:true,sz:9,fg:'8A5A12'}),xpRun(tx.a,{sz:9,fg:MUT})].concat(tx.more>0?[xpRun('\n+ '+tx.more+' more high-impact',{i:true,sz:9,fg:RED})]:[])}:{richText:[xpRun('CLEAR  ',{b:true,sz:9,fg:GRN}),xpRun('No open high-impact challenges',{sz:9,fg:GRN})]};
+        xpBox(ws,rt+9,b,rt+9,b+9,bandRich,{bg:cw,wrap:true,v:'top',ind:1});
+        var bc={style:'thin',color:{argb:'FF'+LINE}};
+        for(var rr=rt;rr<=rt+9;rr++){ for(var cx=b;cx<=b+9;cx++){ var cl=ws.getCell(rr,cx), bd2=cl.border||{}; if(cx===b) bd2.left=edge.left; if(cx===b+9) bd2.right=bc; if(rr===rt) bd2.top=bc; if(rr===rt+9) bd2.bottom=bc; cl.border=bd2; } }
+      });
+      [0,1,2,3,4,5,6,8].forEach(function(o){ var m=ws.getRow(rt+o).height||0; var want=[24,24,16,16,16,18,20,0,28][o]; if(o===7) return; ws.getRow(rt+o).height=Math.max(m,want); });
+      h(rt+7,7); h(rt+9,Math.max(ws.getRow(rt+9).height||0,bandH)); h(rt+10,8);
+      rowsUsed+=11; });
+    return rowsUsed; };
+  var banner=function(g,c0,c1,r){ var a=g.a;
+    xpBox(ws,r,c0,r,c0+Math.floor((c1-c0)*0.45),g.name+'  ·  '+g.projs.length+' project'+(g.projs.length>1?'s':''),{bg:NAVY,fg:'FFFFFF',b:true,sz:12,ind:1});
+    xpBox(ws,r,c0+Math.floor((c1-c0)*0.45)+1,r,c1,'Planned '+pct(a.plan)+'   ·   Actual '+pct(a.act),{bg:NAVY,fg:'F0D9A8',b:true,sz:10,h:'right',ind:1}); h(r,24); };
+  var i=0;
+  while(i<D.progs.length){ var g=D.progs[i], nx=D.progs[i+1];
+    if(g.projs.length<=2&&nx&&nx.projs.length<=2){
+      banner(g,base(0),base(1)+9,R); banner(nx,base(2),base(3)+9,R); h(R+1,4);
+      var u1=place(g,[0,1],R+2), u2=place(nx,[2,3],R+2);
+      R+=2+Math.max(u1,u2); i+=2; }
+    else { banner(g,2,C1,R); h(R+1,4); R+=2+place(g,[0,1,2,3],R+2); i++; }
+    h(R,6); R++; }
+  xpBox(ws,R,2,R,C1,'KEC Project Controls Dashboard · cut-off '+D.cutTxt+' · bottom band of each card = the first high-impact challenge and its action; the full log is on the “Challenges (all)” sheet',{fg:MUT,sz:9,i:true,bg:CREAM}); h(R,18);
+  ws.pageSetup.printArea='A1:'+xpCol(LASTC)+R;
+  imgs.forEach(function(m){ try{ var ext=/png/i.test(m.url.slice(0,20))?'png':'jpeg', id=wb.addImage({base64:m.url,extension:ext}); ws.addImage(id,{tl:{col:m.col+0.1,row:m.row+0.05},ext:{width:112,height:62}}); }catch(e){} });
+  return ws;
+}
+async function xpExport(kind){
+  if(!model||!model.rows||!model.rows.length){ toast('Load the data first',true); return; }
+  toast('Building the Excel dashboard…');
+  if(!(await loadExcelJS())){ toast('The Excel builder could not load (needs internet access). Try again.',true); return; }
+  try{
+    var D=xpData(); if(!D.progs.length){ toast('No data for the current filters',true); return; }
+    var wb=new ExcelJS.Workbook(); wb.creator='KEC Project Controls Dashboard'; wb.created=new Date();
+    if(kind===1) xpBuild1(wb,D); else xpBuild2(wb,D);
+    xpExtras(wb,D);
+    var ok=await xpSave(wb,(kind===1?'KEC_Executive_Scorecard_Dark_':'KEC_Executive_Dashboard_Cards_')+D.cut+'.xlsx');
+    if(ok) toast('Excel dashboard exported · cut-off '+D.cutTxt);
+  }catch(e){ console.error(e); toast('Could not build the Excel file: '+((e&&e.message)||e),true); }
+}
+document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-xp]'); if(!b) return; e.preventDefault(); xpExport(+b.getAttribute('data-xp')); });
 
 /* ---------- render ---------- */
 function destroyCharts(){ charts.forEach(function(c){ try{c.destroy();}catch(e){} }); charts=[]; }
