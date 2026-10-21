@@ -959,7 +959,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-editing .rp-note .rp-ed:empty:before{content:"Add a note for this slide…";color:#9aa3b2}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V226</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V227</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1857,6 +1857,35 @@ function xpBar(ws,row,c0,n,frac,plan,fillHex,trackHex,markHex){
   if(plan!=null&&plan>0){ var pi=Math.round(clamp(plan)*n), b={style:'medium',color:{argb:'FF'+markHex}};
     if(pi>=n) ws.getCell(row,c0+n-1).border={right:b}; else if(pi>=1) ws.getCell(row,c0+pi).border={left:b}; }
 }
+var XPS=false;
+function loadJSZip(){ return new Promise(function(res){ if(window.JSZip) return res(true); var sc=document.createElement('script'); sc.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'; sc.onload=function(){ res(!!window.JSZip); }; sc.onerror=function(){ res(false); }; document.head.appendChild(sc); setTimeout(function(){ res(!!window.JSZip); },12000); }); }
+/* real Excel shapes (rounded outlines, pills, bars, markers) are added to the dashboard sheet after ExcelJS has written the file */
+function xpShape(ws,o){ (ws._sh=ws._sh||[]).push(o); }
+function xpAnc(ws,c,x){ var k=Math.floor(x+1e-9), cc=c+k, f=x-k, w=(ws._W&&ws._W[cc])||8.43; return {col:cc-1,off:Math.max(0,Math.round(f*w*7*9525))}; }
+function xpShapeXml(ws,o,id){
+  var f=xpAnc(ws,o.c1,o.x1||0), t=xpAnc(ws,o.c2||o.c1,o.x2||0), r1=o.r1-1, r2=(o.r2||o.r1)-1;
+  var fill=o.fill?'<a:solidFill><a:srgbClr val="'+o.fill+'"/></a:solidFill>':'<a:noFill/>';
+  var ln=o.line?'<a:ln w="'+Math.round((o.lw||0.75)*12700)+'"><a:solidFill><a:srgbClr val="'+o.line+'"/></a:solidFill></a:ln>':'<a:ln><a:noFill/></a:ln>';
+  var geom='<a:prstGeom prst="'+(o.t||'rect')+'"><a:avLst>'+(o.adj!=null?'<a:gd name="adj" fmla="val '+o.adj+'"/>':'')+'</a:avLst></a:prstGeom>';
+  var tx='<xdr:txBody><a:bodyPr wrap="none" lIns="0" tIns="0" rIns="0" bIns="0" rtlCol="0" anchor="ctr"><a:noAutofit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"/>'+(o.text?'<a:r><a:rPr lang="en-US" sz="'+Math.round((o.tsz||9)*100)+'" b="'+(o.b?1:0)+'"><a:solidFill><a:srgbClr val="'+(o.tc||'FFFFFF')+'"/></a:solidFill><a:latin typeface="Calibri"/></a:rPr><a:t>'+esc(o.text)+'</a:t></a:r>':'<a:endParaRPr lang="en-US"/>')+'</a:p></xdr:txBody>';
+  return '<xdr:twoCellAnchor editAs="oneCell"><xdr:from><xdr:col>'+f.col+'</xdr:col><xdr:colOff>'+f.off+'</xdr:colOff><xdr:row>'+r1+'</xdr:row><xdr:rowOff>'+Math.round((o.y1||0)*12700)+'</xdr:rowOff></xdr:from><xdr:to><xdr:col>'+t.col+'</xdr:col><xdr:colOff>'+t.off+'</xdr:colOff><xdr:row>'+r2+'</xdr:row><xdr:rowOff>'+Math.round((o.y2||0)*12700)+'</xdr:rowOff></xdr:to><xdr:sp macro="" textlink=""><xdr:nvSpPr><xdr:cNvPr id="'+id+'" name="Shape '+id+'"/><xdr:cNvSpPr/></xdr:nvSpPr><xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/></a:xfrm>'+geom+fill+ln+'</xdr:spPr>'+tx+'</xdr:sp><xdr:clientData/></xdr:twoCellAnchor>';
+}
+async function xpInject(buf,ws){
+  var z=await JSZip.loadAsync(buf), p='xl/drawings/drawing1.xml', f=z.file(p); if(!f) return buf;
+  var x=await f.async('string'), id=2000, s='';
+  (ws._sh||[]).forEach(function(o){ s+=xpShapeXml(ws,o,id++); });
+  z.file(p,x.replace('</xdr:wsDr>',s+'</xdr:wsDr>'));
+  return await z.generateAsync({type:'uint8array',compression:'DEFLATE'});
+}
+function xpTiny(wb,ws){ try{ var id=wb.addImage({base64:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',extension:'png'}); ws.addImage(id,{tl:{col:0,row:0},ext:{width:1,height:1}}); }catch(e){} }
+/* smooth bar: a pill-shaped track, a pill-shaped fill and a thin marker for the planned %. H = row height in points, bh = bar height in points */
+function xpBarS(ws,row,c0,n,frac,plan,H,fillHex,trackHex,markHex,bh){
+  if(!XPS) return xpBar(ws,row,c0,n,frac,plan,fillHex,trackHex,markHex);
+  var y1=(H-bh)/2, y2=y1+bh, px=7*((ws._W&&ws._W[c0])||2);
+  xpShape(ws,{t:'roundRect',adj:50000,fill:trackHex,c1:c0,x1:0,x2:n,r1:row,y1:y1,y2:y2});
+  if(frac>0) xpShape(ws,{t:'roundRect',adj:50000,fill:fillHex,c1:c0,x1:0,x2:Math.max(clamp(frac)*n,(bh*1.34)/px),r1:row,y1:y1,y2:y2});
+  if(plan!=null&&plan>0&&plan<1){ var xm=clamp(plan)*n; xpShape(ws,{t:'rect',fill:markHex,c1:c0,x1:xm-1.2/px,x2:xm+1.2/px,r1:row,y1:y1-2.5,y2:y2+2.5}); }
+}
 /* split columns c0..c1 into three card ranges separated by one gap column */
 function xpSplit3(W,c0,c1){
   var tot=0,c; for(c=c0;c<=c1;c++) tot+=W[c];
@@ -1931,8 +1960,8 @@ function xpExtras(wb,D){
   /* the list below is a filter formula-free table: pick the project above and see the same rows on Challenges (all) filtered by project */
   xpBox(ws,r2+1,2,r2+1,6,'Open the “Challenges (all)” sheet and filter the Project column for the full list with actions.',{i:true,sz:10,fg:'6B7C93',ind:1});
 }
-async function xpSave(wb,fn){
-  var buf=await wb.xlsx.writeBuffer(), dl=null;
+async function xpSave(buf,fn){
+  var dl=null;
   try{ if(window.claude&&window.claude.use) dl=await window.claude.use('downloads'); }catch(e){}
   if(dl){ try{ await dl.save({filename:fn,data:buf}); }catch(e){ if(!e||e.code!=='declined') toast('Download unavailable here',true); return false; } }
   else{ var url=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})); var a=document.createElement('a'); a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(url); },3000); }
@@ -1941,12 +1970,12 @@ async function xpSave(wb,fn){
 /* ---- Option 1: dark scorecard ---- */
 function xpBuild1(wb,D){
   var BG='0C1626', PANEL='12233B', PANEL2='0F1D33', HEAD='24395A', INK='E8EEF7', MUT='8FA3BF', GOLD='C8963E', BLUE='3AA0E0', TRK='24395A', RED='E0584A', GRN='3DBE74', AMB='E9A23B';
-  var NB=20, B0=6, W=[0,1.5,34,11,9,9];
+  var NB=20, B0=6, W=[0,1.5,38,11,9,9];
   for(var i=0;i<NB;i++) W.push(1.6);
   W.push(9,11,11,11,10,1.5); /* 26 var, 27 start, 28 planned finish, 29 forecast, 30 delay, 31 margin */
   var C0=2, C1=30, LAST=31;
   var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:8}});
-  ws.columns=W.slice(1).map(function(w){ return {width:w}; });
+  ws.columns=W.slice(1).map(function(w){ return {width:w}; }); ws._W=W; if(XPS) xpTiny(wb,ws);
   var R=1, rowsUsed=[];
   var h=function(r,pt){ ws.getRow(r).height=pt; };
   xpPaint(ws,1,1,400,LAST,BG); /* page background, trimmed afterwards */
@@ -1976,15 +2005,15 @@ function xpBuild1(wb,D){
     xpBox(ws,R,2,R,2,g.name+'  ·  '+g.projs.length+' project'+(g.projs.length>1?'s':''),{bg:'1B3050',fg:'FFFFFF',b:true,sz:11,ind:1});
     xpBox(ws,R,3,R,3,fm(a.rvP),{bg:'1B3050',fg:MUT,sz:9,h:'center'});
     xpBox(ws,R,4,R,4,a.plan,{bg:'1B3050',fg:INK,b:true,sz:10,h:'center',nf:'0.0%'}); xpBox(ws,R,5,R,5,a.act,{bg:'1B3050',fg:'FFFFFF',b:true,sz:10,h:'center',nf:'0.0%'});
-    xpPaint(ws,R,6,R,25,'1B3050'); xpBar(ws,R,B0,NB,a.act,a.plan,BLUE,TRK,GOLD);
-    xpBox(ws,R,26,R,26,gp,{bg:'1B3050',fg:gp<-0.05?RED:GRN,b:true,sz:10,h:'center',nf:'+0.0;-0.0;0.0'});
+    xpPaint(ws,R,6,R,25,'1B3050'); xpBarS(ws,R,B0,NB,a.act,a.plan,22,BLUE,TRK,GOLD,10);
+    xpBox(ws,R,26,R,26,gp,{bg:'1B3050',fg:gp<-0.05?RED:GRN,b:true,sz:10,h:'center',nf:'"▲ "+0.0;"▼ "-0.0;0.0'});
     xpPaint(ws,R,27,R,30,'1B3050'); h(R,22); R++;
     g.projs.forEach(function(p,i){ var q=p.a, pp=(q.act-q.plan)*100, bg=i%2?PANEL2:PANEL, c=xpStCol(p);
       xpBox(ws,R,2,R,2,p.name,{bg:bg,fg:INK,sz:10,ind:2});
-      statusPill(R,p); xpPaint(ws,R,3,R,3,c); ws.getCell(R,3).fill=xpFill(c);
+      if(XPS){ xpPaint(ws,R,3,R,3,bg); xpShape(ws,{t:'roundRect',adj:50000,fill:c,text:xpStLbl(p),tsz:9,b:1,c1:3,x1:0.08,x2:0.92,r1:R,y1:3.5,y2:15.5}); } else { statusPill(R,p); xpPaint(ws,R,3,R,3,c); ws.getCell(R,3).fill=xpFill(c); }
       xpBox(ws,R,4,R,4,p.started?q.plan:null,{bg:bg,fg:MUT,sz:10,h:'center',nf:'0.0%'}); xpBox(ws,R,5,R,5,p.started?q.act:null,{bg:bg,fg:'FFFFFF',b:true,sz:10,h:'center',nf:'0.0%'});
-      xpPaint(ws,R,6,R,25,bg); if(p.started) xpBar(ws,R,B0,NB,q.act,q.plan,c==='C0392B'?RED:BLUE,TRK,GOLD); else xpBar(ws,R,B0,NB,0,null,BLUE,TRK,GOLD);
-      xpBox(ws,R,26,R,26,p.started?pp:null,{bg:bg,fg:pp<-0.05?RED:GRN,b:true,sz:10,h:'center',nf:'+0.0;-0.0;0.0'});
+      xpPaint(ws,R,6,R,25,bg); xpBarS(ws,R,B0,NB,p.started?q.act:0,p.started?q.plan:null,19,c==='C0392B'?RED:BLUE,TRK,GOLD,9);
+      xpBox(ws,R,26,R,26,p.started?pp:null,{bg:bg,fg:pp<-0.05?RED:GRN,b:true,sz:10,h:'center',nf:'"▲ "+0.0;"▼ "-0.0;0.0'});
       xpBox(ws,R,27,R,27,xpDt(q.start),{bg:bg,fg:MUT,sz:10,h:'center',nf:'d-mmm-yy'}); xpBox(ws,R,28,R,28,xpDt(q.pf),{bg:bg,fg:MUT,sz:10,h:'center',nf:'d-mmm-yy'});
       xpBox(ws,R,29,R,29,xpDt(q.ff),{bg:bg,fg:INK,sz:10,h:'center',nf:'d-mmm-yy'});
       xpBox(ws,R,30,R,30,p.done?'Complete':!p.started?'—':p.dl===0?'on plan':p.dl>0?'−'+p.dl+' d':'+'+(-p.dl)+' d early',{bg:bg,fg:p.dl>0&&!p.done?RED:GRN,b:true,sz:10,h:'center'});
@@ -1999,9 +2028,9 @@ function xpBuild1(wb,D){
       xpBox(ws,R,2,R+1,2,p.name,{bg:PANEL,fg:INK,sz:10,ind:2,wrap:true});
       xpBox(ws,R,3,R,3,'Planned',{bg:PANEL,fg:MUT,sz:9,h:'center'}); xpBox(ws,R+1,3,R+1,3,'Actual',{bg:PANEL,fg:MUT,sz:9,h:'center'});
       xpBox(ws,R,4,R,5,p.started?q.plan:null,{bg:PANEL,fg:MUT,sz:10,h:'center',nf:'0.0%'}); xpBox(ws,R+1,4,R+1,5,p.started?q.act:null,{bg:PANEL,fg:'FFFFFF',b:true,sz:10,h:'center',nf:'0.0%'});
-      xpPaint(ws,R,6,R+1,30,PANEL); xpBar(ws,R,B0,NB,p.started?q.plan:0,null,'6C86AB',TRK,GOLD); xpBar(ws,R+1,B0,NB,p.started?q.act:0,null,c,TRK,GOLD);
+      xpPaint(ws,R,6,R+1,30,PANEL); xpBarS(ws,R,B0,NB,p.started?q.plan:0,null,17,'6C86AB',TRK,GOLD,8); xpBarS(ws,R+1,B0,NB,p.started?q.act:0,null,17,c,TRK,GOLD,8);
       xpBox(ws,R,26,R+1,30,p.started?(p.done?'Complete':p.dl===0?'On plan':p.dl>0?p.dl+' days behind · forecast '+fd(q.ff):(-p.dl)+' days early'):'Not started',{bg:PANEL,fg:p.dl>0&&!p.done?RED:MUT,sz:9,h:'center',wrap:true});
-      h(R,15); h(R+1,15); R+=2; });
+      h(R,17); h(R+1,17); R+=2; });
   });
   h(R,12); R++;
   /* 3. challenges */
@@ -2031,7 +2060,7 @@ function xpBuild2(wb,D){
   var W=[0,1.5]; for(var k=0;k<4;k++){ W.push(9); for(var j=0;j<8;j++) W.push(2.6); W.push(8); W.push(k<3?2:1.5); }
   var LASTC=W.length-1, C1=LASTC-1;
   var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:8}});
-  ws.columns=W.slice(1).map(function(w){ return {width:w}; });
+  ws.columns=W.slice(1).map(function(w){ return {width:w}; }); ws._W=W; if(XPS) xpTiny(wb,ws);
   xpPaint(ws,1,1,400,LASTC,CREAM);
   var h=function(r,pt){ ws.getRow(r).height=pt; }, base=function(i){ return 2+i*11; };
   h(1,8);
@@ -2043,6 +2072,7 @@ function xpBuild2(wb,D){
   var sp=xpSplit3(W,2,C1), K=[['PROJECTS UNDER CONSTRUCTION',D.k1,D.k1s,'2A7FB8'],['AWARDED CONTRACTS VALUE',D.k2,D.k2s,GOLD],['CERTIFIED AMOUNT',D.k3,D.k3s,GRN]];
   K.forEach(function(k,i){ var a=sp[i][0], b=sp[i][1];
     xpBox(ws,6,a,6,b,k[0],{bg:'FFFFFF',fg:MUT,b:true,sz:9,ind:1,v:'bottom'}); xpBox(ws,7,a,7,b,k[1],{bg:'FFFFFF',fg:NAVY,b:true,sz:26,ind:1}); xpBox(ws,8,a,8,b,k[2],{bg:'FFFFFF',fg:MUT,sz:10,ind:1,v:'top'});
+    if(XPS){ xpShape(ws,{t:'roundRect',adj:7000,line:LINE,lw:1,c1:a,x1:0,c2:b+1,x2:0,r1:6,r2:9}); xpShape(ws,{t:'rect',fill:k[3],c1:a,x1:0,x2:0.12,r1:6,r2:9}); return; }
     for(var r=6;r<=8;r++){ ws.getCell(r,a).border={left:{style:'thick',color:{argb:'FF'+k[3]}}}; for(var c=a;c<=b;c++){ var cell=ws.getCell(r,c), bd=cell.border||{}; bd.top=r===6?{style:'thin',color:{argb:'FF'+LINE}}:bd.top; bd.bottom=r===8?{style:'thin',color:{argb:'FF'+LINE}}:bd.bottom; if(c===b) bd.right={style:'thin',color:{argb:'FF'+LINE}}; cell.border=bd; } } });
   h(6,20); h(7,38); h(8,20); h(9,12);
   var R=10, imgs=[];
@@ -2057,29 +2087,33 @@ function xpBuild2(wb,D){
         bandH=Math.max(bandH,lines*12.5+8);
         var edge={left:{style:'thick',color:{argb:'FF'+c}}};
         xpPaint(ws,rt,b,rt+9,b+9,'FFFFFF');
-        xpBox(ws,rt,b,rt+1,b+5,p.name,{bg:'FFFFFF',fg:NAVY,b:true,sz:12,wrap:true,v:'top',ind:1});
-        xpBox(ws,rt+2,b,rt+2,b+5,'● '+xpStLbl(p),{bg:'FFFFFF',fg:c,b:true,sz:9,ind:1});
         var url=null; try{ url=pjGet(p.code)||PHOTO_OVR[p.code]||''; }catch(e){}
-        if(url&&/^data:image\/(png|jpe?g)/i.test(url)){ xpPaint(ws,rt,b+6,rt+2,b+9,'FFFFFF'); ws.mergeCells(rt,b+6,rt+2,b+9); imgs.push({url:url,col:b+5,row:rt-1}); }
-        else xpBox(ws,rt,b+6,rt+2,b+9,String(p.name).replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/).slice(0,2).map(function(w){ return w.charAt(0).toUpperCase(); }).join(''),{bg:'4F7FB0',fg:'FFFFFF',b:true,sz:16,h:'center'});
-        xpBox(ws,rt+3,b,rt+3,b,'Planned',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBar(ws,rt+3,b+1,8,p.started?q.plan:0,null,'C9C0B0',LINE,GOLD); xpBox(ws,rt+3,b+9,rt+3,b+9,p.started?q.plan:null,{bg:'FFFFFF',fg:INK,sz:10,h:'right',nf:'0.0%'});
-        xpBox(ws,rt+4,b,rt+4,b,'Actual',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBar(ws,rt+4,b+1,8,p.started?q.act:0,null,'3A7BE0',LINE,GOLD); xpBox(ws,rt+4,b+9,rt+4,b+9,p.started?q.act:null,{bg:'FFFFFF',fg:INK,b:true,sz:10,h:'right',nf:'0.0%'});
+        var hasPh=!!(url&&/^data:image\/(png|jpe?g)/i.test(url));
+        xpBox(ws,rt,b,rt+1,b+(hasPh||!XPS?5:9),p.name,{bg:'FFFFFF',fg:NAVY,b:true,sz:12,wrap:true,v:'top',ind:1});
+        xpBox(ws,rt+2,b,rt+2,b+5,'● '+xpStLbl(p),{bg:'FFFFFF',fg:c,b:true,sz:9,ind:1});
+        if(hasPh){ xpPaint(ws,rt,b+6,rt+2,b+9,'FFFFFF'); ws.mergeCells(rt,b+6,rt+2,b+9); imgs.push({url:url,col:b+5,row:rt-1}); }
+        else if(!XPS) xpBox(ws,rt,b+6,rt+2,b+9,String(p.name).replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/).slice(0,2).map(function(w){ return w.charAt(0).toUpperCase(); }).join(''),{bg:'4F7FB0',fg:'FFFFFF',b:true,sz:16,h:'center'});
+        xpBox(ws,rt+3,b,rt+3,b,'Planned',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBarS(ws,rt+3,b+1,8,p.started?q.plan:0,null,16,'C9C0B0',LINE,GOLD,8); xpBox(ws,rt+3,b+9,rt+3,b+9,p.started?q.plan:null,{bg:'FFFFFF',fg:INK,sz:10,h:'right',nf:'0.0%'});
+        xpBox(ws,rt+4,b,rt+4,b,'Actual',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBarS(ws,rt+4,b+1,8,p.started?q.act:0,null,16,'3A7BE0',LINE,GOLD,8); xpBox(ws,rt+4,b+9,rt+4,b+9,p.started?q.act:null,{bg:'FFFFFF',fg:INK,b:true,sz:10,h:'right',nf:'0.0%'});
         var pp=(q.act-q.plan)*100;
-        xpBox(ws,rt+5,b,rt+5,b+4,'Variance',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBox(ws,rt+5,b+5,rt+5,b+9,p.started?pp:null,{bg:'FFFFFF',fg:pp<-0.05?RED:GRN,b:true,sz:11,h:'right',nf:'+0.00" %";-0.00" %";0.00" %"'});
+        xpBox(ws,rt+5,b,rt+5,b+4,'Variance',{bg:'FFFFFF',fg:MUT,sz:9,ind:1}); xpBox(ws,rt+5,b+5,rt+5,b+9,p.started?pp:null,{bg:'FFFFFF',fg:pp<-0.05?RED:GRN,b:true,sz:11,h:'right',nf:'"▲ "+0.00" %";"▼ "-0.00" %";0.00" %"'});
         var dtxt=p.done?'✔ Completed':!p.started?'Not started'+(q.start?' · starts '+fd(q.start):''):p.dl===0?'On plan':p.dl>0?'−'+p.dl+' days':'+'+(-p.dl)+' days early';
         xpBox(ws,rt+6,b,rt+6,b+9,dtxt,{bg:'FFFFFF',fg:p.dl>0&&!p.done&&p.started?RED:GRN,b:true,sz:11,h:'center'});
         for(var cc2=b;cc2<=b+9;cc2++){ var tp=ws.getCell(rt+6,cc2), bd=tp.border||{}; bd.top={style:'thin',color:{argb:'FF'+LINE}}; tp.border=bd; }
-        xpPaint(ws,rt+7,b,rt+7,b+9,'FFFFFF'); for(var s=1;s<=8;s++) ws.getCell(rt+7,b+s).fill=xpFill(s===1?NAVY:s===8?c:GOLD);
+        xpPaint(ws,rt+7,b,rt+7,b+9,'FFFFFF');
+        if(XPS){ xpShape(ws,{t:'roundRect',adj:50000,fill:GOLD,c1:b+1,x1:0.5,c2:b+8,x2:0.5,r1:rt+7,y1:5.5,y2:8.5}); xpShape(ws,{t:'ellipse',fill:NAVY,line:'FFFFFF',lw:1,c1:b+1,x1:0.17,x2:0.83,r1:rt+7,y1:2,y2:12}); xpShape(ws,{t:'ellipse',fill:c,line:'FFFFFF',lw:1,c1:b+8,x1:0.17,x2:0.83,r1:rt+7,y1:2,y2:12}); }
+        else for(var s=1;s<=8;s++) ws.getCell(rt+7,b+s).fill=xpFill(s===1?NAVY:s===8?c:GOLD);
         if(p.started){ xpBox(ws,rt+8,b,rt+8,b+4,{richText:[xpRun(fd(q.pf),{b:true,sz:10,fg:NAVY}),xpRun('\n'+(p.done?'Planned finish':'Planned'),{sz:8,fg:MUT})]},{bg:'FFFFFF',wrap:true,ind:1,v:'top'});
           xpBox(ws,rt+8,b+5,rt+8,b+9,{richText:[xpRun(fd(q.ff),{b:true,sz:10,fg:NAVY}),xpRun('\n'+(p.done?'Actual completion':'Forecast'),{sz:8,fg:MUT})]},{bg:'FFFFFF',wrap:true,h:'right',v:'top'}); }
         else xpPaint(ws,rt+8,b,rt+8,b+9,'FFFFFF');
         var bandRich=tx?{richText:[xpRun('HIGH  ',{b:true,sz:9,fg:RED}),xpRun(tx.c,{sz:9,fg:INK}),xpRun('\nACTION  ',{b:true,sz:9,fg:'8A5A12'}),xpRun(tx.a,{sz:9,fg:MUT})].concat(tx.more>0?[xpRun('\n+ '+tx.more+' more high-impact',{i:true,sz:9,fg:RED})]:[])}:{richText:[xpRun('CLEAR  ',{b:true,sz:9,fg:GRN}),xpRun('No open high-impact challenges',{sz:9,fg:GRN})]};
         xpBox(ws,rt+9,b,rt+9,b+9,bandRich,{bg:cw,wrap:true,v:'top',ind:1});
         var bc={style:'thin',color:{argb:'FF'+LINE}};
-        for(var rr=rt;rr<=rt+9;rr++){ for(var cx=b;cx<=b+9;cx++){ var cl=ws.getCell(rr,cx), bd2=cl.border||{}; if(cx===b) bd2.left=edge.left; if(cx===b+9) bd2.right=bc; if(rr===rt) bd2.top=bc; if(rr===rt+9) bd2.bottom=bc; cl.border=bd2; } }
+        if(XPS){ xpShape(ws,{t:'roundRect',adj:3200,line:LINE,lw:1,c1:b,x1:0,c2:b+10,x2:0,r1:rt,r2:rt+10}); xpShape(ws,{t:'rect',fill:c,c1:b,x1:0,x2:0.08,r1:rt,r2:rt+10}); }
+        else for(var rr=rt;rr<=rt+9;rr++){ for(var cx=b;cx<=b+9;cx++){ var cl=ws.getCell(rr,cx), bd2=cl.border||{}; if(cx===b) bd2.left=edge.left; if(cx===b+9) bd2.right=bc; if(rr===rt) bd2.top=bc; if(rr===rt+9) bd2.bottom=bc; cl.border=bd2; } }
       });
-      [0,1,2,3,4,5,6,8].forEach(function(o){ var m=ws.getRow(rt+o).height||0; var want=[24,24,16,16,16,18,20,0,28][o]; if(o===7) return; ws.getRow(rt+o).height=Math.max(m,want); });
-      h(rt+7,7); h(rt+9,Math.max(ws.getRow(rt+9).height||0,bandH)); h(rt+10,8);
+      [0,1,2,3,4,5,6,8].forEach(function(o){ var m=ws.getRow(rt+o).height||0; var want=[17,17,16,16,16,18,20,0,28][o]; if(o===7) return; ws.getRow(rt+o).height=Math.max(m,want); });
+      h(rt+7,XPS?14:7); h(rt+9,Math.max(ws.getRow(rt+9).height||0,bandH)); h(rt+10,8);
       rowsUsed+=11; });
     return rowsUsed; };
   var banner=function(g,c0,c1,r){ var a=g.a;
@@ -2106,9 +2140,12 @@ async function xpExport(kind){
   try{
     var D=xpData(); if(!D.progs.length){ toast('No data for the current filters',true); return; }
     var wb=new ExcelJS.Workbook(); wb.creator='KEC Project Controls Dashboard'; wb.created=new Date();
-    if(kind===1) xpBuild1(wb,D); else xpBuild2(wb,D);
+    XPS=await loadJSZip();
+    var wsd=(kind===1)?xpBuild1(wb,D):xpBuild2(wb,D);
     xpExtras(wb,D);
-    var ok=await xpSave(wb,(kind===1?'KEC_Executive_Scorecard_Dark_':'KEC_Executive_Dashboard_Cards_')+D.cut+'.xlsx');
+    var buf=await wb.xlsx.writeBuffer();
+    if(XPS){ try{ buf=await xpInject(buf,wsd); }catch(e){ console.warn('shapes failed',e); } }
+    var ok=await xpSave(buf,(kind===1?'KEC_Executive_Scorecard_Dark_':'KEC_Executive_Dashboard_Cards_')+D.cut+'.xlsx');
     if(ok) toast('Excel dashboard exported · cut-off '+D.cutTxt);
   }catch(e){ console.error(e); toast('Could not build the Excel file: '+((e&&e.message)||e),true); }
 }
