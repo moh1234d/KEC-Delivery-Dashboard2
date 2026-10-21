@@ -1006,7 +1006,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V230</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V231</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2310,6 +2310,10 @@ function svChalList(sc,cut){
 function svStamp(ms){ var d=new Date(ms), p=function(n){ return String(n).padStart(2,'0'); }; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
 function svNowTxt(){ var d=new Date(), p=function(n){ return String(n).padStart(2,'0'); }; return d.getDate()+' '+MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2)+' · '+p(d.getHours())+':'+p(d.getMinutes()); }
 /* ---- the page ---- */
+function svEmpty(arr,what,sheet){
+  if(!(arr||[]).length) return '<div class="card plain"><div class="empty">The loaded database has no <b>'+sheet+'</b> sheet, so there is no '+what+' data. Data source now: <i>'+esc(source||'—')+'</i>. If you replaced the SharePoint file, press <b>Refresh</b> under “Live data” in the left panel; if it still shows this, the link is serving the old file.</div></div>';
+  return '<div class="card plain"><div class="empty">No '+what+' data for this selection ('+arr.length+' rows loaded for other projects/packages).</div></div>';
+}
 function pSiteBuild(rows,coreRows,cut){
   var head=function(t,sub){ return '<h2 class="pgtitle sm">'+t+'</h2><p class="pgsub">'+sub+'</p>'; };
   if(selList('P').length!==1){
@@ -2360,14 +2364,14 @@ function pSiteBuild(rows,coreRows,cut){
   var e1b=e1.map(function(g){ var t=svSum(g.l,'tot'),ap=svSum(g.l,'app'); return '<tr><td>'+esc(g.k)+'</td><td class="n">'+t+'</td><td class="n">'+svSum(g.l,'plan')+'</td><td class="n">'+svSum(g.l,'sub')+'</td><td class="n">'+ap+'</td><td class="n">'+svSum(g.l,'rev')+'</td><td class="n">'+svSum(g.l,'rvw')+'</td><td class="n'+(svSum(g.l,'ns')>0?' bad':'')+'">'+svSum(g.l,'ns')+'</td><td class="n">'+svPctBar(t?ap/t:0)+'</td></tr>'; }).join('');
   var t1={tot:svSum(e1L,'tot'),app:svSum(e1L,'app')};
   var e1f='<tr><td>Total</td><td class="n">'+t1.tot+'</td><td class="n">'+svSum(e1L,'plan')+'</td><td class="n">'+svSum(e1L,'sub')+'</td><td class="n">'+t1.app+'</td><td class="n">'+svSum(e1L,'rev')+'</td><td class="n">'+svSum(e1L,'rvw')+'</td><td class="n">'+svSum(e1L,'ns')+'</td><td class="n">'+svPctBar(t1.tot?t1.app/t1.tot:0)+'</td></tr>';
-  var E1=sec('svE1','Engineering tracker · Technical submittals','by submittal type · latest update at or before the cut-off')+(e1L.length?svTable(['Submittal type','Total','Planned to submit','Submitted','Approved','Revise / resubmit','Under review','Not submitted','Approved %'],e1b,e1f):'<div class="card plain"><div class="empty">No technical-submittal data for this selection.</div></div>');
+  var E1=sec('svE1','Engineering tracker · Technical submittals','by submittal type · latest update at or before the cut-off')+(e1L.length?svTable(['Submittal type','Total','Planned to submit','Submitted','Approved','Revise / resubmit','Under review','Not submitted','Approved %'],e1b,e1f):svEmpty(cur.e1,'technical-submittal','Technical Submittals'));
   var e2L=svLatest(cur.e2,sc,cut,''), e2b=e2L.sort(function(a,b){ return b.tot-a.tot; }).map(function(x){ var t=x.tot||0; return '<tr><td>'+esc(dp(x.pkg))+'</td><td class="n">'+t+'</td><td class="n">'+(x.loc||0)+'</td><td class="n">'+(x.ooc||0)+'</td><td class="n">'+(x.ppo||0)+'</td><td class="n">'+(x.apo||0)+'</td><td class="n">'+(x.pdl||0)+'</td><td class="n">'+(x.adl||0)+'</td><td class="n">'+svPctBar(t?(x.adl||0)/t:0)+'</td></tr>'; }).join('');
   var t2=svSum(e2L,'tot'), e2f='<tr><td>Total</td><td class="n">'+t2+'</td><td class="n">'+svSum(e2L,'loc')+'</td><td class="n">'+svSum(e2L,'ooc')+'</td><td class="n">'+svSum(e2L,'ppo')+'</td><td class="n">'+svSum(e2L,'apo')+'</td><td class="n">'+svSum(e2L,'pdl')+'</td><td class="n">'+svSum(e2L,'adl')+'</td><td class="n">'+svPctBar(t2?svSum(e2L,'adl')/t2:0)+'</td></tr>';
-  var E2=sec('svE2','Procurement tracker · Material procurement','by package · latest update at or before the cut-off')+(e2L.length?svTable(['Package / plot','Total material','Local','Out of country','Planned PO','PO issued','Planned delivery','Delivered','Delivered %'],e2b,e2f):'<div class="card plain"><div class="empty">No material-procurement data for this selection.</div></div>');
+  var E2=sec('svE2','Procurement tracker · Material procurement','by package · latest update at or before the cut-off')+(e2L.length?svTable(['Package / plot','Total material','Local','Out of country','Planned PO','PO issued','Planned delivery','Delivered','Delivered %'],e2b,e2f):svEmpty(cur.e2,'material-procurement','Material Procurement'));
   /* quality */
   var qL=svLatest(cur.qa,sc,cut,'type'), qs=function(re){ var l=qL.filter(function(x){ return re.test(String(x.type)); }); return {t:svSum(l,'tot'),c:svSum(l,'cl'),o:svSum(l,'op')}; };
   var nq=qs(/ncr/i), si=qs(/site\s*instr|^sor|site\s*obs/i);
-  var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open')+(qL.length?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>':'<div class="card plain"><div class="empty">No quality data for this selection.</div></div>');
+  var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open')+(qL.length?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>':svEmpty(cur.qa,'quality','Quality Statistics'));
   /* manpower + trends canvases */
   var mpAny=(cur.mp||[]).some(function(x){ return String(x.code).toLowerCase()===sc.lc; });
   var M=sec('svM','Manpower','planned vs actual · variance = planned − actual')+'<div class="card plain">'+(mpAny?'<div class="chart-box"><canvas id="svMp"></canvas></div>':'<div class="empty">Manpower data has not been loaded yet. It will appear here once the Manpower sheet is filled in the database.</div>')+'</div>';
