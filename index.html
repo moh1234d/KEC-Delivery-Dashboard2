@@ -1006,7 +1006,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V231</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V232</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2393,19 +2393,30 @@ function pSiteBuild(rows,coreRows,cut){
     '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'+E1+E2+Q+M+ch+pageFt+'</div>';
 }
 function groupBy0(L,kf){ var m={},o=[]; L.forEach(function(x){ var k=kf(x), n=svN(k); if(!m[n]){ m[n]={k:k,l:[]}; o.push(m[n]); } m[n].l.push(x); }); return o.sort(function(a,b){ return svSum(b.l,'tot')-svSum(a.l,'tot'); }); }
+function svCfgs(){
+  var sc=SV.cur.sc, cut=SV.cur.cut, ink=cssv('--mut'), line=cssv('--line'), acc=cssv('--accent'), bad=cssv('--bad'), out={};
+  var base=function(){ return {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:ink,boxWidth:12}}},scales:{x:{ticks:{color:ink},grid:{color:line}},y:{ticks:{color:ink},grid:{color:line}}}}; };
+  var by={}; (cur.mp||[]).forEach(function(x){ if(String(x.code).toLowerCase()!==sc.lc||x.d>cut||!sc.ok(x.pkg)) return; var o=by[x.d]||(by[x.d]={pl:0,ac:0}); o.pl+=x.pl||0; o.ac+=x.ac||0; });
+  var ds=Object.keys(by).sort().slice(-14);
+  if(ds.length) out.svMp=function(){ return {type:'bar',data:{labels:ds.map(function(d){ return [d2(d),'Var '+(by[d].pl-by[d].ac>0?'+':'')+(by[d].pl-by[d].ac)]; }),datasets:[{label:'Planned',data:ds.map(function(d){ return by[d].pl; }),backgroundColor:'#b9b09e'},{label:'Actual',data:ds.map(function(d){ return by[d].ac; }),backgroundColor:acc}]},options:base()}; };
+  var P=[],A=[],Od=[],L=[];
+  model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.maxDelay||0); });
+  out.svTa=function(){ return {type:'line',data:{labels:L.slice(),datasets:[{label:'Planned %',data:P.slice(),borderColor:'#b9b09e',borderDash:[6,4],pointRadius:2,tension:.2},{label:'Actual %',data:A.slice(),borderColor:acc,backgroundColor:acc,pointRadius:3,tension:.2}]},options:base()}; };
+  out.svTo=function(){ return {type:'line',data:{labels:L.slice(),datasets:[{label:'Overrun (days)',data:Od.slice(),borderColor:bad,backgroundColor:bad,pointRadius:3,tension:.2}]},options:base()}; };
+  return out;
+}
 function drawSite(){
   if(typeof Chart==='undefined'||!SV.cur) return;
-  var sc=SV.cur.sc, cut=SV.cur.cut, ink=cssv('--mut'), line=cssv('--line'), acc=cssv('--accent'), bad=cssv('--bad');
-  var base={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:ink,boxWidth:12}}},scales:{x:{ticks:{color:ink},grid:{color:line}},y:{ticks:{color:ink},grid:{color:line}}}};
-  var mp=document.getElementById('svMp');
-  if(mp){ var by={}; (cur.mp||[]).forEach(function(x){ if(String(x.code).toLowerCase()!==sc.lc||x.d>cut||!sc.ok(x.pkg)) return; var o=by[x.d]||(by[x.d]={pl:0,ac:0}); o.pl+=x.pl||0; o.ac+=x.ac||0; });
-    var ds=Object.keys(by).sort().slice(-14);
-    charts.push(new Chart(mp,{type:'bar',data:{labels:ds.map(function(d){ return [d2(d),'Var '+(by[d].pl-by[d].ac>0?'+':'')+(by[d].pl-by[d].ac)]; }),datasets:[{label:'Planned',data:ds.map(function(d){ return by[d].pl; }),backgroundColor:'#b9b09e'},{label:'Actual',data:ds.map(function(d){ return by[d].ac; }),backgroundColor:acc}]},options:base})); }
-  var ta=document.getElementById('svTa'), to=document.getElementById('svTo');
-  if(ta||to){ var P=[],A=[],Od=[],L=[];
-    model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.maxDelay||0); });
-    if(ta) charts.push(new Chart(ta,{type:'line',data:{labels:L,datasets:[{label:'Planned %',data:P,borderColor:'#b9b09e',borderDash:[6,4],pointRadius:2,tension:.2},{label:'Actual %',data:A,borderColor:acc,backgroundColor:acc,pointRadius:3,tension:.2}]},options:base}));
-    if(to) charts.push(new Chart(to,{type:'line',data:{labels:L,datasets:[{label:'Overrun (days)',data:Od,borderColor:bad,backgroundColor:bad,pointRadius:3,tension:.2}]},options:base})); }
+  SV.mk=svCfgs();
+  Object.keys(SV.mk).forEach(function(id){ var cv=document.getElementById(id); if(cv) charts.push(new Chart(cv,SV.mk[id]())); });
+}
+/* picture of a chart drawn at a fixed size, for printing */
+function svChartPic(id){
+  if(!SV.mk||!SV.mk[id]) return '';
+  var cv=document.createElement('canvas'); cv.width=1040; cv.height=420; var cfg=SV.mk[id]();
+  cfg.options.responsive=false; cfg.options.animation=false; cfg.options.devicePixelRatio=1; cfg.options.font={size:18};
+  cfg.options.plugins.legend.labels.font={size:18}; cfg.options.scales.x.ticks.font={size:16}; cfg.options.scales.y.ticks.font={size:16};
+  var ch=new Chart(cv,cfg), u=cv.toDataURL('image/png'); ch.destroy(); return u;
 }
 /* ---- add / edit a challenge ---- */
 function svModal(it){
@@ -3512,9 +3523,8 @@ $('#printAllBtn').addEventListener('click',function(){ if(state.all){ state.all=
 var prevTheme, themeSwapped=false;
 window.addEventListener('beforeprint',function(){ if(!model) return; if(curTheme()==='dark'){ prevTheme=document.documentElement.getAttribute('data-theme'); themeSwapped=true; document.documentElement.setAttribute('data-theme','light'); } state.gprint=true; render(); });
 window.addEventListener('afterprint',function(){ var need=state.all||themeSwapped||state.gprint; state.gprint=false; if(themeSwapped){ if(prevTheme) document.documentElement.setAttribute('data-theme',prevTheme); else document.documentElement.removeAttribute('data-theme'); themeSwapped=false; } state.all=false; if(model&&need) render(); });
-/* charts become pictures while printing, so they never come out blank */
-window.addEventListener('beforeprint',function(){ try{ document.querySelectorAll('.sitepg canvas').forEach(function(cv){ var ch=Chart.getChart(cv); if(!ch) return; var im=document.createElement('img'); im.className='svpimg'; im.src=ch.toBase64Image(); im.style.cssText='width:100%;height:100%;object-fit:contain'; cv.style.display='none'; cv.parentNode.appendChild(im); }); }catch(e){ console.error('ERR print',e); } });
-window.addEventListener('afterprint',function(){ document.querySelectorAll('.svpimg').forEach(function(i){ var cv=i.parentNode.querySelector('canvas'); if(cv) cv.style.display=''; i.remove(); }); });
+window.addEventListener('beforeprint',function(){ try{ if(state.page!=='site'||!SV.cur) return; document.querySelectorAll('.sitepg canvas').forEach(function(cv){ var u=svChartPic(cv.id); if(!u) return; var im=document.createElement('img'); im.className='svpimg'; im.src=u; im.style.cssText='width:100%;height:auto;display:block'; cv.style.display='none'; cv.parentNode.style.height='auto'; cv.parentNode.appendChild(im); }); }catch(e){ console.error('ERR print',e); } });
+window.addEventListener('afterprint',function(){ document.querySelectorAll('.svpimg').forEach(function(i){ var cv=i.parentNode.querySelector('canvas'); if(cv) cv.style.display=''; i.parentNode.style.height=''; i.remove(); }); });
 /* data notes page: hidden by default, user can show it from the side bar */
 var notesOn=false; try{ notesOn=localStorage.getItem('kec.notes')==='1'; }catch(e){}
 function paintNotes(){ document.body.classList.toggle('shownotes',notesOn); var nb=document.getElementById('notesBtn'); if(nb) nb.textContent=notesOn?'Hide data notes':'Show data notes'; }
