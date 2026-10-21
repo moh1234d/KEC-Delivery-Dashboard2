@@ -959,7 +959,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-editing .rp-note .rp-ed:empty:before{content:"Add a note for this slide…";color:#9aa3b2}
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V227</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V228</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1974,7 +1974,7 @@ function xpBuild1(wb,D){
   for(var i=0;i<NB;i++) W.push(1.6);
   W.push(9,11,11,11,10,1.5); /* 26 var, 27 start, 28 planned finish, 29 forecast, 30 delay, 31 margin */
   var C0=2, C1=30, LAST=31;
-  var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:8}});
+  var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'portrait',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:8,margins:{left:0.3,right:0.3,top:0.35,bottom:0.35,header:0.1,footer:0.1},horizontalCentered:true}});
   ws.columns=W.slice(1).map(function(w){ return {width:w}; }); ws._W=W; if(XPS) xpTiny(wb,ws);
   var R=1, rowsUsed=[];
   var h=function(r,pt){ ws.getRow(r).height=pt; };
@@ -2034,6 +2034,7 @@ function xpBuild1(wb,D){
   });
   h(R,12); R++;
   /* 3. challenges */
+  ws.getRow(R-1).addPageBreak(); /* A3 portrait: the challenges start on the second page */
   var nH=0; D.progs.forEach(function(g){ g.projs.forEach(function(p){ nH+=p.hi.length; }); }); nH+=D.other.filter(function(c){ return c.impact==='High'; }).length;
   sect('Challenges · high impact, by project',nH+' high-impact challenge'+(nH===1?'':'s')+(D.consDate?' · log as at '+xpLong(D.consDate):''));
   var shown=0, put=function(name,hi,all){
@@ -2059,7 +2060,7 @@ function xpBuild2(wb,D){
   var CREAM='F4F1EC', NAVY='0F2A4A', GOLD='C8963E', LINE='E3DDD2', INK='1B2A3A', MUT='6B7A8C', RED='C0392B', GRN='1F8A4C', AMB='D9822B';
   var W=[0,1.5]; for(var k=0;k<4;k++){ W.push(9); for(var j=0;j<8;j++) W.push(2.6); W.push(8); W.push(k<3?2:1.5); }
   var LASTC=W.length-1, C1=LASTC-1;
-  var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:8}});
+  var ws=wb.addWorksheet('Dashboard',{views:[{showGridLines:false,zoomScale:90}],pageSetup:{orientation:'portrait',fitToPage:true,fitToWidth:1,fitToHeight:1,paperSize:8,margins:{left:0.3,right:0.3,top:0.35,bottom:0.35,header:0.1,footer:0.1},horizontalCentered:true}});
   ws.columns=W.slice(1).map(function(w){ return {width:w}; }); ws._W=W; if(XPS) xpTiny(wb,ws);
   xpPaint(ws,1,1,400,LASTC,CREAM);
   var h=function(r,pt){ ws.getRow(r).height=pt; }, base=function(i){ return 2+i*11; };
@@ -2087,8 +2088,8 @@ function xpBuild2(wb,D){
         bandH=Math.max(bandH,lines*12.5+8);
         var edge={left:{style:'thick',color:{argb:'FF'+c}}};
         xpPaint(ws,rt,b,rt+9,b+9,'FFFFFF');
-        var url=null; try{ url=pjGet(p.code)||PHOTO_OVR[p.code]||''; }catch(e){}
-        var hasPh=!!(url&&/^data:image\/(png|jpe?g)/i.test(url));
+        var url=(D.photos&&D.photos[p.code])||'';
+        var hasPh=!!url;
         xpBox(ws,rt,b,rt+1,b+(hasPh||!XPS?5:9),p.name,{bg:'FFFFFF',fg:NAVY,b:true,sz:12,wrap:true,v:'top',ind:1});
         xpBox(ws,rt+2,b,rt+2,b+5,'● '+xpStLbl(p),{bg:'FFFFFF',fg:c,b:true,sz:9,ind:1});
         if(hasPh){ xpPaint(ws,rt,b+6,rt+2,b+9,'FFFFFF'); ws.mergeCells(rt,b+6,rt+2,b+9); imgs.push({url:url,col:b+5,row:rt-1}); }
@@ -2132,6 +2133,24 @@ function xpBuild2(wb,D){
   imgs.forEach(function(m){ try{ var ext=/png/i.test(m.url.slice(0,20))?'png':'jpeg', id=wb.addImage({base64:m.url,extension:ext}); ws.addImage(id,{tl:{col:m.col+0.1,row:m.row+0.05},ext:{width:112,height:62}}); }catch(e){} });
   return ws;
 }
+/* project photos for the Excel cards: embedded or linked pictures are fetched, cropped to the card's photo box and shrunk; a link the browser cannot read gives no photo */
+async function xpPhoto(url){
+  try{
+    if(!url) return '';
+    var src=url, tmp=null;
+    if(!/^data:image\//i.test(url)){
+      if(!/^https?:/i.test(url)) return '';
+      var ctl=new AbortController(), tm=setTimeout(function(){ ctl.abort(); },9000);
+      var r=await fetch(url,{mode:'cors',signal:ctl.signal}); clearTimeout(tm); if(!r.ok) return '';
+      tmp=URL.createObjectURL(await r.blob()); src=tmp;
+    }
+    return await new Promise(function(res){ var im=new Image(); im.onload=function(){
+      var tw=360, th=Math.round(tw*62/112), w=im.naturalWidth, h=im.naturalHeight, k=Math.max(tw/w,th/h), sw=tw/k, sh=th/k;
+      var cv=document.createElement('canvas'); cv.width=tw; cv.height=th; cv.getContext('2d').drawImage(im,(w-sw)/2,(h-sh)/2,sw,sh,0,0,tw,th);
+      if(tmp) URL.revokeObjectURL(tmp); try{ res(cv.toDataURL('image/jpeg',0.85)); }catch(e){ res(''); } };
+      im.onerror=function(){ if(tmp) URL.revokeObjectURL(tmp); res(''); }; im.src=src; });
+  }catch(e){ return ''; }
+}
 async function xpExport(kind){
   if(!xlCan()){ toast('Your account is not allowed to export to Excel. Ask the administrator.',true); return; }
   if(!model||!model.rows||!model.rows.length){ toast('Load the data first',true); return; }
@@ -2140,6 +2159,8 @@ async function xpExport(kind){
   try{
     var D=xpData(); if(!D.progs.length){ toast('No data for the current filters',true); return; }
     var wb=new ExcelJS.Workbook(); wb.creator='KEC Project Controls Dashboard'; wb.created=new Date();
+    D.photos={}; var pcs=[]; D.progs.forEach(function(g){ g.projs.forEach(function(p){ pcs.push(p.code); }); });
+    if(kind===2) await Promise.all(pcs.map(async function(c){ var pi=model.projects.get(c), u=''; try{ u=pjGet(c)||PHOTO_OVR[c]||(pi&&pi.photo?String(pi.photo).trim():''); }catch(e){} D.photos[c]=await xpPhoto(u); }));
     XPS=await loadJSZip();
     var wsd=(kind===1)?xpBuild1(wb,D):xpBuild2(wb,D);
     xpExtras(wb,D);
