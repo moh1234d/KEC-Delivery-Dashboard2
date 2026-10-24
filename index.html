@@ -956,6 +956,19 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-rsl .rp-ovtd{position:absolute;top:4%;bottom:4%;border-left:2px dashed #2a8c9a}.rp-rsl .rp-ovtl{position:absolute;top:calc(4% - 16px);transform:translateX(-50%);background:#2a8c9a;color:#fff;font:700 11px Carlito,Calibri,Arial,sans-serif;padding:1px 7px;border-radius:8px;white-space:nowrap}
 .rp-rsl .rp-ovdl{position:absolute;top:50%;height:8px;margin-top:-4px;border-radius:4px;background:repeating-linear-gradient(45deg,#d96b58,#d96b58 4px,#ecaa9d 4px,#ecaa9d 8px)}
 .rp-rsl .rp-ovpt{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff;border:4px solid;box-sizing:border-box}
+
+.rp-rsl .rp-tlv:before{background:#ddd6c8}.rp-rsl .rp-tlv i{position:absolute;left:8px;top:7px;height:3px;background:#c8963e}
+.rp-rsl .rp-pgb{flex:1;min-height:0;display:flex;flex-direction:column}
+.rp-rsl .rp-sec{font:700 15px Carlito,Calibri,Arial,sans-serif;color:#14304f;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin:0 0 6px}.rp-rsl .rp-sec:before{content:"";width:9px;height:9px;border-radius:50%;background:#14304f}
+.rp-rsl .rp-sec.rp-aoc{color:#b5402a;margin-top:14px}.rp-rsl .rp-sec.rp-aoc:before{background:#b5402a}
+.rp-rsl .rp-g{display:grid;gap:10px}.rp-rsl .rp-gc{display:flex;flex-direction:column;gap:8px;min-width:0}
+.rp-rsl .rp-cn{background:#fff;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,.10);border-left:5px solid #b5402a;padding:6px 10px 8px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.rp-rsl .rp-cnh{display:flex;gap:6px;align-items:center}.rp-rsl .rp-sev{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:9px;background:#fbe5e2;color:#b5402a}.rp-rsl .rp-pk{font-size:10.5px;font-weight:700;color:#14304f;background:#e8edf4;border-radius:9px;padding:2px 8px}
+.rp-rsl .rp-more{font-size:11.5px;color:#b5402a;font-weight:700;text-align:center;padding:2px}.rp-rsl .rp-cn h5{margin:0;font:700 14px/1.15 Carlito,Calibri,Arial,sans-serif;color:#14304f;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rp-rsl .rp-ab{background:#f6f3ec;border-radius:6px;padding:5px 8px;font-size:12px;line-height:1.25;color:#2c3a50;}.rp-rsl .rp-abt{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.rp-rsl .rp-ab i{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#7a8499;margin-bottom:1px}
+.rp-rsl .rp-ow{font-size:11.5px;color:#6b7587}.rp-rsl .rp-ow b{color:#14304f}
+.rp-rsl .rp-cnn{font-size:12px;color:#9aa3b3;border:1px dashed #cfc8b8;border-radius:8px;padding:10px;text-align:center}
+.rp-rsl .rp-pc{background:#fff;border-radius:14px;padding:3px;box-sizing:border-box;min-height:0;min-width:0;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.05)}.rp-rsl .rp-pc img,.rp-rsl .rp-pc .rp-ld{flex:1;min-height:0;width:100%;object-fit:cover;border-radius:11px;display:block}.rp-rsl .rp-pc .rp-cap{font-size:13px;color:#4a566a;padding:4px 6px 2px}
 @media (max-width:700px){#rptRoot .rp-rsetup .rp-g2{grid-template-columns:1fr}}
 @media print{
  body.rptp>*{display:none!important}
@@ -1020,7 +1033,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V236</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V237</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2440,7 +2453,7 @@ function svModal(it){
   var m=document.createElement('div'); m.className='svm'; m.id='svModal';
   var f=function(id,l,inner,h){ return '<div class="svf'+(h?' h':'')+'"><label for="'+id+'">'+l+'</label>'+inner+'</div>'; };
   m.innerHTML='<div class="svmb" role="dialog" aria-modal="true"><h3>'+(isNew?'Add challenge':'Edit challenge')+'</h3><div class="svmg">'+
-    f('svfCon','Concern','<textarea id="svfCon" rows="2">'+esc(x.concern)+'</textarea>')+f('svfAct','Suggested action','<textarea id="svfAct" rows="3">'+esc(x.action)+'</textarea>')+
+    f('svfCon','Concern','<textarea id="svfCon" rows="2">'+esc(x.concern)+'</textarea>')+f('svfAct','Action taken / planned','<textarea id="svfAct" rows="3">'+esc(x.action)+'</textarea>')+
     f('svfImp','Impact','<select id="svfImp">'+['High','Medium','Low'].map(function(v){ return '<option'+(v===x.impact?' selected':'')+'>'+v+'</option>'; }).join('')+'</select>',1)+
     f('svfPkg','Package / plot','<select id="svfPkg">'+opts.map(function(v){ return '<option value="'+esc(v)+'"'+(v===(x.pkg||opts[0])?' selected':'')+'>'+esc(dp(v))+'</option>'; }).join('')+'</select>',1)+
     f('svfOwn','Owner','<input id="svfOwn" type="text" value="'+esc(x.owner)+'">',1)+f('svfTgt','Target date','<input id="svfTgt" type="date" value="'+esc(x.target||'')+'">',1)+
@@ -3979,7 +3992,7 @@ var cutIso=function(){ return model&&model.snaps&&model.snaps.length?model.snaps
 var P2=function(a){ return a; };
 function defCfg(){
   var C=function(t,code,pk){ return {id:uid(),t:t,code:code,pk:pk||[],ph:[]}; };
-  return {v:1,ov:{on:true,style:'a'},kicker:'Executive progress review',title:'Construction Projects Progress Summary',slides:[
+  return {v:1,pages:'two',ov:{on:true,style:'a'},kicker:'Executive progress review',title:'Construction Projects Progress Summary',slides:[
     {id:uid(),title:'Al-Aliya Projects',frame:'Cluster A',layout:'rows',cards:[C('Plot 142','AL-142'),C('Plot 128 & 129','AL-128/129')],ph:[]},
     {id:uid(),title:'Al-Aliya Projects',frame:'Cluster D',layout:'side',cards:[C('PH 1 (Plots 133, 134, 136)','AL-D',['Plot 133','Plot 134','Plot 136']),C('PH 2 (Plot 138)','AL-D',['Plot 138']),C('PH 3 (Plots 135, 137, 144)','AL-D',['Plot 135','Plot 137','Plot 144']),C('CL-D Overall summary','AL-D')],ph:[]},
     {id:uid(),title:'Al-Aliya Projects',frame:'Cluster D Ph 2',layout:'side',cards:[C('Plots 148, 149, 150','AL-D2',['Plot 148','Plot 149','Plot 150']),C('Plot 093 (Nursery Plot)','AL-D2',['Plot 093'])],ph:[]},
@@ -4008,7 +4021,7 @@ function rcard(c,P,cut){
   if(started&&a.act>=0.9999&&a.ff&&a.ff<=cut) h+='<div class="rp-dl rp-g">'+ed(K+'dl','Completed')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Actual completion</div></div>';
   else if(!started) h+='<div class="rp-nf">'+ed(K+'dl',(!a.pf&&!a.ff)?'No finish dates reported':'Not started yet'+(a.start?' · planned start '+fd(a.start):''))+'</div>';
   else if(dl===0) h+='<div class="rp-dl rp-n">'+ed(K+'dl','On plan')+'</div><div class="rp-tg"></div><div class="rp-ctr"><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned = Forecast</div>';
-  else h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+ed(K+'dl',dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Forecast</div></div>';
+  else{ var xx=Math.max(14,Math.min(100,dl/(RPMX||1)*100-5)); h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+ed(K+'dl',dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div>'+(dl>0?'<div class="rp-tl rp-tlv"><u class="rp-o"></u><i style="width:calc('+xx+'% - 8px)"></i><u class="rp-f" style="left:calc('+xx+'% - 13px);right:auto"></u></div>':'<div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div>')+'<div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned finish</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Forecast finish</div></div>'; }
   return h+'</div>';
 }
 /* ----- photos: the layout adapts to 1, 2, 3 or 4 photos ----- */
@@ -4096,6 +4109,50 @@ function overview(P,cut,N){
   var body=!it.length?'<p style="color:#6b7587;font-size:16px;margin:30px 0 0">No project in the report has a planned completion date at this cut-off.</p>':(st==='b'?ovB(it,cut):ovA(it));
   return '<div class="rp-st">'+ed('ov:title','Projects Overview')+'</div><div class="rp-fr rp-ovfr"><div class="rp-fl">'+ed('ov:sub','Planned completion dates')+' <span style="font-weight:400;font-size:15px;color:#6b7587">· by month and year · data date '+dd(cut)+'</span></div><div class="rp-ovw">'+body+'</div></div><div class="rp-pn">1 / '+N+'</div>';
 }
+
+/* ----- two pages per slide: page 1 = progress information + area of concern, page 2 = progress photos ----- */
+var RPMX=1, CNMAX=2;
+function pgMode(){ return (RP.cfg&&RP.cfg.pages==='one')?'one':'two'; }
+function slideMax(s,P,cut){ var m=1; (s.cards||[]).forEach(function(c){ var rr=cardRows(P,c); if(!rr.length) return; var a=agg(rr,cut,true); if(a.pf&&a.ff){ var d=dayDiff(a.pf,a.ff); if(d>m) m=d; } }); return m; }
+function cnOff(c){ return c.nc===true; }
+function cardConcerns(c,cut,s){
+  if(cnOff(c)) return [];
+  var set=(c.pk||[]).slice(), L=[], sib=!set.length&&(s.cards||[]).some(function(o){ return o!==c&&o.code===c.code&&(o.pk||[]).length; });
+  try{ svChalLoad(); L=svChalList({code:c.code,lc:String(c.code).toLowerCase(),ok:function(p){ return set.length?(!p||set.some(function(n){ return svPkgMatch(n,p); })):(sib?!p:true); }},cut).all; }catch(e){ L=[]; }
+  if(set.length) L=L.filter(function(x){ return x.pkg||set.some(function(n){ var nn=svN(n); return nn&&svHas(svN((x.concern||'')+' '+(x.action||'')),nn); }); });
+  L=L.filter(function(x){ return !/^(closed|complete)/i.test(x.status||'')&&/high|critical/i.test(x.impact||''); });
+  L.sort(function(a,b){ return (/critical/i.test(b.impact)?1:0)-(/critical/i.test(a.impact)?1:0); });
+  return L;
+}
+function cnHtml(x){ var cr=/critical/i.test(x.impact||''); return '<div class="rp-cn"><div class="rp-cnh"><span class="rp-sev">'+(cr?'Critical':'High')+'</span>'+(x.pkg?'<span class="rp-pk">'+esc(x.pkg)+'</span>':'')+'</div><h5>'+esc(x.concern||'')+'</h5>'+(x.action?'<div class="rp-ab"><i>Action taken</i><div class="rp-abt">'+esc(x.action)+'</div></div>':'')+(x.owner?'<div class="rp-ow">Owner: <b>'+esc(x.owner)+'</b></div>':'')+'</div>'; }
+function pageProgress(s,i,N,P,cut){
+  var cards=s.cards||[]; RPMX=slideMax(s,P,cut); var body='', first=true;
+  for(var a=0;a<cards.length;a+=4){
+    var ch=cards.slice(a,a+4), k=ch.length, cols=ch.map(function(c){ return cardConcerns(c,cut,s); }), any=cols.some(function(x){ return x.length; });
+    if(first){ body+='<div class="rp-sec">'+ed('s:'+s.id+':sec','Progress information')+'</div>'; first=false; }
+    body+='<div class="rp-g" style="grid-template-columns:repeat('+k+',1fr)">'+ch.map(function(c){ return rcard(c,P,cut); }).join('')+'</div>';
+    if(!any&&cols.some(function(x,j){ return !cnOff(ch[j]); })) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-cnn" style="text-align:left">No open high / critical concerns at this cut-off.</div>';
+    if(any) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-g" style="grid-template-columns:repeat('+k+',1fr);align-items:start">'+cols.map(function(L){ return '<div class="rp-gc">'+(L.length?L.slice(0,CNMAX).map(cnHtml).join('')+(L.length>CNMAX?'<div class="rp-more">+ '+(L.length-CNMAX)+' more high / critical concern'+(L.length-CNMAX>1?'s':'')+' in the Site view</div>':''):'<div class="rp-cnn">No high / critical concerns</div>')+'</div>'; }).join('')+'</div>';
+  }
+  var nk='s:'+s.id+':note', note=ov(nk,'');
+  return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+'</div><div class="rp-pgb">'+body+'</div></div>'+((RP.ed||note)?'<div class="rp-note">'+ed(nk,'')+'</div>':'')+'<div class="rp-pn">'+(i+1)+' / '+N+'</div>';
+}
+function slidePhotos(s){ var o=[]; (s.cards||[]).forEach(function(c){ (c.ph||[]).forEach(function(p){ o.push({p:p,cap:c.t||''}); }); }); (s.ph||[]).forEach(function(p){ o.push({p:p,cap:s.frame||''}); }); return o.slice(0,12); }
+function pagePhotos(s,i,N){
+  var L=slidePhotos(s), n=L.length, por=n&&L[0].p.h>L[0].p.w, cols=por?Math.min(n,4):(n<=2?n:(n===3?3:(n===4?2:4)));
+  var cell=function(x){ var d=RP.ph[x.p.id]; return '<div class="rp-pc">'+(d?'<img alt="" src="'+d+'">':'<div class="rp-ld"></div>')+(x.cap?'<div class="rp-cap">'+esc(x.cap)+'</div>':'')+'</div>'; };
+  return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+' <span style="font-weight:400;font-size:15px;color:#6b7587">· Progress photos</span></div><div class="rp-pgb" style="display:grid;grid-template-columns:repeat('+cols+',1fr);grid-auto-rows:1fr;gap:12px">'+L.map(cell).join('')+'</div></div><div class="rp-pn">'+(i+1)+' / '+N+'</div>';
+}
+function buildPages(P,cut){
+  var out=[], sl=RP.cfg.slides||[], two=pgMode()==='two';
+  if(ovOn()) out.push(function(i,N){ return {h:overview(P,cut,N),nt:false,ix:i}; });
+  sl.forEach(function(s){
+    if(!two){ out.push(function(i,N){ return {h:slide(s,i,N,P,cut),nt:!s.title}; }); return; }
+    out.push(function(i,N){ return {h:pageProgress(s,i,N,P,cut),nt:!s.title}; });
+    if(slidePhotos(s).length) out.push(function(i,N){ return {h:pagePhotos(s,i,N),nt:!s.title}; });
+  });
+  return out;
+}
 /* ----- window ----- */
 function ensure(){
   var r=document.getElementById('rptRoot'); if(r) return r;
@@ -4116,7 +4173,7 @@ function drawView(){
   var body=document.getElementById('rptBody'); if(!RP.cfg) return;
   var cut=RP.cut, P=pool(cut), sl=RP.cfg.slides||[], w=Math.min(1122,Math.max(320,body.clientWidth-24)), sc=w/1122;
   var wrap=function(h,extra){ return '<div class="rp-rs" style="width:'+w+'px;height:'+(793*sc)+'px"><div class="rp-rsl'+(extra||'')+'" style="transform:scale('+sc+')">'+h+'</div></div>'; };
-  var oo=ovOn()?1:0, NN=sl.length+oo; body.innerHTML=wrap(cover())+(oo?wrap(overview(P,cut,NN)):'')+sl.map(function(s,i){ return wrap(slide(s,i+oo,NN,P,cut),s.title?'':' rp-nt'); }).join('');
+  var pg=buildPages(P,cut), NN=pg.length; body.innerHTML=wrap(cover())+pg.map(function(f,i){ var r=f(i,NN); return wrap(r.h,r.nt?' rp-nt':''); }).join('');
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+(RP.dirty?' · unsaved settings':'');
   body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!Object.keys(RP.ov.v).length; var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
 }
@@ -4144,7 +4201,7 @@ async function open(){
   actLog('report','Opened the progress report'); var r=ensure(); r.classList.add('on'); RP.cut=cutIso(); RP.mode='view'; if(RP.ov.cut!==RP.cut) RP.ov={cut:RP.cut,v:{}};
   if(!RP.cut){ document.getElementById('rptBody').innerHTML='<p style="color:#fff;padding:20px">Load the progress data first.</p>'; return; }
   if(!RP.loaded) await load();
-  setMode('view'); fetchPhotos(); ovWarm();
+  try{ svChalLoad(); }catch(e){} setMode('view'); fetchPhotos(); ovWarm();
 }
 function close(){ var r=document.getElementById('rptRoot'); if(r) r.classList.remove('on'); }
 function pdf(){
@@ -4173,6 +4230,7 @@ function drawSetup(){
   var opt=function(sel){ return projs.map(function(c){ return '<option value="'+esc(c)+'"'+(c===sel?' selected':'')+'>'+esc(pname(c))+' ('+esc(c)+')</option>'; }).join(''); };
   var h=(RP.msg?'<div class="rp-msg">'+esc(RP.msg)+'</div>':'')+
    '<div class="rp-bx"><h5>Cover page</h5><div class="rp-g2"><div><label>Small heading</label><input type="text" data-f="kicker" value="'+esc(c0.kicker||'')+'"></div><div style="grid-column:span 2"><label>Title</label><input type="text" data-f="title" value="'+esc(c0.title||'')+'"></div></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The data date follows the latest cut-off in the dashboard ('+esc(dd(cutIso()))+').</p></div>'+
+   '<div class="rp-bx"><h5>Pages for each slide</h5><select data-f="pages"><option value="two"'+(pgMode()==='two'?' selected':'')+'>Two pages: progress information with Area of concern, then a progress photos page</option><option value="one"'+(pgMode()==='one'?' selected':'')+'>One page: cards and photos together (the previous layout)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Area of concern lists the open High and Critical challenges (from the Site view) under the card of the same project or package. The progress photos page appears only when the slide has photos.</p></div>'+
    '<div class="rp-bx"><h5>Overview page (page 1)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="ov.on"'+(ovOn()?' checked':'')+'> Include an overview page: every project by planned completion month, with a photo</label>'+
    '<label>Style</label><select data-f="ov.style"><option value="a"'+(((c0.ov&&c0.ov.style)||"a")==="a"?' selected':'')+'>Style A: milestones evenly spaced, alternating above and below</option><option value="b"'+(((c0.ov&&c0.ov.style)||"a")==="b"?' selected':'')+'>Style B: true time scale with delay bars and the data date</option></select>'+
    '<p style="margin:8px 0 0;font-size:12px;color:#5b6784">Each card below appears as one project (the picture is the project\'s default photo, the same one shown on the dashboard cards, not a progress photo). Untick a card to leave it out.</p></div>';
@@ -4185,6 +4243,7 @@ function drawSetup(){
        '<details style="margin-top:6px"><summary style="cursor:pointer;font-size:13px;color:#0b1f4d">Packages: '+(set.length?esc(set.join(', ')):'all packages of the project')+'</summary><div class="rp-pk">'+all.map(function(p){ return '<label><input type="checkbox" data-f="c.pk" data-s="'+si+'" data-c="'+ci+'" value="'+esc(p)+'"'+(set.indexOf(p)>=0?' checked':'')+'> '+esc(p)+'</label>'; }).join('')+'</div><small style="color:#5b6784">Tick nothing to include every package of the project.</small></details>'+
        (s.layout!=='side'?'<div class="rp-row"><b style="font-size:12px;color:#5b6784">Photos</b>'+thumbs(c.ph,si,ci)+'</div>':'')+
        '<label style="display:flex;gap:6px;align-items:center;margin-top:6px"><input type="checkbox" data-f="c.nov" data-s="'+si+'" data-c="'+ci+'"'+((c.nov===true||(c.nov==null&&/overall|summary/i.test(c.t||'')))?'':' checked')+'> Show in the overview page</label>'+
+       '<label style="display:flex;gap:6px;align-items:center;margin-top:4px"><input type="checkbox" data-f="c.nc" data-s="'+si+'" data-c="'+ci+'"'+(cnOff(c)?'':' checked')+'> Show Area of concern under this card</label>'+
        '<div class="rp-row"><button class="rp-sb" data-r="cup" data-s="'+si+'" data-c="'+ci+'">↑</button><button class="rp-sb" data-r="cdn" data-s="'+si+'" data-c="'+ci+'">↓</button><button class="rp-sb rp-d" data-r="cdel" data-s="'+si+'" data-c="'+ci+'">Remove card</button></div></div>';
     });
     h+=(s.layout==='side'?'<div class="rp-row"><b style="font-size:12px;color:#5b6784">Photos for this slide</b>'+thumbs(s.ph,si,-1)+'</div>':'')+
@@ -4212,6 +4271,8 @@ function onChange(e){
   else if(f==='ov.on'){ RP.cfg.ov=RP.cfg.ov||{style:'a'}; RP.cfg.ov.on=!!t.checked; dirty(); }
   else if(f==='ov.style'){ RP.cfg.ov=RP.cfg.ov||{on:true}; RP.cfg.ov.style=t.value; dirty(); }
   else if(f==='c.nov'){ cardOf(t).nov=!t.checked; dirty(); }
+  else if(f==='c.nc'){ cardOf(t).nc=!t.checked; dirty(); }
+  else if(f==='pages'){ RP.cfg.pages=t.value; dirty(); }
   else if(t.getAttribute&&t.getAttribute('data-r')==='file') addPhotos(t);
 }
 function shrink(file){
