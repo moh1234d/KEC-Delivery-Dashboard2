@@ -1033,7 +1033,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V237</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V238</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4125,14 +4125,17 @@ function cardConcerns(c,cut,s){
   return L;
 }
 function cnHtml(x){ var cr=/critical/i.test(x.impact||''); return '<div class="rp-cn"><div class="rp-cnh"><span class="rp-sev">'+(cr?'Critical':'High')+'</span>'+(x.pkg?'<span class="rp-pk">'+esc(x.pkg)+'</span>':'')+'</div><h5>'+esc(x.concern||'')+'</h5>'+(x.action?'<div class="rp-ab"><i>Action taken</i><div class="rp-abt">'+esc(x.action)+'</div></div>':'')+(x.owner?'<div class="rp-ow">Owner: <b>'+esc(x.owner)+'</b></div>':'')+'</div>'; }
+var RPBUD={};
 function pageProgress(s,i,N,P,cut){
   var cards=s.cards||[]; RPMX=slideMax(s,P,cut); var body='', first=true;
   for(var a=0;a<cards.length;a+=4){
-    var ch=cards.slice(a,a+4), k=ch.length, cols=ch.map(function(c){ return cardConcerns(c,cut,s); }), any=cols.some(function(x){ return x.length; });
+    var ch=cards.slice(a,a+4), k=ch.length, full=ch.map(function(c){ return cardConcerns(c,cut,s); });
+    var cols=ch.map(function(c,j){ var L=full[j], left=Math.max(0,2-(RPBUD[c.code]||0)), shown=L.slice(0,left); RPBUD[c.code]=(RPBUD[c.code]||0)+shown.length; return {shown:shown,more:L.length-shown.length}; });
+    var any=cols.some(function(x){ return x.shown.length||x.more>0; });
     if(first){ body+='<div class="rp-sec">'+ed('s:'+s.id+':sec','Progress information')+'</div>'; first=false; }
     body+='<div class="rp-g" style="grid-template-columns:repeat('+k+',1fr)">'+ch.map(function(c){ return rcard(c,P,cut); }).join('')+'</div>';
-    if(!any&&cols.some(function(x,j){ return !cnOff(ch[j]); })) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-cnn" style="text-align:left">No open high / critical concerns at this cut-off.</div>';
-    if(any) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-g" style="grid-template-columns:repeat('+k+',1fr);align-items:start">'+cols.map(function(L){ return '<div class="rp-gc">'+(L.length?L.slice(0,CNMAX).map(cnHtml).join('')+(L.length>CNMAX?'<div class="rp-more">+ '+(L.length-CNMAX)+' more high / critical concern'+(L.length-CNMAX>1?'s':'')+' in the Site view</div>':''):'<div class="rp-cnn">No high / critical concerns</div>')+'</div>'; }).join('')+'</div>';
+    if(any) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-g" style="grid-template-columns:repeat('+k+',1fr);align-items:start">'+cols.map(function(x,j){ var h=x.shown.map(cnHtml).join(''); if(x.more>0) h+='<div class="rp-more">+ '+x.more+' more high / critical concern'+(x.more>1?'s':'')+' in the Site view</div>'; if(!h) h='<div class="rp-cnn">'+(cnOff(ch[j])?'Not shown':'No high / critical concerns')+'</div>'; return '<div class="rp-gc">'+h+'</div>'; }).join('')+'</div>';
+    else if(ch.some(function(c){ return !cnOff(c); })) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-cnn" style="text-align:left">No open high / critical concerns at this cut-off.</div>';
   }
   var nk='s:'+s.id+':note', note=ov(nk,'');
   return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+'</div><div class="rp-pgb">'+body+'</div></div>'+((RP.ed||note)?'<div class="rp-note">'+ed(nk,'')+'</div>':'')+'<div class="rp-pn">'+(i+1)+' / '+N+'</div>';
@@ -4143,7 +4146,7 @@ function pagePhotos(s,i,N){
   var cell=function(x){ var d=RP.ph[x.p.id]; return '<div class="rp-pc">'+(d?'<img alt="" src="'+d+'">':'<div class="rp-ld"></div>')+(x.cap?'<div class="rp-cap">'+esc(x.cap)+'</div>':'')+'</div>'; };
   return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+' <span style="font-weight:400;font-size:15px;color:#6b7587">· Progress photos</span></div><div class="rp-pgb" style="display:grid;grid-template-columns:repeat('+cols+',1fr);grid-auto-rows:1fr;gap:12px">'+L.map(cell).join('')+'</div></div><div class="rp-pn">'+(i+1)+' / '+N+'</div>';
 }
-function buildPages(P,cut){
+function buildPages(P,cut){ RPBUD={};
   var out=[], sl=RP.cfg.slides||[], two=pgMode()==='two';
   if(ovOn()) out.push(function(i,N){ return {h:overview(P,cut,N),nt:false,ix:i}; });
   sl.forEach(function(s){
