@@ -905,7 +905,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-rsl .rp-col-ph{flex:1;min-height:0}
 .rp-rsl .rp-ph{display:grid;gap:10px;width:100%;height:100%}
 .rp-rsl .rp-ph>div{background:#fff;border-radius:14px;padding:3px;box-sizing:border-box;min-height:0;min-width:0;box-shadow:0 0 0 1px rgba(0,0,0,.05)}
-.rp-rsl .rp-ph img{width:100%;height:100%;object-fit:cover;border-radius:11px;display:block}
+.rp-rsl .rp-ph img{width:100%;height:100%;object-fit:contain;border-radius:11px;display:block}
 .rp-rsl .rp-ph .rp-ld{width:100%;height:100%;border-radius:11px;background:#e6e1d6}
 .rp-rsl .rp-rc{background:#fff;border-radius:8px;border-top:3px solid #14304f;box-shadow:0 1px 5px rgba(0,0,0,.10);padding:8px 14px 10px;font-size:14px;box-sizing:border-box}
 .rp-rsl .rp-rc h4{margin:0 0 5px;text-align:left;font:700 16px Carlito,Calibri,Arial,sans-serif;color:#14304f}
@@ -938,7 +938,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 #rptRoot .rp-rsetup .rp-sb{border:1px solid #c7cddb;background:#fff;border-radius:7px;padding:5px 9px;font:600 12px Inter,Arial,sans-serif;cursor:pointer;color:#0b1f4d}
 #rptRoot .rp-rsetup .rp-sb.rp-d{color:#a3321f;border-color:#e2b4aa}#rptRoot .rp-rsetup .rp-sb.rp-p{background:#0b1f4d;color:#fff;border-color:#0b1f4d}
 #rptRoot .rp-rsetup .rp-th{position:relative;width:74px;height:54px;border-radius:8px;overflow:hidden;border:1px solid #c7cddb}
-#rptRoot .rp-rsetup .rp-th img{width:100%;height:100%;object-fit:cover}#rptRoot .rp-rsetup .rp-th button{position:absolute;right:3px;top:3px;border:0;background:rgba(0,0,0,.65);color:#fff;border-radius:50%;width:18px;height:18px;min-width:0;min-height:0;padding:0;margin:0;cursor:pointer;font-size:10px;line-height:18px;text-align:center}
+#rptRoot .rp-rsetup .rp-th img{width:100%;height:100%;object-fit:contain;background:#fff}#rptRoot .rp-rsetup .rp-th button{position:absolute;right:3px;top:3px;border:0;background:rgba(0,0,0,.65);color:#fff;border-radius:50%;width:18px;height:18px;min-width:0;min-height:0;padding:0;margin:0;cursor:pointer;font-size:10px;line-height:18px;text-align:center}
 #rptRoot .rp-rsetup .rp-pk{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:13px}#rptRoot .rp-rsetup .rp-pk label{display:inline-flex;gap:5px;align-items:center;font-weight:400;color:#14213d;margin:0}
 #rptRoot .rp-rsetup .rp-msg{font-size:13px;margin:8px auto;max-width:980px;padding:8px 12px;border-radius:8px;background:#fff6dd;color:#6b4a00}
 #rptPageStyle{display:none}
@@ -968,7 +968,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-rsl .rp-ab{background:#f6f3ec;border-radius:6px;padding:5px 8px;font-size:12px;line-height:1.25;color:#2c3a50;}.rp-rsl .rp-abt{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.rp-rsl .rp-ab i{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#7a8499;margin-bottom:1px}
 .rp-rsl .rp-ow{font-size:11.5px;color:#6b7587}.rp-rsl .rp-ow b{color:#14304f}
 .rp-rsl .rp-cnn{font-size:12px;color:#9aa3b3;border:1px dashed #cfc8b8;border-radius:8px;padding:10px;text-align:center}
-.rp-rsl .rp-pc{background:#fff;border-radius:14px;padding:3px;box-sizing:border-box;min-height:0;min-width:0;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.05)}.rp-rsl .rp-pc img,.rp-rsl .rp-pc .rp-ld{flex:1;min-height:0;width:100%;object-fit:cover;border-radius:11px;display:block}.rp-rsl .rp-pc .rp-cap{font-size:13px;color:#4a566a;padding:4px 6px 2px}
+.rp-rsl .rp-pc{background:#fff;border-radius:14px;padding:3px;box-sizing:border-box;min-height:0;min-width:0;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.05)}.rp-rsl .rp-pc img,.rp-rsl .rp-pc .rp-ld{flex:1;min-height:0;width:100%;object-fit:contain;border-radius:11px;display:block}.rp-rsl .rp-pc .rp-cap{font-size:13px;color:#4a566a;padding:4px 6px 2px}
 @media (max-width:700px){#rptRoot .rp-rsetup .rp-g2{grid-template-columns:1fr}}
 @media print{
  body.rptp>*{display:none!important}
@@ -1033,7 +1033,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V239</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V240</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4017,18 +4017,18 @@ function rcard(c,P,cut){
   var h='<div class="rp-rc"><h4>'+T+'</h4>'+
     '<div class="rp-rr"><span>Planned</span><div class="rp-rt"><i style="width:'+(wp!=null?wp:bw(a.plan))+'%;background:#a9b6c8"></i></div><b>'+ed(K+'plan',pct(a.plan))+'</b></div>'+
     '<div class="rp-rr"><span>Actual</span><div class="rp-rt"><i style="width:'+(wa!=null?wa:bw(a.act))+'%;background:#14304f"></i></div><b>'+ed(K+'act',pct(a.act))+'</b></div>'+
-    '<div class="rp-rv"><span>Variance</span><b class="'+vcls+'">'+ed(K+'var',zero?'0.00':sgn(gap,2,''))+'</b></div>';
+    '';
   if(started&&a.act>=0.9999&&a.ff&&a.ff<=cut) h+='<div class="rp-dl rp-g">'+ed(K+'dl','Completed')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Actual completion</div></div>';
   else if(!started) h+='<div class="rp-nf">'+ed(K+'dl',(!a.pf&&!a.ff)?'No finish dates reported':'Not started yet'+(a.start?' · planned start '+fd(a.start):''))+'</div>';
   else if(dl===0) h+='<div class="rp-dl rp-n">'+ed(K+'dl','On plan')+'</div><div class="rp-tg"></div><div class="rp-ctr"><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned = Forecast</div>';
-  else{ h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+ed(K+'dl',dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div>'+'<div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div>'+'<div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned finish</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Forecast finish</div></div>'; }
+  else{ h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+ed(K+'dl','')+'</div>'+'<div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div>'+'<div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned finish</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Forecast finish</div></div>'; }
   return h+'</div>';
 }
 /* ----- photos: the layout adapts to 1, 2, 3 or 4 photos ----- */
 function phHtml(list,lay){
   list=(list||[]).slice(0,4); var n=list.length; if(!n) return '';
   var cell=function(p,x){ var d=RP.ph[p.id]; return '<div'+(x?' style="'+x+'"':'')+'>'+(d?'<img alt="" src="'+d+'">':'<div class="rp-ld"></div>')+'</div>'; };
-  var por=list[0].h>list[0].w, st, big=false;
+  var por=list.filter(function(p){ return p.h>p.w; }).length*2>n, st, big=false;
   if(n===1) st='grid-template-columns:1fr;grid-template-rows:1fr';
   else if(n===2) st=(lay==='rows'||por)?'grid-template-columns:1fr 1fr;grid-template-rows:1fr':'grid-template-columns:1fr;grid-template-rows:1fr 1fr';
   else if(n===3){ st='grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr'; big=true; }
@@ -4062,7 +4062,7 @@ function ovItems(P,cut){
 }
 function ovTxt(x,col){
   var d=x.dl>0?'<b style="color:#b5402a">−'+x.dl+' d</b>':x.dl<0?'<b style="color:#2f8f5b">+'+(-x.dl)+' d early</b>':'<b style="color:#2f8f5b">on plan</b>';
-  return '<div class="rp-ovd" style="color:'+col+'">'+ovMY(x.pf)+'</div><div class="rp-ovn">'+esc(x.t)+'</div>'+(x.fr?'<div class="rp-ovf">'+esc(x.fr)+'</div>':'')+'<div class="rp-ovs">Forecast '+ovMY(x.ff)+' · '+d+'<br>Progress '+pct(x.act)+'</div>';
+  return '<div class="rp-ovd" style="color:'+col+'">'+ovMY(x.pf)+'</div><div class="rp-ovn">'+esc(x.t)+'</div>'+(x.fr?'<div class="rp-ovf">'+esc(x.fr)+'</div>':'')+'<div class="rp-ovs">Forecast '+ovMY(x.ff)+'<br>Progress '+pct(x.act)+'</div>';
 }
 function ovImg(x,h){
   var u=''; try{ u=pjGet(x.code)||PHOTO_OVR[x.code]||''; var pi=model.projects.get(x.code); if(!u&&pi&&pi.photo) u=String(pi.photo).trim(); }catch(e){}
@@ -4142,7 +4142,7 @@ function pageProgress(s,i,N,P,cut){
 }
 function slidePhotos(s){ var o=[]; (s.cards||[]).forEach(function(c){ (c.ph||[]).forEach(function(p){ o.push({p:p,cap:c.t||''}); }); }); (s.ph||[]).forEach(function(p){ o.push({p:p,cap:s.frame||''}); }); return o.slice(0,12); }
 function pagePhotos(s,i,N){
-  var L=slidePhotos(s), n=L.length, por=n&&L[0].p.h>L[0].p.w, cols=por?Math.min(n,4):(n<=2?n:(n===3?3:(n===4?2:4)));
+  var L=slidePhotos(s), n=L.length, por=n&&(L.filter(function(x){ return x.p.h>x.p.w; }).length*2>n), cols=por?Math.min(n,4):(n<=2?n:(n===3?3:(n===4?2:4)));
   var cell=function(x){ var d=RP.ph[x.p.id]; return '<div class="rp-pc">'+(d?'<img alt="" src="'+d+'">':'<div class="rp-ld"></div>')+(x.cap?'<div class="rp-cap">'+esc(x.cap)+'</div>':'')+'</div>'; };
   return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+' <span style="font-weight:400;font-size:15px;color:#6b7587">· Progress photos</span></div><div class="rp-pgb" style="display:grid;grid-template-columns:repeat('+cols+',1fr);grid-auto-rows:1fr;gap:12px">'+L.map(cell).join('')+'</div></div><div class="rp-pn">'+(i+1)+' / '+N+'</div>';
 }
