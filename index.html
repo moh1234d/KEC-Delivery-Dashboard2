@@ -1033,7 +1033,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V238</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V239</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4021,7 +4021,7 @@ function rcard(c,P,cut){
   if(started&&a.act>=0.9999&&a.ff&&a.ff<=cut) h+='<div class="rp-dl rp-g">'+ed(K+'dl','Completed')+'</div><div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div><div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Actual completion</div></div>';
   else if(!started) h+='<div class="rp-nf">'+ed(K+'dl',(!a.pf&&!a.ff)?'No finish dates reported':'Not started yet'+(a.start?' · planned start '+fd(a.start):''))+'</div>';
   else if(dl===0) h+='<div class="rp-dl rp-n">'+ed(K+'dl','On plan')+'</div><div class="rp-tg"></div><div class="rp-ctr"><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned = Forecast</div>';
-  else{ var xx=Math.max(14,Math.min(100,dl/(RPMX||1)*100-5)); h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+ed(K+'dl',dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div>'+(dl>0?'<div class="rp-tl rp-tlv"><u class="rp-o"></u><i style="width:calc('+xx+'% - 8px)"></i><u class="rp-f" style="left:calc('+xx+'% - 13px);right:auto"></u></div>':'<div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div>')+'<div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned finish</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Forecast finish</div></div>'; }
+  else{ h+='<div class="rp-dl'+(dl>0?'':' rp-g')+'">'+ed(K+'dl',dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</div>'+'<div class="rp-tl"><u class="rp-o"></u><u class="rp-f"></u></div>'+'<div class="rp-td"><div><b>'+ed(K+'pf',fd(a.pf))+'</b>Planned finish</div><div><b>'+ed(K+'ff',fd(a.ff))+'</b>Forecast finish</div></div>'; }
   return h+'</div>';
 }
 /* ----- photos: the layout adapts to 1, 2, 3 or 4 photos ----- */
