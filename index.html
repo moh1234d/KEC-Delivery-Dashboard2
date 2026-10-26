@@ -1068,7 +1068,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V255</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V256</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4214,6 +4214,9 @@ document.addEventListener('focusout',function(e){
   var rt=document.getElementById('rptRoot'); if(!rt||!rt.classList.contains('on')||RP.mode!=='view') return;
   setTimeout(function(){ if(!document.activeElement||!document.activeElement.getAttribute||!document.activeElement.getAttribute('data-ek')) drawViewB(); },0);
 });
+function cardOk(c){ var t=String((c&&c.t)||'').trim(); return !!(c&&c.code&&t&&!/^new card$/i.test(t)); }
+function hasDraft(){ return (RP.cfg.slides||[]).some(function(s){ return (s.cards||[]).some(function(c){ return !cardOk(c); }); }); }
+function visCfg(cfg){ return Object.assign({},cfg,{slides:(cfg.slides||[]).map(function(s){ return Object.assign({},s,{cards:(s.cards||[]).filter(cardOk)}); })}); }
 function tplB(){ return !!(RP.cfg&&RP.cfg.tpl==='b'); }
 function bc(){ var b=(RP.cfg&&RP.cfg.b)||{}; return {dept:b.dept!=null?b.dept:'Delivery Department',l1:b.l1!=null?b.l1:'Monthly',title:b.title!=null?b.title:'Construction\nProgress Report',sub:b.sub!=null?b.sub:'Executive Progress Update',end:b.end!==false}; }
 function p2(n){ return (n<10?'0':'')+n; }
@@ -4460,7 +4463,8 @@ document.addEventListener('pointerdown',function(e){
 document.addEventListener('pointermove',function(e){ if(!TD) return; var dx=(e.clientX-TD.sx)/TD.k2, dy=(e.clientY-TD.sy)/TD.k2; if(Math.abs(dx)+Math.abs(dy)>2) TD.mv=1; TD.box.style.left=(TD.l+dx)+'px'; TD.box.style.top=(TD.t+dy)+'px'; });
 function tdUp(e){ if(!TD) return; var d=TD; TD=null; if(!d.mv) return; var dx=parseFloat(d.box.style.left)-d.l, dy=parseFloat(d.box.style.top)-d.t, l=tbLay(d.k); l.dx=(l.dx||0)+dx; l.dy=(l.dy||0)+dy; drawViewB(); }
 document.addEventListener('pointerup',tdUp); document.addEventListener('pointercancel',tdUp);
-function drawViewB(){
+function drawViewB(){ if(!RP._v&&hasDraft()){ RP._v=1; var real=RP.cfg; RP.cfg=visCfg(real); try{ return drawViewB0(); }finally{ RP.cfg=real; RP._v=0; } } return drawViewB0(); }
+function drawViewB0(){
   var body=document.getElementById('rptBody'), cut=RP.cut, P=pool(cut), SC=bScenes(P,cut), w=Math.min(PW,Math.max(320,body.clientWidth-24)), sc=w/PW;
   body.innerHTML=SC.map(function(s){ return '<div class="rp-rs" style="width:'+w+'px;height:'+(PH*sc)+'px"><div class="rp-rsl rp-b" style="width:'+PW+'px;height:'+PH+'px;transform:scale('+sc+');background:'+s.bg+'">'+scHtml(s.sc)+'</div></div>'; }).join('');
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+' · '+sizeOf().n+(RP.dirty?' · unsaved settings':'');
@@ -4522,7 +4526,7 @@ async function pvClean(q){
   q.oid=q.id; q.id=id; return 1;
 }
 /* ----- photo controls in the preview ----- */
-function pvOwner(si,ci){ var s=(RP.cfg.slides||[])[si]; if(!s) return null; var t=ci>=0?(s.cards||[])[ci]:s; if(t) t.ph=t.ph||[]; return t; }
+function pvOwner(si,ci){ var s=(RP.cfg.slides||[])[si]; if(!s) return null; var t=ci>=0?(s.cards||[]).filter(cardOk)[ci]:s; if(t) t.ph=t.ph||[]; return t; }
 async function pvStore(file){ var o=await shrink(file), id=uid(); RP.ph[id]=o.data; try{ await accCall('PUT','/report-photo',{id:id,data:o.data},30000); }catch(e){ RP.pvLocal=1; } return {id:id,w:o.w,h:o.h}; }
 function pvDrop(p){ if(!p) return; if(p.oid){ delete RP.ph[p.oid]; accCall('PUT','/report-photo',{id:p.oid,data:null},15000).catch(function(){}); } delete RP.ph[p.id]; accCall('PUT','/report-photo',{id:p.id,data:null},15000).catch(function(){}); }
 async function pvCleanRun(btn){
@@ -4643,7 +4647,7 @@ async function pptx(){
   try{
     if(document.activeElement&&document.activeElement.blur) document.activeElement.blur(); RP.ed=false;
     if(!(await loadPptx())) throw new Error('The PowerPoint library could not be loaded. Check the internet connection and try again.');
-    var cut=RP.cut, S=bScenes(pool(cut),cut), pp=new window.PptxGenJS(), my=monthYear(cut);
+    var cut=RP.cut, real0=RP.cfg; RP.cfg=visCfg(real0); var S; try{ S=bScenes(pool(cut),cut); }finally{ RP.cfg=real0; } var pp=new window.PptxGenJS(), my=monthYear(cut);
     pp.defineLayout({name:'KEC_PG',width:PW/96,height:PH/96}); pp.layout='KEC_PG'; pp.title='Monthly Construction Progress Report'; pp.company='KEC Delivery Department'; pp.author='KEC Delivery Department';
     for(var i=0;i<S.length;i++){ var sl=pp.addSlide(); sl.background={color:hx(S[i].bg)}; for(var j=0;j<S[i].sc.length;j++) await pptPrim(pp,sl,S[i].sc[j]); }
     var blob=await pp.write({outputType:'blob'}), a=document.createElement('a'), nm='KEC_Monthly_Construction_Progress_Report_'+(my.m.charAt(0)+my.m.slice(1).toLowerCase())+'_'+my.y+'.pptx';
@@ -4671,7 +4675,7 @@ function ensure(){
   return r;
 }
 function drawView(){
-  var body=document.getElementById('rptBody'); if(!RP.cfg) return; if(tplB()) return drawViewB();
+  var body=document.getElementById('rptBody'); if(!RP.cfg) return; if(!RP._v&&hasDraft()){ RP._v=1; var real=RP.cfg; RP.cfg=visCfg(real); try{ return drawView(); }finally{ RP.cfg=real; RP._v=0; } } if(tplB()) return drawViewB();
   var cut=RP.cut, P=pool(cut), sl=RP.cfg.slides||[], w=Math.min(1122,Math.max(320,body.clientWidth-24)), sc=w/1122;
   var wrap=function(h,extra){ return '<div class="rp-rs" style="width:'+w+'px;height:'+(793*sc)+'px"><div class="rp-rsl'+(extra||'')+'" style="transform:scale('+sc+')">'+h+'</div></div>'; };
   var pg=buildPages(P,cut), NN=pg.length; body.innerHTML=wrap(cover())+pg.map(function(f,i){ var r=f(i,NN); return wrap(r.h,r.nt?' rp-nt':''); }).join('');
@@ -4728,7 +4732,7 @@ function thumbs(list,s,c){
 }
 function drawSetup(){
   var el=document.getElementById('rptSetup'), c0=RP.cfg, projs=Array.from(model.projects.keys()).sort();
-  var opt=function(sel){ return projs.map(function(c){ return '<option value="'+esc(c)+'"'+(c===sel?' selected':'')+'>'+esc(pname(c))+' ('+esc(c)+')</option>'; }).join(''); };
+  var opt=function(sel){ return (sel?'':'<option value="" selected>Choose a project…</option>')+projs.map(function(c){ return '<option value="'+esc(c)+'"'+(c===sel?' selected':'')+'>'+esc(pname(c))+' ('+esc(c)+')</option>'; }).join(''); };
   var h=(RP.msg?'<div class="rp-msg">'+esc(RP.msg)+'</div>':'')+
    tplBox()+(tplB()?'':'<div class="rp-bx"><h5>Cover page</h5><div class="rp-g2"><div><label>Small heading</label><input type="text" data-f="kicker" value="'+esc(c0.kicker||'')+'"></div><div style="grid-column:span 2"><label>Title</label><input type="text" data-f="title" value="'+esc(c0.title||'')+'"></div></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The data date follows the latest cut-off in the dashboard ('+esc(dd(cutIso()))+').</p></div>')+
    (tplB()?'':'<div class="rp-bx"><h5>Pages for each slide</h5><select data-f="pages"><option value="two"'+(pgMode()==='two'?' selected':'')+'>Two pages: progress information with Area of concern, then a progress photos page</option><option value="one"'+(pgMode()==='one'?' selected':'')+'>One page: cards and photos together (the previous layout)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Area of concern lists the open High and Critical challenges (from the Site view) under the card of the same project or package. The progress photos page appears only when the slide has photos.</p></div>')+
@@ -4740,7 +4744,7 @@ function drawSetup(){
      '<div><label>Arrangement</label><select data-f="s.layout" data-s="'+si+'"><option value="side"'+(s.layout==='side'?' selected':'')+'>Cards on the left, photos together on the right</option><option value="rows"'+(s.layout==='rows'?' selected':'')+'>One row per card, with its photos beside it</option><option value="cols"'+(s.layout==='cols'?' selected':'')+'>Cards across, each with its photos below</option></select></div></div>';
     (s.cards||[]).forEach(function(c,ci){
       var all=pkgsOf(c.code), set=(c.pk||[]);
-      h+='<div class="rp-cd"><div class="rp-g2"><div><label>Card title</label><input type="text" data-f="c.t" data-s="'+si+'" data-c="'+ci+'" value="'+esc(c.t||'')+'"></div><div style="grid-column:span 2"><label>Project</label><select data-f="c.code" data-s="'+si+'" data-c="'+ci+'">'+opt(c.code)+'</select></div></div>'+
+      h+='<div class="rp-cd">'+(cardOk(c)?'':'<div class="rp-msg" style="margin:0 0 8px">This card is not shown in the report yet: give it a title (not "New card") and choose a project.</div>')+'<div class="rp-g2"><div><label>Card title</label><input type="text" data-f="c.t" data-s="'+si+'" data-c="'+ci+'" value="'+esc(c.t||'')+'"></div><div style="grid-column:span 2"><label>Project</label><select data-f="c.code" data-s="'+si+'" data-c="'+ci+'">'+opt(c.code)+'</select></div></div>'+
        '<details style="margin-top:6px"><summary style="cursor:pointer;font-size:13px;color:#0b1f4d">Packages: '+(set.length?esc(set.join(', ')):'all packages of the project')+'</summary><div class="rp-pk">'+all.map(function(p){ return '<label><input type="checkbox" data-f="c.pk" data-s="'+si+'" data-c="'+ci+'" value="'+esc(p)+'"'+(set.indexOf(p)>=0?' checked':'')+'> '+esc(p)+'</label>'; }).join('')+'</div><small style="color:#5b6784">Tick nothing to include every package of the project.</small></details>'+
        (s.layout!=='side'?'<div class="rp-row"><b style="font-size:12px;color:#5b6784">Photos</b>'+thumbs(c.ph,si,ci)+'</div>':'')+
        '<label style="display:flex;gap:6px;align-items:center;margin-top:6px"><input type="checkbox" data-f="c.nov" data-s="'+si+'" data-c="'+ci+'"'+((c.nov===true||(c.nov==null&&/overall|summary/i.test(c.t||'')))?'':' checked')+'> Show in the overview page</label>'+
@@ -4814,7 +4818,7 @@ function onClick(e){
   RP.confirm='';
   if(a==='sadd') S.push({id:uid(),title:'',frame:'New slide',layout:'side',cards:[],ph:[]});
   else if(a==='sup') mv(S,si,-1); else if(a==='sdn') mv(S,si,1); else if(a==='sdel') S.splice(si,1);
-  else if(a==='cadd') s.cards.push({id:uid(),t:'New card',code:Array.from(model.projects.keys()).sort()[0],pk:[],ph:[]});
+  else if(a==='cadd'){ s.cards.push({id:uid(),t:'',code:'',pk:[],ph:[]}); RP.msg='A new card was added at the end of the slide. It stays out of the report until it has a title and a project.'; }
   else if(a==='cup') mv(s.cards,ci,-1); else if(a==='cdn') mv(s.cards,ci,1); else if(a==='cdel') s.cards.splice(ci,1);
   else if(a==='prem'){ var tgt=ci>=0?s.cards[ci]:s, i=+t.getAttribute('data-i'), p=tgt.ph[i]; if(p){ tgt.ph.splice(i,1); delete RP.ph[p.id]; accCall('PUT','/report-photo',{id:p.id,data:null},15000).catch(function(){}); } }
   else return;
