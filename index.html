@@ -1068,7 +1068,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V254</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V255</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4315,30 +4315,33 @@ function sceneOverview(P,cut){
   });
   return {sc:sc,bg:CRM};
 }
+function isAll(c){ return /overall/i.test((c&&c.t)||''); }
 function progCard(sc,c,P,cut,x,y,w,h){
-  var K='c:'+c.id+':', d=bCardData(c,P,cut), tf=fit(c.t||'',w-32,22,14.5,true,1.1);
-  sc.push(bR(x,y,w,h,{f:'#fff',rd:12,sh:1}));
-  sc.push(bT(x+16,y+10,w-32,22,tf.s,{fs:14.5,b:1,up:1,k:K+'t'}));
-  var by=[y+46,y+72], rows=[['Planned',GD,'plan'],['Actual',NV,'act']];
+  var K='c:'+c.id+':', d=bCardData(c,P,cut), zv=Math.max(1,Math.min(1.45,h/118)), z=Math.max(1,Math.min(zv,w*.0029)), al=isAll(c), tf=fit(c.t||'',w-32-(al?74:0),22*z,14.5*z,true,1.1);
+  sc.push(al?bR(x,y,w,h,{f:'#fbf6ea',bd:GD,rd:12,sh:1}):bR(x,y,w,h,{f:'#fff',rd:12,sh:1}));
+  if(al) sc.push(bT(x+w-86,y+13*zv,72,12,'Overall',{fs:7.5*z,c:GD,b:1,ls:1.6,up:1,al:'r',k:K+'tag'}));
+  sc.push(bT(x+16,y+10*zv,w-32-(al?74:0),22*z,tf.s,{fs:14.5*z,b:1,up:1,k:K+'t'}));
+  var by=[y+46*zv,y+72*zv], rows=[['Planned',GD,'plan'],['Actual',NV,'act']], th=6*z, lw=78*z, rw=66*z, trk=al?'#e6dfcd':TRK;
   rows.forEach(function(r,j){
-    sc.push(bT(x+16,by[j]-3,62,12,r[0],{fs:7.5,c:GR,b:1,ls:1.3,up:1,k:K+'l'+r[2]}));
-    if(d.empty){ sc.push(bT(x+78,by[j]-4,w-92,14,'Data not reported',{fs:10.5,c:GR,k:K+'dnr'+r[2]})); return; }
-    var wv=numOf(ov(K+r[2],null)), fr=wv!=null?wv/100:d[r[2]], bx=x+78, bw=w-78-66;
-    sc.push(bR(bx,by[j],bw,6,{f:TRK,rd:3}));
-    if(fr>0) sc.push(bR(bx,by[j],Math.max(5,bw*Math.min(1,fr)),6,{f:r[1],rd:3}));
-    sc.push(bT(x+w-60,by[j]-6,46,18,pct(d[r[2]]),{fs:12.5,b:1,al:'r',k:K+r[2]}));
+    sc.push(bT(x+16,by[j]-3*z,62*z,12*z,r[0],{fs:7.5*z,c:GR,b:1,ls:1.3,up:1,k:K+'l'+r[2]}));
+    if(d.empty){ sc.push(bT(x+lw,by[j]-4*z,w-lw-14,14*z,'Data not reported',{fs:10.5*z,c:GR,k:K+'dnr'+r[2]})); return; }
+    var wv=numOf(ov(K+r[2],null)), fr=wv!=null?wv/100:d[r[2]], bx=x+lw, bw=w-lw-rw;
+    sc.push(bR(bx,by[j],bw,th,{f:trk,rd:th/2}));
+    if(fr>0) sc.push(bR(bx,by[j],Math.max(5,bw*Math.min(1,fr)),th,{f:r[1],rd:th/2}));
+    sc.push(bT(x+w-60*z,by[j]-6*z,46*z,18*z,pct(d[r[2]]),{fs:12.5*z,b:1,al:'r',k:K+r[2]}));
   });
-  sc.push(bT(x+16,y+h-24,w-32,12,d.empty?'No progress data at this cut-off':d.line,{fs:7.5,c:GR,ls:.8,up:1,k:K+'fin'}));
+  var ft=d.empty?'No progress data at this cut-off':d.line, ffs=Math.max(6,Math.min(7.5*z,((w-32)/Math.max(1,ft.length)-.4)/.58)), fls=ffs<7?.4:.8;
+  sc.push(bT(x+16,y+h-24*zv,w-32,12*z,ft,{fs:ffs,c:GR,ls:fls,up:1,k:K+'fin'}));
 }
 function concernCard(sc,o,x,y,w,h,sid,i){
-  var x1=o.x, K='n:'+sid+':'+i+':', iw=w-34, hd=fit(cnHead(x1,o.lab),iw,14,10.5,true,1.1);
+  var x1=o.x, K='n:'+sid+':'+i+':', z=Math.max(1,Math.min(1.3,h/124)), iw=w-34, hd=fit(cnHead(x1,o.lab),iw,14*z,10.5*z,true,1.1);
   sc.push(bR(x,y,w,h,{f:'#fff',rd:12,sh:1})); sc.push(bR(x,y,6,h,{f:RD}));
-  sc.push(bT(x+20,y+10,iw,14,hd.s,{fs:10.5,c:RD,b:1,k:K+'h'}));
-  var tf=fit(x1.concern||'',iw,36,13,true,1.18), th=Math.round(tf.n*13*1.18)+1;
-  sc.push(bT(x+20,y+28,iw,th,tf.s,{fs:13,b:1,lh:1.18,k:K+'t'}));
+  sc.push(bT(x+20,y+10*z,iw,14*z,hd.s,{fs:10.5*z,c:RD,b:1,k:K+'h'}));
+  var tf=fit(x1.concern||'',iw,36*z,13*z,true,1.18), th=Math.round(tf.n*13*z*1.18)+1, ty=y+28*z;
+  sc.push(bT(x+20,ty,iw,th,tf.s,{fs:13*z,b:1,lh:1.18,k:K+'t'}));
   if(x1.action){
-    var ya=y+28+th+9; sc.push(bT(x+20,ya,iw,12,'Action taken',{fs:9.5,c:GD,b:1,ls:1.2,up:1,k:K+'al'}));
-    var ah=y+h-(ya+15)-8; if(ah>=11){ var af=fit(x1.action,iw,ah,9.5,false,1.28); sc.push(bT(x+20,ya+15,iw,ah,af.s,{fs:9.5,c:GR,lh:1.28,k:K+'a'})); }
+    var ya=ty+th+9*z; sc.push(bT(x+20,ya,iw,12*z,'Action taken',{fs:9.5*z,c:GD,b:1,ls:1.2,up:1,k:K+'al'}));
+    var ah=y+h-(ya+15*z)-8; if(ah>=11){ var af=fit(x1.action,iw,ah,9.5*z,false,1.28); sc.push(bT(x+20,ya+15*z,iw,ah,af.s,{fs:9.5*z,c:GR,lh:1.28,k:K+'a'})); }
   }
 }
 function sceneProgress(s,P,cut,pg){
@@ -4350,21 +4353,23 @@ function sceneProgress(s,P,cut,pg){
   else sc.push(bT(48,148,222,100,s.frame||'',{fs:22,c:GD,up:1,ls:1.4,lh:1.15,k:K+'frame'}));
   sc.push(bR(48,306,92,2,{f:'#ffffff',a:.55}));
   sc.push(bT(48,326,222,50,'Progress &\nareas of concern',{fs:17,c:'#fff',b:1,up:1,lh:1.2,k:K+'side'}));
-  var X0=312, W=PW-312-32, gap=14, cols=n<=2?1:(n===4?2:3), rows=Math.max(1,Math.ceil(n/cols)), ch=rows>2?100:(PH<760?110:118), cwid=(W-(cols-1)*gap)/cols;
+  var X0=312, W=PW-312-32, gap=14, cols=n<=2?1:(n===4?2:3), rows=Math.max(1,Math.ceil(n/cols)), ch0=rows>2?100:(PH<760?110:118), cwid=(W-(cols-1)*gap)/cols, bot=PH-59, hasC=cards.some(function(c){ return !cnOff(c); }), list=[], cc=n<=2?2:3, cwc=(W-(cc-1)*gap)/cc, hc0=118, rC=0, ch=ch0, hc=hc0;
+  if(hasC){
+    cards.forEach(function(c){ var L=cardConcerns(c,cut,s), left=Math.max(0,CNMAX-(RPBUD[c.code]||0)), shn=L.slice(0,left); RPBUD[c.code]=(RPBUD[c.code]||0)+shn.length; shn.forEach(function(x){ list.push({x:x,lab:c.t}); }); });
+    var av0=bot-(56+rows*ch0+(rows-1)*gap+52), mxR=Math.max(1,Math.floor((av0+12)/(hc0+12)));
+    if(list.length){ rC=Math.ceil(list.length/cc); if(rC>mxR){ list=list.slice(0,mxR*cc); rC=mxR; } } else rC=0;
+  }
+  /* use the free height: the cards grow with the page instead of leaving a gap */
+  var nat=56+rows*ch0+(rows-1)*gap+(hasC?52+(rC?rC*hc0+(rC-1)*12:70):0), extra=Math.max(0,bot-nat);
+  if(!hasC) ch=Math.min(ch0*1.6,ch0+extra/rows);
+  else{ var gP=Math.min(ch0*.5,extra*.5/rows); ch=ch0+gP; if(rC) hc=hc0+Math.min(hc0*.7,(extra-gP*rows)/rC); }
   sc.push(bT(X0,28,500,18,'Progress summary',{fs:13,b:1,up:1,ls:1.5,k:K+'sec'}));
   cards.forEach(function(c,i){ progCard(sc,c,P,cut,X0+(i%cols)*(cwid+gap),56+Math.floor(i/cols)*(ch+gap),cwid,ch); });
-  var yEnd=56+rows*ch+(rows-1)*gap;
-  if(cards.some(function(c){ return !cnOff(c); })){
-    var yh=yEnd+26, list=[], more=0;
+  if(hasC){
+    var yh=56+rows*ch+(rows-1)*gap+26, top=yh+26;
     sc.push(bT(X0,yh,500,18,'Priority concerns',{fs:13,b:1,up:1,ls:1.5,k:K+'aoc'}));
-    cards.forEach(function(c){ var L=cardConcerns(c,cut,s), left=Math.max(0,CNMAX-(RPBUD[c.code]||0)), shn=L.slice(0,left); RPBUD[c.code]=(RPBUD[c.code]||0)+shn.length; more+=L.length-shn.length; shn.forEach(function(x){ list.push({x:x,lab:c.t}); }); });
-    var top=yh+26, avail=PH-59-top, cc=n<=2?2:3, cwc=(W-(cc-1)*gap)/cc;
-    if(!list.length) { sc.push(bR(X0,top,W,Math.min(70,avail),{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,Math.min(70,avail),'No open high / critical concerns at this cut-off',{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
-    else{
-      var rC=Math.ceil(list.length/cc), mxR=Math.max(1,Math.floor((avail+12)/124)); if(rC>mxR){ more+=list.length-mxR*cc; list=list.slice(0,mxR*cc); rC=mxR; }
-      var hc=Math.min(150,Math.floor((avail-(rC-1)*12)/rC));
-      list.forEach(function(o,i){ concernCard(sc,o,X0+(i%cc)*(cwc+gap),top+Math.floor(i/cc)*(hc+12),cwc,hc,s.id,i); });
-    }
+    if(!list.length){ var nh=Math.min(70,bot-top); sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,'No open high / critical concerns at this cut-off',{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
+    else list.forEach(function(o,i){ concernCard(sc,o,X0+(i%cc)*(cwc+gap),top+Math.floor(i/cc)*(hc+12),cwc,hc,s.id,i); });
   }
   sc.push(bT(X0,PH-35,400,12,'KEC | Delivery Department',{fs:8,c:GR,up:1,ls:1,k:K+'ft'}));
   if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1});
