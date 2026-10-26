@@ -1053,6 +1053,7 @@ body.rptp .rp-gr{display:none!important}
 .svdn{padding:14px 16px}.svdn h3{margin:0 0 6px;font-size:15px}.svdr{display:flex;align-items:center;gap:18px}.svlg{font-size:13px;line-height:2}.svlg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
 .svchl{display:flex;flex-direction:column;gap:8px}.svch{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card)}.svcb{flex:1;min-width:0}.svcb p{margin:3px 0;font-size:12.5px;color:var(--mut)}.svcb small{color:var(--mut);font-size:11.5px}
 .svimp{font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;flex:none;margin-top:2px}.svimp.bad{background:var(--bad-bg);color:var(--bad)}.svimp.warn{background:var(--warn-bg);color:var(--warn)}.svimp.good{background:var(--good-bg);color:var(--good)}
+.svpgh .btn,.svtb .btn,.svch .btn{background:#0b2a5e;color:#fff;border:0;border-radius:8px;padding:7px 14px;font-weight:700;font-size:12.5px;cursor:pointer;white-space:nowrap}.svpgh .btn:hover,.svtb .btn:hover,.svch .btn:hover{background:#12408a}.svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
 .svmg{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}.svf{grid-column:span 2}.svf.h{grid-column:span 1}.svmg label{display:block;font-size:11px;letter-spacing:.06em;color:var(--mut);font-weight:700;text-transform:uppercase;margin:6px 0 3px}.svmg textarea,.svmg input,.svmg select{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
@@ -1081,7 +1082,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V260</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V261</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2395,12 +2396,76 @@ function svEmpty(arr,what,sheet){
   if(!(arr||[]).length) return '<div class="card plain"><div class="empty">The loaded database has no <b>'+sheet+'</b> sheet, so there is no '+what+' data. Data source now: <i>'+esc(source||'—')+'</i>. '+sheetsSeen()+'<br>If you replaced the SharePoint file, press <b>Refresh</b> under “Live data” in the left panel; if it still shows this, the link is serving the old file.</div></div>';
   return '<div class="card plain"><div class="empty">No '+what+' data for this selection ('+arr.length+' rows loaded for other projects/packages).</div></div>';
 }
+/* Site view for a whole program (or several chosen projects): the same sections as one project, one row per project */
+function svGrpScope(c){ return {code:c,lc:String(c).toLowerCase(),filt:false,names:[],single:true,ok:function(){ return true; }}; }
+function pSiteGroup(rows,coreRows,cut){
+  var codes=[]; rows.forEach(function(r){ if(codes.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) codes.push(r.code); });
+  codes.sort(function(a,b){ return pname(a)<pname(b)?-1:1; });
+  var name=state.program?state.program+' · program':'Selected projects ('+codes.length+')';
+  var core=(coreRows&&coreRows.length)?coreRows:rows, A=agg(core), AF=agg(rows);
+  var ST={red:['bad','At risk'],amber:['warn','Watch'],green:['good','On track'],done:['good','Complete'],pending:['warn','Not started']};
+  var banner='<div class="svscope"><span class="svs1">VIEWING</span><div><small>'+(state.program?'PROGRAM':'PROJECTS')+'</small><b>'+esc(state.program||'Selected projects')+'</b></div><div><small>PROJECTS</small><b>'+codes.length+'</b></div><div><small>PACKAGES</small><b>'+rows.length+'</b></div><span class="svs2">Open a project in the table below for its full site dashboard</span></div>';
+  var ovr=dayDiff(A.ff,A.pf), gap=(A.act-A.plan)*100;
+  var kp='<div class="grid g-ov svk" style="grid-template-columns:repeat(5,1fr)">'+
+    kpi('Planned progress',pct(A.plan),'planned to '+d2(cut))+
+    kpi('Actual progress',pct(A.act),'vs plan '+(Math.abs(gap)<0.05?'0.0 %':sgn(gap,1,' %')),gap<-0.05?'bad':'good')+
+    kpi('SPI',A.spi==null?'—':A.spi.toFixed(2),'earned ÷ planned',spiCls(A.spi))+
+    kpi('Planned completion',d2(A.pf),'latest planned finish')+
+    kpi('Forecast completion',d2(A.ff),ovr<0?(-ovr)+' d after plan':ovr>0?ovr+' d ahead of plan':'on the planned date',ovr<0?'bad':ovr>0?'good':'')+'</div>';
+  /* per-project rows */
+  var CH={}, openAll=[];
+  codes.forEach(function(c){ var L=svChalList(svGrpScope(c),cut).all.filter(function(x){ return !/^closed/i.test(x.status); }); CH[c]=L; L.forEach(function(x){ openAll.push(Object.assign({_c:c},x)); }); });
+  var tb=codes.map(function(c){
+    var rp=core.filter(function(r){ return r.code===c; }); if(!rp.length) rp=rows.filter(function(r){ return r.code===c; });
+    var a=agg(rp,undefined,true), g=(a.act-a.plan)*100, dl=dayDiff(a.ff,a.pf), st=ST[pkgStatus(a.act,a.pv,a.ev,a.spi,a.maxDelay)]||ST.green, hi=CH[c].filter(function(x){ return x.impact==='High'; }).length;
+    return '<tr><td><b>'+esc(pname(c))+'</b><br><small>'+esc(c)+' · '+rows.filter(function(r){ return r.code===c; }).length+(rows.filter(function(r){ return r.code===c; }).length===1?' package':' packages')+'</small></td><td class="n">'+svPctBar(a.plan)+'</td><td class="n">'+svPctBar(a.act)+'</td><td class="n '+(g<-0.05?'bad':'good')+'">'+(Math.abs(g)<0.05?'0.0':sgn(g,1,''))+' %</td><td class="n">'+(a.spi==null?'—':a.spi.toFixed(2))+'</td><td class="n">'+d2(a.ff)+'<br><small>'+(dl<0?(-dl)+' d late':dl>0?dl+' d early':'on plan')+'</small></td><td><span class="svimp '+st[0]+'">'+st[1]+'</span></td><td class="n">'+CH[c].length+(hi?' <small class="bad">('+hi+' high)</small>':'')+'</td><td><button type="button" class="btn" data-svpj="'+esc(c)+'">Open</button></td></tr>';
+  }).join('');
+  var PT=sec('svP','Projects',codes.length+(codes.length===1?' project':' projects')+' · status by project')+svTable(['Project','Planned','Actual','Variance','SPI','Forecast finish','Status','Open concerns',''],tb);
+  /* finance */
+  var FV=null; try{ FV=finOf(rows,cut,true); }catch(e){}
+  var pv=null, eac=null, anyX=false;
+  if(FV&&FV.lines.length){ FV.lines.forEach(function(l){ if(l.pvoS!=null||l.eacS!=null) anyX=true; pv=(pv||0)+(l.pvoS||0); eac=(eac||0)+(l.eacS||0); }); }
+  var fin='<div class="grid g-ov svk" style="grid-template-columns:repeat(4,1fr)">'+
+    kpi('Awarded contract value',fm(AF.cv),'contract value before variations')+
+    kpi('Approved VOs',fm(AF.vo),AF.cv?pct(AF.vo/AF.cv)+' of awarded value':'')+
+    kpi('Potential VOs',anyX?fm(pv):'n/a',anyX?'pending / anticipated':'not in the contracts file')+
+    kpi('Revised contract value',fm(AF.rv),'awarded + approved VOs')+
+    kpi('Expected at completion',anyX?fm(eac):'n/a',anyX?'revised value + potential VOs':'not in the contracts file')+
+    kpi('Certified amount',fm(AF.gc),pct(AF.cert)+' of revised value','',false,'accent')+
+    kpi('Balance amount',fm(AF.bal),AF.rv?pct(1-AF.cert)+' of revised value':'')+'</div>';
+  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>forecast finish after planned finish</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
+  /* trackers by project */
+  var sumP=function(arr,tk,f){ return codes.map(function(c){ var L=svLatest(arr,svGrpScope(c),cut,tk); return {c:c,L:L,t:L.length?f(L):null}; }); };
+  var e1r=sumP(cur.e1,'type',function(L){ return {tot:svSum(L,'tot'),sub:svSum(L,'sub'),app:svSum(L,'app'),rev:svSum(L,'rev'),rvw:svSum(L,'rvw'),ns:svSum(L,'ns')}; }), anyE1=e1r.some(function(x){ return x.t; });
+  var E1=sec('svE1','Engineering tracker · Technical submittals','by project · latest update at or before the cut-off')+(anyE1?svTable(['Project','Total','Submitted','Approved','Revise / resubmit','Under review','Not submitted'],e1r.map(function(x){ var t=x.t; return '<tr><td>'+esc(pname(x.c))+'</td>'+(t?'<td class="n">'+t.tot+'</td><td class="n">'+t.sub+'</td><td class="n">'+t.app+'</td><td class="n">'+t.rev+'</td><td class="n">'+t.rvw+'</td><td class="n">'+t.ns+'</td>':'<td class="n" colspan="6">no update loaded</td>')+'</tr>'; }).join('')):svEmpty(cur.e1,'technical-submittal','Technical Submittals'));
+  var e2r=sumP(cur.e2,'',function(L){ return {tot:svSum(L,'tot'),loc:svSum(L,'loc'),ooc:svSum(L,'ooc'),ppo:svSum(L,'ppo'),apo:svSum(L,'apo'),pdl:svSum(L,'pdl'),adl:svSum(L,'adl')}; }), anyE2=e2r.some(function(x){ return x.t; });
+  var E2=sec('svE2','Procurement tracker · Material procurement','by project · latest update at or before the cut-off')+(anyE2?svTable(['Project','Total material','Local','Out of country','Planned PO','PO issued','Planned delivery','Delivered'],e2r.map(function(x){ var t=x.t; return '<tr><td>'+esc(pname(x.c))+'</td>'+(t?'<td class="n">'+t.tot+'</td><td class="n">'+t.loc+'</td><td class="n">'+t.ooc+'</td><td class="n">'+t.ppo+'</td><td class="n">'+t.apo+'</td><td class="n">'+t.pdl+'</td><td class="n">'+t.adl+'</td>':'<td class="n" colspan="7">no update loaded</td>')+'</tr>'; }).join('')):svEmpty(cur.e2,'material-procurement','Material Procurement'));
+  var qa=codes.map(function(c){ var L=svLatest(cur.qa,svGrpScope(c),cut,'type'), q=function(re){ var l=L.filter(function(x){ return re.test(String(x.type)); }); return {t:svSum(l,'tot'),c:svSum(l,'cl'),o:svSum(l,'op')}; }; return {c:c,any:L.length>0,n:q(/ncr/i),s:q(/site\s*instr|^sor|site\s*obs/i)}; });
+  var nq={t:0,c:0,o:0}, si={t:0,c:0,o:0}; qa.forEach(function(x){ ['t','c','o'].forEach(function(k){ nq[k]+=x.n[k]; si[k]+=x.s[k]; }); });
+  var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open')+(qa.some(function(x){ return x.any; })?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>'+svTable(['Project','NCR total','NCR open','SOR total','SOR open'],qa.map(function(x){ return '<tr><td>'+esc(pname(x.c))+'</td><td class="n">'+x.n.t+'</td><td class="n">'+x.n.o+'</td><td class="n">'+x.s.t+'</td><td class="n">'+x.s.o+'</td></tr>'; }).join('')):svEmpty(cur.qa,'quality','Quality Statistics'));
+  var mpAny=(cur.mp||[]).some(function(x){ return codes.some(function(c){ return String(c).toLowerCase()===String(x.code).toLowerCase(); }); });
+  var M=sec('svM','Manpower','planned vs actual · all projects together · variance = planned − actual')+'<div class="card plain">'+(mpAny?'<div class="chart-box"><canvas id="svMp"></canvas></div>':'<div class="empty">Manpower data has not been loaded yet.</div>')+'</div>';
+  /* challenges across the group */
+  var O={High:0,Medium:1,Low:2}; openAll.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
+  var ch=sec('svC','Challenges','open concerns across the '+(state.program?'program':'selected projects'))+'<div class="svbar"><span>'+openAll.length+' open challenge'+(openAll.length===1?'':'s')+'</span><span class="sp"></span><span class="sub">To add or edit a challenge, open the project</span></div>'+
+    (openAll.length?'<div class="svchl">'+openAll.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b><small>'+esc(pname(x._c))+(x.pkg?' · '+esc(x.pkg):'')+(x.owner?' · '+esc(x.owner):'')+(x.target?' · target '+d2(x.target):'')+'</small>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'</div><button type="button" class="btn" data-svpj="'+esc(x._c)+'">Open project</button></div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges.</div></div>');
+  var tools='<div class="svbar svtools"><span class="sp"></span><button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
+  var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(name)+'</span><em>Page '+n+' of 2</em></div>'; };
+  var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+d2(cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
+  SV.cur={grp:true,codes:codes,sc:{code:'',lc:'',ok:function(){ return true; },single:true},open:openAll,all:openAll,cut:cut};
+  return '<h2 class="pgtitle sm">Site view</h2><p class="pgsub">'+esc(name)+' · cut-off '+d2(cut)+'</p>'+tools+
+    '<div class="sitepg">'+pageHd(1)+banner+kp+PT+sec('svF','Contract & financial','')+fin+T+pageFt+'</div>'+
+    '<div class="sitepg">'+pageHd(2)+E1+E2+Q+M+ch+pageFt+'</div>';
+}
+
 function pSiteBuild(rows,coreRows,cut){
   var head=function(t,sub){ return '<h2 class="pgtitle sm">'+t+'</h2><p class="pgsub">'+sub+'</p>'; };
+  if(selList('P').length!==1&&(state.program||selList('P').length>1)) return pSiteGroup(rows,coreRows,cut);
   if(selList('P').length!==1){
     var ps=[]; rows.forEach(function(r){ if(ps.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) ps.push(r.code); });
     ps.sort(function(a,b){ return pname(a)<pname(b)?-1:1; });
-    return head('Site view','Choose one project to open its site dashboard')+'<div class="card plain"><div class="svpick">'+ps.map(function(c){ return '<button type="button" class="svpb" data-svpj="'+esc(c)+'"><b>'+esc(pname(c))+'</b><small>'+esc(prog(c))+' · '+esc(c)+'</small></button>'; }).join('')+'</div></div>';
+    var pg={}, po=[]; ps.forEach(function(c){ var g=prog(c); if(!pg[g]){ pg[g]=[]; po.push(g); } pg[g].push(c); }); po.sort();
+    return head('Site view','Open a whole program, or choose one project')+po.map(function(g){ return '<div class="card plain svpg"><div class="svpgh"><div><b>'+esc(g)+'</b><small>'+pg[g].length+(pg[g].length===1?' project':' projects')+'</small></div><button type="button" class="btn" data-svprog="'+esc(g)+'">Open program overview</button></div><div class="svpick">'+pg[g].map(function(c){ return '<button type="button" class="svpb" data-svpj="'+esc(c)+'"><b>'+esc(pname(c))+'</b><small>'+esc(c)+'</small></button>'; }).join('')+'</div></div>'; }).join('');
   }
   var code=state.project, pi=model.projects.get(code)||{}, sc=svScope(rows,cut);
   svChalLoad();
@@ -2477,7 +2542,7 @@ function groupBy0(L,kf){ var m={},o=[]; L.forEach(function(x){ var k=kf(x), n=sv
 function svCfgs(){
   var sc=SV.cur.sc, cut=SV.cur.cut, ink=cssv('--mut'), line=cssv('--line'), acc=cssv('--accent'), bad=cssv('--bad'), out={};
   var base=function(){ return {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:ink,boxWidth:12}}},scales:{x:{ticks:{color:ink},grid:{color:line}},y:{ticks:{color:ink},grid:{color:line}}}}; };
-  var by={}; (cur.mp||[]).forEach(function(x){ if(String(x.code).toLowerCase()!==sc.lc||x.d>cut||!sc.ok(x.pkg)) return; var o=by[x.d]||(by[x.d]={pl:0,ac:0}); o.pl+=x.pl||0; o.ac+=x.ac||0; });
+  var by={}; (cur.mp||[]).forEach(function(x){ if((SV.cur.grp?SV.cur.codes.map(function(q){ return String(q).toLowerCase(); }).indexOf(String(x.code).toLowerCase())<0:String(x.code).toLowerCase()!==sc.lc)||x.d>cut||!sc.ok(x.pkg)) return; var o=by[x.d]||(by[x.d]={pl:0,ac:0}); o.pl+=x.pl||0; o.ac+=x.ac||0; });
   var ds=Object.keys(by).sort().slice(-14);
   if(ds.length) out.svMp=function(){ return {type:'bar',data:{labels:ds.map(function(d){ return [d2(d),'Var '+(by[d].pl-by[d].ac>0?'+':'')+(by[d].pl-by[d].ac)]; }),datasets:[{label:'Planned',data:ds.map(function(d){ return by[d].pl; }),backgroundColor:'#b9b09e'},{label:'Actual',data:ds.map(function(d){ return by[d].ac; }),backgroundColor:acc}]},options:base()}; };
   var P=[],A=[],Od=[],L=[];
@@ -2556,8 +2621,9 @@ async function svExport(){
   var buf=await wb.xlsx.writeBuffer(); if(await xpSave(buf,'KEC_Challenges_'+sc.code.replace(/[^A-Za-z0-9]+/g,'_')+'_'+SV.cur.cut+'.xlsx')) toast('Challenges exported');
 }
 document.addEventListener('click',function(e){
-  var t=e.target.closest&&e.target.closest('[data-svpj],[data-svadd],[data-svedit],[data-svxl],[data-svcancel],[data-svsave],#svPrint'); if(!t) return;
-  if(t.hasAttribute('data-svpj')){ setSel('P',[t.getAttribute('data-svpj')]); setSel('C',[]); setSel('K',[]); render(); window.scrollTo({top:0}); }
+  var t=e.target.closest&&e.target.closest('[data-svpj],[data-svprog],[data-svadd],[data-svedit],[data-svxl],[data-svcancel],[data-svsave],#svPrint'); if(!t) return;
+  if(t.hasAttribute('data-svprog')){ state.program=t.getAttribute('data-svprog'); setSel('P',[]); setSel('C',[]); setSel('K',[]); render(); window.scrollTo({top:0}); }
+  else if(t.hasAttribute('data-svpj')){ setSel('P',[t.getAttribute('data-svpj')]); setSel('C',[]); setSel('K',[]); render(); window.scrollTo({top:0}); }
   else if(t.hasAttribute('data-svadd')){ if(chCan()) svModal(null); }
   else if(t.hasAttribute('data-svedit')){ var id=t.getAttribute('data-svedit'), it=(SV.cur.all||[]).filter(function(x){ return x.id===id; })[0]; if(it&&chCan()) svModal(it); }
   else if(t.hasAttribute('data-svxl')){ svExport(); }
