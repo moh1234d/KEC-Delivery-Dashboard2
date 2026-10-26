@@ -982,6 +982,13 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-vr{color:#b9544b}
 .rp-va{position:absolute;display:flex;align-items:center;justify-content:center;background:#ba965a;color:#fff;font:700 16px Carlito,Calibri,Arial,sans-serif;border-radius:6px;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.3)}
 body.rptp .rp-vc,body.rptp .rp-va{display:none!important}
+.rp-tb{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;background:#142c3b;color:#fff;padding:7px 16px;font-size:13px}
+.rp-tb[hidden]{display:none}
+.rp-tb button{font:inherit;background:#fff;color:#142c3b;border:0;border-radius:5px;padding:3px 10px;cursor:pointer;margin:0 3px}
+.rp-tb button:disabled{opacity:.45;cursor:default}
+.rp-tb .rp-tbh{opacity:.7;margin-left:auto}
+.rp-gr{position:absolute;left:-9px;top:-9px;width:18px;height:18px;line-height:18px;text-align:center;font-style:normal;font-size:12px;background:#ba965a;color:#fff;border-radius:4px;cursor:move;z-index:5;touch-action:none;box-shadow:0 0 3px rgba(0,0,0,.5)}
+body.rptp .rp-gr{display:none!important}
 .rp-editing .rp-vc{display:none}
 .rp-vc{cursor:move;touch-action:none}
 .rp-vc.rp-drag{opacity:1;background:rgba(20,44,59,.25);outline:3px dashed #ba965a;outline-offset:-3px}
@@ -1061,7 +1068,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V253</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V254</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4240,7 +4247,7 @@ function scHtml(sc){
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
-    return '<div style="position:absolute;'+pos+'display:flex;align-items:'+al+';overflow:hidden"><div style="'+st+'">'+(p.k?ed(p.k,p.d):esc(p.s))+'</div></div>';
+    return '<div style="position:absolute;'+pos+'display:flex;align-items:'+al+';overflow:'+(RP.ed||p.ovr?'visible':'hidden')+'"'+(p.k&&RP.ed?' data-tk="'+esc(p.k)+'"':'')+'>'+(p.k&&RP.ed?'<i class="rp-gr" data-gk="'+esc(p.k)+'" title="Drag to move this text">✥</i>':'')+'<div style="'+st+'">'+(p.k?ed(p.k,p.d):esc(p.s))+'</div></div>';
   }).join('');
 }
 /* ----- concern card (default for every template) ----- */
@@ -4405,6 +4412,14 @@ function sceneEnd(){
   sc.push(bR(64,450,96,3,{f:GD}));
   return {sc:sc,bg:NV};
 }
+function applyLay(out){
+  var L=(RP.ov&&RP.ov.l)||{};
+  out.forEach(function(o){ o.sc.forEach(function(p){ if(p.t!=='x'||!p.k) return; var l=L[p.k]; if(!l) return;
+    p.x+=l.dx||0; p.y+=l.dy||0; if(l.dw) p.w=Math.max(30,p.w+l.dw);
+    if(l.fs){ var r=l.fs/p.fs; if(p.ls) p.ls=p.ls*r; p.fs=l.fs; p.h=p.h*Math.max(1,r); }
+    p.ovr=1; }); });
+  return out;
+}
 function bScenes(P,cut){
   setSize(); RPBUD={}; var out=[], b=bc(), pg=2;
   out.push(affine(sceneCover(cut)));
@@ -4412,15 +4427,44 @@ function bScenes(P,cut){
   (RP.cfg.slides||[]).forEach(function(s){ out.push(sceneProgress(s,P,cut,pg)); pg++; if(slidePhotos(s).length){ out.push(scenePhotos(s)); pg++; } });
   if(b.end) out.push(affine(sceneEnd()));
   out.forEach(function(o,i){ var dark=o.bg===NV; o.sc.push(bT(PW-112,PH-(dark?34:35),80,12,p2(i+1),{fs:9,c:dark?'#fff':GR,al:'r',k:'pgn:'+i})); });
-  return out;
+  RP.scn=out; return applyLay(out);
 }
+function tbFind(k){ var r=null; (RP.scn||[]).forEach(function(o){ o.sc.forEach(function(p){ if(p.t==='x'&&p.k===k) r=p; }); }); return r; }
+function tbUpdate(){
+  var tb=document.getElementById('rptTb'); if(!tb) return; tb.hidden=!(RP.ed&&tplB()); if(tb.hidden) return;
+  var p=RP.sel?tbFind(RP.sel):null, has=!!p; tb.querySelector('[data-tbv=name]').textContent=has?'“'+String(p.s).replace(/\s+/g,' ').slice(0,34)+(String(p.s).length>34?'…':'')+'”':'none: click a text on a slide';
+  tb.querySelector('[data-tbv=fs]').textContent=has?(Math.round(p.fs*75)/100)+' pt':'–'; [].forEach.call(tb.querySelectorAll('button'),function(b){ b.disabled=!has; });
+}
+function tbLay(k){ RP.ov.l=RP.ov.l||{}; return RP.ov.l[k]||(RP.ov.l[k]={}); }
+document.addEventListener('mousedown',function(e){ if(e.target.closest&&e.target.closest('#rptTb button')) e.preventDefault(); });
+document.addEventListener('focusin',function(e){ var k=e.target&&e.target.getAttribute&&e.target.getAttribute('data-ek'); if(k&&tplB()){ RP.sel=k; tbUpdate(); } });
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('#rptTb [data-tb]'); if(!b||!RP.sel||!tplB()) return; var a=b.getAttribute('data-tb'), p=tbFind(RP.sel); if(!p) return; var l=tbLay(RP.sel);
+  var cur=l.fs||p.fs/(l.fs?1:1); if(a==='fs+'||a==='fs-'){ var base=p.fs; l.fs=Math.max(5,Math.min(140,Math.round((base+(a==='fs+'?1:-1)*(4/3))*100)/100)); }
+  else if(a==='w+') l.dw=(l.dw||0)+40; else if(a==='w-') l.dw=(l.dw||0)-40;
+  else if(a==='rs'){ delete RP.ov.l[RP.sel]; }
+  drawViewB();
+});
+/* drag the gold grip to move a text */
+var TD=null;
+document.addEventListener('pointerdown',function(e){
+  var g=e.target.closest&&e.target.closest('.rp-gr'); if(!g||e.button) return; var box=g.parentNode, rs=box.closest('.rp-rs'); if(!rs) return;
+  RP.sel=g.getAttribute('data-gk'); TD={k:RP.sel,box:box,g:g,k2:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,l:parseFloat(box.style.left),t:parseFloat(box.style.top),mv:0};
+  try{ g.setPointerCapture(e.pointerId); }catch(x){} tbUpdate(); e.preventDefault();
+});
+document.addEventListener('pointermove',function(e){ if(!TD) return; var dx=(e.clientX-TD.sx)/TD.k2, dy=(e.clientY-TD.sy)/TD.k2; if(Math.abs(dx)+Math.abs(dy)>2) TD.mv=1; TD.box.style.left=(TD.l+dx)+'px'; TD.box.style.top=(TD.t+dy)+'px'; });
+function tdUp(e){ if(!TD) return; var d=TD; TD=null; if(!d.mv) return; var dx=parseFloat(d.box.style.left)-d.l, dy=parseFloat(d.box.style.top)-d.t, l=tbLay(d.k); l.dx=(l.dx||0)+dx; l.dy=(l.dy||0)+dy; drawViewB(); }
+document.addEventListener('pointerup',tdUp); document.addEventListener('pointercancel',tdUp);
 function drawViewB(){
   var body=document.getElementById('rptBody'), cut=RP.cut, P=pool(cut), SC=bScenes(P,cut), w=Math.min(PW,Math.max(320,body.clientWidth-24)), sc=w/PW;
   body.innerHTML=SC.map(function(s){ return '<div class="rp-rs" style="width:'+w+'px;height:'+(PH*sc)+'px"><div class="rp-rsl rp-b" style="width:'+PW+'px;height:'+PH+'px;transform:scale('+sc+');background:'+s.bg+'">'+scHtml(s.sc)+'</div></div>'; }).join('');
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+' · '+sizeOf().n+(RP.dirty?' · unsaved settings':'');
   var sv=document.getElementById('rptSave'); if(sv) sv.hidden=!RP.dirty;
+  var rr=document.getElementById('rptRoot'), tb=document.getElementById('rptTb');
+  if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><button data-tb="rs">Reset this text</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
+  tbUpdate();
   var rt=document.getElementById('rptRoot'); if(rt&&!rt._pv){ rt._pv=1; rt.addEventListener('click',pvClick); rt.addEventListener('change',pvChange); rt.addEventListener('pointerdown',pvDown); rt.addEventListener('pointermove',pvMove); rt.addEventListener('pointerup',pvUp); rt.addEventListener('pointercancel',pvUp); }
-  body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!Object.keys(RP.ov.v).length; var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
+  body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!(Object.keys(RP.ov.v).length||Object.keys(RP.ov.l||{}).length); var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
 }
 /* ----- remove burned-in date, time and location stamps from a photo (canvas, in place) ----- */
 function stampClean(cv){ return stampRun(cv,218,70)||stampRun(cv,150,45); }
