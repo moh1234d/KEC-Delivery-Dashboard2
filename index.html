@@ -1107,7 +1107,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V264</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V265</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2640,15 +2640,15 @@ function lyClone(o){ return lyNorm(JSON.parse(JSON.stringify(o||lyEmpty()))); }
 async function lyLoad(force){
   if(LY.loading||(LY.loaded&&!force)) return; if(ACC.need===null||(ACC.need&&!ACC.token)) return; LY.loading=true;
   try{
-    if(ulRelay()){ var j=await accCall('GET','/layout',null,20000); LY.cur=j.layout?lyNorm(j.layout):null; LY.rev=j.rev||0; LY.by=j.by||''; LY.ts=j.ts||0; LY.err=''; }
+    if(ulRelay()){ var j=await accCall('GET','/layout',null,20000); if(!j||j.rev===undefined) throw {status:404}; LY.cur=j.layout?lyNorm(j.layout):null; LY.rev=j.rev||0; LY.by=j.by||''; LY.ts=j.ts||0; LY.err=''; }
     else { var l=JSON.parse(localStorage.getItem(LY_KEY)||'null'); LY.cur=l&&l.layout?lyNorm(l.layout):null; LY.rev=l&&l.rev||0; LY.by=l&&l.by||''; LY.ts=l&&l.ts||0; }
-  }catch(e){ LY.err=(e&&e.status===404)?'The relay does not store the layout yet. Deploy relay V25. Layout changes are kept in this browser only.':''; try{ var l2=JSON.parse(localStorage.getItem(LY_KEY)||'null'); LY.cur=l2&&l2.layout?lyNorm(l2.layout):null; LY.rev=l2&&l2.rev||0; }catch(e2){} }
+  }catch(e){ LY.err=(e&&(e.status===404||e.status===405))?'The relay does not store the layout yet. Deploy relay V25. Layout changes are kept in this browser only.':''; try{ var l2=JSON.parse(localStorage.getItem(LY_KEY)||'null'); LY.cur=l2&&l2.layout?lyNorm(l2.layout):null; LY.rev=l2&&l2.rev||0; }catch(e2){} }
   LY.loaded=true; LY.loading=false; if(state.page==='overview'||state.all) render();
 }
 function lyBar(){
   if(!ulAdmin()||state.page!=='overview'||state.project) return '';
   if(!LY.editing) return '<div class="lybar"><span class="sp"></span><button type="button" class="btn" data-lyedit="1" title="Move and resize the blocks on this page (administrators only)">Edit layout</button></div>';
-  return '<div class="lybar on"><b>Editing layout</b><span>Hold <i class="lyg">⠿</i> and drag to move a block. A gold line shows where it will land. Drag an edge or corner to resize. Numbers always come from the data.</span><span class="sp"></span><button type="button" class="btn pri" data-lysave="1"'+(LY.dirty?'':' disabled')+'>Save layout</button><button type="button" class="btn" data-lyreset="1">Reset to default</button><button type="button" class="btn" data-lycancel="1">Cancel</button></div>';
+  return '<div class="lybar on"><b>Editing layout</b><span>Hold <i class="lyg">⠿</i> and drag to move a block. A gold line shows where it will land. Drag an edge or corner to resize. Numbers always come from the data.'+(LY.err?' <b style="color:#ffd27a">Relay V25 is not deployed: saves stay in this browser only.</b>':'')+'</span><span class="sp"></span><button type="button" class="btn pri" data-lysave="1"'+(LY.dirty?'':' disabled')+'>Save layout</button><button type="button" class="btn" data-lyreset="1">Reset to default</button><button type="button" class="btn" data-lycancel="1">Cancel</button></div>';
 }
 /* kinds: top = blocks directly in the page (title, KPI row, group rows, Schedule); kpi = the KPI cards; box = the groups; card = the project cards */
 var LYK={top:{map:'top'},kpi:{map:'kpi'},box:{map:'boxes'},card:{map:'cards'}};
@@ -2757,10 +2757,11 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
 async function lySave(btn){
   if(btn) btn.disabled=true; var lay=lyClone(LY.draft);
   ['top','kpi','boxes','cards'].forEach(function(k){ Object.keys(lay[k]).forEach(function(q){ var c=lay[k][q]; if(c.s==null&&c.h==null&&c.o==null&&c.w==null) delete lay[k][q]; }); });
+  var shared=false;
   try{
-    if(ulRelay()&&!LY.err){ var j=await accCall('POST','/layout',{layout:lay,base:LY.rev},30000); LY.rev=j.rev; LY.by=j.by; LY.ts=j.ts; }
-    else { LY.rev=(LY.rev||0)+1; LY.ts=Date.now(); LY.by=(ACC.user&&ACC.user.name)||'You'; try{ localStorage.setItem(LY_KEY,JSON.stringify({layout:lay,rev:LY.rev,by:LY.by,ts:LY.ts})); }catch(e){} }
-    LY.cur=lay; LY.editing=false; LY.draft=null; LY.dirty=false; toast('Layout saved'+(ulRelay()&&!LY.err?' for everyone':' in this browser')); render();
+    if(ulRelay()&&!LY.err){ try{ var j=await accCall('POST','/layout',{layout:lay,base:LY.rev},30000); LY.rev=j.rev; LY.by=j.by; LY.ts=j.ts; shared=true; }catch(e0){ if(e0&&(e0.status===404||e0.status===405)){ LY.err='The relay does not store the layout yet. Deploy relay V25. Layout changes are kept in this browser only.'; } else throw e0; } }
+    if(!shared){ LY.rev=(LY.rev||0)+1; LY.ts=Date.now(); LY.by=(ACC.user&&ACC.user.name)||'You'; try{ localStorage.setItem(LY_KEY,JSON.stringify({layout:lay,rev:LY.rev,by:LY.by,ts:LY.ts})); }catch(e){} }
+    LY.cur=lay; LY.editing=false; LY.draft=null; LY.dirty=false; toast(shared?'Layout saved for everyone':'Layout saved in this browser only. The relay is not on V25 yet, so other people will not see it.',!shared); render();
   }catch(e){ if(btn) btn.disabled=false; toast((e&&e.status===409)?'Someone else changed the layout. Reload the page, then edit again.':((e&&e.message)||'The layout could not be saved'),true); }
 }
 function lyPost(){ if(state.page==='overview'||state.all){ if(!LY.loaded) lyLoad(); lyApply(); } }
