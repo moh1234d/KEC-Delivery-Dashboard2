@@ -1068,7 +1068,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V256</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V257</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2360,11 +2360,11 @@ function svChalList(sc,cut){
   var base=accRows(cur.con||[],'code').filter(function(c){ return pcodeOf(c.code)===sc.code&&c.d<=cut; });
   var mx=base.reduce(function(m,c){ return c.d>m?c.d:m; },'');
   var items=base.filter(function(c){ return c.d===mx; }).map(function(c){
-    return {id:c.id||('k:'+sc.code+'|'+c.pkg+'|'+c.concern),code:sc.code,pkg:c.pkg||'',concern:c.concern,impact:c.impact||'Medium',action:c.action||'',owner:c.owner||'',target:c.target||'',status:c.status||'Open',raised:c.raised||c.d,closed:c.closed||'',ts:0,from:'file'}; });
+    return {id:c.id||('k:'+sc.code+'|'+c.pkg+'|'+c.concern),code:sc.code,pkg:c.pkg||'',concern:c.concern,impact:c.impact||'Medium',action:c.action||'',owner:c.owner||'',target:c.target||'',status:c.status||'Open',raised:c.raised||c.d,closed:c.closed||'',changed:c.changed||'',ts:0,from:'file'}; });
   (SV.chal||[]).forEach(function(o){
     if(String(o.code).toLowerCase()!==sc.lc) return;
     var i=-1; items.forEach(function(x,k){ if(x.id===o.id) i=k; });
-    if(i>=0){ var td=new Date(o.ts||0).toISOString().slice(0,10); if(td>=mx) items[i]=Object.assign({},o,{from:'edit'}); }
+    if(i>=0){ var td=new Date(o.ts||0).toISOString().slice(0,10); if(!(items[i].changed&&items[i].changed>td)) items[i]=Object.assign({},o,{from:'edit'}); }
     else items.push(Object.assign({},o,{from:'edit'}));
   });
   return {all:items.filter(function(x){ return sc.ok(x.pkg); }),date:mx};
@@ -3566,53 +3566,87 @@ async function handleFiles(files,opts){
 }
 
 /* template download */
+async function svEnsureChal(){
+  if(SV.chal!==null) return;
+  if(ACC.need&&ACC.token&&LIVE&&LIVE.relay&&!SV.local){ try{ var j=await accCall('GET','/challenges',null,20000); SV.chal=(j&&j.items)||[]; SV.log=(j&&j.log)||[]; return; }catch(e){ SV.local=true; } }
+  svLocalLoad();
+}
+/* the challenge register as it stands now: the file's rows plus every edit made in the Site view, in the database's own columns */
+function conExport(){
+  var rows=(cur.con||[]).map(function(c){ return Object.assign({},c); }), last=rows.reduce(function(m,c){ return c.d>m?c.d:m; },'');
+  var key=function(r){ return String(r.code).toLowerCase()+'|'+String(r.pkg||'').toLowerCase()+'|'+String(r.concern||'').toLowerCase(); };
+  (SV.chal||[]).forEach(function(o){
+    var ed=new Date(o.ts||Date.now()), idx=-1;
+    rows.forEach(function(r,i){ if(r.d!==last) return; if((o.id&&String(o.id).charAt(0)!=='k'&&r.id===o.id)||(String(o.id).charAt(0)==='k'&&('k:'+pcodeOf(r.code)+'|'+(r.pkg||'')+'|'+r.concern===o.id))) idx=i; });
+    var base=idx>=0?rows[idx]:null; if(base&&base.changed&&base.changed>ed.toISOString().slice(0,10)) return;
+    var n={d:last||ed.toISOString().slice(0,10),code:o.code,name:pname(o.code),pkg:o.pkg||'',concern:o.concern,impact:o.impact,action:o.action,id:(o.id&&String(o.id).charAt(0)!=='k')?o.id:(base&&base.id)||null,owner:o.owner||null,target:o.target||null,status:o.status||null,raised:o.raised||null,closed:o.closed||null,changed:ed};
+    if(base){ n.name=base.name||n.name; rows[idx]=n; } else rows.push(n);
+  });
+  return rows.sort(function(a,b){ return a.d<b.d?-1:a.d>b.d?1:(a.code<b.code?-1:a.code>b.code?1:0); });
+}
 async function downloadTemplate(){
-  /* the workbook is built from the data loaded right now (the last upload, merged with what was already there), so it always matches what the dashboard shows */
-  if(typeof XLSX==='undefined'){ toast('Excel library not loaded',true); return; }
-  var dt=function(v){ var x=toISO(v); return x?new Date(x+'T00:00:00Z'):null; }, nn=function(v){ return v==null||v===''?null:v; };
+  /* the workbook has the same sheets, column names and formats as the live database, filled with what the dashboard shows now, including challenge edits */
+  if(!(await loadExcelJS())){ toast('The Excel library could not be loaded',true); return; }
+  try{ await svEnsureChal(); }catch(e){}
+  var NAVY='FF0B2A5E', GOLD='FFC8963E', dt=function(v){ var x=toISO(v); return x?new Date(x+'T00:00:00Z'):null; }, nn=function(v){ return v==null||v===''?null:v; };
+  var wb=new ExcelJS.Workbook(); wb.creator='KEC Project Controls Dashboard';
+  var NUM='#,##0;[Red]-#,##0', DT='dd-mmm-yyyy', PC='0.0%';
+  function sheet(name,heads,rows,o){
+    o=o||{}; var ws=wb.addWorksheet(name,{views:[{state:'frozen',xSplit:o.fx||0,ySplit:1}]});
+    ws.columns=heads.map(function(h,i){ return {width:(o.w&&o.w[i])||Math.max(13,String(h).length+2)}; });
+    var hr=ws.getRow(1); heads.forEach(function(h,i){ var c=hr.getCell(i+1); c.value=h; c.font={bold:true,color:{argb:'FFFFFFFF'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:NAVY}}; c.alignment={vertical:'middle',wrapText:true}; c.border={bottom:{style:'medium',color:{argb:GOLD}}}; }); hr.height=30;
+    rows.forEach(function(r){ var row=ws.addRow(r); (o.f||[]).forEach(function(f,i){ if(f) row.getCell(i+1).numFmt=f; }); });
+    if(rows.length) ws.autoFilter={from:{row:1,column:1},to:{row:rows.length+1,column:heads.length}};
+    return ws;
+  }
+  /* Instructions */
+  var wi=wb.addWorksheet('Instructions',{views:[{showGridLines:false}]}); wi.columns=[{width:6},{width:150}];
+  var ins=[['KEC Project Controls Dashboard · Live Database'],['Upload template and instructions · version 2'],[],[],
+   ['1','Fill “Packages - Plots” with one row per package per reporting cut-off (Data Date). Keep adding new cut-offs each period.'],
+   ['2','Fill “Projects Info” with one row per project; Project Code must match the progress sheet (case-insensitive).'],
+   ['3','Keep the header names unchanged. The first data row on each sheet is an example — overwrite it.'],
+   ['4','Required progress columns: Data Date, Project Code, Package/Plot, Planned Start, Planned Finish, Forecast Finish, Revised Value, Planned Value, Earned Value.'],
+   ['5','Recommended: Contractor / Consultant, Contract No., Contract Value, Approved Vos, Gross certified amount, Project Name.'],
+   ['6','Planned % = Planned Value ÷ Revised Value; Actual % = Earned Value ÷ Revised Value. Dates must be real Excel dates; values in SAR.'],
+   ['7','Optional: “Areas of Concern” holds one row per concern per Data Date (Impact = High / Medium / Low). Challenges shows the latest snapshot on or before the cut-off.'],
+   ['8','Optional: “Mandatory Dates” lists projects that have a contractual planned completion date (Project Code + date). It overrides the planned finish from the progress list for that project.'],
+   ['9','Optional: “Phases” maps each Package/Plot to a phase (Project Code, Package/Plot, Phase). The phase is shown as a small label under the plot name on Trends.'],
+   ['10','All sheets can be in one workbook or separate files — select them together or one at a time.'],[],
+   ['Added in version 2'],
+   ['11','“Technical Submittals” (E1): one row per package per Submittal Type (Shop Drawing, Material Submittal, Method Statement, As-Built Drawing) per Data Date. Not Submitted = Total Number − Actual Submitted. Approved + Revise / Resubmit + Under Review should not exceed Actual Submitted.'],
+   ['12','“Material Procurement” (E2): one row per package per Data Date. Local Material No. + Out of Country Material No. = Total Material Number.'],
+   ['13','“Quality Statistics”: one row per package per Submittal Type (NCR, Site Instructions; SOR is the same as Site Instructions and is recorded under it) per Data Date. Total Number = Closed + Open. The Site view shows totals, open and closed as charts.'],
+   ['14','“Manpower”: planned and actual manpower per package per Data Date. Variance = Planned − Actual.'],
+   ['15','“Areas of Concern” now also holds the challenge-tracking columns: Challenge ID (CH-0001… keep the same ID for the same challenge at every Data Date; empty for a new one), Owner, Target Date, Status (Open / Closed), Date Raised, Date Closed. “Last Changed” is stamped by the dashboard when a challenge is edited; the most recent change by date and time wins.'],
+   ['16','Site uploads use the separate site template (same sheets and column names, no serial column). Approved uploads are appended to these sheets. Each data row needs both Project Code and Package/Plot.'],
+   [],['This workbook was exported from the dashboard on '+new Date().toISOString().slice(0,10)+' and already includes the challenge edits made in the Site view. Paste or load it as the new master.']];
+  ins.forEach(function(r,i){ var row=wi.addRow(r); row.alignment={vertical:'top',wrapText:true}; if(r[1]) row.getCell(1).font={bold:true,color:{argb:GOLD}}; });
+  wi.getCell('A1').font={bold:true,size:16,color:{argb:NAVY}}; wi.getCell('A2').font={size:12,color:{argb:'FF5B6784'}}; wi.getCell('A18').font={bold:true,size:12,color:{argb:NAVY}}; wi.getCell('A'+ins.length).font={italic:true,color:{argb:'FF5B6784'}};
+  /* Packages - Plots */
   var P=(cur.prog||[]).slice().sort(function(a,b){ var x=(toISO(a.date)||'')+'|'+String(a.code)+'|'+String(a.pkg), y=(toISO(b.date)||'')+'|'+String(b.code)+'|'+String(b.pkg); return x<y?-1:x>y?1:0; });
-  var pc=['serial','Data Date','Project Code','Project Name','Package/Plot','Contractor / Consultant','Contract No.','Planned Start','Planned Finish','Forecast Finish','Contract Value','Approved Vos','Revised Value','Gross certified amount','Planned Value','Earned Value','PL%','Act. %'];
-  var ws1=XLSX.utils.aoa_to_sheet([pc].concat(P.map(function(r,i){ var rv=Number(r.rv)||0; return [i+1,dt(r.date),r.code,nn(r.pname),r.pkg,nn(r.ctr),nn(r.cno),dt(r.ps),dt(r.pf),dt(r.ff),nn(r.cv),nn(r.vo),nn(r.rv),nn(r.gc),nn(r.pv),nn(r.ev),rv?(Number(r.pv)||0)/rv:null,rv?(Number(r.ev)||0)/rv:null]; })),{cellDates:true});
-  for(var q=2;q<=P.length+1;q++){ ['B','H','I','J'].forEach(function(c){ if(ws1[c+q]) ws1[c+q].z='dd-mmm-yyyy'; }); ['Q','R'].forEach(function(c){ if(ws1[c+q]) ws1[c+q].z='0.0%'; }); }
-  ws1['!cols']=pc.map(function(c){return {wch:Math.max(14,c.length+2)};});
+  sheet('Packages - Plots',['serial','Data Date','Project Code','Project Name','Package/Plot','Contractor / Consultant','Contract No.','Planned Start','Planned Finish','Forecast Finish','Contract Value','Approved Vos','Revised Value','Gross certified amount','Planned Value','Earned Value','PL%','Act. %'],
+    P.map(function(r,i){ var rv=Number(r.rv)||0; return [i+1,dt(r.date),r.code,nn(r.pname),r.pkg,nn(r.ctr),nn(r.cno),dt(r.ps),dt(r.pf),dt(r.ff),nn(r.cv),nn(r.vo),nn(r.rv),nn(r.gc),nn(r.pv),nn(r.ev),rv?(Number(r.pv)||0)/rv:null,rv?(Number(r.ev)||0)/rv:null]; }),
+    {fx:2,w:[9,13,14,30,26,26,14,13,13,13,16,14,16,18,16,16,9,9],f:[null,DT,null,null,null,null,NUM,DT,DT,DT,NUM,NUM,NUM,NUM,NUM,NUM,PC,PC]});
+  /* Projects Info */
   var ic=[['program','Program'],['project','Project'],['code','Project Code'],['type','Project Type'],['stage','Stage'],['status','Project Status'],['inv','Investment Development Cost'],['soft','Investment Soft Cost'],['intres','Invetment Interest reserve'],['plot','Plot Number/ Block Number'],['area','Total Plot Area (Sqm)'],['bua','Built-Up Area (BUA) (Sqm)'],['gfa','Total Design GFA'],['rooms','Hotel Rooms'],['apts','Apartments'],['photo','Photo Link'],['parking','Parking (Basement + Surface)'],['shops','Total Shops Number'],['floors','Total Floors without Roof & U.Roof']];
-  var ws2=XLSX.utils.aoa_to_sheet([ic.map(function(x){return x[1];})].concat((cur.info||[]).filter(function(r){ return r&&r.code; }).map(function(r){ return ic.map(function(x){ return nn(r[x[0]]); }); })));
-  ws2['!cols']=ic.map(function(c){return {wch:Math.max(14,c[1].length+2)};});
-  var ws3=XLSX.utils.aoa_to_sheet([
-    ['KEC Project Controls Dashboard — upload template'],[],
-    ['1. Fill “Packages - Plots” with one row per package per reporting cut-off (Data Date). Keep adding new cut-offs each period.'],
-    ['2. Fill “Projects Info” with one row per project; Project Code must match the progress sheet (case-insensitive).'],
-    ['3. Keep the header names unchanged. The first data row on each sheet is an example — overwrite it.'],
-    ['4. Required progress columns: Data Date, Project Code, Package/Plot, Planned Start, Planned Finish, Forecast Finish, Revised Value, Planned Value, Earned Value.'],
-    ['5. Recommended: Contractor / Consultant, Contract No., Contract Value, Approved Vos, Gross certified amount, Project Name.'],
-    ['6. Planned % = Planned Value ÷ Revised Value; Actual % = Earned Value ÷ Revised Value. Dates must be real Excel dates; values in SAR.'],
-    ['7. Optional: “Areas of Concern” holds one row per concern per Data Date (Impact = High / Medium / Low). Challenges shows the latest snapshot on or before the cut-off.'],['8. Optional: “Mandatory Dates” lists projects that have a contractual planned completion date (Project Code + date). It overrides the planned finish from the progress list for that project.'],['9. Optional: “Phases” maps each Package/Plot to a phase (Project Code, Package/Plot, Phase). The phase is shown as a small label under the plot name on Trends.'],['10. All sheets can be in one workbook or separate files — select them together or one at a time.']]);
-  ws3['!cols']=[{wch:130}];
-  var cc0=['serial','Data Date','Project Code','Project Name','Package','Concern','Impact','Suggested Action'];
-  var ws4=XLSX.utils.aoa_to_sheet([cc0].concat((cur.con||[]).map(function(c,i){ return [i+1,dt(c.d),c.code,nn(c.name),nn(c.pkg),c.concern,nn(c.impact),nn(c.action)]; })),{cellDates:true});
-  for(var q4=2;q4<=(cur.con||[]).length+1;q4++){ if(ws4['B'+q4]) ws4['B'+q4].z='dd-mmm-yyyy'; }
-  ws4['!cols']=cc0.map(function(c){return {wch:Math.max(16,c.length+2)};});
-  var mc0=['Project Code','Package / Plot (optional)','Project Name','Mandatory Planned Completion','Remarks'];
-  var ws5=XLSX.utils.aoa_to_sheet([mc0].concat((cur.mand||[]).map(function(m){ var pn=model&&model.projects?(model.projects.get(m.code)||{}).name:null; return [m.code,nn(m.pkg),nn(pn),dt(m.date),null]; })),{cellDates:true});
-  for(var q5=2;q5<=(cur.mand||[]).length+1;q5++){ if(ws5['D'+q5]) ws5['D'+q5].z='dd-mmm-yyyy'; }
-  ws5['!cols']=[{wch:16},{wch:24},{wch:28},{wch:30},{wch:36}];
-  var ws6=XLSX.utils.aoa_to_sheet([['Project Code','Project Name','Package/Plot','Phase']].concat((cur.phase||[]).map(function(p){ var pn=model&&model.projects?(model.projects.get(p.code)||{}).name:null; return [p.code,nn(pn),p.pkg,p.phase]; })));
-  ws6['!cols']=[{wch:16},{wch:28},{wch:16},{wch:12}];
-  var nc0=['Project Code','Package / Plot','Actual Completion Date','Note (shown at the bottom of the package card)','Forecast Finish Override','No Update Since (optional)'];
-  var ws7=XLSX.utils.aoa_to_sheet([nc0].concat((cur.notes||[]).map(function(n){ return [n.code,n.pkg,dt(n.actual),nn(n.note),dt(n.fc),dt(n.since)]; })),{cellDates:true});
-  for(var q7=2;q7<=(cur.notes||[]).length+1;q7++){ ['C','E','F'].forEach(function(c){ if(ws7[c+q7]) ws7[c+q7].z='dd-mmm-yyyy'; }); }
-  ws7['!cols']=[{wch:16},{wch:26},{wch:22},{wch:60},{wch:22},{wch:22}];
-  /* contracts: one line per construction contract, then the cost lines that no contract line explains (other stages), so the cost type is not lost */
-  var pcode=function(lc){ var hit=lc; if(model&&model.projects) model.projects.forEach(function(p,k){ if(String(k).toLowerCase()===lc) hit=k; }); return hit; };
-  var pool=(cur.cst||[]).map(function(x){ return {x:x,u:false}; }), cr=[];
-  (cur.ctr||[]).forEach(function(c){ var ct=c.ct==='hard'||c.ct==='soft'?c.ct:'';
-    if(!ct&&Math.abs(c.shrv)>=1){ var m=pool.filter(function(q){ return !q.u&&q.x.lc===c.lc&&((q.x.cno!=null&&ckey(q.x.cno)===c.key)||(q.x.cno==null&&Math.abs(q.x.shrv-c.shrv)<1)); })[0]; if(m){ m.u=true; ct=m.x.cost; } }
-    cr.push([c.code,c.vendor,'Construction',c.cno,nn(c.name),nn(c.scope),c.cv,c.vo,c.share,(c.cv||0)+(c.vo||0),c.shrv,c.gc,nn(c.ev),nn(ct)]); });
-  pool.filter(function(q){ return !q.u; }).forEach(function(q){ cr.push([pcode(q.x.lc),null,'Other',nn(q.x.cno),null,null,null,null,null,null,q.x.shrv,null,null,q.x.cost]); });
-  var cch=['ID','Vendor','Stage','CNT #','Contract Name','Scope of Work','Contract Value','Approved VOs','Project Share of Contract %','Revised Contract Value','Project Share of RV. Contract Value','Gross Certified','Earned Value','Cost Type'];
-  var ws8=XLSX.utils.aoa_to_sheet([cch].concat(cr)); ws8['!cols']=cch.map(function(c){return {wch:Math.max(14,c.length+2)};});
-  var wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws3,'Instructions'); XLSX.utils.book_append_sheet(wb,ws1,'Packages - Plots'); XLSX.utils.book_append_sheet(wb,ws2,'Projects Info'); XLSX.utils.book_append_sheet(wb,ws4,'Areas of Concern'); XLSX.utils.book_append_sheet(wb,ws8,'Contracts'); XLSX.utils.book_append_sheet(wb,ws5,'Mandatory Dates'); XLSX.utils.book_append_sheet(wb,ws6,'Phases'); XLSX.utils.book_append_sheet(wb,ws7,'Package Notes');
-  var buf=XLSX.write(wb,{type:'array',bookType:'xlsx',cellDates:true}), fn='KEC_Dashboard_Update_Template.xlsx';
+  sheet('Projects Info',ic.map(function(x){ return x[1]; }),(cur.info||[]).filter(function(r){ return r&&r.code; }).map(function(r){ return ic.map(function(x){ return nn(r[x[0]]); }); }),
+    {fx:1,w:[16,30,14,16,16,16,18,18,18,18,16,16,16,12,12,30,16,14,16],f:[null,null,null,null,null,null,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,null,NUM,NUM,NUM]});
+  /* Areas of Concern (challenges, with the edits merged in) */
+  var C=conExport();
+  sheet('Areas of Concern',['serial','Data Date','Project Code','Project Name','Package','Concern','Impact','Suggested Action','Challenge ID','Owner','Target Date','Status','Date Raised','Date Closed','Last Changed'],
+    C.map(function(c,i){ var chg=c.changed instanceof Date?c.changed:dt(c.changed); return [i+1,dt(c.d),c.code,nn(c.name||pname(c.code)),nn(c.pkg),c.concern,nn(c.impact),nn(c.action),nn(c.id),nn(c.owner),dt(c.target),nn(c.status),dt(c.raised),dt(c.closed),chg]; }),
+    {fx:2,w:[9,13,14,30,26,54,10,60,12,18,13,12,13,13,18],f:[null,DT,null,null,null,null,null,null,null,null,DT,null,DT,DT,'dd-mmm-yyyy hh:mm']});
+  /* Mandatory Dates, Phases, Package Notes */
+  sheet('Mandatory Dates',['Project Code','Package / Plot (optional)','Project Name','Mandatory Planned Completion','Remarks'],(cur.mand||[]).map(function(m){ return [m.code,nn(m.pkg),nn(pname(m.code)),dt(m.date),null]; }),{fx:1,w:[14,18,30,13,54],f:[null,null,null,DT,null]});
+  sheet('Phases',['Project Code','Project Name','Package/Plot','Phase'],(cur.phase||[]).map(function(p){ return [p.code,nn(pname(p.code)),p.pkg,p.phase]; }),{fx:1,w:[14,30,26,18]});
+  sheet('Package Notes',['Project Code','Package / Plot','Actual Completion Date','Note (shown at the bottom of the package card)','Forecast Finish Override','No Update Since (optional)'],(cur.notes||[]).map(function(n){ return [n.code,n.pkg,dt(n.actual),nn(n.note),dt(n.fc),dt(n.since)]; }),{fx:1,w:[14,26,13,54,13,18],f:[null,null,DT,null,DT,DT]});
+  /* site trackers */
+  var srt=function(a){ return (a||[]).slice().sort(function(x,y){ return x.d<y.d?-1:x.d>y.d?1:(x.code<y.code?-1:x.code>y.code?1:(x.pkg<y.pkg?-1:1)); }); };
+  sheet('Technical Submittals',['serial','Data Date','Project Code','Project Name','Package/Plot','Submittal Type','Total Number','Planned to Submit','Actual Submitted','Approved','Revise / Resubmit','Under Review','Not Submitted'],srt(cur.e1).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,r.type,r.tot,r.plan,r.sub,r.app,r.rev,r.rvw,r.ns]; }),{fx:2,w:[9,13,14,30,26,22,13,16,16,12,16,13,14],f:[null,DT,null,null,null,null,NUM,NUM,NUM,NUM,NUM,NUM,NUM]});
+  sheet('Material Procurement',['serial','Data Date','Project Code','Project Name','Package/Plot','Submittal Type','Total Material Number','Local Material No.','Out of Country Material No.','Planned PO Issuance','Actual PO Issued','Planned Delivery','Actual Delivered'],srt(cur.e2).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,r.type,r.tot,r.loc,r.ooc,r.ppo,r.apo,r.pdl,r.adl]; }),{fx:2,w:[9,13,14,30,26,22,16,16,18,16,16,16,16],f:[null,DT,null,null,null,null,NUM,NUM,NUM,NUM,NUM,NUM,NUM]});
+  sheet('Quality Statistics',['serial','Data Date','Project Code','Project Name','Package/Plot','Submittal Type','Total Number','Closed','Open'],srt(cur.qa).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,r.type,r.tot,r.cl,r.op]; }),{fx:2,w:[9,13,14,30,26,22,13,10,10],f:[null,DT,null,null,null,null,NUM,NUM,NUM]});
+  sheet('Manpower',['serial','Data Date','Project Code','Project Name','Package/Plot','Contractor / Consultant','Planned Manpower','Actual Manpower','Variance (Planned - Actual)'],srt(cur.mp).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,nn(r.ctr),r.pl,r.ac,(r.pl||0)-(r.ac||0)]; }),{fx:2,w:[9,13,14,30,26,26,16,16,18],f:[null,DT,null,null,null,null,NUM,NUM,NUM]});
+  var buf=await wb.xlsx.writeBuffer(), fn='KEC_Dashboard_Update_Template.xlsx';
   var dl=null; try{ if(window.claude&&window.claude.use) dl=await window.claude.use('downloads'); }catch(e){}
   if(dl){ try{ await dl.save({filename:fn,data:buf}); }catch(e){ if(!e||e.code!=='declined') toast('Download unavailable here',true); } return; }
   var url=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
