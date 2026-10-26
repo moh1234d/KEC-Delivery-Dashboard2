@@ -975,7 +975,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 .rp-rsl .rp-xp{font-size:12px;line-height:1.3;color:#637785;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .rp-rsl.rp-b .rp-ed{outline:none}
 .rp-rsl.rp-b img{border-radius:0!important}
-.rp-vc{position:absolute;display:flex;gap:8px;justify-content:flex-end;align-items:flex-start;padding:10px;box-sizing:border-box;opacity:0;transition:opacity .12s}
+.rp-vc{position:absolute;display:flex;gap:8px;justify-content:flex-end;align-items:flex-start;flex-wrap:wrap;padding:28px 30px;box-sizing:border-box;opacity:0;transition:opacity .12s}
 .rp-vc:hover{opacity:1;background:rgba(20,44,59,.3)}
 @media(hover:none){.rp-vc{opacity:1}}
 .rp-vb{font:700 17px Carlito,Calibri,Arial,sans-serif;background:#fff;color:#142c3b;border:0;border-radius:6px;padding:7px 14px;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.35)}
@@ -985,9 +985,16 @@ body.rptp .rp-vc,body.rptp .rp-va{display:none!important}
 .rp-editing .rp-vc{display:none}
 .rp-vc{cursor:move;touch-action:none}
 .rp-vc.rp-drag{opacity:1;background:rgba(20,44,59,.25);outline:3px dashed #ba965a;outline-offset:-3px}
-.rp-he{position:absolute;right:0;top:50%;margin-top:-22px;width:14px;height:44px;background:#ba965a;border-radius:6px 0 0 6px;cursor:ew-resize;box-shadow:0 0 4px rgba(0,0,0,.4)}
-.rp-hs{position:absolute;left:50%;bottom:26px;margin-left:-22px;width:44px;height:14px;background:#ba965a;border-radius:6px 6px 0 0;cursor:ns-resize;box-shadow:0 0 4px rgba(0,0,0,.4)}
-.rp-hd{position:absolute;right:0;bottom:0;width:30px;height:30px;background:#ba965a;border-radius:6px 0 0 0;cursor:nwse-resize;box-shadow:0 0 4px rgba(0,0,0,.4)}
+.rp-hh{position:absolute;background:#ba965a;box-shadow:0 0 4px rgba(0,0,0,.4);z-index:2}
+.rp-hh[data-hd=e]{right:0;top:50%;margin-top:-22px;width:14px;height:44px;cursor:ew-resize;border-radius:6px 0 0 6px}
+.rp-hh[data-hd=w]{left:0;top:50%;margin-top:-22px;width:14px;height:44px;cursor:ew-resize;border-radius:0 6px 6px 0}
+.rp-hh[data-hd=s]{left:50%;bottom:26px;margin-left:-22px;width:44px;height:14px;cursor:ns-resize;border-radius:6px 6px 0 0}
+.rp-hh[data-hd=n]{left:50%;top:0;margin-left:-22px;width:44px;height:14px;cursor:ns-resize;border-radius:0 0 6px 6px}
+.rp-hh[data-hd=nw],.rp-hh[data-hd=ne],.rp-hh[data-hd=sw],.rp-hh[data-hd=se]{width:22px;height:22px}
+.rp-hh[data-hd=nw]{left:0;top:0;cursor:nwse-resize;border-radius:0 0 8px 0}
+.rp-hh[data-hd=se]{right:0;bottom:0;cursor:nwse-resize;border-radius:8px 0 0 0}
+.rp-hh[data-hd=ne]{right:0;top:0;cursor:nesw-resize;border-radius:0 0 0 8px}
+.rp-hh[data-hd=sw]{left:0;bottom:0;cursor:nesw-resize;border-radius:0 8px 0 0}
 
 .rp-rsl .rp-pc{background:#fff;border-radius:14px;padding:3px;box-sizing:border-box;min-height:0;min-width:0;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.05)}.rp-rsl .rp-pc img,.rp-rsl .rp-pc .rp-ld{flex:1;min-height:0;width:100%;object-fit:contain;border-radius:11px;display:block}.rp-rsl .rp-pc .rp-cap{font-size:13px;color:#4a566a;padding:4px 6px 2px}
 @media (max-width:700px){#rptRoot .rp-rsetup .rp-g2{grid-template-columns:1fr}}
@@ -1054,7 +1061,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V248</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V249</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4224,7 +4231,7 @@ function scHtml(sc){
       if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove stamps</button>';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'"></label>';
-      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><div class="rp-hd" title="Drag: resize, keeping the shape"></div><div class="rp-he" title="Drag: change the width"></div><div class="rp-hs" title="Drag: change the height"></div><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove stamp')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
+      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove stamp')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
@@ -4466,18 +4473,35 @@ async function pvCleanRun(btn){
   if(!n){ toast('No stamp was found. Photos with very faint or unusual stamps can be replaced with a clean copy.',true); return; }
   dirty(); drawViewB(); toast(was?'Original restored.':n+' photo'+(n>1?'s':'')+' cleaned. Use Restore original on a photo to undo.',!!RP.pvLocal);
 }
+async function pvCleanGlobal(btn){
+  var list=[]; (RP.cfg.slides||[]).forEach(function(sl){ (sl.cards||[]).concat([sl]).forEach(function(o){ (o.ph||[]).forEach(function(q){ if(!q.oid) list.push(q); }); }); });
+  if(!list.length) return toast('There are no photos left to clean.'); if(btn){ btn.disabled=true; } toast('Looking for date, time and location stamps in '+list.length+' photo'+(list.length>1?'s':'')+'…'); RP.pvLocal=0; var n=0;
+  try{ await fetchPhotos(); for(var i=0;i<list.length;i++) n+=await pvClean(list[i]); }catch(x){ if(btn) btn.disabled=false; return toast((x&&x.message)||'Could not process the pictures.',true); }
+  if(btn) btn.disabled=false; if(n){ dirty(); drawView(); }
+  toast(n?n+' of '+list.length+' photo'+(list.length>1?'s':'')+' cleaned. Use Restore original on a photo to undo.':'No stamp was found in any photo.',!n||!!RP.pvLocal);
+}
+document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-pv="cleanglobal"]'); if(b){ e.preventDefault(); pvCleanGlobal(b); } });
 var DR=null;
 function pvDown(e){
   var o=e.target.closest&&e.target.closest('.rp-vc'); if(!o||e.button||e.target.closest('.rp-vb')) return;
   var rs=o.closest('.rp-rs'); if(!rs) return;
-  DR={o:o,h:e.target.closest('.rp-hd')?'c':e.target.closest('.rp-he')?'e':e.target.closest('.rp-hs')?'s':'',k:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,l:parseFloat(o.style.left),t:parseFloat(o.style.top),w:parseFloat(o.style.width),hh:parseFloat(o.style.height),nw:+o.getAttribute('data-nw')||4,nh:+o.getAttribute('data-nh')||3,mv:0};
+  DR={o:o,h:(e.target.closest('.rp-hh')||{getAttribute:function(){ return ''; }}).getAttribute('data-hd'),k:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,l:parseFloat(o.style.left),t:parseFloat(o.style.top),w:parseFloat(o.style.width),hh:parseFloat(o.style.height),nw:+o.getAttribute('data-nw')||4,nh:+o.getAttribute('data-nh')||3,mv:0};
   o.classList.add('rp-drag'); try{ o.setPointerCapture(e.pointerId); }catch(x){} e.preventDefault();
 }
 function pvMove(e){
   if(!DR) return; var d=DR, dx=(e.clientX-d.sx)/d.k, dy=(e.clientY-d.sy)/d.k, st=d.o.style; if(Math.abs(dx)+Math.abs(dy)>3) d.mv=1;
-  if(d.h==='c'){ var w=Math.max(90,Math.min(PW-d.l,d.w+dx)), h=(d.hh-26)*w/d.w+26; if(d.t+h>PH){ h=PH-d.t; w=d.w*(h-26)/(d.hh-26); } if(h<86){ h=86; w=d.w*60/(d.hh-26); } st.width=w+'px'; st.height=h+'px'; }
-  else if(d.h==='e'){ st.width=Math.max(90,Math.min(PW-d.l,d.w+dx))+'px'; }
-  else if(d.h==='s'){ st.height=Math.max(86,Math.min(PH-d.t,d.hh+dy))+'px'; }
+  if(d.h){
+    var hd=d.h, ih0=d.hh-26, L=d.l, T=d.t, Wn=d.w, Hn=d.hh;
+    if(hd.length===2){
+      var ar=hd.indexOf('w')>=0, ab=hd.indexOf('n')>=0, spX=ar?d.l+d.w:PW-d.l, spY=ab?d.t+d.hh:PH-d.t, sg=ar?-1:1, sc2=(d.w+sg*dx)/d.w;
+      sc2=Math.max(90/d.w,60/ih0,Math.min(sc2,spX/d.w,(spY-26)/ih0)); Wn=d.w*sc2; Hn=ih0*sc2+26; L=ar?d.l+d.w-Wn:d.l; T=ab?d.t+d.hh-Hn:d.t;
+    }else{
+      if(hd==='e') Wn=Math.max(90,Math.min(PW-d.l,d.w+dx));
+      if(hd==='w'){ Wn=Math.max(90,Math.min(d.l+d.w,d.w-dx)); L=d.l+d.w-Wn; }
+      if(hd==='s') Hn=Math.max(86,Math.min(PH-d.t,d.hh+dy));
+      if(hd==='n'){ Hn=Math.max(86,Math.min(d.t+d.hh,d.hh-dy)); T=d.t+d.hh-Hn; }
+    }
+    st.left=L+'px'; st.top=T+'px'; st.width=Wn+'px'; st.height=Hn+'px'; }
   else{ st.left=Math.max(0,Math.min(PW-d.w,d.l+dx))+'px'; st.top=Math.max(0,Math.min(PH-d.hh,d.t+dy))+'px'; }
 }
 function pvUp(e){
@@ -4571,7 +4595,7 @@ async function pptx(){
 function ensure(){
   var r=document.getElementById('rptRoot'); if(r) return r;
   r=document.createElement('div'); r.id='rptRoot';
-  r.innerHTML='<div class="rp-rbar"><b>Progress report<small id="rptSub"></small></b><button class="rp-rb" data-r="edit" id="rptEdit">Edit text</button><button class="rp-rb" data-r="rst" id="rptRst" hidden>Reset edits</button><button class="rp-rb" data-r="mode" id="rptMode">Setup</button><button class="rp-rb" data-r="save" id="rptSave" hidden>Save settings</button><button class="rp-rb" data-r="pptx" id="rptPptx" title="Editable PowerPoint slides in the Template B layout, at the chosen page size">Export PPTX</button><button class="rp-rb rp-p" data-r="pdf" id="rptPdf">Download PDF</button><button class="rp-rb" data-r="close">Close</button></div><div class="rp-hint" id="rptHint" hidden>Click any text on a slide to change it, then press Download PDF. Edits are for this PDF only: the dashboard data is not changed. In Template B, hover a photo to drag it, resize it with the gold handles (corner keeps the shape, the side handles change width or height, and Crop / Stretch chooses how the picture fills a changed shape), change it or remove it, or use Add photos. Titles and cards are changed in Setup.</div><div class="rp-rbody" id="rptBody"></div><div class="rp-rsetup" id="rptSetup" hidden></div>';
+  r.innerHTML='<div class="rp-rbar"><b>Progress report<small id="rptSub"></small></b><button class="rp-rb" data-r="edit" id="rptEdit">Edit text</button><button class="rp-rb" data-r="rst" id="rptRst" hidden>Reset edits</button><button class="rp-rb" data-r="mode" id="rptMode">Setup</button><button class="rp-rb" data-r="save" id="rptSave" hidden>Save settings</button><button class="rp-rb" data-pv="cleanglobal" id="rptClean" title="Remove the burned-in date, time and location stamps from every photo in the report">Remove all stamps</button><button class="rp-rb" data-r="pptx" id="rptPptx" title="Editable PowerPoint slides in the Template B layout, at the chosen page size">Export PPTX</button><button class="rp-rb rp-p" data-r="pdf" id="rptPdf">Download PDF</button><button class="rp-rb" data-r="close">Close</button></div><div class="rp-hint" id="rptHint" hidden>Click any text on a slide to change it, then press Download PDF. Edits are for this PDF only: the dashboard data is not changed. In Template B, hover a photo to drag it, resize it with the gold handles (corner keeps the shape, the side handles change width or height, and Crop / Stretch chooses how the picture fills a changed shape), change it or remove it, or use Add photos. Titles and cards are changed in Setup.</div><div class="rp-rbody" id="rptBody"></div><div class="rp-rsetup" id="rptSetup" hidden></div>';
   document.body.appendChild(r);
   r.addEventListener('click',onClick); r.addEventListener('input',onInput); r.addEventListener('change',onChange);
   window.addEventListener('resize',function(){ if(r.classList.contains('on')&&RP.mode==='view') drawView(); });
@@ -4594,7 +4618,7 @@ function drawView(){
 function setMode(m){
   RP.mode=m; var b=document.getElementById('rptBody'), s=document.getElementById('rptSetup');
   b.hidden=m!=='view'; s.hidden=m!=='setup';
-  document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=m!=='setup'; document.getElementById('rptPdf').hidden=m!=='view'; document.getElementById('rptPptx').hidden=m!=='view'; document.getElementById('rptEdit').hidden=m!=='view'; if(m!=='view'){ document.getElementById('rptRst').hidden=true; document.getElementById('rptHint').hidden=true; }
+  document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=m!=='setup'; document.getElementById('rptPdf').hidden=m!=='view'; document.getElementById('rptPptx').hidden=m!=='view'; document.getElementById('rptClean').hidden=m!=='view'; document.getElementById('rptEdit').hidden=m!=='view'; if(m!=='view'){ document.getElementById('rptRst').hidden=true; document.getElementById('rptHint').hidden=true; }
   if(m==='view') drawView(); else drawSetup();
 }
 async function fetchPhotos(){
