@@ -1054,7 +1054,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V246</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V247</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4221,9 +4221,10 @@ function scHtml(sc){
     if(p.t==='e') return '<div style="position:absolute;'+pos+'box-sizing:border-box;border-radius:50%;'+(p.f?'background:'+p.f+';':'')+(p.bd?'border:'+p.bw+'px solid '+p.bd+';':'')+'"></div>';
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
+      if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove stamps</button>';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'"></label>';
-      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><div class="rp-hd" title="Drag: resize, keeping the shape"></div><div class="rp-he" title="Drag: change the width"></div><div class="rp-hs" title="Drag: change the height"></div><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
+      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><div class="rp-hd" title="Drag: resize, keeping the shape"></div><div class="rp-he" title="Drag: change the width"></div><div class="rp-hs" title="Drag: change the height"></div><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove stamp')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
@@ -4361,8 +4362,9 @@ function scenePhotos(s){
   sc.push(bT(40,17,780,14,kick,{fs:10.5,c:GD,b:1,ls:1.6,up:1,k:K+'pk'}));
   sc.push(bT(40,36,820,34,'Construction progress  |  Site photographs',{fs:22,c:'#fff',b:1,up:1,ls:.6,k:K+'pt'}));
   sc.push(bI(PW-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW));
+  if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
   if((s.ph||[]).length<4) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1});
-  if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
+  if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-146-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
   var R=photoRects(n,L,16,102,PW-32,PH-118,8);
   L.forEach(function(x,i){
     var r=R[i], d=RP.ph[x.p.id], ah=r[3]-BAR, nw=x.p.w||4, nh=x.p.h||3, k=Math.min(r[2]/nw,ah/nh), iw=nw*k, ih=nh*k, cx=r[0]+(r[2]-iw)/2, cy=r[1]+(r[3]-(ih+BAR))/2, bx=x.p.box;
@@ -4371,7 +4373,7 @@ function scenePhotos(s){
     if(d) sc.push(bI(cx,cy,iw,ih,d,{fit:cov?'cover':'fill'}));
     sc.push(bR(cx,cy+ih,iw,BAR,{f:NV}));
     sc.push(bT(cx+10,cy+ih,iw-20,BAR,x.cap||'',{fs:10,c:'#fff',b:1,ls:.8,up:1,va:'m',k:'p:'+x.p.id+':cap'}));
-    sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cov:cov,free:!!(bx&&isFinite(bx.h))});
+    sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cl:!!x.p.oid,cov:cov,free:!!(bx&&isFinite(bx.h))});
   });
   return {sc:sc,bg:CRM};
 }
@@ -4400,10 +4402,69 @@ function drawViewB(){
   var rt=document.getElementById('rptRoot'); if(rt&&!rt._pv){ rt._pv=1; rt.addEventListener('click',pvClick); rt.addEventListener('change',pvChange); rt.addEventListener('pointerdown',pvDown); rt.addEventListener('pointermove',pvMove); rt.addEventListener('pointerup',pvUp); rt.addEventListener('pointercancel',pvUp); }
   body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!Object.keys(RP.ov.v).length; var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
 }
+/* ----- remove burned-in date, time and location stamps from a photo (canvas, in place) ----- */
+function stampClean(cv){ return stampRun(cv,218,70)||stampRun(cv,150,45); }
+function stampRun(cv,TW,TD){
+  var W=cv.width, H=cv.height, ctx=cv.getContext('2d'), im=ctx.getImageData(0,0,W,H), d=im.data, N=W*H, i, x, y;
+  var lum=new Uint8Array(N); for(i=0;i<N;i++) lum[i]=(d[i*4]*77+d[i*4+1]*150+d[i*4+2]*29)>>8;
+  var wh=new Uint8Array(N); for(i=0;i<N;i++){ var r=d[i*4],g=d[i*4+1],b=d[i*4+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b); wh[i]=(mn>=TW&&mx-mn<=46)?1:0; }
+  var st=new Uint8Array(N), R=2, band=Math.round(H*.26);
+  for(y=0;y<H;y++){ if(y>band&&y<H-band) continue; for(x=0;x<W;x++){ i=y*W+x; if(!wh[i]) continue; var ok=false, l0=lum[i];
+    for(var dy=-R;dy<=R&&!ok;dy++){ var yy=y+dy; if(yy<0||yy>=H) continue; for(var dx=-R;dx<=R;dx++){ var xx=x+dx; if(xx<0||xx>=W) continue; if(l0-lum[yy*W+xx]>TD){ ok=true; break; } } }
+    if(ok) st[i]=1; } }
+  /* connected strokes = candidate glyphs */
+  var lab=new Int32Array(N), comps=[], stack=[], c=0;
+  for(i=0;i<N;i++){ if(!st[i]||lab[i]) continue; c++; var x0=1e9,x1=-1,y0=1e9,y1=-1,n=0; stack.length=0; stack.push(i); lab[i]=c;
+    while(stack.length){ var p=stack.pop(), px=p%W, py=(p/W)|0; n++; if(px<x0)x0=px; if(px>x1)x1=px; if(py<y0)y0=py; if(py>y1)y1=py;
+      for(var ny=py-1;ny<=py+1;ny++) for(var nx=px-1;nx<=px+1;nx++){ if(nx<0||ny<0||nx>=W||ny>=H) continue; var q=ny*W+nx; if(st[q]&&!lab[q]){ lab[q]=c; stack.push(q); } } }
+    var gh=y1-y0+1, gw=x1-x0+1; if(gh>=H*.008&&gh<=H*.07&&gw<=gh*2.2&&n>=gh*.8&&n<=gh*gw*.75) comps.push({x0:x0,x1:x1,y0:y0,y1:y1,id:c,h:gh}); }
+  /* group glyphs into text lines */
+  comps.sort(function(a,b){ return a.x0-b.x0; });
+  var lines=[]; comps.forEach(function(g){ var best=null; lines.forEach(function(L){ var cy=(L.y0+L.y1)/2, gy=(g.y0+g.y1)/2, hh=Math.max(L.h,g.h); if(Math.abs(cy-gy)<=hh*.45&&Math.abs(L.h-g.h)<=hh*.6&&g.x0-L.x1<=hh*2.4) best=L; });
+    if(best){ best.g.push(g); best.x1=Math.max(best.x1,g.x1); best.y0=Math.min(best.y0,g.y0); best.y1=Math.max(best.y1,g.y1); best.h=Math.max(best.h,g.h); }
+    else lines.push({g:[g],x0:g.x0,x1:g.x1,y0:g.y0,y1:g.y1,h:g.h}); });
+  lines=lines.filter(function(L){ return L.g.length>=2; });
+  var mg=true; while(mg){ mg=false; for(i=0;i<lines.length&&!mg;i++) for(var j=i+1;j<lines.length&&!mg;j++){ var A1=lines[i], B1=lines[j], hh=Math.max(A1.h,B1.h), ov=Math.min(A1.y1,B1.y1)-Math.max(A1.y0,B1.y0);
+    var gap=Math.max(A1.x0,B1.x0)-Math.min(A1.x1,B1.x1); if(ov>=hh*.5&&gap<=hh*7){ A1.g=A1.g.concat(B1.g); A1.x0=Math.min(A1.x0,B1.x0); A1.x1=Math.max(A1.x1,B1.x1); A1.y0=Math.min(A1.y0,B1.y0); A1.y1=Math.max(A1.y1,B1.y1); A1.h=hh; lines.splice(j,1); mg=true; } } }
+  lines=lines.filter(function(L){ return L.g.length>=6&&(L.x1-L.x0)>=L.h*4; });
+  if(!lines.length) return 0;
+  /* mask: every near-white pixel inside the text boxes, grown to cover outline and shadow */
+  var mk=new Uint8Array(N), m=Math.max(3,Math.round(H*.006)), bx0=W,bx1=0,by0=H,by1=0;
+  lines.forEach(function(L){ var ya=Math.max(0,L.y0-m), yb=Math.min(H-1,L.y1+m), xa=Math.max(0,L.x0-m), xb=Math.min(W-1,L.x1+m);
+    for(var yy=ya;yy<=yb;yy++) for(var xx=xa;xx<=xb;xx++) if(wh[yy*W+xx]) for(var ey=-2;ey<=2;ey++) for(var ex=-2;ex<=2;ex++){ var qy=yy+ey, qx=xx+ex; if(qy>=0&&qy<H&&qx>=0&&qx<W) mk[qy*W+qx]=1; }
+    bx0=Math.min(bx0,xa); bx1=Math.max(bx1,xb); by0=Math.min(by0,ya); by1=Math.max(by1,yb); });
+  /* fill by diffusion from the surrounding pixels */
+  var pad=6, X0=Math.max(0,bx0-pad), X1=Math.min(W-1,bx1+pad), Y0=Math.max(0,by0-pad), Y1=Math.min(H-1,by1+pad), w=X1-X0+1, h=Y1-Y0+1, ch=[0,1,2];
+  var A=new Float32Array(w*h*3), K=new Uint8Array(w*h);
+  for(y=0;y<h;y++) for(x=0;x<w;x++){ var s=((y+Y0)*W+(x+X0)), t=y*w+x; K[t]=mk[s]; A[t*3]=d[s*4]; A[t*3+1]=d[s*4+1]; A[t*3+2]=d[s*4+2]; }
+  /* start: fill masked pixels by horizontal interpolation to the nearest clean pixels */
+  for(y=0;y<h;y++){ x=0; while(x<w){ if(!K[y*w+x]){ x++; continue; } var a=x; while(x<w&&K[y*w+x]) x++; var b=x-1, L0=a-1, R0=b+1; for(var xx2=a;xx2<=b;xx2++){ var t2=y*w+xx2; for(var cc=0;cc<3;cc++){ var lv=L0>=0?A[(y*w+L0)*3+cc]:(R0<w?A[(y*w+R0)*3+cc]:128), rv=R0<w?A[(y*w+R0)*3+cc]:lv, f=(xx2-L0)/(R0-L0); A[t2*3+cc]=lv+(rv-lv)*(L0>=0&&R0<w?f:0); } } } }
+  for(var it=0;it<40;it++){ for(y=1;y<h-1;y++) for(x=1;x<w-1;x++){ var t3=y*w+x; if(!K[t3]) continue; for(var c3=0;c3<3;c3++) A[t3*3+c3]=(A[(t3-1)*3+c3]+A[(t3+1)*3+c3]+A[(t3-w)*3+c3]+A[(t3+w)*3+c3])/4; } }
+  for(y=0;y<h;y++) for(x=0;x<w;x++){ var t4=y*w+x; if(!K[t4]) continue; var s2=((y+Y0)*W+(x+X0))*4; d[s2]=A[t4*3]; d[s2+1]=A[t4*3+1]; d[s2+2]=A[t4*3+2]; }
+  ctx.putImageData(im,0,0); return lines.length;
+}
+function cleanOn(){ return !(RP.cfg&&RP.cfg.clean===false); }
+async function pvClean(q){
+  if(q.oid){ var t=q.id; q.id=q.oid; q.oid=t; return 1; }
+  var src=RP.ph[q.id]; if(!src) return 0; var im=await loadImg(src); if(!im) return 0;
+  var cv=document.createElement('canvas'); cv.width=im.width; cv.height=im.height; cv.getContext('2d').drawImage(im,0,0);
+  if(!stampClean(cv)) return 0;
+  var id=uid(), data=cv.toDataURL('image/jpeg',.88); RP.ph[id]=data; try{ await accCall('PUT','/report-photo',{id:id,data:data},30000); }catch(e){ RP.pvLocal=1; }
+  q.oid=q.id; q.id=id; return 1;
+}
 /* ----- photo controls in the preview ----- */
 function pvOwner(si,ci){ var s=(RP.cfg.slides||[])[si]; if(!s) return null; var t=ci>=0?(s.cards||[])[ci]:s; if(t) t.ph=t.ph||[]; return t; }
 async function pvStore(file){ var o=await shrink(file), id=uid(); RP.ph[id]=o.data; try{ await accCall('PUT','/report-photo',{id:id,data:o.data},30000); }catch(e){ RP.pvLocal=1; } return {id:id,w:o.w,h:o.h}; }
-function pvDrop(p){ if(!p) return; delete RP.ph[p.id]; accCall('PUT','/report-photo',{id:p.id,data:null},15000).catch(function(){}); }
+function pvDrop(p){ if(!p) return; if(p.oid){ delete RP.ph[p.oid]; accCall('PUT','/report-photo',{id:p.oid,data:null},15000).catch(function(){}); } delete RP.ph[p.id]; accCall('PUT','/report-photo',{id:p.id,data:null},15000).catch(function(){}); }
+async function pvCleanRun(btn){
+  var si=+btn.getAttribute('data-si'), all=btn.getAttribute('data-pv')==='cleanall', list=[];
+  if(all){ var sl=(RP.cfg.slides||[])[si]; if(!sl) return; (sl.cards||[]).concat([sl]).forEach(function(o){ (o.ph||[]).forEach(function(q){ if(!q.oid) list.push(q); }); }); }
+  else{ var o=pvOwner(si,+btn.getAttribute('data-ci')), q=o&&o.ph[+btn.getAttribute('data-pi')]; if(q) list.push(q); }
+  if(!list.length) return; toast('Looking for date, time and location stamps…'); RP.pvLocal=0; var n=0, was=!all&&list[0].oid;
+  try{ for(var i=0;i<list.length;i++) n+=await pvClean(list[i]); }catch(x){ return toast((x&&x.message)||'Could not process the picture.',true); }
+  if(!n){ toast('No stamp was found. Photos with very faint or unusual stamps can be replaced with a clean copy.',true); return; }
+  dirty(); drawViewB(); toast(was?'Original restored.':n+' photo'+(n>1?'s':'')+' cleaned. Use Restore original on a photo to undo.',!!RP.pvLocal);
+}
 var DR=null;
 function pvDown(e){
   var o=e.target.closest&&e.target.closest('.rp-vc'); if(!o||e.button||e.target.closest('.rp-vb')) return;
@@ -4427,6 +4488,8 @@ function pvUp(e){
   dirty(); drawViewB();
 }
 function pvClick(e){
+  var cl=e.target.closest&&e.target.closest('[data-pv="clean"],[data-pv="cleanall"]');
+  if(cl){ e.preventDefault(); pvCleanRun(cl); return; }
   var ft=e.target.closest&&e.target.closest('[data-pv="fit"]');
   if(ft){ e.preventDefault(); var oo=ft.closest('.rp-vc'), ow=pvOwner(+ft.getAttribute('data-si'),+ft.getAttribute('data-ci')), qq=ow&&ow.ph[+ft.getAttribute('data-pi')]; if(!qq||!oo) return;
     var r4=function(v){ return Math.round(v*10000)/10000; }, bx=qq.box;
@@ -4450,7 +4513,7 @@ async function pvChange(e){
 }
 function tplBox(){
   var b=bc(), tx='margin:8px 0 0;font-size:12px;color:#5b6784';
-  var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates use the same concern cards. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p></div>';
+  var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates use the same concern cards. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="clean"'+(cleanOn()?' checked':'')+'> Remove burned-in date, time and location stamps from photos when they are added</label></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Cover page (Template B)</h5><div class="rp-g2"><div><label>Department</label><input type="text" data-f="b.dept" value="'+esc(b.dept)+'"></div><div><label>First line</label><input type="text" data-f="b.l1" value="'+esc(b.l1)+'"></div><div><label>Subtitle</label><input type="text" data-f="b.sub" value="'+esc(b.sub)+'"></div></div><label style="margin-top:8px">Title (Enter starts a second line)</label><textarea data-f="b.title" rows="2" style="width:100%;font:inherit;padding:6px 8px;border:1px solid #c9d1e0;border-radius:6px">'+esc(b.title)+'</textarea><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="b.end"'+(b.end?' checked':'')+'> Add a closing "Thank you" slide</label><p style="'+tx+'">The month and year follow the data date ('+esc(dd(cutIso()))+'). Template B uses one progress page and one photos page for each slide, and the overview shows the planned or forecast style only.</p></div>';
   return h;
@@ -4626,12 +4689,13 @@ function onChange(e){
   else if(f==='pages'){ RP.cfg.pages=t.value; dirty(); }
   else if(f==='tpl'){ RP.cfg.tpl=t.value; dirty(); drawSetup(); }
   else if(f==='size'){ RP.cfg.size=t.value; dirty(); }
+  else if(f==='clean'){ RP.cfg.clean=!!t.checked; dirty(); }
   else if(f==='b.end'){ RP.cfg.b=RP.cfg.b||{}; RP.cfg.b.end=!!t.checked; dirty(); }
   else if(t.getAttribute&&t.getAttribute('data-r')==='file') addPhotos(t);
 }
 function shrink(file){
   return new Promise(function(res,rej){ var u=URL.createObjectURL(file), im=new Image();
-    im.onload=function(){ var s=Math.min(1,1400/Math.max(im.width,im.height)), w=Math.round(im.width*s), h=Math.round(im.height*s), cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h);
+    im.onload=function(){ var s=Math.min(1,1400/Math.max(im.width,im.height)), w=Math.round(im.width*s), h=Math.round(im.height*s), cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); try{ if(cleanOn()) stampClean(cv); }catch(e){}
       var q=.84, d; do{ d=cv.toDataURL('image/jpeg',q); q-=.08; }while(d.length>850000&&q>.3); URL.revokeObjectURL(u); res({data:d,w:w,h:h}); };
     im.onerror=function(){ URL.revokeObjectURL(u); rej(new Error('Could not read '+file.name)); }; im.src=u; });
 }
