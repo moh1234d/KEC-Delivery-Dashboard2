@@ -1068,6 +1068,16 @@ body.rptp .rp-gr{display:none!important}
 .ulact{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.ulrs{flex:1;min-width:240px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
 .cell{display:inline-block;min-width:92px;text-align:center;padding:4px 8px;border-radius:8px;font-size:12px;font-weight:700;background:#eceff3;color:#44505a}.cell.g{background:#e3f2e6;color:#2e6b34}.cell.a{background:#fcebd5;color:#9c5a10}.cell.r{background:#fbe3e0;color:#b9544b}
 .ullg{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.ulpgrow td{background:#f0ece3;font-weight:800;color:#0b2a5e;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.lybar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}.lybar .sp{flex:1}
+.lybar.on{background:#0b2a5e;color:#fff;border-radius:10px;padding:10px 14px;position:sticky;top:6px;z-index:30;box-shadow:0 4px 14px rgba(0,0,0,.25)}.lybar.on span{font-size:12.5px;opacity:.9}.lyg{font-style:normal;background:#ba965a;border-radius:4px;padding:0 5px}
+.lybar .btn{padding:7px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:2px solid #cfd6df;background:#fff;color:#142c3b}.lybar .btn.pri{background:#2f7d7a;border-color:#2f7d7a;color:#fff}.lybar .btn:disabled{opacity:.5;cursor:default}
+body.lyedit .ovwrap .pbox{position:relative;outline:2px dashed #ba965a;outline-offset:2px}body.lyedit .ovwrap .uc{position:relative;cursor:default!important;outline:1px dashed rgba(186,150,90,.8)}
+.ly-mv{position:absolute;left:6px;top:6px;z-index:6;width:24px;height:24px;line-height:24px;text-align:center;font-style:normal;background:#ba965a;color:#fff;border-radius:6px;cursor:grab;touch-action:none;box-shadow:0 1px 4px rgba(0,0,0,.35)}.ly-mv:active{cursor:grabbing}
+.pbox>.ly-mv,.uc>.ly-mv{left:auto;right:8px;top:8px}.uc>.ly-mv{right:6px;top:6px}
+.ly-r{position:absolute;z-index:6;background:#ba965a;touch-action:none;box-shadow:0 0 3px rgba(0,0,0,.4)}
+.ly-r.e{right:-5px;top:50%;margin-top:-22px;width:10px;height:44px;border-radius:5px;cursor:ew-resize}.ly-r.s{bottom:-5px;left:50%;margin-left:-22px;height:10px;width:44px;border-radius:5px;cursor:ns-resize}.ly-r.se{right:-6px;bottom:-6px;width:16px;height:16px;border-radius:5px;cursor:nwse-resize}
+.ly-drag{opacity:.65;outline:3px solid #2f7d7a!important}
+.pbox.ly-h{display:flex;flex-direction:column}.pbox.ly-h>.ucs,.pbox.ly-h>.frow{flex:1;grid-auto-rows:1fr}.uc.ly-h{height:auto}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1097,7 +1107,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V262</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V263</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2621,6 +2631,89 @@ function ulRecent(j){
   return '<div class="sepnote" style="display:block"><b>Your recent uploads</b>'+j.recent.map(function(x){ return '<div style="margin-top:6px">'+esc(svStamp(x.ts))+' · <b>'+(st[x.status]||esc(x.status))+'</b>'+(x.partial&&x.partial.rejected&&x.partial.rejected.length?' (not approved: '+esc(x.partial.rejected.join(', '))+')':'')+(x.reason?'<div class="bad">Reason: '+esc(x.reason)+'</div>':'')+'</div>'; }).join('')+'</div>';
 }
 
+/* ===== Edit layout (administrators): move and resize the Overview groups and cards (V263) ===== */
+var LY={cur:null,rev:0,draft:null,editing:false,dirty:false,loaded:false,loading:false,err:'',by:'',ts:0};
+var LY_KEY='kec.layout.v1';
+function lyEmpty(){ return {v:1,boxes:{},cards:{}}; }
+function lyClone(o){ return JSON.parse(JSON.stringify(o||lyEmpty())); }
+async function lyLoad(force){
+  if(LY.loading||(LY.loaded&&!force)) return; if(ACC.need===null||(ACC.need&&!ACC.token)) return; LY.loading=true;
+  try{
+    if(ulRelay()){ var j=await accCall('GET','/layout',null,20000); LY.cur=j.layout||null; LY.rev=j.rev||0; LY.by=j.by||''; LY.ts=j.ts||0; LY.err=''; }
+    else { var l=JSON.parse(localStorage.getItem(LY_KEY)||'null'); LY.cur=l&&l.layout||null; LY.rev=l&&l.rev||0; LY.by=l&&l.by||''; LY.ts=l&&l.ts||0; }
+  }catch(e){ LY.err=(e&&e.status===404)?'The relay does not store the layout yet. Deploy relay V25. Layout changes are kept in this browser only.':''; try{ var l2=JSON.parse(localStorage.getItem(LY_KEY)||'null'); LY.cur=l2&&l2.layout||null; LY.rev=l2&&l2.rev||0; }catch(e2){} }
+  LY.loaded=true; LY.loading=false; if(state.page==='overview'||state.all) render();
+}
+function lyBar(){
+  if(!ulAdmin()||state.page!=='overview') return '';
+  if(!LY.editing) return '<div class="lybar"><span class="sp"></span><button type="button" class="btn" data-lyedit="1" title="Move and resize the groups and cards on this page (administrators only)">Edit layout</button></div>';
+  return '<div class="lybar on"><b>Editing layout</b><span>Drag <i class="lyg">⠿</i> to move a group or a card. Drag an edge or corner to resize. Numbers always come from the data.</span><span class="sp"></span><button type="button" class="btn pri" data-lysave="1"'+(LY.dirty?'':' disabled')+'>Save layout</button><button type="button" class="btn" data-lyreset="1">Reset to default</button><button type="button" class="btn" data-lycancel="1">Cancel</button></div>';
+}
+function lyKeys(root){
+  var occ={}; root.querySelectorAll('.uc[data-project]').forEach(function(u){ var p=u.getAttribute('data-project'); occ[p]=occ[p]||0; u.setAttribute('data-lyk',p+'#'+(occ[p]++)); });
+  root.querySelectorAll('.pbox').forEach(function(b){ var ks=[].map.call(b.querySelectorAll('.uc[data-lyk]'),function(u){ return u.getAttribute('data-lyk'); }); b.setAttribute('data-lyk',ks.length?ks.join('+'):'t:'+((b.querySelector('h3')||{}).textContent||'')); });
+}
+function lyStyle(el,c){
+  el.style.gridColumn=c&&c.s?'span '+c.s:''; el.style.order=c&&c.o!=null?String(c.o):''; el.style.minHeight=c&&c.h?c.h+'px':''; el.classList.toggle('ly-h',!!(c&&c.h));
+}
+function lyApply(){
+  var root=document.querySelector('.ovwrap'); if(!root) return;
+  var cfg=(LY.editing?LY.draft:LY.cur)||lyEmpty(); lyKeys(root);
+  root.querySelectorAll('.pbox').forEach(function(b){ lyStyle(b,cfg.boxes[b.getAttribute('data-lyk')]); });
+  root.querySelectorAll('.uc[data-lyk]').forEach(function(u){ lyStyle(u,cfg.cards[u.getAttribute('data-lyk')]); });
+  document.body.classList.toggle('lyedit',!!LY.editing);
+  root.querySelectorAll('.ly-ov').forEach(function(x){ x.remove(); });
+  if(!LY.editing) return;
+  var add=function(el,withMove){ var h=''; if(withMove) h+='<i class="ly-ov ly-mv" data-lyh="move" title="Drag to move">⠿</i>'; h+='<i class="ly-ov ly-r e" data-lyh="e"></i><i class="ly-ov ly-r s" data-lyh="s"></i><i class="ly-ov ly-r se" data-lyh="se"></i>'; el.insertAdjacentHTML('beforeend',h); };
+  root.querySelectorAll('.pbox').forEach(function(b){ add(b,true); });
+  root.querySelectorAll('.uc[data-lyk]').forEach(function(u){ add(u,true); u.classList.add('ly-c'); });
+}
+function lyEntry(kind,key){ var m=kind==='box'?LY.draft.boxes:LY.draft.cards; return m[key]||(m[key]={}); }
+function lySeq(par,sel){ var L=[].filter.call(par.children,function(c){ return c.matches(sel); }); return L.map(function(c,i){ return {el:c,i:i}; }).sort(function(a,b){ var x=parseInt(a.el.style.order)||0, y=parseInt(b.el.style.order)||0; return x-y||a.i-b.i; }).map(function(o){ return o.el; }); }
+var LYD=null;
+document.addEventListener('pointerdown',function(e){
+  var h=e.target.closest&&e.target.closest('[data-lyh]'); if(!h||!LY.editing) return; e.preventDefault(); e.stopPropagation();
+  var card=h.closest('.uc[data-lyk]'), el=card||h.closest('.pbox'), kind=card?'card':'box', par=el.parentElement;
+  LYD={h:h.getAttribute('data-lyh'),el:el,kind:kind,key:el.getAttribute('data-lyk'),par:par,sel:card?'.uc':'.pbox',id:e.pointerId};
+  if(LYD.h==='move') el.classList.add('ly-drag');
+  try{ document.body.setPointerCapture(e.pointerId); }catch(x){}
+},true);
+document.addEventListener('pointermove',function(e){
+  if(!LYD) return; var D=LYD, el=D.el, r=el.getBoundingClientRect(), cs=getComputedStyle(D.par);
+  if(D.h==='move'){
+    var sib=lySeq(D.par,D.sel).filter(function(s){ return s!==el&&s.offsetParent; }), best=null, bd=1e12;
+    sib.forEach(function(s){ var q=s.getBoundingClientRect(), cx=q.left+q.width/2, cy=q.top+q.height/2, inx=e.clientX>=q.left&&e.clientX<=q.right&&e.clientY>=q.top&&e.clientY<=q.bottom, d=inx?-1:Math.hypot(e.clientX-cx,e.clientY-cy); if(d<bd){ bd=d; best=s; } });
+    if(!best) return; var q=best.getBoundingClientRect(), before=(Math.abs(e.clientY-(q.top+q.height/2))>q.height*0.3)?e.clientY<q.top+q.height/2:e.clientX<q.left+q.width/2;
+    var order=lySeq(D.par,D.sel).filter(function(s){ return s!==el; }), i=order.indexOf(best); order.splice(before?i:i+1,0,el);
+    var cur0=lySeq(D.par,D.sel); if(cur0.every(function(s,k){ return s===order[k]; })) return;
+    order.forEach(function(s,k){ s.style.order=String(k); var en=lyEntry(D.kind,s.getAttribute('data-lyk')); en.o=k; }); LY.dirty=true;
+  } else {
+    var cols=cs.gridTemplateColumns.split(' ').length, gap=parseFloat(cs.columnGap)||0, pr=D.par.getBoundingClientRect(), cw=(pr.width-gap*(cols-1))/cols, en=lyEntry(D.kind,D.key);
+    if(D.h==='e'||D.h==='se'){ var sp=Math.max(1,Math.min(cols,Math.round((e.clientX-r.left+gap)/(cw+gap)))); en.s=sp; el.style.gridColumn='span '+sp; }
+    if(D.h==='s'||D.h==='se'){ var hh=Math.max(D.kind==='card'?160:120,Math.min(1400,Math.round((e.clientY-r.top)/10)*10)); en.h=hh; el.style.minHeight=hh+'px'; el.classList.add('ly-h'); }
+    LY.dirty=true;
+  }
+},true);
+function lyUp(){ if(!LYD) return; LYD.el.classList.remove('ly-drag'); LYD=null; var b=document.querySelector('[data-lysave]'); if(b) b.disabled=!LY.dirty; }
+document.addEventListener('pointerup',lyUp,true); document.addEventListener('pointercancel',lyUp,true);
+document.addEventListener('click',function(e){ if(!LY.editing) return; var t=e.target; if(t.closest&&t.closest('.lybar')) return; if(t.closest&&t.closest('.ovwrap .uc, .ovwrap .pbox')){ e.preventDefault(); e.stopPropagation(); } },true);
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-lyedit],[data-lysave],[data-lycancel],[data-lyreset]'); if(!t) return;
+  if(t.hasAttribute('data-lyedit')){ if(!ulAdmin()) return; LY.editing=true; LY.draft=lyClone(LY.cur); LY.dirty=false; render(); }
+  else if(t.hasAttribute('data-lycancel')){ LY.editing=false; LY.draft=null; LY.dirty=false; render(); }
+  else if(t.hasAttribute('data-lyreset')){ LY.draft=lyEmpty(); LY.dirty=true; render(); }
+  else if(t.hasAttribute('data-lysave')){ lySave(t); }
+});
+async function lySave(btn){
+  if(btn) btn.disabled=true; var lay=lyClone(LY.draft);
+  ['boxes','cards'].forEach(function(k){ Object.keys(lay[k]).forEach(function(q){ var c=lay[k][q]; if(c.s==null&&c.h==null&&c.o==null) delete lay[k][q]; }); });
+  try{
+    if(ulRelay()&&!LY.err){ var j=await accCall('POST','/layout',{layout:lay,base:LY.rev},30000); LY.rev=j.rev; LY.by=j.by; LY.ts=j.ts; }
+    else { LY.rev=(LY.rev||0)+1; LY.ts=Date.now(); LY.by=(ACC.user&&ACC.user.name)||'You'; try{ localStorage.setItem(LY_KEY,JSON.stringify({layout:lay,rev:LY.rev,by:LY.by,ts:LY.ts})); }catch(e){} }
+    LY.cur=lay; LY.editing=false; LY.draft=null; LY.dirty=false; toast('Layout saved'+(ulRelay()&&!LY.err?' for everyone':' in this browser')); render();
+  }catch(e){ if(btn) btn.disabled=false; toast((e&&e.status===409)?'Someone else changed the layout. Reload the page, then edit again.':((e&&e.message)||'The layout could not be saved'),true); }
+}
+function lyPost(){ if(state.page==='overview'||state.all){ if(!LY.loaded) lyLoad(); lyApply(); } }
+
 function svGrpScope(c){ return {code:c,lc:String(c).toLowerCase(),filt:false,names:[],single:true,ok:function(){ return true; }}; }
 function pSiteGroup(rows,coreRows,cut){
   var codes=[]; rows.forEach(function(r){ if(codes.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) codes.push(r.code); });
@@ -3150,7 +3243,8 @@ function navTrack(){ var sn=navSnap(), sig=JSON.stringify(sn);
   NAV.last=sig; NAV.lastState=sn;
   var b=document.getElementById('backBtn'); if(b) b.disabled=!NAV.stack.length; }
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('#backBtn'); if(!b||!NAV.stack.length) return; var p=NAV.stack.pop(); Object.assign(state,p); NAV.skip=true; render(); window.scrollTo({top:0}); });
-function render(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc();
+function render(){ render0.apply(this,arguments); try{ lyPost(); }catch(e){ console.warn('layout',e&&e.message); } }
+function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc();
   destroyCharts();
   renderShell();
   var cut=state.cutoff, idx=model.snaps.indexOf(cut), prevCut=idx>0?model.snaps[idx-1]:null;
@@ -3442,7 +3536,7 @@ function render(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc()
   }
   var sepStarted=sepRows.filter(function(r){return r.pv>0||r.ev>0;}), sepIdle=sepRows.filter(function(r){return !(r.pv>0||r.ev>0);});
   var sepOv=(sel&&sepRows.length)?(sepStarted.length?'<div class="card plain" style="margin-bottom:12px"><h3>Separate plot'+(sepStarted.length>1?'s':'')+' <small>reported separately · not included in the project figures above</small></h3><div class="ucs sepu">'+sepStarted.map(function(r){ return ucard(r.pkg,agg([r]),'sep'); }).join('')+'</div></div>':'')+sepNote(sepIdle,'project'):'';
-  var pOverview=pageHead(scopeName,sel?'Project summary · cut-off '+d2(cut):'Planned vs actual progress and planned vs forecast finish by project · cut-off '+d2(cut),true)+facts+ovK+sepOv+finCard+boxes;
+  var pOverview=lyBar()+pageHead(scopeName,sel?'Project summary · cut-off '+d2(cut):'Planned vs actual progress and planned vs forecast finish by project · cut-off '+d2(cut),true)+facts+ovK+sepOv+finCard+boxes;
   var ganttOv=ganttSection(rows,sel);
   if(!sel) pOverview='<div class="ovwrap">'+pOverview+'</div>'+ganttOv; else pOverview+=ganttOv;
 
