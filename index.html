@@ -1054,7 +1054,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V247</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V248</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4202,7 +4202,7 @@ function fd4(iso){ if(!iso) return '—'; var p=String(iso).split('-'); return p
 function monthYear(cut){ var p=String(cut).split('-'); return {m:MONF[+p[1]-1]||'',y:p[0]||''}; }
 function rgba(hex,a){ if(a==null||a>=1) return hex; var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
 /* ----- drawing primitives: one scene is drawn as HTML in the preview and as PowerPoint shapes in the export ----- */
-function bR(x,y,w,h,o){ o=o||{}; return {t:'r',x:x,y:y,w:w,h:h,f:o.f||null,a:o.a==null?1:o.a,bd:o.bd||null,rd:o.rd||0,sh:!!o.sh}; }
+function bR(x,y,w,h,o){ o=o||{}; return {t:'r',x:x,y:y,w:w,h:h,f:o.f||null,a:o.a==null?1:o.a,bd:o.bd||null,rd:o.rd||0,sh:o.sh===2?2:!!o.sh}; }
 function bE(x,y,w,h,o){ o=o||{}; return {t:'e',x:x,y:y,w:w,h:h,f:o.f||null,bd:o.bd||null,bw:o.bw||1}; }
 function bL(x1,y1,x2,y2,c,w){ return {t:'l',x:Math.min(x1,x2),y:Math.min(y1,y2),w:Math.abs(x2-x1),h:Math.abs(y2-y1),c:c,lw:w||1}; }
 function bI(x,y,w,h,src,o){ o=o||{}; return {t:'i',x:x,y:y,w:w,h:h,src:src,fit:o.fit||'fill',keep:!!o.keep}; }
@@ -4217,7 +4217,7 @@ function fit(s,w,h,fs,bold,lh){
 function scHtml(sc){
   return sc.map(function(p){
     var pos='left:'+p.x+'px;top:'+p.y+'px;width:'+p.w+'px;height:'+p.h+'px;';
-    if(p.t==='r') return '<div style="position:absolute;'+pos+(p.f?'background:'+rgba(p.f,p.a)+';':'')+(p.bd?'border:1px solid '+p.bd+';box-sizing:border-box;':'')+(p.rd?'border-radius:'+p.rd+'px;':'')+(p.sh?'box-shadow:0 1px 7px rgba(20,44,59,.16);':'')+'"></div>';
+    if(p.t==='r') return '<div style="position:absolute;'+pos+(p.f?'background:'+rgba(p.f,p.a)+';':'')+(p.bd?'border:1px solid '+p.bd+';box-sizing:border-box;':'')+(p.rd?'border-radius:'+p.rd+'px;':'')+(p.sh===2?'box-shadow:0 4px 14px rgba(20,44,59,.38);':p.sh?'box-shadow:0 1px 7px rgba(20,44,59,.16);':'')+'"></div>';
     if(p.t==='e') return '<div style="position:absolute;'+pos+'box-sizing:border-box;border-radius:50%;'+(p.f?'background:'+p.f+';':'')+(p.bd?'border:'+p.bw+'px solid '+p.bd+';':'')+'"></div>';
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
@@ -4365,10 +4365,11 @@ function scenePhotos(s){
   if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
   if((s.ph||[]).length<4) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1});
   if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-146-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
-  var R=photoRects(n,L,16,102,PW-32,PH-118,8);
+  var R=photoRects(n,L,20,104,PW-40,PH-124,16);
   L.forEach(function(x,i){
-    var r=R[i], d=RP.ph[x.p.id], ah=r[3]-BAR, nw=x.p.w||4, nh=x.p.h||3, k=Math.min(r[2]/nw,ah/nh), iw=nw*k, ih=nh*k, cx=r[0]+(r[2]-iw)/2, cy=r[1]+(r[3]-(ih+BAR))/2, bx=x.p.box;
+    var r=R[i], d=RP.ph[x.p.id], PD=5, ah=r[3]-BAR-2*PD, nw=x.p.w||4, nh=x.p.h||3, k=Math.min((r[2]-2*PD)/nw,ah/nh), iw=nw*k, ih=nh*k, cx=r[0]+(r[2]-iw)/2, cy=r[1]+(r[3]-(ih+BAR))/2, bx=x.p.box;
     var cov=false; if(bx&&isFinite(bx.w)){ iw=Math.max(90,Math.min(PW,bx.w*PW)); if(isFinite(bx.h)){ ih=Math.max(60,Math.min(PH-BAR,bx.h*PH)); cov=bx.fit!=='fill'; } else{ ih=iw*nh/nw; if(ih+BAR>PH){ ih=PH-BAR; iw=ih*nw/nh; } } cx=Math.max(0,Math.min(PW-iw,bx.x*PW)); cy=Math.max(0,Math.min(PH-ih-BAR,bx.y*PH)); }
+    sc.push(bR(cx-PD,cy-PD,iw+2*PD,ih+BAR+2*PD,{f:'#fff',bd:'#c9cdd0',rd:7,sh:2}));
     sc.push(bR(cx,cy,iw,ih,{f:'#e7e2d8'}));
     if(d) sc.push(bI(cx,cy,iw,ih,d,{fit:cov?'cover':'fill'}));
     sc.push(bR(cx,cy+ih,iw,BAR,{f:NV}));
@@ -4537,7 +4538,7 @@ async function pptPrim(pp,sl,p){
   var q=function(v){ return Math.round(v/96*10000)/10000; };
   if(p.t==='r'||p.t==='e'){
     var o={x:q(p.x),y:q(p.y),w:q(p.w),h:q(p.h),fill:p.f?{color:hx(p.f),transparency:Math.round((1-(p.a==null?1:p.a))*100)}:{color:'FFFFFF',transparency:100},line:p.bd?{color:hx(p.bd),width:(p.bw||1)*.75}:{type:'none'}};
-    if(p.t==='r'&&p.sh) o.shadow={type:'outer',color:'142C3B',opacity:.2,blur:6,offset:1.5,angle:90};
+    if(p.t==='r'&&p.sh) o.shadow=p.sh===2?{type:'outer',color:'142C3B',opacity:.38,blur:10,offset:3,angle:90}:{type:'outer',color:'142C3B',opacity:.2,blur:6,offset:1.5,angle:90};
     if(p.t==='r'&&p.rd) o.rectRadius=Math.min(q(p.rd),Math.min(o.w,o.h)/2);
     sl.addShape(p.t==='e'?pp.ShapeType.ellipse:(p.rd?pp.ShapeType.roundRect:pp.ShapeType.rect),o);
   }else if(p.t==='l'){
