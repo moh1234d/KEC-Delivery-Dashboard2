@@ -149,6 +149,19 @@ body.acc-noxl #xpBtn1,body.acc-noxl #xpBtn2{display:none!important}
 body.acc-lim #printAllBtn,body.acc-lim #notesBtn,body.acc-lim #dcBtn,body.acc-lim #lkOpen,body.acc-lim #loadBtn,body.acc-lim #tplBtn,body.acc-lim #ctrBtn,body.acc-lim #liveExp{display:none!important}
 .livest a{color:#9ec1ff;text-decoration:underline;cursor:pointer}
 .side-foot button{all:unset;cursor:pointer;color:#9ec1ff;text-decoration:underline}
+.side-foot{gap:12px!important}
+.sfcut{font-size:11.5px;line-height:1.5;color:#c9d6ea}
+.sfg{display:grid;gap:3px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12)}
+.sfh{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c8963e;margin-bottom:3px}
+.side-foot .sfg button,.side-foot .sfg a.lklink{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;padding:6px 8px;border-radius:6px;cursor:pointer;color:#dbe6f7;font-size:11.5px;text-decoration:none}
+.side-foot .sfg button:hover,.side-foot .sfg a.lklink:hover{background:rgba(255,255,255,.09);color:#fff}
+.side-foot .sfg button[hidden]{display:none}
+.side-foot .sfg #dcBtn,.side-foot .sfg #notesBtn{opacity:1!important;margin:0!important;padding:6px 8px!important;text-decoration:none!important;color:#dbe6f7!important;font-size:11.5px!important;background:none}
+.side-foot .sfg #dcBtn:hover,.side-foot .sfg #notesBtn:hover{background:rgba(255,255,255,.09)!important;color:#fff!important}
+.sfg.sfadm:not(:has(button:not([hidden]))){display:none}
+.sfg.sfview{border-top:0;padding-top:0}
+.sfg .livest{padding:0 8px 4px}
+
 main{min-width:0}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--side);color:#fff;padding:12px 22px;display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between}
 .top h1{margin:0;font-size:18px;font-weight:700}
@@ -1068,7 +1081,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V259</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V260</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1087,20 +1100,26 @@ body.printsite>*:not(.app){display:none!important}
   </nav>
   <div class="side-foot">
     <div id="accWho" class="accwho" hidden></div>
-    <div id="sideCut"></div>
-    <button id="printAllBtn" type="button">Print all pages (A3)</button>
-    <button id="xpBtn1" type="button" data-xp="1" title="Excel file, dark scorecard, with the cut-off date">Excel dashboard · dark scorecard</button>
-    <button id="xpBtn2" type="button" data-xp="2" title="Excel file, light project cards, with the cut-off date">Excel dashboard · light cards</button>
-    <button id="notesBtn" type="button">Show data notes</button>
-    <button id="dcBtn" type="button">Data warnings <span class="dcn" id="dcN">0</span></button>
-    <div id="liveSt" class="livest"></div>
-    <div id="liveExp" class="liveexp" style="display:none"></div>
-    <a href="#" id="lkOpen" class="lklink">⚙ Live data links</a>
-    <button id="loadBtn" type="button">Load workbook(s)</button>
-    <button id="tplBtn" type="button">Download template</button>
-    <button id="aiLogBtn" type="button" hidden>Export AI log (Excel)</button>
-    <button id="actLogBtn" type="button" hidden>Export action log (Excel)</button>
-    <button id="themeBtn" type="button">Dark mode</button>
+    <div id="sideCut" class="sfcut"></div>
+    <div class="sfg"><div class="sfh">Data</div>
+      <div id="liveSt" class="livest"></div>
+      <div id="liveExp" class="liveexp" style="display:none"></div>
+      <button id="loadBtn" type="button">Load workbook(s)</button>
+      <button id="tplBtn" type="button">Download template</button>
+      <a href="#" id="lkOpen" class="lklink">&#9881; Live data links</a>
+      <button id="dcBtn" type="button">Data warnings <span class="dcn" id="dcN">0</span></button>
+      <button id="notesBtn" type="button">Show data notes</button>
+    </div>
+    <div class="sfg"><div class="sfh">Print &amp; export</div>
+      <button id="printAllBtn" type="button">Print all pages (A3)</button>
+      <button id="xpBtn1" type="button" data-xp="1" title="Excel file, dark scorecard, with the cut-off date">Excel dashboard &middot; dark scorecard</button>
+      <button id="xpBtn2" type="button" data-xp="2" title="Excel file, light project cards, with the cut-off date">Excel dashboard &middot; light cards</button>
+    </div>
+    <div class="sfg sfadm"><div class="sfh">Administration</div>
+      <button id="aiLogBtn" type="button" hidden>Export AI log (Excel)</button>
+      <button id="actLogBtn" type="button" hidden>Export action log (Excel)</button>
+    </div>
+    <div class="sfg sfview"><button id="themeBtn" type="button">Dark mode</button></div>
   </div>
 </aside>
 <main>
