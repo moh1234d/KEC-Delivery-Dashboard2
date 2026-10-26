@@ -1068,7 +1068,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V258</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V259</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2373,7 +2373,7 @@ function svStamp(ms){ var d=new Date(ms), p=function(n){ return String(n).padSta
 function svNowTxt(){ var d=new Date(), p=function(n){ return String(n).padStart(2,'0'); }; return d.getDate()+' '+MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2)+' · '+p(d.getHours())+':'+p(d.getMinutes()); }
 /* ---- the page ---- */
 function svEmpty(arr,what,sheet){
-  if(!(arr||[]).length) return '<div class="card plain"><div class="empty">The loaded database has no <b>'+sheet+'</b> sheet, so there is no '+what+' data. Data source now: <i>'+esc(source||'—')+'</i>. If you replaced the SharePoint file, press <b>Refresh</b> under “Live data” in the left panel; if it still shows this, the link is serving the old file.</div></div>';
+  if(!(arr||[]).length) return '<div class="card plain"><div class="empty">The loaded database has no <b>'+sheet+'</b> sheet, so there is no '+what+' data. Data source now: <i>'+esc(source||'—')+'</i>. '+sheetsSeen()+'<br>If you replaced the SharePoint file, press <b>Refresh</b> under “Live data” in the left panel; if it still shows this, the link is serving the old file.</div></div>';
   return '<div class="card plain"><div class="empty">No '+what+' data for this selection ('+arr.length+' rows loaded for other projects/packages).</div></div>';
 }
 function pSiteBuild(rows,coreRows,cut){
@@ -2579,6 +2579,7 @@ function suParse(wb,okCode){
   if(!data.prog.length&&!data.con.length&&!data.e1.length&&!data.e2.length&&!data.qa.length&&!data.mp.length&&!errs.length) errs.push('The file has no filled rows. Every row needs a Data Date and a Project Code.');
   return {data:data,errs:errs,warns:warns,sum:sum,codes:Object.keys(codes)};
 }
+function sheetsSeen(){ var o=window.KEC_SHEETS||{}, k=Object.keys(o); return k.length?'<br><b>Sheets in the file(s) the dashboard received:</b> '+k.map(function(n){ return '<i>'+esc(n)+'</i> → '+(o[n].map(esc).join(', ')||'no sheets'); }).join(' · '):'<br>No workbook has been read in this session (the built-in sample data is showing).'; }
 function suUndo(){ if(!SU.pre) return; Object.keys(SU.pre).forEach(function(k){ if(cur[k]===SU.post[k]) cur[k]=SU.pre[k]; }); SU.pre=SU.post=null; }
 function suMerge(list){
   var K=['prog','con','e1','e2','qa','mp']; SU.pre={}; K.forEach(function(k){ SU.pre[k]=cur[k]; });
@@ -3488,11 +3489,13 @@ function normNotes(objs){
 async function handleFiles(files,opts){
   opts=opts||{};
   if(!opts.auto&&!isUnlocked()){ pwAsk(function(){}); return; }
+  if(!opts.auto) window.KEC_SHEETS={};
   var errs=[], gotProg=null, gotInfo=null, gotCon=null, gotCtr=null, gotCst=null, gotMand=null, gotPh=null, gotNotes=null, gotE1=null, gotE2=null, gotQa=null, gotMp=null, names=[];
   if(typeof XLSX==='undefined'){ showErrors(['The Excel reader library could not be loaded (needs internet access to cdnjs.cloudflare.com).']); return; }
   for(var f of Array.from(files)){
     var wb;
     try{ wb=XLSX.read(await f.arrayBuffer(),{type:'array'}); }catch(e){ errs.push(esc(f.name)+': not a readable Excel file.'); continue; }
+    window.KEC_SHEETS=window.KEC_SHEETS||{}; window.KEC_SHEETS[f.name]=wb.SheetNames.slice();
     var csn=wb.SheetNames.filter(function(n){ return /^contracts$/i.test(String(n).trim()); })[0];
     var cOK=false, hasProg=false;
     if(csn){ hasProg=wb.SheetNames.some(function(n){ if(n===csn) return false; if(/mandatory|phase|package\s*notes?/i.test(String(n))) return true; try{ var ob=XLSX.utils.sheet_to_json(wb.Sheets[n],{raw:true,defval:null}); var kk=[]; ob.slice(0,25).forEach(function(o){ Object.keys(o).forEach(function(k){ if(kk.indexOf(k)<0) kk.push(k); }); }); var m0=mapCols(kk,PROG_COLS); return !!(m0.date&&m0.pkg); }catch(e){ return false; } });
@@ -5243,7 +5246,7 @@ async function liveLoad(auto){
   LIVE_BUSY=true; liveStatus('load','Loading live data…');
   try{
     var files=await Promise.all(LIVE.sources.map(liveFetch));
-    suUndo();
+    suUndo(); window.KEC_SHEETS={};
     for(var i=0;i<files.length;i++) await handleFiles([files[i]],{auto:true,quiet:true});
     await suSync();
     var d=new Date(), hh=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
