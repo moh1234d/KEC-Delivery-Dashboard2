@@ -1061,7 +1061,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V252</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V253</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4283,10 +4283,10 @@ function sceneOverview(P,cut){
   var it=ovItems(P,cut), st=(RP.cfg.ov&&RP.cfg.ov.style)||'a', sc=[], n=it.length;
   if(st==='c') it=it.map(function(x){ return Object.assign({},x,{pf:x.ff}); });
   it=it.map(function(x,i){ var e=parseMY(ov('ov:'+x.code+':d',null)); return Object.assign({},x,{pf:e||x.pf,_i:i}); }).sort(function(p,q){ return p.pf<q.pf?-1:p.pf>q.pf?1:p._i-q._i; });
-  sc.push(bT(46,28,760,50,'Projects Overview',{fs:34,serif:1,k:'ov:title'}));
-  sc.push(bR(46,84,112,3,{f:GD}));
-  sc.push(bT(46,100,800,24,st==='c'?'Forecast completion dates':'Planned completion dates',{fs:16,b:1,k:'ov:sub'}));
-  sc.push(bI(1122-46-150,26,150,150/RB_IMG.logoR,RB_IMG.logoD,{keep:1}));
+  sc.push(bR(0,0,1122,86,{f:NV}));
+  sc.push(bT(40,17,780,14,st==='c'?'Forecast completion dates':'Planned completion dates',{fs:10.5,c:GD,b:1,ls:1.6,up:1,k:'ov:sub'}));
+  sc.push(bT(40,36,820,34,'Projects Overview',{fs:22,c:'#fff',b:1,up:1,ls:.6,k:'ov:title'}));
+  sc.push(bI(1122-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW,{keep:1}));
   if(!n){ sc.push(bT(46,200,900,30,'No project in the report has a completion date at this cut-off.',{fs:15,c:GR})); return {sc:sc,bg:CRM}; }
   var mid=432, X0=46, W=1030, cw=Math.max(92,Math.min(134,Math.floor(W/n*2)-14)), ch=176;
   sc.push(bR(X0,mid-6,W,12,{f:'#ddd8ce',rd:6}));
@@ -4358,10 +4358,8 @@ function sceneProgress(s,P,cut,pg){
       var hc=Math.min(150,Math.floor((avail-(rC-1)*12)/rC));
       list.forEach(function(o,i){ concernCard(sc,o,X0+(i%cc)*(cwc+gap),top+Math.floor(i/cc)*(hc+12),cwc,hc,s.id,i); });
     }
-    if(more>0) sc.push(bT(X0,PH-55,W,12,'Source note: '+more+' additional high / critical concern'+(more>1?'s':'')+' in the Site view',{fs:8,c:RD,up:1,ls:.6,k:K+'src'}));
   }
   sc.push(bT(X0,PH-35,400,12,'KEC | Delivery Department',{fs:8,c:GR,up:1,ls:1,k:K+'ft'}));
-  sc.push(bT(PW-112,PH-35,80,12,p2(pg),{fs:9,c:GR,al:'r',k:K+'pg'}));
   if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1});
   return {sc:sc,bg:CRM};
 }
@@ -4385,7 +4383,7 @@ function scenePhotos(s){
   if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-176,y:26,w:166,h:34,si:si,ci:-1,pi:-1});
   if((s.ph||[]).length<4) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1});
   if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-176-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
-  var R=photoRects(n,L,20,104,PW-40,PH-124,16);
+  var R=photoRects(n,L,20,104,PW-40,PH-144,16);
   L.forEach(function(x,i){
     var r=R[i], d=RP.ph[x.p.id], PD=5, ah=r[3]-BAR-2*PD, nw=x.p.w||4, nh=x.p.h||3, k=Math.min((r[2]-2*PD)/nw,ah/nh), iw=nw*k, ih=nh*k, cx=r[0]+(r[2]-iw)/2, cy=r[1]+(r[3]-(ih+BAR))/2, bx=x.p.box;
     var cov=false; if(bx&&isFinite(bx.w)){ iw=Math.max(90,Math.min(PW,bx.w*PW)); if(isFinite(bx.h)){ ih=Math.max(60,Math.min(PH-BAR,bx.h*PH)); cov=bx.fit!=='fill'; } else{ ih=iw*nh/nw; if(ih+BAR>PH){ ih=PH-BAR; iw=ih*nw/nh; } } cx=Math.max(0,Math.min(PW-iw,bx.x*PW)); cy=Math.max(0,Math.min(PH-ih-BAR,bx.y*PH)); }
@@ -4413,6 +4411,7 @@ function bScenes(P,cut){
   if(ovOn()){ out.push(affine(sceneOverview(P,cut))); pg++; }
   (RP.cfg.slides||[]).forEach(function(s){ out.push(sceneProgress(s,P,cut,pg)); pg++; if(slidePhotos(s).length){ out.push(scenePhotos(s)); pg++; } });
   if(b.end) out.push(affine(sceneEnd()));
+  out.forEach(function(o,i){ var dark=o.bg===NV; o.sc.push(bT(PW-112,PH-(dark?34:35),80,12,p2(i+1),{fs:9,c:dark?'#fff':GR,al:'r',k:'pgn:'+i})); });
   return out;
 }
 function drawViewB(){
