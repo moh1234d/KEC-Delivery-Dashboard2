@@ -1061,7 +1061,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V249</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V250</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4228,10 +4228,10 @@ function scHtml(sc){
     if(p.t==='e') return '<div style="position:absolute;'+pos+'box-sizing:border-box;border-radius:50%;'+(p.f?'background:'+p.f+';':'')+(p.bd?'border:'+p.bw+'px solid '+p.bd+';':'')+'"></div>';
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
-      if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove stamps</button>';
+      if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove all stamps</button>';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'"></label>';
-      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove stamp')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
+      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
@@ -4369,9 +4369,9 @@ function scenePhotos(s){
   sc.push(bT(40,17,780,14,kick,{fs:10.5,c:GD,b:1,ls:1.6,up:1,k:K+'pk'}));
   sc.push(bT(40,36,820,34,'Construction progress  |  Site photographs',{fs:22,c:'#fff',b:1,up:1,ls:.6,k:K+'pt'}));
   sc.push(bI(PW-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW));
-  if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
+  if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-176,y:26,w:166,h:34,si:si,ci:-1,pi:-1});
   if((s.ph||[]).length<4) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1});
-  if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-146-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
+  if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-176-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
   var R=photoRects(n,L,20,104,PW-40,PH-124,16);
   L.forEach(function(x,i){
     var r=R[i], d=RP.ph[x.p.id], PD=5, ah=r[3]-BAR-2*PD, nw=x.p.w||4, nh=x.p.h||3, k=Math.min((r[2]-2*PD)/nw,ah/nh), iw=nw*k, ih=nh*k, cx=r[0]+(r[2]-iw)/2, cy=r[1]+(r[3]-(ih+BAR))/2, bx=x.p.box;
@@ -4466,6 +4466,8 @@ async function pvStore(file){ var o=await shrink(file), id=uid(); RP.ph[id]=o.da
 function pvDrop(p){ if(!p) return; if(p.oid){ delete RP.ph[p.oid]; accCall('PUT','/report-photo',{id:p.oid,data:null},15000).catch(function(){}); } delete RP.ph[p.id]; accCall('PUT','/report-photo',{id:p.id,data:null},15000).catch(function(){}); }
 async function pvCleanRun(btn){
   var si=+btn.getAttribute('data-si'), all=btn.getAttribute('data-pv')==='cleanall', list=[];
+  if(all) return pvCleanGlobal(btn);
+  var q0=(function(){ var o=pvOwner(si,+btn.getAttribute('data-ci')); return o&&o.ph[+btn.getAttribute('data-pi')]; })(); if(q0&&!q0.oid) return pvCleanGlobal(btn);
   if(all){ var sl=(RP.cfg.slides||[])[si]; if(!sl) return; (sl.cards||[]).concat([sl]).forEach(function(o){ (o.ph||[]).forEach(function(q){ if(!q.oid) list.push(q); }); }); }
   else{ var o=pvOwner(si,+btn.getAttribute('data-ci')), q=o&&o.ph[+btn.getAttribute('data-pi')]; if(q) list.push(q); }
   if(!list.length) return; toast('Looking for date, time and location stamps…'); RP.pvLocal=0; var n=0, was=!all&&list[0].oid;
