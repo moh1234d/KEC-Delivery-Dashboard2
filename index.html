@@ -1061,7 +1061,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V251</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V252</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4202,6 +4202,11 @@ function affine(r){
     if(p.t==='x'){ q.fs=p.fs*m; if(p.ls) q.ls=p.ls*m; } if(p.t==='r'&&p.rd) q.rd=p.rd*m; return q; });
   return r;
 }
+document.addEventListener('focusout',function(e){
+  var t=e.target, k=t&&t.getAttribute&&t.getAttribute('data-ek'); if(!k||!tplB()||!/^(c:.*:(plan|act)|ov:.*:d)$/.test(k)) return;
+  var rt=document.getElementById('rptRoot'); if(!rt||!rt.classList.contains('on')||RP.mode!=='view') return;
+  setTimeout(function(){ if(!document.activeElement||!document.activeElement.getAttribute||!document.activeElement.getAttribute('data-ek')) drawViewB(); },0);
+});
 function tplB(){ return !!(RP.cfg&&RP.cfg.tpl==='b'); }
 function bc(){ var b=(RP.cfg&&RP.cfg.b)||{}; return {dept:b.dept!=null?b.dept:'Delivery Department',l1:b.l1!=null?b.l1:'Monthly',title:b.title!=null?b.title:'Construction\nProgress Report',sub:b.sub!=null?b.sub:'Executive Progress Update',end:b.end!==false}; }
 function p2(n){ return (n<10?'0':'')+n; }
@@ -4267,9 +4272,17 @@ function sceneCover(cut){
   return {sc:sc,bg:NV};
 }
 function ovUrl(x){ var u=''; try{ u=pjGet(x.code)||PHOTO_OVR[x.code]||''; var pi=model.projects.get(x.code); if(!u&&pi&&pi.photo) u=String(pi.photo).trim(); }catch(e){} return /^(https?:\/\/|data:image\/)/i.test(u)?u:''; }
+function parseMY(t){
+  t=String(t||'').trim(); var m, mi=function(n){ n=String(n).slice(0,3).toLowerCase(); for(var i=0;i<12;i++) if(MON[i].toLowerCase()===n) return i+1; return 0; }, o=function(y,mo,d){ return y+'-'+p2(mo)+'-'+p2(d||1); };
+  if((m=/^(\d{4})[-\/.](\d{1,2})(?:[-\/.](\d{1,2}))?$/.exec(t))&&+m[2]>=1&&+m[2]<=12) return o(m[1],+m[2],+m[3]);
+  if((m=/^(?:(\d{1,2})\s+)?([A-Za-z]{3,})\.?,?\s+(\d{4})$/.exec(t))&&mi(m[2])) return o(m[3],mi(m[2]),+m[1]);
+  if((m=/^(\d{1,2})[\/.-](\d{4})$/.exec(t))&&+m[1]>=1&&+m[1]<=12) return o(m[2],+m[1],1);
+  return null;
+}
 function sceneOverview(P,cut){
   var it=ovItems(P,cut), st=(RP.cfg.ov&&RP.cfg.ov.style)||'a', sc=[], n=it.length;
-  if(st==='c') it=it.map(function(x){ return Object.assign({},x,{pf:x.ff}); }).sort(function(p,q){ return p.pf<q.pf?-1:p.pf>q.pf?1:0; });
+  if(st==='c') it=it.map(function(x){ return Object.assign({},x,{pf:x.ff}); });
+  it=it.map(function(x,i){ var e=parseMY(ov('ov:'+x.code+':d',null)); return Object.assign({},x,{pf:e||x.pf,_i:i}); }).sort(function(p,q){ return p.pf<q.pf?-1:p.pf>q.pf?1:p._i-q._i; });
   sc.push(bT(46,28,760,50,'Projects Overview',{fs:34,serif:1,k:'ov:title'}));
   sc.push(bR(46,84,112,3,{f:GD}));
   sc.push(bT(46,100,800,24,st==='c'?'Forecast completion dates':'Planned completion dates',{fs:16,b:1,k:'ov:sub'}));
