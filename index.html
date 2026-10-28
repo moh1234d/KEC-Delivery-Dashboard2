@@ -1144,7 +1144,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V276</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V277</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3175,6 +3175,14 @@ document.addEventListener('click',function(e){
   else if(t.hasAttribute('data-pcreload')){ PC.loaded=false; PC.busy=false; pcLoad(); toast('Reading the list from Google Drive…'); }
 });
 
+/* contracts still to be awarded: their potential values are added to the expected cost at completion */
+function pcPotential(codes){ var T=codes?pcList(codes):[], o={s:0,n:0,all:T.length}; T.forEach(function(x){ if(x.val!=null&&isFinite(x.val)){ o.s+=x.val; o.n++; } }); return o; }
+function pcEacKpi(anyX,eac,rv,codes){
+  var P=pcPotential(codes), base=anyX?eac:(P.n?rv:null);
+  if(base==null) return kpi('Expected at completion','n/a','not in the contracts file');
+  return kpi('Expected at completion',fm(base+P.s),(anyX?'revised value + potential VOs':'revised value')+(P.n?' + '+fm(P.s)+' to be awarded ('+P.n+' contract'+(P.n===1?'':'s')+')':''));
+}
+
 function svGrpScope(c){ return {code:c,lc:String(c).toLowerCase(),filt:false,names:[],single:true,ok:function(){ return true; }}; }
 function pSiteGroup(rows,coreRows,cut){
   var codes=[]; rows.forEach(function(r){ if(codes.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) codes.push(r.code); });
@@ -3208,7 +3216,7 @@ function pSiteGroup(rows,coreRows,cut){
     kpi('Approved VOs',fm(AF.vo),AF.cv?pct(AF.vo/AF.cv)+' of awarded value':'')+
     kpi('Potential VOs',anyX?fm(pv):'n/a',anyX?'pending / anticipated':'not in the contracts file')+
     kpi('Revised contract value',fm(AF.rv),'awarded + approved VOs')+
-    kpi('Expected at completion',anyX?fm(eac):'n/a',anyX?'revised value + potential VOs':'not in the contracts file')+
+    pcEacKpi(anyX,eac,AF.rv,codes)+
     kpi('Certified amount',fm(AF.gc),pct(AF.cert)+' of revised value','',false,'accent')+
     kpi('Balance amount',fm(AF.bal),AF.rv?pct(1-AF.cert)+' of revised value':'')+'</div>';
   var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>forecast finish after planned finish</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
@@ -3280,7 +3288,7 @@ function pSiteBuild(rows,coreRows,cut){
     kpi('Approved VOs',fm(AF.vo),AF.cv?pct(AF.vo/AF.cv)+' of awarded value':'')+
     kpi('Potential VOs',anyX?fm(pv):'n/a',anyX?'pending / anticipated':'not in the contracts file')+
     kpi('Revised contract value',fm(AF.rv),'awarded + approved VOs')+
-    kpi('Expected at completion',anyX?fm(eac):'n/a',anyX?'revised value + potential VOs':'not in the contracts file')+
+    pcEacKpi(anyX,eac,AF.rv,(selList('C').length||selList('K').length)?null:[code])+
     kpi('Certified amount',fm(AF.gc),pct(AF.cert)+' of revised value','', false,'accent')+
     kpi('Balance amount',fm(AF.bal),AF.rv?pct(1-AF.cert)+' of revised value':'')+'</div>';
   /* E1 / E2 */
