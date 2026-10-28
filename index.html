@@ -1133,7 +1133,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V270</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V271</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3219,8 +3219,8 @@ function pSiteGroup(rows,coreRows,cut){
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+d2(cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={grp:true,codes:codes,sc:{code:'',lc:'',ok:function(){ return true; },single:true},open:openAll,all:openAll,cut:cut};
   return '<h2 class="pgtitle sm">Site view</h2><p class="pgsub">'+esc(name)+' · cut-off '+d2(cut)+'</p>'+tools+
-    '<div class="sitepg">'+pageHd(1)+banner+kp+PT+sec('svF','Contract & financial','')+fin+T+pageFt+'</div>'+
-    '<div class="sitepg">'+pageHd(2)+E1+E2+Q+M+ch+pcBox(codes)+phBox(codes)+pageFt+'</div>';
+    '<div class="sitepg">'+pageHd(1)+banner+kp+PT+sec('svF','Contract & financial','')+fin+pcBox(codes)+T+pageFt+'</div>'+
+    '<div class="sitepg">'+pageHd(2)+E1+E2+Q+M+ch+phBox(codes)+pageFt+'</div>';
 }
 
 function pSiteBuild(rows,coreRows,cut){
@@ -3300,8 +3300,8 @@ function pSiteBuild(rows,coreRows,cut){
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+d2(cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={sc:sc,open:open,all:CL.all,cut:cut};
   return head('Site view',esc(pname(code))+' · cut-off '+d2(cut))+tools+
-    '<div class="sitepg">'+pageHd(1)+banner+profile+kp+sec('svP','Packages','same cards as Progress detail')+pk+sec('svF','Contract & financial','')+fin+T+pageFt+'</div>'+
-    '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'+E1+E2+Q+M+ch+(cs.length||ks.length?'':pcBox([code]))+phBox([code])+pageFt+'</div>';
+    '<div class="sitepg">'+pageHd(1)+banner+profile+kp+sec('svP','Packages','same cards as Progress detail')+pk+sec('svF','Contract & financial','')+fin+(cs.length||ks.length?'':pcBox([code]))+T+pageFt+'</div>'+
+    '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'+E1+E2+Q+M+ch+phBox([code])+pageFt+'</div>';
 }
 function groupBy0(L,kf){ var m={},o=[]; L.forEach(function(x){ var k=kf(x), n=svN(k); if(!m[n]){ m[n]={k:k,l:[]}; o.push(m[n]); } m[n].l.push(x); }); return o.sort(function(a,b){ return svSum(b.l,'tot')-svSum(a.l,'tot'); }); }
 function svCfgs(){
