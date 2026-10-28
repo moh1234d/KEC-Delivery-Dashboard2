@@ -1140,7 +1140,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V274</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V275</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3084,7 +3084,7 @@ function pcLoad(){
   if(!ACC.need||!LIVE||!LIVE.relay){ pcLocalLoad(); PC.loaded=true; PC.local=true; return; }
   PC.busy=true;
   accCall('GET','/pcontracts'+(PC.t?'?fresh=1':''),null,20000).then(function(j){ var before=JSON.stringify(PC.kv); if(j.sheet){ PC.sheet=true; PC.kv={}; } (j.items||[]).forEach(function(x){ if(x&&x.id) PC.kv[x.id]=x; }); PC.loaded=true; PC.busy=false; PC.t=Date.now(); if(state.page==='site'&&(JSON.stringify(PC.kv)!==before||!PC.seen)){ PC.seen=true; render(); } })
-   .catch(function(e){ PC.busy=false; PC.loaded=true; PC.local=true; pcLocalLoad(); PC.err=(e&&e.status===404)?'The relay (Cloudflare worker) does not store contracts to be awarded yet. Deploy relay V27. Entries are kept in this browser only.':'Could not reach the relay. Entries are kept in this browser only.'; if(state.page==='site') render(); });
+   .catch(function(e){ PC.busy=false; PC.loaded=true; PC.t=Date.now(); if(e&&e.status===404){ PC.local=true; pcLocalLoad(); PC.err='The relay (Cloudflare worker) does not store contracts to be awarded yet. Deploy relay V27 or newer. Entries are kept in this browser only.'; } else PC.err='The list could not be read from the relay: '+((e&&e.message)||'no answer')+'. Entries you add are sent to the relay and will show an error if it cannot save them.'; if(state.page==='site') render(); });
 }
 function pcTake(s,d){ (d.pc||[]).forEach(function(r){ if(!r||!r.id) return; var o=Object.assign({},r,{ts:s.ts||Date.now(),src:'site'}); if(!PC.sub[r.id]||o.ts>=PC.sub[r.id].ts) PC.sub[r.id]=o; if(ACC.need===false){ pcLoad(); PC.kv[r.id]=o; pcLocalSave(); } }); }
 function pcList(codes){
