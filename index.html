@@ -1115,6 +1115,13 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 .pcact{display:flex;flex-direction:column;gap:3px;align-items:flex-end}.pcact .pced{font:700 11px inherit;font-family:inherit;border:1px solid var(--bar-g);background:var(--card);color:var(--ink);border-radius:6px;padding:2px 8px;cursor:pointer}.pcact .pced:hover{background:var(--chipbg)}.pcact .pced.rm{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,var(--bar-g))}
 .pcband .pcrl{padding:7px 10px;font-size:14px}
 .pcband{flex-wrap:wrap!important;gap:6px 8px!important;padding:10px 12px!important}.pcband .pct{font-size:15.5px!important}.pcband .sp{flex:1 1 4px}.pcband .btn{padding:6px 10px!important;font-size:12px!important}
+
+/* program boxes with few cards: the border hugs the cards instead of leaving an empty gap on the right */
+.boxes>.pbox.s1,.boxes>.pbox.s2,.boxes>.pbox.s3{justify-self:start;width:fit-content;max-width:100%}
+.boxes>.pbox.s1>.ucs{grid-template-columns:minmax(215px,320px)}
+.boxes>.pbox.s2>.ucs{grid-template-columns:repeat(2,minmax(215px,320px))}
+.boxes>.pbox.s3>.ucs{grid-template-columns:repeat(3,minmax(215px,320px));max-width:none}
+@media print{.boxes>.pbox.s1,.boxes>.pbox.s2,.boxes>.pbox.s3{width:fit-content}}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1144,7 +1151,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V279</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V280</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
