@@ -1162,7 +1162,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V289</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V290</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3285,6 +3285,49 @@ async function pcutSave(){
 }
 document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-pcutopen],[data-pcutsave],[data-pcutcancel]'); if(!t) return;
   if(t.hasAttribute('data-pcutopen')) pcutModal(); else if(t.hasAttribute('data-pcutcancel')){ var m=document.getElementById('pcutModal'); if(m) m.remove(); } else pcutSave(); });
+/* V290: the administrator can change or remove the data date of a project's report */
+var DFIX=[];
+function dfixKey(c,d){ return String(c).trim().toLowerCase()+'|'+d; }
+function dfixRows(a,f){ if(!DFIX.length||!Array.isArray(a)) return a; var m={}; DFIX.forEach(function(o){ m[dfixKey(o.code,o.d)]=o.to; });
+  var out=[]; a.forEach(function(r){ var d=toISO(r&&r[f]); var k=d?dfixKey(r.code,d):null; if(k&&Object.prototype.hasOwnProperty.call(m,k)){ if(m[k]==='') return; var c=Object.assign({},r); c[f]=m[k]; out.push(c); } else out.push(r); }); return out; }
+function dfixLoad(){
+  try{ if(!ACC.need){ var l=JSON.parse(localStorage.getItem('kec_dfix')||'[]'); if(Array.isArray(l)&&l.length){ DFIX=l; if(cur&&cur.prog) suReload(); } return; } }catch(e){}
+  if(!ACC.token) return;
+  accCall('GET','/dfix',null,15000).then(function(j){ if(j&&Array.isArray(j.list)&&JSON.stringify(j.list)!==JSON.stringify(DFIX)){ DFIX=j.list; if(cur&&cur.prog) suReload(); } }).catch(function(){});
+}
+function dfixBtn(){ return pkCan()?'<button type="button" class="btn" data-dfixopen="1" title="Change or remove the data date of a project report (administrator)">Edit data dates</button>':''; }
+var DFD={list:[],code:''};
+function dfixModal(){
+  var codes=pcutCodes(); if(!codes.length) return; DFD.list=DFIX.map(function(o){ return Object.assign({},o); }); if(!DFD.code||codes.indexOf(DFD.code)<0) DFD.code=codes[0];
+  var m=document.getElementById('dfixModal'); if(m) m.remove(); m=document.createElement('div'); m.className='svm'; m.id='dfixModal'; m.innerHTML='<div class="svmb" role="dialog" aria-modal="true" style="width:min(760px,96vw)"><div id="dfixB"></div></div>'; document.body.appendChild(m); dfixDraw(); }
+function dfixDraw(){
+  var codes=pcutCodes(), code=DFD.code, b=document.getElementById('dfixB'); if(!b) return;
+  var dates={}; model.rows.forEach(function(r){ if(String(r.code).toLowerCase()===String(code).toLowerCase()) dates[r.date]=(dates[r.date]||0)+1; });
+  var pend={}; DFD.list.forEach(function(o){ if(String(o.code).toLowerCase()===String(code).toLowerCase()) pend[o.d]=o; });
+  var ds=Object.keys(dates).sort().reverse();
+  var rows=ds.map(function(d){ var o=pend[d]; return '<tr><td><b>'+d2(d)+'</b></td><td>'+dates[d]+' package row'+(dates[d]===1?'':'s')+'</td><td>'+(o?(o.to===''?'<span class="svimp bad">Will be removed</span>':'<span class="svimp warn">Will become '+d2(o.to)+'</span>'):'')+'</td><td class="n">'+
+    '<input type="date" data-dfixto="'+d+'" style="width:140px"> <button type="button" class="btn" data-dfixchg="'+d+'">Change</button> <button type="button" class="btn" data-dfixrm="'+d+'">Remove</button>'+(o?' <button type="button" class="btn" data-dfixundo="'+d+'">Undo</button>':'')+'</td></tr>'; }).join('');
+  b.innerHTML='<h3>Edit data dates</h3><p class="pcnote" style="margin:0 0 8px">Changes the date of a project report, or removes that report from the dashboard for everyone. The source file is not touched: the change is applied on top of it each time the dashboard loads, and <b>Undo</b> brings the original back.</p>'+
+   '<div class="svf"><label for="dfixPj">Project</label><select id="dfixPj"'+(codes.length>1?'':' disabled')+'>'+codes.map(function(c){ return '<option value="'+esc(c)+'"'+(c===code?' selected':'')+'>'+esc(pname(c))+'</option>'; }).join('')+'</select></div>'+
+   '<div class="svtw" style="max-height:340px;overflow:auto;margin-top:8px"><table class="svtb"><thead><tr><th>Data date</th><th>Rows</th><th>Pending change</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+   '<div class="svma"><button type="button" class="btn" data-dfixcancel="1">Cancel</button><button type="button" class="btn pri" data-dfixsave="1">Save changes</button></div>';
+}
+async function dfixSave(){
+  var b=document.querySelector('[data-dfixsave]'); if(b){ b.disabled=true; b.textContent='Saving…'; }
+  try{ var next=DFD.list; if(ACC.need){ var j=await accCall('PUT','/dfix',{list:next},20000); next=(j&&j.list)||next; } else { try{ localStorage.setItem('kec_dfix',JSON.stringify(next)); }catch(e){} }
+    DFIX=next; var m=document.getElementById('dfixModal'); if(m) m.remove(); toast('Data dates saved · reloading'); setTimeout(function(){ location.reload(); },700);
+  }catch(e){ toast((e&&e.status===404?'The relay does not support data date changes yet. Deploy relay V30.':(e&&e.message)||'Could not save'),true); if(b){ b.disabled=false; b.textContent='Save changes'; } }
+}
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-dfixopen],[data-dfixsave],[data-dfixcancel],[data-dfixchg],[data-dfixrm],[data-dfixundo]'); if(!t) return;
+  var set=function(d,to){ DFD.list=DFD.list.filter(function(o){ return !(String(o.code).toLowerCase()===String(DFD.code).toLowerCase()&&o.d===d); }); if(to!==null) DFD.list.push({code:DFD.code,d:d,to:to}); dfixDraw(); };
+  if(t.hasAttribute('data-dfixopen')) dfixModal();
+  else if(t.hasAttribute('data-dfixcancel')){ var m=document.getElementById('dfixModal'); if(m) m.remove(); }
+  else if(t.hasAttribute('data-dfixsave')) dfixSave();
+  else if(t.hasAttribute('data-dfixrm')) set(t.getAttribute('data-dfixrm'),'');
+  else if(t.hasAttribute('data-dfixundo')) set(t.getAttribute('data-dfixundo'),null);
+  else if(t.hasAttribute('data-dfixchg')){ var d=t.getAttribute('data-dfixchg'), inp=document.querySelector('[data-dfixto="'+d+'"]'), to=inp&&inp.value; if(!to) return toast('Choose the new date first',true); if(to===d) return;
+    var exists=model.rows.some(function(r){ return String(r.code).toLowerCase()===String(DFD.code).toLowerCase()&&r.date===to; }); if(exists&&!confirm('This project already has a report on '+d2(to)+'. The two will be merged (the moved rows win). Continue?')) return; set(d,to); } });
+document.addEventListener('change',function(e){ if(e.target&&e.target.id==='dfixPj'){ DFD.code=e.target.value; dfixDraw(); } });
 function svGrpScope(c){ return {code:c,lc:String(c).toLowerCase(),filt:false,names:[],single:true,ok:function(){ return true; }}; }
 function pSiteGroup(rows,coreRows,cut){
   var codes=[]; rows.forEach(function(r){ if(codes.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) codes.push(r.code); });
@@ -3337,7 +3380,7 @@ function pSiteGroup(rows,coreRows,cut){
   var O={High:0,Medium:1,Low:2}; openAll.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
   var ch=sec('svC','Challenges','open concerns across the '+(state.program?'program':'selected projects'))+'<div class="svbar"><span>'+openAll.length+' open challenge'+(openAll.length===1?'':'s')+'</span><span class="sp"></span><span class="sub">To add or edit a challenge, open the project</span></div>'+
     (openAll.length?'<div class="svchl">'+openAll.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b><small>'+esc(pname(x._c))+(x.pkg?' · '+esc(x.pkg):'')+(x.owner?' · '+esc(x.owner):'')+(x.target?' · target '+d2(x.target):'')+'</small>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'</div><button type="button" class="btn" data-svpj="'+esc(x._c)+'">Open project</button></div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges.</div></div>');
-  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+pcutBtn()+phBtn()+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
+  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+pcutBtn()+dfixBtn()+phBtn()+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(name)+'</span><em>Page '+n+' of 2</em></div>'; };
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+cutTxt(codes,cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={grp:true,codes:codes,sc:{code:'',lc:'',ok:function(){ return true; },single:true},open:openAll,all:openAll,cut:cut};
@@ -3418,7 +3461,7 @@ function pSiteBuild(rows,coreRows,cut){
     '<div class="svbar"><span>'+open.length+' open challenge'+(open.length===1?'':'s')+'</span><span class="sp"></span>'+(can?'<button type="button" class="btn" data-svadd="1">+ Add challenge</button>':'')+(xlCan()?'<button type="button" class="btn" data-svxl="1">Export to Excel</button>':'')+'</div>'+
     (SV.err?'<div class="sepnote"><span class="ni">i</span><div>'+esc(SV.err)+'</div></div>':'')+
     (open.length?'<div class="svchl">'+open.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'<small>'+esc(dp(x.pkg)||'Project')+(x.owner?' · Owner: '+esc(x.owner):'')+(x.target?' · Target '+d2(x.target):'')+(x.id&&x.id.charAt(0)!=='k'?' · '+esc(x.id):'')+'</small></div>'+(can?'<button type="button" class="btn svedit" data-svedit="'+esc(x.id)+'">Edit</button>':'')+'</div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges for this selection.</div></div>');
-  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+pcutBtn()+(suMode()!=='off'?'<button type="button" class="btn" data-suopen="1">Site update</button>':'')+phBtn()+(suIsAdmin()?'<button type="button" class="btn" data-suadm="1">Site submissions</button>':'')+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
+  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+pcutBtn()+dfixBtn()+(suMode()!=='off'?'<button type="button" class="btn" data-suopen="1">Site update</button>':'')+phBtn()+(suIsAdmin()?'<button type="button" class="btn" data-suadm="1">Site submissions</button>':'')+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(pname(code))+(cs.length?' · '+esc(cs.join(', ')):'')+(ks.length?' · '+esc(ks.join(', ')):'')+'</span><em>Page '+n+' of 2</em></div>'; };
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+cutTxt([code],cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={sc:sc,open:open,all:CL.all,cut:cut};
@@ -4439,7 +4482,7 @@ function dropTerminated(){
     for(var g=0;g<gone.length;g++){ var c=gone[g]; if(!used[g]&&x.lc===c.lc&&Math.abs(x.shrv-c.shrv)<1){ used[g]=1; return false; } } return true; });
 }
 function setData(progRaw,infoRaw,src,kind){
-  dropTerminated(); progRaw=histKeep(accRows(progRaw,'code'),'date'); infoRaw=accRows(infoRaw,'code'); ['con','qa','mp','e1','e2'].forEach(function(k){ if(Array.isArray(cur[k])) cur[k]=histKeep(cur[k],'d'); });
+  dropTerminated(); progRaw=histKeep(dfixRows(accRows(progRaw,'code'),'date'),'date'); infoRaw=accRows(infoRaw,'code'); ['con','qa','mp','e1','e2'].forEach(function(k){ if(Array.isArray(cur[k])) cur[k]=histKeep(dfixRows(cur[k],'d'),'d'); });
   progRaw=(progRaw||[]).filter(function(r){ var k=r.cno!=null?r.cno:(r['Contract No.']!=null?r['Contract No.']:null); return k==null||!TERMINATED[ckey(k)]; }); setMand(); setPh(); setNotes();
   var m=buildModel(progRaw,infoRaw);
   if(!m.rows.length) throw new Error('No usable progress rows found.');
@@ -4878,7 +4921,7 @@ function accApply(){
 }
 function accReapply(){ if(cur.prog){ try{ setData(cur.prog,cur.info,source,sourceKind); }catch(e){} } else render(); }
 function accWhen(fn){ if(ACC.ready) fn(); else ACC.cbs.push(fn); }
-function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
+function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} try{ dfixLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
 function accShowLogin(msg){
   var o=document.getElementById('accLogin'); if(!o) return; o.hidden=false; document.body.classList.add('acc-locked');
   o.querySelector('.accerr').textContent=msg||''; var lg=document.querySelector('aside .brand img'), al=document.getElementById('accLogoImg'); if(lg&&al&&!al.getAttribute('src')) al.src=lg.src; var i=o.querySelector('input'); i.value=''; setTimeout(function(){ i.focus(); },50);
