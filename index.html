@@ -1159,7 +1159,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V286</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V287</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1383,7 +1383,7 @@ function buildModel(progRaw, infoRaw){
     var pc=pkgCanon.get(lc+'|'+pkg.toLowerCase()); if(pc&&pc!==pkg){ pkgRecased[pkg+' → '+pc]=1; pkg=pc; }
     if(caseMap.has(lc)){ var c=caseMap.get(lc); if(c!==code){ recased[code+' → '+c]=1; code=c; } }
     else caseMap.set(lc,code);
-    var o={date:date,code:code,pname:str(r.pname),pkg:pkg,ctr:str(r.ctr),cno:str(r.cno),ps:toISO(r.ps),pf:toISO(r.pf),eot:num(r.eot),rf:toISO(r.rf),ff:toISO(r.ff),
+    var o={date:date,code:code,pname:str(r.pname),pkg:pkg,ctr:str(r.ctr),cno:str(r.cno),ps:toISO(r.ps),pf:toISO(r.pf),eot:num(r.eot),rf:toISO(r.rf),scope:str(r.scope),bud:num(r.bud),ff:toISO(r.ff),
       cv:num(r.cv),vo:num(r.vo),rv:num(r.rv),gc:num(r.gc),pv:num(r.pv),ev:num(r.ev)};
     if(!o.ps||!o.pf){ dropped++; return; }
     if(!o.ff) o.ff=o.pf;
@@ -3209,6 +3209,42 @@ function pcEacKpi(anyX,eac,rv,codes){
   return kpi('Expected at completion',fm(base+P.s),(anyX?'revised value + potential VOs':'revised value')+(P.n?' + '+fm(P.s)+' to be awarded ('+P.n+' contract'+(P.n===1?'':'s')+')':''));
 }
 
+/* V287: the administrator adds a new package or plot to a project from inside the dashboard */
+function pkCan(){ return ACC.need?!!(ACC.user&&ACC.user.admin===true):true; }
+function pkBtn(){ return pkCan()?'<button type="button" class="btn" data-pkadd="1" title="Add a new package or plot to a project (administrator)">+ Add package / plot</button>':''; }
+function pkCodes(){ return (SV.cur&&SV.cur.grp)?SV.cur.codes.slice():[state.project||(SV.cur&&SV.cur.sc&&SV.cur.sc.code)].filter(Boolean); }
+function pkModal(){
+  var codes=pkCodes(); if(!codes.length) return;
+  var m=document.createElement('div'); m.className='svm'; m.id='pkModal';
+  var f=function(id,l,inner,h){ return '<div class="svf'+(h?' h':'')+'"><label for="'+id+'">'+l+'</label>'+inner+'</div>'; }, inp=function(id,t,x){ return '<input id="'+id+'" type="'+t+'" '+(x||'')+'>'; };
+  m.innerHTML='<div class="svmb" role="dialog" aria-modal="true"><h3>Add a package or plot</h3><p class="pcnote" style="margin:0 0 8px">Creates the package in the dashboard for everyone who can see this project, starting at 0% progress. The site team then reports its progress in the template.</p><div class="svmg">'+
+   f('pkPj','Project','<select id="pkPj"'+(codes.length>1?'':' disabled')+'>'+codes.map(function(c){ return '<option value="'+esc(c)+'">'+esc(pname(c))+'</option>'; }).join('')+'</select>')+
+   f('pkNm','Package / plot name *',inp('pkNm','text','maxlength="80" placeholder="e.g. Plot 151"'))+
+   f('pkSc','Scope of work','<textarea id="pkSc" rows="2" maxlength="400"></textarea>')+
+   f('pkCt','Contractor / consultant *',inp('pkCt','text','maxlength="80"'),1)+f('pkNo','Contract no. *',inp('pkNo','text','maxlength="40" placeholder="e.g. CNT-1234"'),1)+
+   f('pkCv','Contract value (SAR) *',inp('pkCv','number','min="0" step="1000"'),1)+f('pkBd','Budgeted value (SAR)',inp('pkBd','number','min="0" step="1000"'),1)+
+   f('pkPs','Planned start *',inp('pkPs','date'),1)+f('pkPf','Planned finish *',inp('pkPf','date'),1)+f('pkFf','Forecast finish (empty = planned finish)',inp('pkFf','date'),1)+
+   '</div><div class="svma"><button type="button" class="btn" data-pkcancel="1">Cancel</button><button type="button" class="btn pri" data-pksave="1">Add package</button></div></div>';
+  document.body.appendChild(m); setTimeout(function(){ var e=document.getElementById('pkNm'); if(e) e.focus(); },50);
+}
+async function pkSave(){
+  var g=function(i){ return (document.getElementById(i).value||'').trim(); }, code=g('pkPj'), nm=g('pkNm'), ctr=g('pkCt'), cno=g('pkNo'), cv=g('pkCv'), ps=g('pkPs'), pf=g('pkPf'), ff=g('pkFf')||pf;
+  if(!nm) return toast('Write the package or plot name',true); if(!ctr) return toast('Write the contractor or consultant',true); if(!cno) return toast('Write the contract number',true);
+  if(cv===''||isNaN(Number(cv))||Number(cv)<0) return toast('Write the contract value',true); if(!ps||!pf) return toast('Choose the planned start and planned finish',true); if(pf<ps) return toast('The planned finish is before the planned start',true);
+  var dupe=false, nmP=pname(code);
+  (model.rows||[]).forEach(function(r){ if(String(r.code).toLowerCase()===code.toLowerCase()&&svPkgMatch(r.pkg,nm)) dupe=true; });
+  if(dupe||nmP.toLowerCase()===nm.toLowerCase()) return toast('This project already has a package called '+nm,true);
+  var cd=(model.rows||[]).filter(function(r){ return String(r.code).toLowerCase()===code.toLowerCase(); }).reduce(function(a,r){ return r.date>a?r.date:a; },'')||state.cutoff;
+  var row={date:cd,code:code,pname:nmP,pkg:nm,ctr:ctr,cno:cno,ps:ps,pf:pf,ff:ff,cv:Number(cv),vo:0,rv:Number(cv),gc:0,pv:0,ev:0,scope:g('pkSc'),bud:g('pkBd')===''?null:Number(g('pkBd'))};
+  var data={ver:2.3,prog:[row],con:[],e1:[],e2:[],qa:[],mp:[],pc:[]}, b=document.querySelector('[data-pksave]'); if(b){ b.disabled=true; b.textContent='Adding…'; }
+  try{
+    if(suMode()==='local'){ suMerge([{data:data}]); suReload(); }
+    else{ var j=await accCall('POST','/site-upload',{data:data},60000); if(j.status!=='accepted') throw {message:'The relay kept it for approval; approve it in Site submissions'}; await suSync(); }
+    toast(nm+' added to '+nmP); var m=document.getElementById('pkModal'); if(m) m.remove(); render();
+  }catch(e){ toast((e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Could not add the package'),true); if(b){ b.disabled=false; b.textContent='Add package'; } }
+}
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-pkadd],[data-pksave],[data-pkcancel]'); if(!t) return;
+  if(t.hasAttribute('data-pkadd')) pkModal(); else if(t.hasAttribute('data-pkcancel')){ var m=document.getElementById('pkModal'); if(m) m.remove(); } else pkSave(); });
 function svGrpScope(c){ return {code:c,lc:String(c).toLowerCase(),filt:false,names:[],single:true,ok:function(){ return true; }}; }
 function pSiteGroup(rows,coreRows,cut){
   var codes=[]; rows.forEach(function(r){ if(codes.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) codes.push(r.code); });
@@ -3261,7 +3297,7 @@ function pSiteGroup(rows,coreRows,cut){
   var O={High:0,Medium:1,Low:2}; openAll.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
   var ch=sec('svC','Challenges','open concerns across the '+(state.program?'program':'selected projects'))+'<div class="svbar"><span>'+openAll.length+' open challenge'+(openAll.length===1?'':'s')+'</span><span class="sp"></span><span class="sub">To add or edit a challenge, open the project</span></div>'+
     (openAll.length?'<div class="svchl">'+openAll.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b><small>'+esc(pname(x._c))+(x.pkg?' · '+esc(x.pkg):'')+(x.owner?' · '+esc(x.owner):'')+(x.target?' · target '+d2(x.target):'')+'</small>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'</div><button type="button" class="btn" data-svpj="'+esc(x._c)+'">Open project</button></div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges.</div></div>');
-  var tools='<div class="svbar svtools"><span class="sp"></span>'+phBtn()+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
+  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+phBtn()+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(name)+'</span><em>Page '+n+' of 2</em></div>'; };
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+d2(cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={grp:true,codes:codes,sc:{code:'',lc:'',ok:function(){ return true; },single:true},open:openAll,all:openAll,cut:cut};
@@ -3342,7 +3378,7 @@ function pSiteBuild(rows,coreRows,cut){
     '<div class="svbar"><span>'+open.length+' open challenge'+(open.length===1?'':'s')+'</span><span class="sp"></span>'+(can?'<button type="button" class="btn" data-svadd="1">+ Add challenge</button>':'')+(xlCan()?'<button type="button" class="btn" data-svxl="1">Export to Excel</button>':'')+'</div>'+
     (SV.err?'<div class="sepnote"><span class="ni">i</span><div>'+esc(SV.err)+'</div></div>':'')+
     (open.length?'<div class="svchl">'+open.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'<small>'+esc(dp(x.pkg)||'Project')+(x.owner?' · Owner: '+esc(x.owner):'')+(x.target?' · Target '+d2(x.target):'')+(x.id&&x.id.charAt(0)!=='k'?' · '+esc(x.id):'')+'</small></div>'+(can?'<button type="button" class="btn svedit" data-svedit="'+esc(x.id)+'">Edit</button>':'')+'</div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges for this selection.</div></div>');
-  var tools='<div class="svbar svtools"><span class="sp"></span>'+(suMode()!=='off'?'<button type="button" class="btn" data-suopen="1">Site update</button>':'')+phBtn()+(suIsAdmin()?'<button type="button" class="btn" data-suadm="1">Site submissions</button>':'')+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
+  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+(suMode()!=='off'?'<button type="button" class="btn" data-suopen="1">Site update</button>':'')+phBtn()+(suIsAdmin()?'<button type="button" class="btn" data-suadm="1">Site submissions</button>':'')+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(pname(code))+(cs.length?' · '+esc(cs.join(', ')):'')+(ks.length?' · '+esc(ks.join(', ')):'')+'</span><em>Page '+n+' of 2</em></div>'; };
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+d2(cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={sc:sc,open:open,all:CL.all,cut:cut};
