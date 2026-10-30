@@ -1159,7 +1159,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V287</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V288</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1424,8 +1424,8 @@ function buildModel(progRaw, infoRaw){
 
 /* ---------- queries ---------- */
 function rowsAt(cut){
-  var m=new Map();
-  for(var i=0;i<model.rows.length;i++){ var r=model.rows[i]; if(r.date>cut) break; m.set(r.key,r); }
+  var m=new Map(), pd=pcutDates(cut);
+  for(var i=0;i<model.rows.length;i++){ var r=model.rows[i]; if(r.date>cut) break; var lim=pd[r.code]; if(lim&&r.date>lim) continue; m.set(r.key,r); }
   return Array.from(m.values());
 }
 function prog(code){ var p=model.projects.get(code); return p?p.program:'Unmapped'; }
@@ -1447,7 +1447,7 @@ function ctrLc(){ return selList('C').map(function(x){ return String(x).toLowerC
 function multiN(){ return state.mP.length+state.mC.length+state.mK.length; }
 function derive(r,cut){
   var rv=r.rv||0;
-  var d=Object.assign({},r,{plan:rv?r.pv/rv:0,act:rv?r.ev/rv:0,spi:r.pv>0?r.ev/r.pv:null,delay:dayDiff(r.pf,r.ff),cert:rv?r.gc/rv:0,stale:r.date!==cut});
+  var d=Object.assign({},r,{plan:rv?r.pv/rv:0,act:rv?r.ev/rv:0,spi:r.pv>0?r.ev/r.pv:null,delay:dayDiff(r.pf,r.ff),cert:rv?r.gc/rv:0,stale:r.date!==projCut(r.code,cut)});
   d.status=pkgStatus(d.act,d.pv,d.ev,d.spi,d.delay);
   return d;
 }
@@ -1849,7 +1849,7 @@ function ucard(title,a,cls,code,photo){
   var h='<div class="uc '+(cls||'')+' st-'+st+'"'+(code?' data-project="'+esc(code)+'" style="cursor:pointer" title="Click to filter to this project"':'')+'>'+(code&&photo?'<div class="uc-hd"><div class="uc-t"><h4>'+esc(title)+'</h4>'+(PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':'')+'</div>'+photoTile(code,title)+'</div>':'<h4>'+esc(title)+'</h4>'+(code&&PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':''))+
     '<div class="ur"><span>Planned</span>'+bar(a.plan,null,'g')+'<span class="v">'+pct(a.plan)+'</span></div>'+
     '<div class="ur"><span>Actual</span>'+bar(a.act,null,'')+'<span class="v">'+pct(a.act)+'</span></div>'+
-    '<div class="uv"><span>Variance</span><b class="'+gc+'">'+gtxt+'</b></div>';
+    '<div class="uv"><span>Variance</span><b class="'+gc+'">'+gtxt+'</b></div>'+((code&&projCut(code,state.cutoff)!==state.cutoff)?'<div class="uv"><span>Reported</span><b class="warn">'+d2(projCut(code,state.cutoff))+'</b></div>':'');
   if(started&&a.act>=0.9999) h+='<div class="usl"><span class="dd '+(dl>0?'warn':'good')+'">'+(dl>0?'−'+dl+' days late':dl<0?'+'+(-dl)+' days early':'on plan')+'</span><div class="sl"><i class="o"></i><div></div><i class="f"></i></div><div class="sd"><div><b>'+fd(a.pf)+'</b>'+(cls==='pk'?'Planned finish':'Planned')+'</div><div><b>'+fd(a.ff)+'</b>Actual completion</div></div></div><div class="donebadge">✔ Completed</div>';
   else if(!started) h+='<div class="usl"><span class="dt" style="font-weight:600;color:var(--mut)">Not started yet'+(a.start?' · planned start '+fd(a.start):'')+'</span></div>';
   else if(dl===0) h+='<div class="usl"><span>On plan</span><span class="tgt"></span><span class="dt">'+fd(a.pf)+'</span><span>Planned = Forecast</span></div>';
@@ -3245,6 +3245,43 @@ async function pkSave(){
 }
 document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-pkadd],[data-pksave],[data-pkcancel]'); if(!t) return;
   if(t.hasAttribute('data-pkadd')) pkModal(); else if(t.hasAttribute('data-pkcancel')){ var m=document.getElementById('pkModal'); if(m) m.remove(); } else pkSave(); });
+/* V288: every project has its own reporting cut-off (its latest report on or before the selected date); the administrator can override it */
+var PCUT={}, PCRV=0, PCM={m:null};
+function pcutDates(cut){
+  if(PCM.m&&PCM.cut===cut&&PCM.mod===model&&PCM.rev===PCRV&&PCM.n===model.rows.length) return PCM.m;
+  var by={}, ov={}; for(var i=0;i<model.rows.length;i++){ var r=model.rows[i]; if(r.date>cut) break; by[r.code]=r.date; var o=PCUT[r.code]; if(o&&r.date<=o) ov[r.code]=r.date; }
+  Object.keys(ov).forEach(function(c){ by[c]=ov[c]; });
+  PCM={m:by,cut:cut,mod:model,rev:PCRV,n:model.rows.length}; return by; }
+function projCut(code,cut){ cut=cut||state.cutoff; return pcutDates(cut)[code]||cut; }
+function cutTxt(codes,cut){
+  cut=cut||state.cutoff; var cs=codes; if(!cs){ var seen={}; cs=[]; rowsAt(cut).filter(inScope).forEach(function(r){ if(!seen[r.code]){ seen[r.code]=1; cs.push(r.code); } }); }
+  var ds=[]; cs.forEach(function(c){ var d=projCut(c,cut); if(ds.indexOf(d)<0) ds.push(d); }); ds.sort();
+  if(ds.length<=1) return d2(ds[0]||cut); return 'mixed dates ('+d2(ds[0])+' – '+d2(ds[ds.length-1])+')'; }
+function pcutLoad(){
+  try{ if(!ACC.need){ var l=JSON.parse(localStorage.getItem('kec_pcut')||'{}'); if(l&&typeof l==='object'){ PCUT=l; PCRV++; } return; } }catch(e){}
+  if(!ACC.token) return;
+  accCall('GET','/pcut',null,15000).then(function(j){ if(j&&j.map&&JSON.stringify(j.map)!==JSON.stringify(PCUT)){ PCUT=j.map; PCRV++; if(model) render(); } }).catch(function(){});
+}
+function pcutBtn(){ return pkCan()?'<button type="button" class="btn" data-pcutopen="1" title="Reporting date of each project (administrator)">Reporting dates</button>':''; }
+function pcutCodes(){ if(SV&&SV.cur&&SV.cur.grp) return SV.cur.codes.slice(); var c=state.project||(SV&&SV.cur&&SV.cur.sc&&SV.cur.sc.code); return c?[c]:[]; }
+function pcutModal(){
+  var codes=pcutCodes(); if(!codes.length) return; var m=document.getElementById('pcutModal'); if(m) m.remove();
+  var all={}; model.rows.forEach(function(r){ (all[r.code]=all[r.code]||{})[r.date]=1; });
+  var rows=codes.map(function(c){ var ds=Object.keys(all[c]||{}).sort().reverse(), cur=PCUT[c]||'', auto=(function(){ var a=''; ds.forEach(function(d){ if(d<=state.cutoff&&!a) a=d; }); return a; })();
+    return '<tr><td><b>'+esc(pname(c))+'</b><small>'+esc(c)+'</small></td><td>'+(auto?d2(auto):'—')+'</td><td><select data-pcutc="'+esc(c)+'"><option value="">Automatic (latest report)</option>'+ds.map(function(d){ return '<option value="'+d+'"'+(d===cur?' selected':'')+'>'+d2(d)+'</option>'; }).join('')+'</select></td></tr>'; }).join('');
+  m=document.createElement('div'); m.className='svm'; m.id='pcutModal';
+  m.innerHTML='<div class="svmb" role="dialog" aria-modal="true" style="width:min(720px,96vw)"><h3>Reporting date of each project</h3><p class="pcnote" style="margin:0 0 8px">Each project shows its own latest report on or before the cut-off you choose at the top. Here the administrator can make a project show an earlier report instead (for example when its latest report is wrong). Everyone sees the change.</p><div class="svtw"><table class="svtb"><thead><tr><th>Project</th><th>Latest report</th><th>Show the report of</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="svma"><button type="button" class="btn" data-pcutcancel="1">Cancel</button><button type="button" class="btn pri" data-pcutsave="1">Save</button></div></div>';
+  document.body.appendChild(m);
+}
+async function pcutSave(){
+  var next=Object.assign({},PCUT); [].forEach.call(document.querySelectorAll('#pcutModal [data-pcutc]'),function(s){ var c=s.getAttribute('data-pcutc'); if(s.value) next[c]=s.value; else delete next[c]; });
+  var b=document.querySelector('[data-pcutsave]'); if(b){ b.disabled=true; b.textContent='Saving…'; }
+  try{ if(ACC.need){ var j=await accCall('PUT','/pcut',{map:next},20000); next=(j&&j.map)||next; } else { try{ localStorage.setItem('kec_pcut',JSON.stringify(next)); }catch(e){} }
+    PCUT=next; PCRV++; var m=document.getElementById('pcutModal'); if(m) m.remove(); toast('Reporting dates saved'); render();
+  }catch(e){ toast((e&&e.status===404?'The relay does not support reporting dates yet. Deploy relay V30.':(e&&e.message)||'Could not save'),true); if(b){ b.disabled=false; b.textContent='Save'; } }
+}
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-pcutopen],[data-pcutsave],[data-pcutcancel]'); if(!t) return;
+  if(t.hasAttribute('data-pcutopen')) pcutModal(); else if(t.hasAttribute('data-pcutcancel')){ var m=document.getElementById('pcutModal'); if(m) m.remove(); } else pcutSave(); });
 function svGrpScope(c){ return {code:c,lc:String(c).toLowerCase(),filt:false,names:[],single:true,ok:function(){ return true; }}; }
 function pSiteGroup(rows,coreRows,cut){
   var codes=[]; rows.forEach(function(r){ if(codes.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) codes.push(r.code); });
@@ -3255,7 +3292,7 @@ function pSiteGroup(rows,coreRows,cut){
   var banner='<div class="svscope"><span class="svs1">VIEWING</span><div><small>'+(state.program?'PROGRAM':'PROJECTS')+'</small><b>'+esc(state.program||'Selected projects')+'</b></div><div><small>PROJECTS</small><b>'+codes.length+'</b></div><div><small>PACKAGES</small><b>'+rows.length+'</b></div><span class="svs2">Open a project in the table below for its full site dashboard</span></div>';
   var ovr=dayDiff(A.ff,A.pf), gap=(A.act-A.plan)*100;
   var kp='<div class="grid g-ov svk" style="grid-template-columns:repeat(5,1fr)">'+
-    kpi('Planned progress',pct(A.plan),'planned to '+d2(cut))+
+    kpi('Planned progress',pct(A.plan),'planned to '+cutTxt(codes,cut))+
     kpi('Actual progress',pct(A.act),'vs plan '+(Math.abs(gap)<0.05?'0.0 %':sgn(gap,1,' %')),gap<-0.05?'bad':'good')+
     kpi('SPI',A.spi==null?'—':A.spi.toFixed(2),'earned ÷ planned',spiCls(A.spi))+
     kpi('Planned completion',d2(A.pf),'latest planned finish')+
@@ -3297,11 +3334,11 @@ function pSiteGroup(rows,coreRows,cut){
   var O={High:0,Medium:1,Low:2}; openAll.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
   var ch=sec('svC','Challenges','open concerns across the '+(state.program?'program':'selected projects'))+'<div class="svbar"><span>'+openAll.length+' open challenge'+(openAll.length===1?'':'s')+'</span><span class="sp"></span><span class="sub">To add or edit a challenge, open the project</span></div>'+
     (openAll.length?'<div class="svchl">'+openAll.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b><small>'+esc(pname(x._c))+(x.pkg?' · '+esc(x.pkg):'')+(x.owner?' · '+esc(x.owner):'')+(x.target?' · target '+d2(x.target):'')+'</small>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'</div><button type="button" class="btn" data-svpj="'+esc(x._c)+'">Open project</button></div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges.</div></div>');
-  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+phBtn()+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
+  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+pcutBtn()+phBtn()+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(name)+'</span><em>Page '+n+' of 2</em></div>'; };
-  var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+d2(cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
+  var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+cutTxt(codes,cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={grp:true,codes:codes,sc:{code:'',lc:'',ok:function(){ return true; },single:true},open:openAll,all:openAll,cut:cut};
-  return '<h2 class="pgtitle sm">Site view</h2><p class="pgsub">'+esc(name)+' · cut-off '+d2(cut)+'</p>'+tools+
+  return '<h2 class="pgtitle sm">Site view</h2><p class="pgsub">'+esc(name)+' · cut-off '+cutTxt(codes,cut)+'</p>'+tools+
     '<div class="sitepg">'+pageHd(1)+banner+kp+PT+sec('svF','Contract & financial','')+fin+pcBox(codes)+T+pageFt+'</div>'+
     '<div class="sitepg">'+pageHd(2)+E1+E2+Q+M+ch+phBox(codes)+pageFt+'</div>';
 }
@@ -3335,7 +3372,7 @@ function pSiteBuild(rows,coreRows,cut){
   /* progress KPIs */
   var ovr=dayDiff(A.ff,A.pf), gap=(A.act-A.plan)*100;
   var kp='<div class="grid g-ov svk" style="grid-template-columns:repeat(5,1fr)">'+
-    kpi('Planned progress',pct(A.plan),'planned to '+d2(cut))+
+    kpi('Planned progress',pct(A.plan),'planned to '+cutTxt([code],cut))+
     kpi('Actual progress',pct(A.act),'vs plan '+(Math.abs(gap)<0.05?'0.0 %':sgn(gap,1,' %')),gap<-0.05?'bad':'good')+
     kpi('SPI',A.spi==null?'—':A.spi.toFixed(2),'earned ÷ planned',spiCls(A.spi))+
     kpi('Planned completion',d2(A.pf),'latest planned finish')+
@@ -3378,11 +3415,11 @@ function pSiteBuild(rows,coreRows,cut){
     '<div class="svbar"><span>'+open.length+' open challenge'+(open.length===1?'':'s')+'</span><span class="sp"></span>'+(can?'<button type="button" class="btn" data-svadd="1">+ Add challenge</button>':'')+(xlCan()?'<button type="button" class="btn" data-svxl="1">Export to Excel</button>':'')+'</div>'+
     (SV.err?'<div class="sepnote"><span class="ni">i</span><div>'+esc(SV.err)+'</div></div>':'')+
     (open.length?'<div class="svchl">'+open.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'<small>'+esc(dp(x.pkg)||'Project')+(x.owner?' · Owner: '+esc(x.owner):'')+(x.target?' · Target '+d2(x.target):'')+(x.id&&x.id.charAt(0)!=='k'?' · '+esc(x.id):'')+'</small></div>'+(can?'<button type="button" class="btn svedit" data-svedit="'+esc(x.id)+'">Edit</button>':'')+'</div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges for this selection.</div></div>');
-  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+(suMode()!=='off'?'<button type="button" class="btn" data-suopen="1">Site update</button>':'')+phBtn()+(suIsAdmin()?'<button type="button" class="btn" data-suadm="1">Site submissions</button>':'')+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
+  var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+pcutBtn()+(suMode()!=='off'?'<button type="button" class="btn" data-suopen="1">Site update</button>':'')+phBtn()+(suIsAdmin()?'<button type="button" class="btn" data-suadm="1">Site submissions</button>':'')+'<button type="button" class="btn" id="svPrint">Print Site view (A3)</button></div>';
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(pname(code))+(cs.length?' · '+esc(cs.join(', ')):'')+(ks.length?' · '+esc(ks.join(', ')):'')+'</span><em>Page '+n+' of 2</em></div>'; };
-  var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+d2(cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
+  var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+cutTxt([code],cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={sc:sc,open:open,all:CL.all,cut:cut};
-  return head('Site view',esc(pname(code))+' · cut-off '+d2(cut))+tools+
+  return head('Site view',esc(pname(code))+' · cut-off '+cutTxt([code],cut))+tools+
     '<div class="sitepg">'+pageHd(1)+banner+profile+kp+sec('svP','Packages','same cards as Progress detail')+pk+sec('svF','Contract & financial','')+fin+(cs.length||ks.length?'':pcBox([code]))+T+pageFt+'</div>'+
     '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'+E1+E2+Q+M+ch+phBox([code])+pageFt+'</div>';
 }
@@ -3915,7 +3952,7 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
   if(AP&&(A.gcP-AP.gcP)<-999) whyC='<div class="why" role="note"><span class="fchip">Check</span><span><b>Certified value is lower than at '+d2(prevCut)+'</b>'+(cDown.length?': '+cDown.slice(-4).map(function(x){ return esc(x.n)+' '+sgn(x.d/1e6,2,'M'); }).join('; ')+'. A certificate may have been reversed or corrected; verify.':'. Verify the source file.')+'</span></div>';
   var nRiskP=coreRows.filter(function(r){return r.status==='red';}).length;
   var prg='<div class="prg2">'+
-    '<div class="card hero2"><div class="k-l">Progress <span style="font-weight:400;letter-spacing:0">· overall · cut-off '+d2(cut)+'</span></div>'+
+    '<div class="card hero2"><div class="k-l">Progress <span style="font-weight:400;letter-spacing:0">· overall · cut-off '+cutTxt(null,cut)+'</span></div>'+
       '<div class="hl"><div class="hr"><span>Planned <i>(value-weighted · '+codes.length+' project'+(codes.length>1?'s':'')+')</i></span><b class="num">'+pct(A.plan)+'</b></div>'+bar(A.plan,null,'g')+'</div>'+
       '<div class="hl"><div class="hr"><span>Actual</span><b class="num acc">'+pct(A.act)+'</b></div>'+bar(A.act,A.plan,spiCls(A.spi)==="bad"?"bad":"")+'<div class="k-s">the tick on the bar is the planned %</div></div>'+
       '<div class="hv"><span class="k-s">Variance to plan</span><span class="vp '+(gap<0?'bad':'good')+'">'+sgn(gap,1,' %')+'</span></div></div>'+
@@ -4122,14 +4159,14 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
   }
   var sepStarted=sepRows.filter(function(r){return r.pv>0||r.ev>0;}), sepIdle=sepRows.filter(function(r){return !(r.pv>0||r.ev>0);});
   var sepOv=(sel&&sepRows.length)?(sepStarted.length?'<div class="card plain" style="margin-bottom:12px"><h3>Separate plot'+(sepStarted.length>1?'s':'')+' <small>reported separately · not included in the project figures above</small></h3><div class="ucs sepu">'+sepStarted.map(function(r){ return ucard(r.pkg,agg([r]),'sep'); }).join('')+'</div></div>':'')+sepNote(sepIdle,'project'):'';
-  var pOverview=lyBar()+pageHead(scopeName,sel?'Project summary · cut-off '+d2(cut):'Planned vs actual progress and planned vs forecast finish by project · cut-off '+d2(cut),true)+facts+ovK+sepOv+finCard+boxes;
+  var pOverview=lyBar()+pageHead(scopeName,sel?'Project summary · cut-off '+cutTxt(null,cut):'Planned vs actual progress and planned vs forecast finish by project · cut-off '+cutTxt(null,cut),true)+facts+ovK+sepOv+finCard+boxes;
   var ganttOv=ganttSection(rows,sel);
   if(!sel) pOverview='<div class="ovwrap">'+pOverview+'</div>'+ganttOv; else pOverview+=ganttOv;
 
-  var pProgress=pageHead('Progress detail','Value-weighted progress, schedule performance and package status · cut-off '+d2(cut))+top+prg+projTable+pkCards+sepCards;
+  var pProgress=pageHead('Progress detail','Value-weighted progress, schedule performance and package status · cut-off '+cutTxt(null,cut))+top+prg+projTable+pkCards+sepCards;
   if(!state.project){ var pickCodes=codes.filter(function(c){ return HIDE_PROJ.indexOf(c)<0&&inP(c); });
     pProgress=pageHead('Progress detail','Select a project to see its progress, schedule performance and package status.')+'<div class="card plain pickp"><h3>Select a project</h3><p>Progress detail is shown one project at a time.'+(state.mP.length?' You have '+state.mP.length+' projects selected; pick one of them here.':' Choose a project in the Project filter above, or pick one here.')+'</p><div class="pickl">'+pickCodes.map(function(c){ return '<button type="button" class="chp" data-project="'+esc(c)+'">'+esc(pname(c))+'</button>'; }).join('')+'</div></div>'; }
-  var pContracts=pageHead('Contracts & financial position',nShown+' contract'+(nShown>1?'s':'')+' · '+(useDB?'project share of revised value':'certified against revised value')+' · cut-off '+d2(cut))+fin;
+  var pContracts=pageHead('Contracts & financial position',nShown+' contract'+(nShown>1?'s':'')+' · '+(useDB?'project share of revised value':'certified against revised value')+' · cut-off '+cutTxt(null,cut))+fin;
 
   var phK=function(r){ return PHMAP.get(String(r.code).toLowerCase()+'|'+String(r.pkg).toLowerCase())||'~'; };
   var tpks=rows.slice().sort(function(a,b){ if(a.code!==b.code) return a.code<b.code?-1:1; var pa=phK(a), pb=phK(b); if(pa!==pb) return pa<pb?-1:1; return a.pkg<b.pkg?-1:a.pkg>b.pkg?1:0; });
@@ -4157,14 +4194,14 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
     kpi('High impact',String(nHigh),'need immediate action',nHigh?'bad':'good')+
     kpi('Medium impact',String(nMed),'monitor and follow up',nMed?'warn':'good')+
     kpi('Low impact',String(nLow),'watch only')+'</div>';
-  var pIssues=pageHead('Challenges','Areas of concern log'+(cc.date?' · latest entry '+d2(cc.date):'')+' · cut-off '+d2(cut))+issK+stripSec(conHtml).replace('<div class="card plain">','<div class="card plain" style="margin-top:12px">');
+  var pIssues=pageHead('Challenges','Areas of concern log'+(cc.date?' · latest entry '+d2(cc.date):'')+' · cut-off '+cutTxt(null,cut))+issK+stripSec(conHtml).replace('<div class="card plain">','<div class="card plain" style="margin-top:12px">');
   var pNotes=pageHead('Data notes','What the dashboard did with your files')+ulNotesHtml()+stripSec(dq)+cmPanel();
 
   var pSite=state.page==='site'?pSiteBuild(rows,coreRows,cut):'';
   var pUpdates=state.page==='updates'?ulPage():'';
   var PG={overview:pOverview,progress:pProgress,contracts:pContracts,trends:pTrends,issues:pIssues,site:pSite,updates:pUpdates,notes:pNotes};
   var order=['overview','progress','contracts','trends','issues'].concat(document.body.classList.contains('shownotes')?['notes']:[]);
-  var crumb='<p class="crumb">KEC · Project Controls Dashboard · '+PN[state.all?'overview':state.page]+(state.all?' … all pages':'')+' · cut-off '+d2(cut)+(state.program?' · '+esc(state.program):'')+(selList('P').length?' · '+selList('P').map(function(c){return esc(pname(c));}).join(', '):'')+(selList('C').length?' · '+selList('C').map(esc).join(', '):'')+(selList('K').length?' · '+selList('K').map(function(k){return esc(k.split('|').slice(1).join('|'));}).join(', '):'')+'</p>';
+  var crumb='<p class="crumb">KEC · Project Controls Dashboard · '+PN[state.all?'overview':state.page]+(state.all?' … all pages':'')+' · cut-off '+cutTxt(null,cut)+(state.program?' · '+esc(state.program):'')+(selList('P').length?' · '+selList('P').map(function(c){return esc(pname(c));}).join(', '):'')+(selList('C').length?' · '+selList('C').map(esc).join(', '):'')+(selList('K').length?' · '+selList('K').map(function(k){return esc(k.split('|').slice(1).join('|'));}).join(', '):'')+'</p>';
   view.innerHTML=crumb+(state.all?order.map(function(k,i){ return '<div class="'+(i?'pgbreak':'')+'">'+PG[k]+'</div>'; }).join(''):PG[state.page]);
   fitGantt();
 
@@ -4834,7 +4871,7 @@ function accApply(){
 }
 function accReapply(){ if(cur.prog){ try{ setData(cur.prog,cur.info,source,sourceKind); }catch(e){} } else render(); }
 function accWhen(fn){ if(ACC.ready) fn(); else ACC.cbs.push(fn); }
-function accReady(){ ACC.ready=true; var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
+function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
 function accShowLogin(msg){
   var o=document.getElementById('accLogin'); if(!o) return; o.hidden=false; document.body.classList.add('acc-locked');
   o.querySelector('.accerr').textContent=msg||''; var lg=document.querySelector('aside .brand img'), al=document.getElementById('accLogoImg'); if(lg&&al&&!al.getAttribute('src')) al.src=lg.src; var i=o.querySelector('input'); i.value=''; setTimeout(function(){ i.focus(); },50);
@@ -5900,7 +5937,7 @@ function aiDigest(){
   var cut=state.cutoff, si=model.snaps.indexOf(cut), prev=si>0?model.snaps[si-1]:null;
   var now=rowsAt(cut).map(function(r){ return derive(r,cut); }), pm={}; if(prev) rowsAt(prev).forEach(function(r){ pm[r.key]=derive(r,prev); });
   now.sort(function(a,b){ return a.code<b.code?-1:a.code>b.code?1:a.pkg<b.pkg?-1:1; });
-  var o=[]; o.push('CUT-OFF (latest reporting date used): '+d2(cut)+(prev?'. Previous cut-off: '+d2(prev):'')+'. All reporting dates available: '+model.snaps.map(d2).join(', ')+'.');
+  var o=[]; o.push('CUT-OFF (latest reporting date used): '+d2(cut)+(prev?'. Previous cut-off: '+d2(prev):'')+'. All reporting dates available: '+model.snaps.map(d2).join(', ')+'. Each project has its own cut-off, its latest report on or before this date: '+Array.from(model.projects.keys()).map(function(c){ return c+' '+d2(projCut(c,cut)); }).join('; ')+'.');
   o.push('UNITS: money is SAR millions (M) with 2 decimals. Planned value (PV), earned value (EV) and certified (gross certified amount) are all in the same SAR M unit, so they can be compared directly. Planned % = PV / revised value. Actual % = EV / revised value. Certified % = certified / revised value.');
   o.push('PROJECTS (code | name | program / cluster as shown in the dashboard | stage | status | type):');
   model.projects.forEach(function(p){ o.push([p.code,p.name,p.program,p.stage||'-',p.status||'-',p.type||'-'].join(' | ')); });
@@ -5954,7 +5991,7 @@ function aiDigest(){
     var byC={}; ctr.forEach(function(c){ var k=c.cno; if(!byC[k]) byC[k]={c:c,codes:[],sh:0}; byC[k].codes.push(c.code); byC[k].sh+=c.shrv; });
     var cs=Object.keys(byC).map(function(k){ var e=byC[k]; e.cls=cl(e.c); return e; });
     var cnt={}; cs.forEach(function(e){ cnt[e.cls]=(cnt[e.cls]||0)+1; });
-    o.push('CONTRACT EXPIRY (construction-stage contracts only, each distinct contract number counted once; status is the "Expiry status" from the Contracts sheet, with days counted from the cut-off '+d2(cut)+' to the contract revised completion date): '+cs.length+' contracts. Counts: '+Object.keys(cnt).map(function(k){ return cnt[k]+' '+k; }).join(', ')+'.');
+    o.push('CONTRACT EXPIRY (construction-stage contracts only, each distinct contract number counted once; status is the "Expiry status" from the Contracts sheet, with days counted from the cut-off '+cutTxt(null,cut)+' to the contract revised completion date): '+cs.length+' contracts. Counts: '+Object.keys(cnt).map(function(k){ return cnt[k]+' '+k; }).join(', ')+'.');
     var CL=function(t,cls){ var arr=cs.filter(function(e){ return e.cls===cls; }).sort(function(a,b){ return (a.c.rcomp||'')<(b.c.rcomp||'')?-1:1; }); o.push(t+' ['+arr.length+']'+(arr.length?' (contract no | vendor | contract name | project code(s) | revised completion | days from cut-off | project share of revised value SAR M):':': none')); arr.forEach(function(e){ var c=e.c; o.push('  '+[c.cno,c.vendor,String(c.name||'').replace(/\s*\|\s*/g,' - ').slice(0,60),Array.from(new Set(e.codes)).join('/'),c.rcomp?d2(c.rcomp):'-',c.rcomp?dayDiff(cut,c.rcomp)+' d':'-',m2(e.sh)].join(' | ')); }); };
     CL('Contracts EXPIRED (revised completion date passed, not closed)','Expired');
     CL('Contracts expiring WITHIN 3 MONTHS','Expire within 3 months');
