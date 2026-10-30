@@ -1130,6 +1130,9 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 
 .pcwr{font-style:normal;color:#b45309;font-weight:600;margin-left:4px}.pcwr a{color:#b45309;text-decoration:underline}
 @media print{.pcwr{display:none}}
+
+.ucdd{margin-top:6px;font-size:10.5px;color:var(--mut);text-align:center;letter-spacing:.02em}
+@media print{.ucdd{font-size:9px}}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1159,7 +1162,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V288</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V289</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1849,12 +1852,12 @@ function ucard(title,a,cls,code,photo){
   var h='<div class="uc '+(cls||'')+' st-'+st+'"'+(code?' data-project="'+esc(code)+'" style="cursor:pointer" title="Click to filter to this project"':'')+'>'+(code&&photo?'<div class="uc-hd"><div class="uc-t"><h4>'+esc(title)+'</h4>'+(PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':'')+'</div>'+photoTile(code,title)+'</div>':'<h4>'+esc(title)+'</h4>'+(code&&PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':''))+
     '<div class="ur"><span>Planned</span>'+bar(a.plan,null,'g')+'<span class="v">'+pct(a.plan)+'</span></div>'+
     '<div class="ur"><span>Actual</span>'+bar(a.act,null,'')+'<span class="v">'+pct(a.act)+'</span></div>'+
-    '<div class="uv"><span>Variance</span><b class="'+gc+'">'+gtxt+'</b></div>'+((code&&projCut(code,state.cutoff)!==state.cutoff)?'<div class="uv"><span>Reported</span><b class="warn">'+d2(projCut(code,state.cutoff))+'</b></div>':'');
+    '<div class="uv"><span>Variance</span><b class="'+gc+'">'+gtxt+'</b></div>';
   if(started&&a.act>=0.9999) h+='<div class="usl"><span class="dd '+(dl>0?'warn':'good')+'">'+(dl>0?'−'+dl+' days late':dl<0?'+'+(-dl)+' days early':'on plan')+'</span><div class="sl"><i class="o"></i><div></div><i class="f"></i></div><div class="sd"><div><b>'+fd(a.pf)+'</b>'+(cls==='pk'?'Planned finish':'Planned')+'</div><div><b>'+fd(a.ff)+'</b>Actual completion</div></div></div><div class="donebadge">✔ Completed</div>';
   else if(!started) h+='<div class="usl"><span class="dt" style="font-weight:600;color:var(--mut)">Not started yet'+(a.start?' · planned start '+fd(a.start):'')+'</span></div>';
   else if(dl===0) h+='<div class="usl"><span>On plan</span><span class="tgt"></span><span class="dt">'+fd(a.pf)+'</span><span>Planned = Forecast</span></div>';
   else h+='<div class="usl"><span class="dd '+(dl>0?(dl>T.delayAmber?'bad':'warn'):'good')+'">'+(dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</span><div class="sl"><i class="o"></i><div></div><i class="f"></i></div><div class="sd"><div><b>'+fd(a.pf)+'</b>'+(cls==='pk'?'Planned finish':'Planned')+'</div><div><b>'+fd(a.ff)+'</b>'+(cls==='pk'?'Forecast finish':'Forecast')+'</div></div></div>';
-  return h+'</div>';
+  return h+((code&&mixedDates())?'<div class="ucdd">Data date '+d2(projCut(code,state.cutoff))+'</div>':'')+'</div>';
 }
 function sepList(pj){
   var cards=[]; pj.forEach(function(g){ var sp=g.rows.filter(isSep); if(sp.length&&sp.length<g.rows.length) sp.forEach(function(r){ cards.push(ucard(pname(g.name)+' · '+dp(r.pkg)+' (separate)',agg([r]),'sep',g.name)); }); });
@@ -3303,7 +3306,7 @@ function pSiteGroup(rows,coreRows,cut){
   var tb=codes.map(function(c){
     var rp=core.filter(function(r){ return r.code===c; }); if(!rp.length) rp=rows.filter(function(r){ return r.code===c; });
     var a=agg(rp,undefined,true), g=(a.act-a.plan)*100, dl=dayDiff(a.ff,a.pf), st=ST[pkgStatus(a.act,a.pv,a.ev,a.spi,a.maxDelay)]||ST.green, hi=CH[c].filter(function(x){ return x.impact==='High'; }).length;
-    return '<tr><td><b>'+esc(pname(c))+'</b><br><small>'+esc(c)+' · '+rows.filter(function(r){ return r.code===c; }).length+(rows.filter(function(r){ return r.code===c; }).length===1?' package':' packages')+'</small></td><td class="n">'+svPctBar(a.plan)+'</td><td class="n">'+svPctBar(a.act)+'</td><td class="n '+(g<-0.05?'bad':'good')+'">'+(Math.abs(g)<0.05?'0.0':sgn(g,1,''))+' %</td><td class="n">'+(a.spi==null?'—':a.spi.toFixed(2))+'</td><td class="n">'+d2(a.ff)+'<br><small>'+(dl<0?(-dl)+' d late':dl>0?dl+' d early':'on plan')+'</small></td><td><span class="svimp '+st[0]+'">'+st[1]+'</span></td><td class="n">'+CH[c].length+(hi?' <small class="bad">('+hi+' high)</small>':'')+'</td><td><button type="button" class="btn" data-svpj="'+esc(c)+'">Open</button></td></tr>';
+    return '<tr><td><b>'+esc(pname(c))+'</b><br><small>'+esc(c)+(mixedDates()?' · data date '+d2(projCut(c,state.cutoff)):'')+' · '+rows.filter(function(r){ return r.code===c; }).length+(rows.filter(function(r){ return r.code===c; }).length===1?' package':' packages')+'</small></td><td class="n">'+svPctBar(a.plan)+'</td><td class="n">'+svPctBar(a.act)+'</td><td class="n '+(g<-0.05?'bad':'good')+'">'+(Math.abs(g)<0.05?'0.0':sgn(g,1,''))+' %</td><td class="n">'+(a.spi==null?'—':a.spi.toFixed(2))+'</td><td class="n">'+d2(a.ff)+'<br><small>'+(dl<0?(-dl)+' d late':dl>0?dl+' d early':'on plan')+'</small></td><td><span class="svimp '+st[0]+'">'+st[1]+'</span></td><td class="n">'+CH[c].length+(hi?' <small class="bad">('+hi+' high)</small>':'')+'</td><td><button type="button" class="btn" data-svpj="'+esc(c)+'">Open</button></td></tr>';
   }).join('');
   var PT=sec('svP','Projects',codes.length+(codes.length===1?' project':' projects')+' · status by project')+svTable(['Project','Planned','Actual','Variance','SPI','Forecast finish','Status','Open concerns',''],tb);
   /* finance */
@@ -3701,13 +3704,17 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
 /* ---------- render ---------- */
 function destroyCharts(){ charts.forEach(function(c){ try{c.destroy();}catch(e){} }); charts=[]; }
 
+function scopeCodes(){ var P=selList('P'); if(P.length) return P; if(state.program){ var o=[]; model.projects.forEach(function(p,c){ if(p.program===state.program) o.push(c); }); return o; } return null; }
+function scopeSnaps(){ var cs=scopeCodes(); if(!cs) return model.snaps.slice(); var set={}; cs.forEach(function(c){ set[String(c)]=1; }); var seen={}, out=[]; model.rows.forEach(function(r){ if(set[r.code]&&!seen[r.date]){ seen[r.date]=1; out.push(r.date); } }); out.sort(); return out.length?out:model.snaps.slice(); }
+function mixedDates(){ var seen={}, n=0; rowsAt(state.cutoff).filter(inScope).forEach(function(r){ var d=projCut(r.code,state.cutoff); if(!seen[d]){ seen[d]=1; n++; } }); return n>1; }
+function shellCut(sn){ var e=sn[0]; sn.forEach(function(d){ if(d<=state.cutoff&&(e>state.cutoff||d>e)) e=d; }); return e; }
 function renderShell(){
-  var snaps=model.snaps.slice().reverse();
+  var sn=scopeSnaps(), snaps=sn.slice().reverse(), eff=shellCut(sn);
   var partialDates={}; model.partial.forEach(function(p){ partialDates[p.date]=1; });
-  $('#cutSel').innerHTML=snaps.map(function(d){ return '<option value="'+d+'"'+(d===state.cutoff?' selected':'')+'>'+d2(d)+(partialDates[d]?' (partial)':'')+'</option>'; }).join('');
-  var idx=model.snaps.indexOf(state.cutoff), prev=idx>0?model.snaps[idx-1]:null;
-  $('#period').textContent=prev?d2(prev)+' – '+d2(state.cutoff):'First snapshot';
-  $('#sideCut').innerHTML='cut-off '+d2(state.cutoff)+'<br>'+model.snaps.length+' reported snapshot'+(model.snaps.length===1?'':'s')+histNote();
+  $('#cutSel').innerHTML=snaps.map(function(d){ return '<option value="'+d+'"'+(d===eff?' selected':'')+'>'+d2(d)+(partialDates[d]?' (partial)':'')+'</option>'; }).join('');
+  var idx=sn.indexOf(eff), prev=idx>0?sn[idx-1]:null;
+  $('#period').textContent=prev?d2(prev)+' – '+d2(eff):'First snapshot';
+  $('#sideCut').innerHTML='cut-off '+d2(eff)+'<br>'+sn.length+' reported snapshot'+(sn.length===1?'':'s')+histNote();
   $('#srcBadge').innerHTML='DATA SOURCE &nbsp;<b>●</b> '+esc(source);
   $('#srcBadge').title=source;
   $('#cutTxt').textContent=d2(state.cutoff);
