@@ -1133,6 +1133,7 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 
 .ucdd{margin-top:6px;font-size:10.5px;color:var(--mut);text-align:center;letter-spacing:.02em}
 @media print{.ucdd{font-size:9px}}
+#pcutTop[hidden],#dfixTop[hidden]{display:none!important}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1162,7 +1163,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V290</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V291</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1216,6 +1217,8 @@ body.printsite>*:not(.app){display:none!important}
         <div class="ag">
           <button class="btn ghost" id="usrBtn" type="button" hidden title="Add, edit or remove users and reset passcodes (administrators only)">Users</button>
           <button class="btn ghost" id="rptBtn" type="button" hidden title="Construction progress report for management: slides with progress cards and site photos, saved as a PDF (administrators only)">Report</button>
+          <button class="btn ghost" id="pcutTop" type="button" hidden data-pcutopen="1" title="Choose which report each project shows (administrator)">Reporting dates</button>
+          <button class="btn ghost" id="dfixTop" type="button" hidden data-dfixopen="1" title="Change or remove the data date of a project report (administrator)">Edit data dates</button>
           <button class="btn ghost" id="ctrBtn" type="button" title="Upload the contracts database (Contracts sheet) to refresh contracts, vendors and costs">Update contracts</button>
         </div>
         <span class="vsep"></span>
@@ -3266,7 +3269,8 @@ function pcutLoad(){
   accCall('GET','/pcut',null,15000).then(function(j){ if(j&&j.map&&JSON.stringify(j.map)!==JSON.stringify(PCUT)){ PCUT=j.map; PCRV++; if(model) render(); } }).catch(function(){});
 }
 function pcutBtn(){ return pkCan()?'<button type="button" class="btn" data-pcutopen="1" title="Reporting date of each project (administrator)">Reporting dates</button>':''; }
-function pcutCodes(){ if(SV&&SV.cur&&SV.cur.grp) return SV.cur.codes.slice(); var c=state.project||(SV&&SV.cur&&SV.cur.sc&&SV.cur.sc.code); return c?[c]:[]; }
+function pcutCodes(){ if(state.page==='site'){ if(SV&&SV.cur&&SV.cur.grp) return SV.cur.codes.slice(); var c=state.project||(SV&&SV.cur&&SV.cur.sc&&SV.cur.sc.code); if(c) return [c]; }
+  var cs=scopeCodes(); if(!cs){ cs=[]; model.projects.forEach(function(p,k){ cs.push(String(k)); }); } cs=cs.filter(function(c){ return HIDE_PROJ.indexOf(c)<0; }); cs.sort(function(a,b){ return pname(a)<pname(b)?-1:1; }); return cs; }
 function pcutModal(){
   var codes=pcutCodes(); if(!codes.length) return; var m=document.getElementById('pcutModal'); if(m) m.remove();
   var all={}; model.rows.forEach(function(r){ (all[r.code]=all[r.code]||{})[r.date]=1; });
@@ -5978,7 +5982,7 @@ document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.
 function aiShow(){ var adm=!!(ACC.need&&ACC.user&&ACC.user.admin), ok=!!(ACC.need&&ACC.user&&(ACC.user.admin||ACC.user.ai)); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
   var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm; var xb=document.getElementById('actLogBtn'); if(xb) xb.hidden=!adm;
-  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm;
+  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
   if(!model||!model.rows||!model.rows.length) return '';
