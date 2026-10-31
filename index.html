@@ -1163,7 +1163,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V294</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V295</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3655,7 +3655,10 @@ function suParse(wb,okCode){
       data.prog.forEach(function(r,i){ r.code=String(r.code).trim(); if(r.pkg==null||String(r.pkg).trim()==='') errs.push('Packages - Plots, row '+(i+1)+': Package/Plot is missing for '+r.code+'.'); else r.pkg=String(r.pkg).trim(); if(r.pname!=null) r.pname=String(r.pname);
         ['date','ps','pf','rf','ff'].forEach(function(f){ if(r[f]!=null&&typeof r[f]!=='number'){ var t=toISO(r[f]); r[f]=t?Math.round(Date.parse(t+'T00:00:00Z')/864e5)+25569:r[f]; } });
         PROG_REQ.forEach(function(k){ if(['date','code','pkg'].indexOf(k)<0&&(r[k]==null||r[k]==='')&&errs.length<20) errs.push('Packages - Plots, '+r.code+' · '+r.pkg+': '+PROG_LABEL[k]+' is empty.'); }); }); } }
-  var C=get(/^areas\s*of\s*concern$/i); if(C&&C.rows){ data.con=normCon(C.rows); }
+  var C=get(/^areas\s*of\s*concern$/i); if(C&&C.rows){ data.con=normCon(C.rows);
+    var noAct=data.con.filter(function(c){ return !c.action&&!/^closed$/i.test(String(c.status||'')); });
+    noAct.slice(0,12).forEach(function(c){ errs.push('Areas of Concern: the Suggested action is missing for '+c.code+(c.pkg?' · '+c.pkg:'')+' — "'+String(c.concern||'').slice(0,60)+(String(c.concern||'').length>60?'…':'')+'". Every concern needs a Suggested action before it can be sent.'); });
+    if(noAct.length>12) errs.push('Areas of Concern: '+(noAct.length-12)+' more concern(s) have no Suggested action.'); }
   [['e1',/^technical\s*submittals?$/i],['e2',/^material\s*procurement$/i],['qa',/^quality/i],['mp',/^manpower$/i]].forEach(function(x){ var S=get(x[1]); if(S&&S.rows&&S.rows.length){ data[x[0]]=normSite(S.rows,x[0]); data[x[0]].forEach(function(r,i){ if(!r.pkg) errs.push(S.n+': Package/Plot is missing for '+r.code+'.'); }); } });
   suParsePC(wb,data,errs);
   var codes={}; ['prog','con','e1','e2','qa','mp','pc'].forEach(function(k){ data[k].forEach(function(r){ codes[String(r.code).trim()]=1; }); sum.push([k,data[k].length]); });
