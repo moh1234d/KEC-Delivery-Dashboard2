@@ -1163,7 +1163,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V292</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V293</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -4628,7 +4628,9 @@ async function handleFiles(files,opts){
       var nd1=new Set(cur.prog.map(function(r){return toISO(r.date);})).size;
       mergeNote=' · '+(nd1-nd0>0?(nd1-nd0)+' new cut-off'+(nd1-nd0>1?'s':'')+' added':'no new cut-off dates')+(replaced?', '+replaced+' rows updated':'')+(droppedPk?', '+droppedPk+' package'+(droppedPk>1?'s':'')+' not in the sheet removed':'');
     }
-    if(gotInfo) cur.info=gotInfo;
+    if(gotInfo){ var ikn={}, imerged=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k){ ikn[k]=1; } imerged.push(r); });
+      (cur.info||[]).forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k&&!ikn[k]) imerged.push(r); });
+      cur.info=imerged; }
     if(gotCon){
       /* concerns: replace the dates present in the new file, keep earlier dates */
       var cd={}; gotCon.forEach(function(c){ cd[c.d]=1; });
