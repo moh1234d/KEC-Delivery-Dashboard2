@@ -1163,7 +1163,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V293</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V294</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -2969,12 +2969,12 @@ function dbCard(){
   if(!i) st='Checking the relay…';
   else if(i.err==='old') st='The relay is older than V26, so publishing is not available yet.';
   else if(i.err) st=esc(i.err);
-  else if(!i.on) st='Publishing to Google Drive is not switched on in the relay (needs the Drive key and the database file id).';
+  else if(!i.on&&!i.gs) st='Publishing to Google Drive is not switched on in the relay (needs the Drive key and the database file id).';
   else st=i.last?'Last published '+svStamp(i.last.ts)+' by '+esc(i.last.by||'')+(i.last.note?' · '+esc(i.last.note):''):'Nothing has been published yet.';
-  var can=!!(i&&i.on);
+  var can=!!(i&&(i.on||i.gs));
   return '<div class="card plain ulcard" id="dbCard"><h3>Excel database</h3><div class="ulsub">The database file is not changed when a site update is approved: the approved data is added on top of it when the dashboard opens. Use these buttons to write it into the file.</div>'+
     '<div class="ulsub" style="margin-top:6px">'+st+'</div>'+
-    '<div class="svma" style="justify-content:flex-start;margin-top:10px"><button type="button" class="btn" data-dbact="download">Download merged database</button>'+(can?'<button type="button" class="btn pri" data-dbact="publish">Publish approved updates to the Excel database</button>':'')+'</div></div>';
+    '<div class="svma" style="justify-content:flex-start;margin-top:10px"><button type="button" class="btn" data-dbact="download">Download merged database</button>'+(can?'<button type="button" class="btn pri" data-dbact="publish">'+(i&&i.gs?'Write approved updates to the Google Sheet':'Publish approved updates to the Excel database')+'</button>':'')+'</div></div>';
 }
 /* ---- reading a worksheet ---- */
 function dbV(c){ var v=c&&c.value; if(v&&typeof v==='object'&&!(v instanceof Date)){ if('result' in v) v=v.result; else if(v.richText) v=v.richText.map(function(t){ return t.text; }).join(''); else if('text' in v) v=v.text; else v=null; } return v; }
@@ -3063,6 +3063,28 @@ function dbApply(plan){
     removes.sort(function(a,b){ return b-a; }).forEach(function(r){ ws.spliceRows(r,1); });
   });
 }
+
+function dbIso(v){ if(v===null||v===undefined||v==='') return ''; if(v instanceof Date) return isNaN(v)?'':v.toISOString().slice(0,10); return toISO(v)||''; }
+function dbOps(plan){
+  var ops=[];
+  Object.keys(plan.sheets).forEach(function(kind){ var S=plan.sheets[kind]; if(!S.todo||!S.todo.length) return;
+    var c=S.cols, fields=Object.keys(c), isDate={}; DB_DATES[kind].forEach(function(f){ isDate[f]=1; });
+    var op={sheet:S.ws.name,keyCol:c.code,reps:[],adds:[],dels:[]}, ser=S.ser||0;
+    var cells=function(rw){ var o={}; fields.forEach(function(f){ var v=rw[f]; if(v===undefined) return;
+        if(isDate[f]){ var iso=dbIso(v); o[c[f]]=iso; } else o[c[f]]=(v===null?'':v); });
+      var nmf=kind==='prog'?'pname':'name'; if(c[nmf]!==undefined&&(rw[nmf]==null||rw[nmf]==='')){ var nm=S.names[String(rw.code).trim().toLowerCase()]||pname(rw.code); if(nm) o[c[nmf]]=nm; }
+      if(c._plp!==undefined) o[c._plp]=(rw.rv&&rw.pv!=null)?rw.pv/rw.rv:'';
+      if(c._acp!==undefined) o[c._acp]=(rw.rv&&rw.ev!=null)?rw.ev/rw.rv:'';
+      if(c._var!==undefined&&rw.pl!=null&&rw.ac!=null) o[c._var]=rw.pl-rw.ac;
+      return o; };
+    var keyAt=function(r){ var v=dbV(S.ws.getRow(r).getCell(c.code)); return v==null?'':String(v).trim(); };
+    S.todo.forEach(function(t){ t.rows.forEach(function(rw,i){
+        if(i<t.ex.length) op.reps.push({row:t.ex[i],key:keyAt(t.ex[i]),c:cells(rw)});
+        else { var o=cells(rw); if(c._ser!==undefined) o[c._ser]=++ser; op.adds.push({c:o}); } });
+      for(var k=t.rows.length;k<t.ex.length;k++) op.dels.push({row:t.ex[k],key:keyAt(t.ex[k])}); });
+    if(op.reps.length||op.adds.length||op.dels.length) ops.push(op); });
+  return ops;
+}
 async function dbBuffer(plan){ dbApply(plan); return await plan.wb.xlsx.writeBuffer(); }
 function dbName(plan){ var b=String(plan.file||'KEC_Database').replace(/\.[a-z0-9]+$/i,''), t=new Date(); return b+'_merged_'+t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0')+'.xlsx'; }
 function dbPreviewHtml(plan,publish){
@@ -3070,18 +3092,26 @@ function dbPreviewHtml(plan,publish){
   var tb=function(L){ return '<div class="svtw" style="max-height:340px;overflow:auto"><table class="svtb"><thead><tr><th>Sheet</th><th>Action</th><th>Date</th><th>Project</th><th>Package</th><th>Details</th></tr></thead><tbody>'+L.map(function(r){ return '<tr><td>'+esc(r.sheet)+'</td><td><b>'+esc(r.act)+'</b></td><td>'+(r.date?esc(d2(r.date)):'')+'</td><td>'+esc(r.proj||'')+'</td><td>'+esc(r.pkg||'')+'</td><td>'+esc(r.desc||'')+'</td></tr>'; }).join('')+'</tbody></table></div>'; };
   if(!rows.length) return '<p>The approved site updates are already part of the file, or no update has been approved yet. Nothing would change.</p>';
   return '<p><b>'+plan.n.add+'</b> row'+(plan.n.add===1?'':'s')+' added · <b>'+plan.n.rep+'</b> replaced · from <b>'+plan.subs+'</b> approved update'+(plan.subs===1?'':'s')+'. File: <b>'+esc(plan.file)+'</b></p>'+tb(rows.slice(0,300))+(rows.length>300?'<p class="ulsub">Showing the first 300 of '+rows.length+' rows.</p>':'')+
-    (publish?'<div class="sepnote"><span class="ni">i</span><div>Publishing replaces the file on Google Drive. Drive keeps the previous version (File › Version history). Charts, pivot tables and macros inside the workbook may not survive the rewrite: check the downloaded copy first if the file has any.</div></div><label style="display:block;margin-top:8px">Note for the version history (optional) <input type="text" id="dbNote" maxlength="200" style="width:100%"></label>':'');
+    (publish?'<div class="sepnote"><span class="ni">i</span><div>'+(DB.info&&DB.info.gs?'Only the rows listed above are written into the Google Sheet; nothing else in it changes. Google keeps every earlier version (File › Version history).':'Publishing replaces the file on Google Drive. Drive keeps the previous version (File › Version history). Charts, pivot tables and macros inside the workbook may not survive the rewrite: check the downloaded copy first if the file has any.')+'</div></div><label style="display:block;margin-top:8px">Note for the version history (optional) <input type="text" id="dbNote" maxlength="200" style="width:100%"></label>':'');
 }
 async function dbRun(act){
   if(DB.busy) return; DB.busy=true; toast('Preparing the merged database…');
   var plan; try{ plan=await dbBuild(); }catch(e){ DB.busy=false; toast((e&&e.message)||'Could not prepare the database',true); return; }
   DB.plan=plan; DB.busy=false;
-  var foot=plan.rows.length?(act==='publish'?'<button type="button" class="btn pri" id="dbGo" data-dbact="go-publish">Publish to Google Drive</button>':'<button type="button" class="btn pri" id="dbGo" data-dbact="go-download">Download .xlsx</button>'):'';
+  var foot=plan.rows.length?(act==='publish'?'<button type="button" class="btn pri" id="dbGo" data-dbact="go-publish">'+(DB.info&&DB.info.gs?'Write to the Google Sheet':'Publish to Google Drive')+'</button>':'<button type="button" class="btn pri" id="dbGo" data-dbact="go-download">Download .xlsx</button>'):'';
   suModal('dbModal',act==='publish'?'Publish approved updates to the Excel database':'Download merged database',dbPreviewHtml(plan,act==='publish'),foot);
 }
 async function dbGo(act){
   var plan=DB.plan; if(!plan||DB.busy) return; DB.busy=true; var b=document.getElementById('dbGo'); if(b){ b.disabled=true; b.textContent='Working…'; }
   try{
+    if(act==='publish'&&DB.info&&DB.info.gs){
+      var gnote=(document.getElementById('dbNote')||{}).value||'', gops=dbOps(plan);
+      if(!gops.length) throw new Error('Nothing to write');
+      var gr=await fetch(phBase()+'/gsheet-apply',{method:'POST',headers:{'X-KEC-Token':ACC.token,'Content-Type':'application/json'},body:JSON.stringify({ops:gops,note:gnote.slice(0,200)})});
+      var gj={}; try{ gj=await gr.json(); }catch(e){} if(!gr.ok) throw new Error(gj.error||('The relay answered '+gr.status));
+      DB.info=Object.assign({},DB.info,{last:gj.last}); toast('Google Sheet updated · '+(gj.count?gj.count.add+' added, '+gj.count.rep+' replaced'+(gj.count.del?', '+gj.count.del+' removed':''):''));
+      var gm=document.getElementById('dbModal'); if(gm) gm.remove(); DB.busy=false; DB.plan=null; if(state.page==='updates') render(); return;
+    }
     var buf=await dbBuffer(plan);
     if(act==='download'){ await xpSave(buf,dbName(plan)); toast('Merged database downloaded'); }
     else{
