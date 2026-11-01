@@ -531,7 +531,7 @@ select option,select optgroup{background:var(--card);color:var(--ink)}
 aside{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}aside::-webkit-scrollbar{width:6px}aside::-webkit-scrollbar-thumb{background:rgba(255,255,255,.28);border-radius:3px}
 
 .stkid{display:flex;align-items:center;gap:18px;padding:12px 16px!important}
-#aiLogBtn[hidden],#actLogBtn[hidden],#usrBtn[hidden],#rptBtn[hidden],#aiBtn[hidden],#aiTest[hidden]{display:none!important}
+#aiLogBtn[hidden],#actLogBtn[hidden],#ntBtn[hidden],#usrBtn[hidden],#rptBtn[hidden],#aiBtn[hidden],#aiTest[hidden]{display:none!important}
 .stkid .stkph{flex:none;position:relative}.pjbar{position:absolute;right:8px;bottom:8px;display:flex;gap:6px}.pjb{font:600 12px Inter,system-ui,sans-serif;border:0;border-radius:999px;padding:6px 11px;background:rgba(20,48,79,.86);color:#fff;cursor:pointer;opacity:0;transition:opacity .15s}.stkph:hover .pjb,.pjb:focus{opacity:1}@media (hover:none){.pjb{opacity:1}}.pjb:hover{background:#14304f}.stkid .stkph .ph,.stkid .stkph .phx{display:flex;width:300px;height:152px;border-radius:10px;border:1px solid var(--line);object-fit:cover;background:var(--bg);align-items:center;justify-content:center}
 .stkid .stkrt{display:flex;flex-direction:column;gap:12px;min-width:0;flex:1}
 .stkid .idl{display:flex;flex-direction:column;gap:2px}.stkid .idl b{font-size:18px;font-weight:650}
@@ -1170,6 +1170,15 @@ body.lyedit .ovwrap .ly-tg{opacity:.4;text-decoration:line-through}
 #dcModal .jerr{background:#fbdcd7;color:#a32a1e;border-radius:8px;padding:8px 12px;font-size:12.5px;margin-bottom:8px}
 #dcModal .dci .jd span{display:inline-block;margin-top:0}#dcModal .dci .jd span:before{content:none;display:none}#dcModal .dci .jd .jm{color:var(--mut)}
 .suchk .suci{border-top:1px solid var(--line);padding:8px 0;font-size:12.5px}.suchk .suci:first-of-type{border-top:0}.suchk .suci b{display:block}.suchk .sujt{width:100%;box-sizing:border-box;margin-top:5px;font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--card);color:var(--ink)}
+#muBar{margin:0 0 10px}#muBar .mub{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-radius:10px;padding:9px 14px;font-size:13px;margin-bottom:6px;border:1px solid}#muBar .mub button{margin-inline-start:auto;font:inherit;font-size:12px;font-weight:600;border:1px solid currentColor;background:transparent;color:inherit;border-radius:7px;padding:2px 10px;cursor:pointer}
+#muBar .warn{background:#fbeccd;border-color:#e3b653;color:#6e4700}#muBar .good{background:#dcf3e6;border-color:#7cc59b;color:#14573a}#muBar .bad{background:#fbdcd7;border-color:#e08a7f;color:#8e2a1f}
+@media print{#muBar{display:none!important}}
+#ntModal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:6vh 16px;overflow:auto}#ntModal.on{display:flex}
+#ntModal .dcp{background:var(--card,#fff);color:var(--ink);border-radius:14px;max-width:720px;width:100%;padding:18px 22px;box-shadow:0 20px 60px rgba(0,0,0,.35)}#ntModal h3{margin:0 0 6px;font-size:17px}#ntModal h4{margin:16px 0 6px;font-size:13.5px;border-top:1px solid var(--line);padding-top:12px}
+#ntModal .dcs{color:var(--mut);font-size:12.5px}#ntModal .ntl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;margin:5px 0}#ntModal input[type=number],#ntModal select{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--card);color:var(--ink)}
+#ntModal .dcacts{float:right}#ntModal .dcx{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 14px;cursor:pointer}
+#ntModal .dcig{font:inherit;font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:4px 12px;cursor:pointer}#ntModal .jpri{background:#1f3f78;color:#fff;border-color:#1f3f78}#ntModal .jfa{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+#ntModal .jb{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 10px}#ntModal .jb-g{background:#dcf3e6;color:#14663f}#ntModal .jb-p{background:#fbeccd;color:#8a5a00}#ntModal .jb-r{background:#fbdcd7;color:#a32a1e}#ntModal .jerr{background:#fbdcd7;color:#a32a1e;border-radius:8px;padding:8px 12px;font-size:12.5px;margin:6px 0}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1199,7 +1208,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V305</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V306</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1237,6 +1246,7 @@ body.printsite>*:not(.app){display:none!important}
     <div class="sfg sfadm"><div class="sfh">Administration</div>
       <button id="aiLogBtn" type="button" hidden>Export AI log (Excel)</button>
       <button id="actLogBtn" type="button" hidden>Export action log (Excel)</button>
+      <button id="ntBtn" type="button" hidden>Notifications</button>
     </div>
     <div class="sfg sfview"><button id="themeBtn" type="button">Dark mode</button></div>
   </div>
@@ -1284,6 +1294,7 @@ body.printsite>*:not(.app){display:none!important}
 <div id="accLogin" hidden><form class="accbox" onsubmit="return false"><div class="acclogo"><img id="accLogoImg" alt="KEC"></div><h2>Projects Delivery Department</h2><p>Sign in with your passcode to open the dashboard.</p><input id="accPass" type="password" autocomplete="current-password" placeholder="Passcode"><button type="button" id="accGo" class="accgo">Sign in</button><div class="accerr" role="alert"></div></form></div>
 <div id="lkModal" role="dialog" aria-modal="true" aria-label="Live data links"></div>
 <div id="dcModal" role="dialog" aria-modal="true" aria-label="Data warnings"></div>
+<div id="ntModal" role="dialog" aria-modal="true" aria-label="Notifications"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.mini.min.js"></script>
@@ -1957,6 +1968,33 @@ function jsDetail(r,m,x){
   }
   return '<div class="jx">'+h+'</div>'+(btn?'<div class="jfa">'+btn+'</div>':'');
 }
+var MU={items:[],seen:{},timer:null};
+try{ MU.seen=JSON.parse(localStorage.getItem('kec_mu_seen')||'{}')||{}; }catch(e){}
+function muSave(){ try{ localStorage.setItem('kec_mu_seen',JSON.stringify(MU.seen)); }catch(e){} }
+function muLoad(){
+  if(!ACC.need||!ACC.token||!ACC.user||ACC.user.admin) return;
+  accCall('GET','/my-updates',null,15000).then(function(j){ MU.items=(j&&j.items)||[]; MU.days=(j&&j.banner&&j.banner.days)||14; MU.dismiss=!(j&&j.banner&&j.banner.dismiss===false); muPaint(); muPlan(); }).catch(function(){});
+}
+function muPlan(){ clearTimeout(MU.timer); if(!ACC.token||!ACC.user||ACC.user.admin) return; var pend=MU.items.some(function(s){ return s.status==='pending'; }); MU.timer=setTimeout(muLoad,pend?45000:300000); }
+function muDis(s){ return MU.dismiss===false?'':'<button type="button" data-mud="'+esc(s.id)+'">Dismiss</button>'; }
+function muPaint(){
+  var bar=document.getElementById('muBar');
+  if(!bar){ var v=document.getElementById('view'); if(!v||!v.parentNode) return; bar=document.createElement('div'); bar.id='muBar'; v.parentNode.insertBefore(bar,v); }
+  var rows=[];
+  MU.items.forEach(function(s){
+    var pr=esc((s.projects||[]).slice(0,3).join(', ')+((s.projects||[]).length>3?' …':'')), by=s.reviewed&&s.reviewed.by&&s.reviewed.by!=='auto'?s.reviewed.by:'';
+    if(s.status==='pending') rows.push('<div class="mub warn"><b>Waiting for approval</b> · your update ('+pr+') was sent '+svStamp(s.ts)+'. An administrator has been notified. This message goes away when it is decided.</div>');
+    else if(by&&(MU.dismiss===false||!MU.seen[s.id])&&Date.now()-s.ts<(MU.days||14)*864e5){
+      var when=s.reviewed&&s.reviewed.ts?svStamp(s.reviewed.ts):'';
+      if(s.status==='accepted') rows.push('<div class="mub good"><b>Approved</b> · your update ('+pr+') was approved by '+esc(by)+' '+when+' and is now live.'+(s.partial&&s.partial.rejected&&s.partial.rejected.length?' Not included: '+esc(s.partial.rejected.join(', '))+'.':'')+'<button type="button" data-mud="'+esc(s.id)+'">Dismiss</button></div>');
+      else if(s.status==='rejected') rows.push('<div class="mub bad"><b>Rejected</b> · your update ('+pr+') was rejected by '+esc(by)+' '+when+'.'+(s.reviewed.reason?' Reason: '+esc(s.reviewed.reason):'')+muDis(s)+'</div>');
+      else if(s.status==='revoked') rows.push('<div class="mub bad"><b>Taken back</b> · your update ('+pr+') was taken back by '+esc(by)+' '+when+'.'+muDis(s)+'</div>');
+    }
+  });
+  bar.innerHTML=rows.join(''); bar.style.display=rows.length?'block':'none';
+}
+document.addEventListener('click',function(e){ var d=e.target.closest&&e.target.closest('[data-mud]'); if(!d) return; MU.seen[d.getAttribute('data-mud')]=1; muSave(); muPaint(); });
+document.addEventListener('visibilitychange',function(){ if(!document.hidden) try{ muLoad(); }catch(e){} });
 function dcSaveIgn(){ try{ localStorage.setItem('kecdash.v1.dcign',JSON.stringify(DCIGN)); }catch(e){} }
 function dateIssues(r,cut,raw){
   var out=[], add=function(c,m,fp){ out.push(m); DCCODE[m]=c; DCFP[m]=fp==null?m:String(fp); }, done=r.ev&&r.rv&&r.ev/r.rv>=0.9999, pc=function(v){ return (v*100).toFixed(1)+'%'; };
@@ -3089,11 +3127,14 @@ async function phDelete(id){
 function phPost(){ if(state.page!=='site') return; document.querySelectorAll('.phsec').forEach(function(el){ phGal(el); }); }
 
 /* ---- V266: Excel database on Google Drive: merged download + publish (admin) ---- */
-var DB={info:null,asked:false,busy:false,plan:null};
+var DB={info:null,tg:null,asked:false,busy:false,plan:null};
 function dbOk(){ return !!(ulAdmin()&&ACC.need&&ACC.token&&LIVE&&LIVE.relay); }
 function dbLoadInfo(force){
   if(!dbOk()||(DB.asked&&!force)) return; DB.asked=true;
   accCall('GET','/db-info',null,20000).then(function(j){ DB.info=j; }).catch(function(e){ DB.info={err:(e&&e.status===404)?'old':((e&&e.message)||'Could not reach the relay')}; }).then(function(){ if(state.page==='updates'&&!DB.busy) render(); });
+}
+function dbTgHtml(){
+  return '<div class="ulsub" style="margin-top:10px;border-top:1px solid var(--line);padding-top:8px">Telegram messages, reminders and quiet hours are in <a href="#" id="ntOpenLink">Notifications</a> (sidebar, Administration).</div>';
 }
 function dbCard(){
   if(!dbOk()) return ''; dbLoadInfo();
@@ -3104,7 +3145,7 @@ function dbCard(){
   else if(!i.on&&!i.gs) st='Publishing to Google Drive is not switched on in the relay (needs the Drive key and the database file id).';
   else st=i.last?'Last published '+svStamp(i.last.ts)+' by '+esc(i.last.by||'')+(i.last.note?' · '+esc(i.last.note):''):'Nothing has been published yet.';
   var can=!!(i&&(i.on||i.gs));
-  return '<div class="card plain ulcard" id="dbCard"><h3>Excel database</h3><div class="ulsub">'+(i&&i.gs&&i.auto!==undefined?'When a site update is accepted, the relay writes it into the Google Sheet by itself. Rows that already hold the same values are left alone. Use the button below to write older updates that are not in the Sheet yet.':'The database file is not changed when a site update is approved: the approved data is added on top of it when the dashboard opens. Use these buttons to write it into the file.')+'</div>'+(i&&i.gs&&i.auto!==undefined?'<label class="ulsub" style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="dbAuto"'+(i.auto?' checked':'')+'> Write to the Google Sheet automatically when an update is accepted</label>':'')+
+  return '<div class="card plain ulcard" id="dbCard"><h3>Excel database</h3><div class="ulsub">'+(i&&i.gs&&i.auto!==undefined?'When a site update is accepted, the relay writes it into the Google Sheet by itself. Rows that already hold the same values are left alone. Use the button below to write older updates that are not in the Sheet yet.':'The database file is not changed when a site update is approved: the approved data is added on top of it when the dashboard opens. Use these buttons to write it into the file.')+'</div>'+dbTgHtml()+(i&&i.gs&&i.auto!==undefined?'<label class="ulsub" style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="dbAuto"'+(i.auto?' checked':'')+'> Write to the Google Sheet automatically when an update is accepted</label>':'')+
     '<div class="ulsub" style="margin-top:6px">'+st+'</div>'+
     '<div class="svma" style="justify-content:flex-start;margin-top:10px"><button type="button" class="btn" data-dbact="download">Download merged database</button>'+(can?'<button type="button" class="btn pri" data-dbact="publish">'+(i&&i.gs?'Write approved updates to the Google Sheet':'Publish approved updates to the Excel database')+'</button>':'')+'</div></div>';
 }
@@ -3953,7 +3994,7 @@ async function suSubmit(){
     if(suMode()==='local'){ var pvl=[]; try{ pvl=ulPreview(P.data); }catch(e){} suMerge([{data:P.data}]); suReload(); toast('Update applied in this browser'); try{ ulSave({route:'site',by:'This browser',label:'Site update applied locally',cut:'',projects:P.codes||[],n:pvl.length,flags:pvl.filter(function(c){ return c.flag; }).length,changes:pvl.slice(0,600)},null); }catch(e){} }
     else{ var j; if(SU.tok){ var r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/site-upload',{method:'POST',headers:{'Content-Type':'application/json','X-KEC-Link':SU.tok},body:JSON.stringify({data:P.data})}); j=await r.json().catch(function(){return {};}); if(!r.ok) throw {message:j.error||('the relay answered '+r.status)}; }
       else j=await accCall('POST','/site-upload',{data:P.data},60000);
-      toast(j.status==='accepted'?'Update accepted and live':'Update sent for approval'); if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } if(JT.length&&ACC.need) await suSaveJust(JT); }
+      toast(j.status==='accepted'?'Update accepted and live':'Update sent for approval'); try{ muLoad(); }catch(e){} if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } if(JT.length&&ACC.need) await suSaveJust(JT); }
     var m=document.getElementById('suModal'); if(m&&!SU.tok) m.remove(); else document.getElementById('suRes').innerHTML='<div class="sepnote"><span class="ni">✓</span><div>Update received. You can close this page.</div></div>';
   }catch(e){ toast((e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Upload failed'),true); b.disabled=false; b.textContent='Submit update'; }
 }
@@ -5082,6 +5123,34 @@ $('#fileC').addEventListener('change',async function(e){
 });
 $('#tplBtn').addEventListener('click',function(){ if(isUnlocked()) downloadTemplate(); else pwAsk(function(){ downloadTemplate(); }); });
 $('#dcBtn').addEventListener('click',function(){ dcOpen(); try{ jsLoad(); }catch(e){} });
+var NT={d:null,busy:false,find:null,err:''};
+function ntHrs(id,v){ var o=''; for(var h=0;h<24;h++) o+='<option value="'+h+'"'+(h===v?' selected':'')+'>'+String(h).padStart(2,'0')+':00</option>'; return '<select id="'+id+'">'+o+'</select>'; }
+function ntOpen(){ var m=document.getElementById('ntModal'); if(!m) return; m.classList.add('on'); m.innerHTML='<div class="dcp"><h3>Notifications</h3><div class="dcs">Loading…</div></div>'; ntLoad(); }
+function ntLoad(){ accCall('GET','/notif',null,20000).then(function(j){ NT.d=j; NT.err=''; ntPaint(); }).catch(function(e){ NT.d=null; var m=document.getElementById('ntModal'); m.innerHTML='<div class="dcp"><div class="dcacts"><button type="button" class="dcx" id="ntClose">Close</button></div><h3>Notifications</h3><div class="jerr">'+esc((e&&e.status===404)?'The relay is older than V36. Deploy relay V36 to use this section.':((e&&e.message)||'Could not load'))+'</div></div>'; }); }
+function ntPaint(){
+  var d=NT.d, m=document.getElementById('ntModal'); if(!d||!m) return; var c=d.cfg, ev=c.ev, ck=function(id,v,l){ return '<label class="ntl"><input type="checkbox" id="'+id+'"'+(v?' checked':'')+'> '+l+'</label>'; };
+  var st=!d.configured?'Telegram is not set up on the relay yet. It needs the secrets TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID.':(d.last?(d.last.ok?'Connected. Last message sent '+svStamp(d.last.ts)+'.':'Last attempt failed: '+esc(d.last.err||'')):'Set up. No message sent yet.');
+  var lab={upd:'Update waiting for approval',just:'Justification waiting for approval',sheet:'Sheet write failed',rem:'Reminder',summary:'Morning summary',test:'Test message'};
+  var log=(d.log||[]).map(function(x){ return '<tr><td>'+svStamp(x.ts)+'</td><td>'+esc(lab[x.ev]||x.ev)+'</td><td>'+(x.st==='sent'?'<span class="jb jb-g">Sent</span>':x.st==='held'?'<span class="jb jb-p">Held until morning</span>':'<span class="jb jb-r">Failed</span> '+esc(x.err||''))+'</td></tr>'; }).join('');
+  m.innerHTML='<div class="dcp ntp"><div class="dcacts"><button type="button" class="dcx" id="ntClose">Close</button></div><h3>Notifications</h3>'+(NT.err?'<div class="jerr">'+esc(NT.err)+'</div>':'')+
+   '<h4>Telegram</h4><div class="dcs">'+st+'</div>'+ck('ntTg',c.tg,'Send Telegram messages')+
+   '<div class="jfa"><button type="button" class="dcig" id="ntTest"'+(d.configured?'':' disabled')+'>Send a test message</button><button type="button" class="dcig" id="ntFind"'+(d.configured||true?'':' disabled')+'>Find my chat ID</button></div>'+
+   (NT.find?'<div class="dcs" style="margin-top:6px">'+(NT.find.length?NT.find.map(function(x){ return 'Chat ID <b>'+esc(x.id)+'</b> · '+esc(x.name); }).join('<br>')+'<br>Put this number in the secret TELEGRAM_CHAT_ID.':'No chat found. Send any message to your bot in Telegram, then press the button again.')+'</div>':'')+
+   '<h4>Message me when</h4>'+ck('ntUpd',ev.upd,'an update is waiting for approval')+ck('ntJust',ev.just,'a justification is waiting for approval')+ck('ntSheet',ev.sheet,'the automatic write to the Google Sheet fails')+ck('ntRem',ev.rem,'an update keeps waiting: remind me every <input type="number" id="ntRemH" min="1" max="72" value="'+c.remH+'" style="width:56px"> hours')+
+   '<h4>Quiet hours (Riyadh time)</h4><div class="ntl">No messages from '+ntHrs('ntQs',c.qs)+' to '+ntHrs('ntQe',c.qe)+'</div><div class="dcs">Messages that come up in quiet hours are held and sent as one summary when they end. The test message is always sent.'+(d.held?' <b>'+d.held+' held now.</b>':'')+'</div>'+
+   '<h4>Banner for people who upload</h4><div class="ntl">Keep an approved or rejected message on their page for <input type="number" id="ntDays" min="1" max="60" value="'+c.bannerDays+'" style="width:56px"> days</div>'+ck('ntDis',c.dismiss,'Let them dismiss it')+
+   '<div class="jfa" style="margin-top:12px"><button type="button" class="dcig jpri" id="ntSave">Save settings</button></div>'+
+   '<h4>Recent notifications</h4>'+(log?'<div class="svtw" style="max-height:240px;overflow:auto"><table class="svtb"><thead><tr><th>When</th><th>Event</th><th>Result</th></tr></thead><tbody>'+log+'</tbody></table></div>':'<div class="dcs">None yet.</div>')+'</div>';
+}
+function ntCfgNow(){ var g=function(id){ return document.getElementById(id); }; return {tg:g('ntTg').checked,ev:{upd:g('ntUpd').checked,just:g('ntJust').checked,sheet:g('ntSheet').checked,rem:g('ntRem').checked},remH:+g('ntRemH').value,qs:+g('ntQs').value,qe:+g('ntQe').value,bannerDays:+g('ntDays').value,dismiss:g('ntDis').checked}; }
+document.getElementById('ntModal').addEventListener('click',function(e){
+  var t=e.target; if(t.id==='ntModal'||t.id==='ntClose'){ document.getElementById('ntModal').classList.remove('on'); return; }
+  if(t.id==='ntSave'){ accCall('POST','/notif',{cfg:ntCfgNow()},20000).then(function(j){ NT.d=j; NT.err=''; ntPaint(); toast('Notification settings saved'); }).catch(function(er){ NT.err=(er&&er.message)||'Could not save'; ntPaint(); }); return; }
+  if(t.id==='ntTest'){ t.disabled=true; accCall('POST','/tg',{action:'test'},20000).then(function(){ toast('Test message sent. Check Telegram.'); ntLoad(); }).catch(function(er){ NT.err=(er&&er.message)||'The test message could not be sent'; ntLoad(); }); return; }
+  if(t.id==='ntFind'){ accCall('POST','/tg',{action:'find'},20000).then(function(j){ NT.find=j.chats||[]; ntPaint(); }).catch(function(er){ NT.err=(er&&er.message)||'Could not look up the chat'; ntPaint(); }); return; }
+});
+document.getElementById('ntBtn').addEventListener('click',ntOpen);
+document.addEventListener('click',function(e){ if(e.target&&e.target.id==='ntOpenLink'){ e.preventDefault(); ntOpen(); } });
 document.getElementById('dcModal').addEventListener('click',function(e){
   var t=e.target;
   if(t.id==='dcModal'||t.id==='dcClose'){ dcClose(); return; }
@@ -5195,7 +5264,7 @@ function accApply(){
 }
 function accReapply(){ if(cur.prog){ try{ setData(cur.prog,cur.info,source,sourceKind); }catch(e){} } else render(); }
 function accWhen(fn){ if(ACC.ready) fn(); else ACC.cbs.push(fn); }
-function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} try{ jsLoad(); }catch(e){} try{ dfixLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
+function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} try{ jsLoad(); }catch(e){} try{ muLoad(); }catch(e){} try{ dfixLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
 function accShowLogin(msg){
   var o=document.getElementById('accLogin'); if(!o) return; o.hidden=false; document.body.classList.add('acc-locked');
   o.querySelector('.accerr').textContent=msg||''; var lg=document.querySelector('aside .brand img'), al=document.getElementById('accLogoImg'); if(lg&&al&&!al.getAttribute('src')) al.src=lg.src; var i=o.querySelector('input'); i.value=''; setTimeout(function(){ i.focus(); },50);
@@ -6251,7 +6320,7 @@ document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.
 
 function aiShow(){ var adm=!!(ACC.need&&ACC.user&&ACC.user.admin), ok=!!(ACC.need&&ACC.user&&(ACC.user.admin||ACC.user.ai)); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
-  var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm; var xb=document.getElementById('actLogBtn'); if(xb) xb.hidden=!adm;
+  var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm; var xb=document.getElementById('actLogBtn'); if(xb) xb.hidden=!adm; var nb=document.getElementById('ntBtn'); if(nb) nb.hidden=!adm;
   var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
