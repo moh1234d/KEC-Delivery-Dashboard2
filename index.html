@@ -1145,6 +1145,17 @@ body.lyedit .ovwrap .ly-tg{opacity:.4;text-decoration:line-through}
 #lyTxtPop textarea{width:100%;min-height:62px;box-sizing:border-box;border:1px solid #cfd5e1;border-radius:6px;padding:7px;font:inherit;resize:vertical}
 #lyTxtPop .lyr{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 #lyTxtPop .lyr button{flex:1 1 auto}
+/* V299 collapsible sections + manpower */
+.sec-x{width:22px;height:22px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--mut);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;align-self:center;flex:none}
+.sec-x:hover{color:var(--ink);border-color:var(--mut)}.sec-x svg{transition:transform .15s}.sec-c .sec-x svg{transform:rotate(-90deg)}
+.sec-h{display:none!important}.sec-c .q::after{content:" · collapsed";font-style:italic}
+.sec-bar{display:flex;gap:8px;justify-content:flex-end;margin:6px 0 -14px}.sec-bar .btn{font-size:12px;padding:4px 10px}
+.mpk{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 12px}
+.mpk>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.mpk .l{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}.mpk b{font-size:26px;line-height:1.15;font-variant-numeric:tabular-nums}.mpk .s{font-size:12px;color:var(--mut)}
+.mpt{font-size:12.5px;font-weight:600;color:var(--mut);margin:0 0 4px}
+@media(max-width:700px){.mpk{grid-template-columns:repeat(2,1fr)}}
+@media print{.sec-x,.sec-bar{display:none!important}.mpk b{font-size:20px}}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1174,7 +1185,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V298</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V299</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3474,7 +3485,7 @@ function pSiteGroup(rows,coreRows,cut){
   var nq={t:0,c:0,o:0}, si={t:0,c:0,o:0}; qa.forEach(function(x){ ['t','c','o'].forEach(function(k){ nq[k]+=x.n[k]; si[k]+=x.s[k]; }); });
   var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open')+(qa.some(function(x){ return x.any; })?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>'+svTable(['Project','NCR total','NCR open','SOR total','SOR open'],qa.map(function(x){ return '<tr><td>'+esc(pname(x.c))+'</td><td class="n">'+x.n.t+'</td><td class="n">'+x.n.o+'</td><td class="n">'+x.s.t+'</td><td class="n">'+x.s.o+'</td></tr>'; }).join('')):svEmpty(cur.qa,'quality','Quality Statistics'));
   var mpAny=(cur.mp||[]).some(function(x){ return codes.some(function(c){ return String(c).toLowerCase()===String(x.code).toLowerCase(); }); });
-  var M=sec('svM','Manpower','planned vs actual · all projects together · variance = planned − actual')+'<div class="card plain">'+(mpAny?'<div class="chart-box"><canvas id="svMp"></canvas></div>':'<div class="empty">Manpower data has not been loaded yet.</div>')+'</div>';
+  var M=svMpHtml(svMpModel({lc:'',ok:function(){ return true; }},cut,true,codes));
   /* challenges across the group */
   var O={High:0,Medium:1,Low:2}; openAll.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
   var ch=sec('svC','Challenges','open concerns across the '+(state.program?'program':'selected projects'))+'<div class="svbar"><span>'+openAll.length+' open challenge'+(openAll.length===1?'':'s')+'</span><span class="sp"></span><span class="sub">To add or edit a challenge, open the project</span></div>'+
@@ -3550,7 +3561,7 @@ function pSiteBuild(rows,coreRows,cut){
   var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open')+(qL.length?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>':svEmpty(cur.qa,'quality','Quality Statistics'));
   /* manpower + trends canvases */
   var mpAny=(cur.mp||[]).some(function(x){ return String(x.code).toLowerCase()===sc.lc; });
-  var M=sec('svM','Manpower','planned vs actual · variance = planned − actual')+'<div class="card plain">'+(mpAny?'<div class="chart-box"><canvas id="svMp"></canvas></div>':'<div class="empty">Manpower data has not been loaded yet. It will appear here once the Manpower sheet is filled in the database.</div>')+'</div>';
+  var M=svMpHtml(svMpModel(sc,cut,false,null));
   var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>forecast finish after planned finish</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
   /* challenges */
   var CL=svChalList(sc,cut), open=CL.all.filter(function(x){ return !/^closed/i.test(x.status); }), closed=CL.all.length-open.length;
@@ -3569,12 +3580,75 @@ function pSiteBuild(rows,coreRows,cut){
     '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'+E1+E2+Q+M+ch+phBox([code])+pageFt+'</div>';
 }
 function groupBy0(L,kf){ var m={},o=[]; L.forEach(function(x){ var k=kf(x), n=svN(k); if(!m[n]){ m[n]={k:k,l:[]}; o.push(m[n]); } m[n].l.push(x); }); return o.sort(function(a,b){ return svSum(b.l,'tot')-svSum(a.l,'tot'); }); }
+
+/* ---- collapse / expand sections (V299). The choice is remembered on this device. ---- */
+var SECC=(function(){ try{ return JSON.parse(localStorage.getItem('kec_secc')||'{}')||{}; }catch(e){ return {}; } })();
+function secSave(){ try{ localStorage.setItem('kec_secc',JSON.stringify(SECC)); }catch(e){} }
+function secKey(s){ var t=s.querySelector('.t'); return (state.page||'')+'|'+(s.id||(t?t.textContent:'')); }
+function secStop(n){ return !n||n.classList.contains('sec')||n.classList.contains('svft')||n.classList.contains('svhd')||n.classList.contains('sec-bar'); }
+function secApply(s,hide){
+  s.classList.toggle('sec-c',hide); var x=s.querySelector('.sec-x'); if(x){ x.setAttribute('aria-expanded',hide?'false':'true'); x.title=hide?'Expand this section':'Collapse this section'; }
+  var n=s.nextElementSibling; while(n&&!secStop(n)){ n.classList.toggle('sec-h',hide); n=n.nextElementSibling; }
+  if(!hide) try{ window.dispatchEvent(new Event('resize')); }catch(e){}
+}
+function secPost(){
+  var v=document.getElementById('view'); if(!v) return; var all=[].slice.call(v.querySelectorAll('.sec'));
+  all.forEach(function(s){ if(s.querySelector('.sec-x')) return; var b=document.createElement('button'); b.type='button'; b.className='sec-x'; b.setAttribute('aria-label','Collapse or expand this section'); b.innerHTML='<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; s.insertBefore(b,s.firstChild); });
+  all.forEach(function(s){ secApply(s,state.gprint?false:!!SECC[secKey(s)]); });
+  if(all.length>1&&!v.querySelector('.sec-bar')){ var bar=document.createElement('div'); bar.className='sec-bar'; bar.innerHTML='<button type="button" class="btn" data-secall="1">Collapse all sections</button><button type="button" class="btn" data-secall="0">Expand all sections</button>'; all[0].parentNode.insertBefore(bar,all[0]); }
+}
+document.addEventListener('click',function(e){
+  var t=e.target&&e.target.closest?e.target.closest('.sec-x,[data-secall]'):null; if(!t) return;
+  if(t.hasAttribute('data-secall')){ var hide=t.getAttribute('data-secall')==='1'; [].slice.call(document.querySelectorAll('#view .sec')).forEach(function(s){ SECC[secKey(s)]=hide?1:0; if(!hide) delete SECC[secKey(s)]; secApply(s,hide); }); secSave(); return; }
+  var s=t.closest('.sec'); if(!s) return; var h=!s.classList.contains('sec-c'); if(h) SECC[secKey(s)]=1; else delete SECC[secKey(s)]; secApply(s,h); secSave(); e.stopPropagation();
+},true);
+
+/* ---- manpower block (V299): latest data date, by package, values + variance, summary cards, table ---- */
+function svMpModel(sc,cut,grp,codes){
+  var lcs=(codes||[]).map(function(q){ return String(q).toLowerCase(); }), by={};
+  (cur.mp||[]).forEach(function(x){ var ok=grp?lcs.indexOf(String(x.code).toLowerCase())>=0:String(x.code).toLowerCase()===sc.lc; if(!ok||x.d>cut||!sc.ok(x.pkg)) return; (by[x.d]||(by[x.d]=[])).push(x); });
+  var ds=Object.keys(by).sort(); if(!ds.length) return null;
+  var d=ds[ds.length-1], g={}, ord=[];
+  by[d].forEach(function(x){ var k=grp?pname(x.code):(dp(x.pkg)||'Project'); if(!g[k]){ g[k]={k:k,pl:0,ac:0}; ord.push(g[k]); } g[k].pl+=x.pl||0; g[k].ac+=x.ac||0; });
+  ord.sort(function(a,b){ return b.pl-a.pl||b.ac-a.ac; });
+  var tot={pl:0,ac:0}; ord.forEach(function(r){ tot.pl+=r.pl; tot.ac+=r.ac; });
+  var trend=ds.slice(-14).map(function(q){ var p=0,a=0; by[q].forEach(function(x){ p+=x.pl||0; a+=x.ac||0; }); return {d:q,pl:p,ac:a}; });
+  return {d:d,rows:ord,tot:tot,trend:trend,grp:grp};
+}
+function svMpVar(v){ return (v>0?'+':v<0?'−':'')+Math.abs(v).toLocaleString('en-US'); }
+function svMpHtml(m){
+  var t=sec('svM','Manpower','planned vs actual · variance = actual − planned · negative = fewer people on site than planned');
+  if(!m) return t+'<div class="card plain"><div class="empty">Manpower data has not been loaded yet. It will appear here once the Manpower sheet is filled in the database.</div></div>';
+  var N=function(v){ return Math.round(v).toLocaleString('en-US'); }, vr=m.tot.ac-m.tot.pl, pc=m.tot.pl?Math.round(m.tot.ac/m.tot.pl*100):null;
+  var vc=function(v){ return v<0?'var(--bad)':v>0?'var(--good)':'var(--mut)'; };
+  var kp='<div class="mpk"><div><span class="l">Planned</span><b>'+N(m.tot.pl)+'</b><span class="s">people · '+d2(m.d)+'</span></div><div><span class="l">Actual</span><b>'+N(m.tot.ac)+'</b><span class="s">people on site</span></div><div><span class="l">Variance</span><b style="color:'+vc(vr)+'">'+svMpVar(vr)+'</b><span class="s">actual − planned</span></div><div><span class="l">Actual vs plan</span><b>'+(pc==null?'–':pc+'%')+'</b><span class="s">'+(pc==null?'':pc>=100?'at or above plan':'below plan')+'</span></div></div>';
+  var rows=m.rows.map(function(r){ var v=r.ac-r.pl, p=r.pl?Math.round(r.ac/r.pl*100)+'%':'–'; return '<tr><td>'+esc(r.k)+'</td><td class="n">'+N(r.pl)+'</td><td class="n">'+N(r.ac)+'</td><td class="n" style="color:'+vc(v)+';font-weight:700">'+svMpVar(v)+'</td><td class="n">'+p+'</td></tr>'; }).join('');
+  var foot='<tr><td>Total</td><td class="n">'+N(m.tot.pl)+'</td><td class="n">'+N(m.tot.ac)+'</td><td class="n" style="color:'+vc(vr)+'">'+svMpVar(vr)+'</td><td class="n">'+(pc==null?'–':pc+'%')+'</td></tr>';
+  var h=Math.max(260,Math.min(420,200+m.rows.length*8));
+  return t+kp+'<div class="card plain"><div class="mpt">By '+(m.grp?'project':'package')+' · data date '+d2(m.d)+'</div><div class="chart-box" style="height:'+h+'px"><canvas id="svMp"></canvas></div></div>'+
+    svTable([m.grp?'Project':'Package / plot','Planned','Actual','Variance','Actual % of plan'],rows,foot)+
+    (m.trend.length>1?'<div class="card plain"><div class="mpt">Total manpower by data date</div><div class="chart-box" style="height:230px"><canvas id="svMpT"></canvas></div></div>':'');
+}
+function svMpCfg(m,ink,line,acc){
+  var good=cssv('--good'), bad=cssv('--bad'), halo=cssv('--card')||'#fff';
+  var wrap=function(s){ s=String(s); if(s.length<=14) return s; var w=s.split(' '),o=[],c=''; w.forEach(function(x){ if((c+' '+x).trim().length>14&&c){ o.push(c); c=x; } else c=(c+' '+x).trim(); }); if(c) o.push(c); return o; };
+  var lab={id:'mpLbl',afterDatasetsDraw:function(ch){ var c=ch.ctx; c.save(); c.textAlign='center'; c.textBaseline='bottom';
+    var a=ch.getDatasetMeta(0), b=ch.getDatasetMeta(1);
+    m.rows.forEach(function(r,i){ var p=a.data[i], q=b.data[i]; if(!p||!q) return;
+      c.font='600 11px Inter,system-ui,sans-serif'; c.fillStyle=ink; c.fillText(Math.round(r.pl).toLocaleString('en-US'),p.x,p.y-4); c.fillStyle=cssv('--ink')||ink; c.fillText(Math.round(r.ac).toLocaleString('en-US'),q.x,q.y-4);
+    });
+    c.restore(); }};
+  var o={responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{position:'top',align:'end',labels:{color:ink,boxWidth:12,usePointStyle:true}}},scales:{x:{ticks:{color:ink,maxRotation:0,autoSkip:false},grid:{display:false}},y:{beginAtZero:true,ticks:{color:ink,precision:0},grid:{color:line}}},barPercentage:.8,categoryPercentage:.7};
+  return {type:'bar',data:{labels:m.rows.map(function(r){ return wrap(r.k); }),datasets:[{label:'Planned',data:m.rows.map(function(r){ return r.pl; }),backgroundColor:'#b9b09e',borderRadius:4},{label:'Actual',data:m.rows.map(function(r){ return r.ac; }),backgroundColor:acc,borderRadius:4}]},options:o,plugins:[lab]};
+}
+function svMpTrend(m,ink,line,acc){
+  return {type:'line',data:{labels:m.trend.map(function(x){ return d2(x.d); }),datasets:[{label:'Planned',data:m.trend.map(function(x){ return x.pl; }),borderColor:'#b9b09e',borderDash:[6,4],pointRadius:3,tension:.2},{label:'Actual',data:m.trend.map(function(x){ return x.ac; }),borderColor:acc,backgroundColor:acc,pointRadius:3,tension:.2}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,right:12}},plugins:{legend:{position:'top',align:'end',labels:{color:ink,boxWidth:12,usePointStyle:true}}},scales:{x:{ticks:{color:ink},grid:{display:false}},y:{beginAtZero:true,ticks:{color:ink,precision:0},grid:{color:line}}}}};
+}
 function svCfgs(){
   var sc=SV.cur.sc, cut=SV.cur.cut, ink=cssv('--mut'), line=cssv('--line'), acc=cssv('--accent'), bad=cssv('--bad'), out={};
   var base=function(){ return {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:ink,boxWidth:12}}},scales:{x:{ticks:{color:ink},grid:{color:line}},y:{ticks:{color:ink},grid:{color:line}}}}; };
-  var by={}; (cur.mp||[]).forEach(function(x){ if((SV.cur.grp?SV.cur.codes.map(function(q){ return String(q).toLowerCase(); }).indexOf(String(x.code).toLowerCase())<0:String(x.code).toLowerCase()!==sc.lc)||x.d>cut||!sc.ok(x.pkg)) return; var o=by[x.d]||(by[x.d]={pl:0,ac:0}); o.pl+=x.pl||0; o.ac+=x.ac||0; });
-  var ds=Object.keys(by).sort().slice(-14);
-  if(ds.length) out.svMp=function(){ return {type:'bar',data:{labels:ds.map(function(d){ return [d2(d),'Var '+(by[d].pl-by[d].ac>0?'+':'')+(by[d].pl-by[d].ac)]; }),datasets:[{label:'Planned',data:ds.map(function(d){ return by[d].pl; }),backgroundColor:'#b9b09e'},{label:'Actual',data:ds.map(function(d){ return by[d].ac; }),backgroundColor:acc}]},options:base()}; };
+  var MPm=svMpModel(sc,cut,!!SV.cur.grp,SV.cur.grp?SV.cur.codes:null);
+  if(MPm&&MPm.rows.length){ out.svMp=function(){ return svMpCfg(MPm,ink,line,acc); }; if(MPm.trend.length>1) out.svMpT=function(){ return svMpTrend(MPm,ink,line,acc); }; }
   var P=[],A=[],Od=[],L=[];
   model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.maxDelay||0); });
   var halo=cssv('--card')||'#fff';
@@ -4023,7 +4097,7 @@ function navTrack(){ var sn=navSnap(), sig=JSON.stringify(sn);
   NAV.last=sig; NAV.lastState=sn;
   var b=document.getElementById('backBtn'); if(b) b.disabled=!NAV.stack.length; }
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('#backBtn'); if(!b||!NAV.stack.length) return; var p=NAV.stack.pop(); Object.assign(state,p); NAV.skip=true; render(); window.scrollTo({top:0}); });
-function render(){ render0.apply(this,arguments); try{ lyPost(); }catch(e){ console.warn('layout',e&&e.message); } try{ phPost(); }catch(e){ console.warn('photos',e&&e.message); } }
+function render(){ render0.apply(this,arguments); try{ lyPost(); }catch(e){ console.warn('layout',e&&e.message); } try{ phPost(); }catch(e){ console.warn('photos',e&&e.message); } try{ secPost(); }catch(e){ console.warn('sections',e&&e.message); } }
 function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc();
   destroyCharts();
   renderShell();
