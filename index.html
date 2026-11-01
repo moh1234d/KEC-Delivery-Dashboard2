@@ -1158,6 +1158,18 @@ body.lyedit .ovwrap .ly-tg{opacity:.4;text-decoration:line-through}
 @media print{.sec-x,.sec-bar{display:none!important}.mpk b{font-size:20px}}
 .mpone{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 12px;align-items:stretch}.mpone .mpk{grid-template-columns:1fr 1fr;margin:0}.mpone>.card{margin:0}
 @media(max-width:800px){.mpone{grid-template-columns:1fr}}
+/* V303 justifications */
+#dcModal .dci .dcw{display:flex}#dcModal .dci .dcw span{display:flex}
+#dcModal .jd{margin:4px 0 2px 22px}#dcModal .jx{display:flex;flex-direction:column;gap:3px}
+#dcModal .jb{display:inline-block;align-self:flex-start;font-size:11px;font-weight:700;border-radius:999px;padding:2px 10px}
+#dcModal .dci .jd .jb-p{background:#fbeccd;color:#8a5a00}#dcModal .dci .jd .jb-r{background:#fbdcd7;color:#a32a1e}#dcModal .dci .jd .jb-g{background:#dcf3e6;color:#14663f}#dcModal .dci .jd .jb-n{background:#e6e8ec;color:#4a5160}
+#dcModal .jt{font-size:13px;color:var(--ink);margin-top:2px}#dcModal .jm{font-size:11.5px;color:var(--mut)}
+#dcModal .jdone .jt{opacity:.9}#dcModal .jdone>span{color:var(--mut)}#dcModal .jdone>span:before{background:#2a9d6a}
+#dcModal .jfa{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}#dcModal .jfa .jpri,#dcModal .jfa .jgo{background:#1f3f78;color:#fff;border-color:#1f3f78}
+#dcModal .jf label{display:block;font-size:11.5px;color:var(--mut);margin-bottom:3px}#dcModal .jf textarea{width:100%;box-sizing:border-box;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--card);color:var(--ink)}
+#dcModal .jerr{background:#fbdcd7;color:#a32a1e;border-radius:8px;padding:8px 12px;font-size:12.5px;margin-bottom:8px}
+#dcModal .dci .jd span{display:inline-block;margin-top:0}#dcModal .dci .jd span:before{content:none;display:none}#dcModal .dci .jd .jm{color:var(--mut)}
+.suchk .suci{border-top:1px solid var(--line);padding:8px 0;font-size:12.5px}.suchk .suci:first-of-type{border-top:0}.suchk .suci b{display:block}.suchk .sujt{width:100%;box-sizing:border-box;margin-top:5px;font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--card);color:var(--ink)}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1187,7 +1199,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V301</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V303</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1899,25 +1911,71 @@ function stripSec(h){ return h.replace(/^<div class="sec"[^>]*>.*?<\/div>/,''); 
 function moneyTile(l,v,note,cls){ return v==null||!isFinite(v)||v===0?'':'<div class="tile '+(cls||'')+'"><div class="k-l">'+l+'</div><div class="tv">'+fm(v)+'</div>'+(note?'<div class="k-s">'+note+'</div>':'')+'</div>'; }
 /* ---------- data check: date problems that cannot be true, flagged before the figures are relied on ---------- */
 var DCCODE={}; var DCIGN={}; try{ DCIGN=JSON.parse(localStorage.getItem('kecdash.v1.dcign')||'{}')||{}; }catch(e){}
+var DCFP={}; var JST={items:[],pend:[],me:'',ok:false,busy:false,err:'',form:null}, JSIDX=[];
+function jsKey(r,m){ return (DCCODE[m]||'C05')+'|'+r.code+'|'+r.pkg; }
+function jsFind(r,m){ var k=jsKey(r,m), f=DCFP[m]==null?m:DCFP[m], hit=null; JST.items.forEach(function(x){ if(x.key===k&&x.fp===f&&x.status!=='Removed') hit=x; }); return hit; }
+function jsState(r,m){ if(!ACC.need) return DCIGN[r.key+'|'+m]?'Ignored':'open'; var j=jsFind(r,m); return j?j.status:'open'; }
+function jsHidden(r,m){ var s=jsState(r,m); return s==='Approved'||s==='Ignored'; }
+function jsLoad(){ if(!ACC.need||!ACC.token) return; accCall('GET','/justify',null,15000).then(function(j){ if(j&&Array.isArray(j.items)){ JST.items=j.items; JST.me=j.me||''; JST.ok=true; paintDc(); var m=document.getElementById('dcModal'); if(m&&m.classList.contains('on')) dcOpen(); }
+    if(ACC.user&&ACC.user.admin&&model) accCall('GET','/site-admin',null,30000).then(function(a){ JST.pend=[]; ((a&&a.subs)||[]).filter(function(q){ return q.status==='pending'&&q.data; }).forEach(function(q){ suChkRows(q.data).forEach(function(x){ x.by=q.by; JST.pend.push(x); }); }); paintDc(); var m2=document.getElementById('dcModal'); if(m2&&m2.classList.contains('on')) dcOpen(); }).catch(function(){}); }).catch(function(){}); }
+function suChkRows(data){
+  var out=[], seen={}; if(!model||!data||!data.prog) return out;
+  data.prog.forEach(function(u){ try{
+    var code=pcodeOf(u.code)||u.code, hit=null;
+    for(var i=model.rows.length-1;i>=0;i--){ var q=model.rows[i]; if(String(q.code).toLowerCase()===String(code).toLowerCase()&&svPkgMatch(q.pkg,u.pkg)){ hit=q; break; } }
+    var r={key:hit?hit.key:(code+'|'+u.pkg),code:hit?hit.code:code,pkg:hit?hit.pkg:u.pkg,date:toISO(u.date)||u.date,ps:toISO(u.ps)||'',pf:toISO(u.pf)||'',ff:toISO(u.ff)||'',cv:+u.cv||0,vo:+u.vo||0,rv:+u.rv||0,gc:+u.gc||0,pv:+u.pv||0,ev:+u.ev||0,cno:hit?hit.cno:'',ctr:hit?hit.ctr:'',stale:false};
+    dateIssues(r,r.date,true).forEach(function(m){ var k=jsKey(r,m)+'~'+DCFP[m]; if(seen[k]) return; seen[k]=1; out.push({r:r,m:m,d:r.date}); });
+  }catch(e){} });
+  return out;
+}
+function suChkHtml(list){
+  if(!list.length) return '';
+  return '<div class="sepnote suchk" style="border-color:var(--warn)"><span class="ni">!</span><div><b>These figures do not add up ('+list.length+')</b><div class="jm" style="margin:2px 0 6px">You can still submit. If a figure is correct, add a justification below, or fix the file and upload it again. Warnings without a justification stay open in the Alerts window.</div>'+list.slice(0,30).map(function(x,i){ return '<div class="suci"><b>'+esc(pname(x.r.code))+' · '+esc(x.r.pkg)+'</b><div>'+esc(x.m)+'</div>'+(ACC.need?'<textarea class="sujt" data-suj="'+i+'" rows="2" maxlength="800" placeholder="Justification, at least 10 characters (optional)"></textarea>':'')+'</div>'; }).join('')+(list.length>30?'<div class="jm">… and '+(list.length-30)+' more are in the Alerts window after you submit.</div>':'')+'</div></div>';
+}
+async function suSaveJust(JT){
+  var fail=0; for(var i=0;i<JT.length;i++){ var x=JT[i].x, m=x.m; try{ await accCall('POST','/justify',{action:'add',key:jsKey(x.r,m),rule:DCCODE[m]||'C05',code:x.r.code,pkg:x.r.pkg,dd:x.d,warn:m,fp:DCFP[m]==null?m:DCFP[m],just:JT[i].v},20000); }catch(e){ fail++; } }
+  jsLoad(); if(fail) toast(fail+' justification'+(fail>1?'s':'')+' could not be saved. Add '+(fail>1?'them':'it')+' in the Alerts window.',true);
+}
+function jsCall(body){ if(JST.busy) return; JST.busy=true; JST.err=''; dcOpen(); accCall('POST','/justify',body,20000).then(function(){ JST.busy=false; JST.form=null; jsLoad(); }).catch(function(e){ JST.busy=false; JST.err=(e&&e.message)||'Could not save'; dcOpen(); }); }
+function jsWhen(s){ try{ return d2(String(s).slice(0,10)); }catch(e){ return ''; } }
+function jsDetail(r,m,x){
+  var j=jsFind(r,m), st=jsState(r,m), adm=!!(ACC.user&&ACC.user.admin), own=!!(j&&j.by===JST.me), B=function(a,t,c){ return '<button type="button" class="dcig'+(c?' '+c:'')+'" data-ja="'+a+'" data-jx="'+x+'">'+t+'</button>'; }, h='', btn='';
+  if(!ACC.need){ return st==='Ignored'?'<span class="jb jb-n">Ignored on this device</span>':B('ignore','Ignore'); }
+  if(JST.form&&JST.form.x===x){
+    var lab=JST.form.mode==='reject'?'Reason for rejecting (optional)':'Justification (at least 10 characters)';
+    return '<div class="jf"><label>'+lab+'</label><textarea id="jText" rows="3" maxlength="800">'+esc(JST.form.text||'')+'</textarea><div class="jfa">'+B('save',JST.form.mode==='reject'?'Reject':'Save','jpri')+B('cancel','Cancel')+'</div></div>';
+  }
+  if(st==='open') btn=B('add','Justify')+(adm?B('ignore','Ignore'):'');
+  else if(st==='Pending') h='<span class="jb jb-p">Pending approval</span>'; else if(st==='Rejected') h='<span class="jb jb-r">Rejected</span>';
+  else if(st==='Approved') h='<span class="jb jb-g">Justified</span>'; else if(st==='Ignored') h='<span class="jb jb-n">Ignored</span>';
+  if(j){
+    if(st==='Ignored') h+=' <span class="jm">by '+esc(j.by)+' · '+jsWhen(j.at)+'</span>';
+    else h+='<div class="jt">'+esc(j.just)+'</div><div class="jm">'+esc(j.by)+' · '+jsWhen(j.at)+(j.eby?' · edited by '+esc(j.eby)+' '+jsWhen(j.eat):'')+(st==='Approved'&&j.dby?' · approved by '+esc(j.dby)+' '+jsWhen(j.dat):'')+(st==='Rejected'&&j.dby?' · rejected by '+esc(j.dby)+(j.note?': '+esc(j.note):''):'')+'</div>';
+    if(st==='Pending'&&adm) btn+=B('approve','Approve','jgo')+B('reject','Reject');
+    if(st==='Ignored'){ if(adm) btn+=B('remove','Restore'); }
+    else if(own||adm) btn+=B('edit',st==='Rejected'?'Edit and resubmit':'Edit')+B('remove','Remove');
+  }
+  return '<div class="jx">'+h+'</div>'+(btn?'<div class="jfa">'+btn+'</div>':'');
+}
 function dcSaveIgn(){ try{ localStorage.setItem('kecdash.v1.dcign',JSON.stringify(DCIGN)); }catch(e){} }
 function dateIssues(r,cut,raw){
-  var out=[], add=function(c,m){ out.push(m); DCCODE[m]=c; }, done=r.ev&&r.rv&&r.ev/r.rv>=0.9999, pc=function(v){ return (v*100).toFixed(1)+'%'; };
+  var out=[], add=function(c,m,fp){ out.push(m); DCCODE[m]=c; DCFP[m]=fp==null?m:String(fp); }, done=r.ev&&r.rv&&r.ev/r.rv>=0.9999, pc=function(v){ return (v*100).toFixed(1)+'%'; };
   if(isNoInfo(r)) return out;
   var act=r.rv?r.ev/r.rv:0;
   if(!done){
     if(!r.pf) add('C05','Planned finish date is missing');
     if(!r.ff) add('C05','Forecast finish date is missing');
-    if(r.ff&&cut&&r.ff<cut) add('C06','Forecast finish '+fd(r.ff)+' has already passed at the '+d2(cut)+' cut-off, but progress is only '+pc(act)+'. The forecast needs updating.');
+    if(r.ff&&cut&&r.ff<cut) add('C06','Forecast finish '+fd(r.ff)+' has already passed at the '+d2(cut)+' cut-off, but progress is only '+pc(act)+'. The forecast needs updating.','ff:'+r.ff);
   }
   if(r.ps&&r.pf&&r.pf<r.ps) add('C05','Planned finish '+fd(r.pf)+' is before the planned start '+fd(r.ps));
   if(!done&&r.ps&&r.ff&&r.ff<r.ps) add('C05','Forecast finish '+fd(r.ff)+' is before the planned start '+fd(r.ps));
-  for(var i=model.rows.length-1;i>=0;i--){ var q=model.rows[i]; if(q.key===r.key&&q.date<r.date){ var pa=q.rv?q.ev/q.rv:0; if(act<pa-0.02) add('C07','Actual progress fell from '+pc(pa)+' ('+d2(q.date)+') to '+pc(act)+' ('+d2(r.date)+')'); break; } }
+  for(var i=model.rows.length-1;i>=0;i--){ var q=model.rows[i]; if(q.key===r.key&&q.date<r.date){ var pa=q.rv?q.ev/q.rv:0; if(act<pa-0.02) add('C07','Actual progress fell from '+pc(pa)+' ('+d2(q.date)+') to '+pc(act)+' ('+d2(r.date)+')','fall:'+pc(pa)+'>'+pc(act)); break; } }
   var rv0=+r.rv||0, ev0=+r.ev||0, gc0=+r.gc||0;
-  if(rv0<0||ev0<0||gc0<0) add('C04','Negative value in the progress list (revised '+fm1(rv0)+', earned '+fm1(ev0)+', certified '+fm1(gc0)+')');
-  if(rv0>0&&ev0>rv0*1.0001+1) add('C02','Earned value '+fm1(ev0)+' is above the revised value '+fm1(rv0)+'. Source: Packages - Plots sheet.');
-  if(rv0>0&&gc0>rv0*1.0001+1) add('C03','Gross certified '+fm1(gc0)+' is above the revised value '+fm1(rv0)+'. Source: Packages - Plots sheet.');
-  if(ev0>=0&&gc0>ev0+1000){ var cx=dcCtrGc(r,cut); add('C01','Gross certified '+fm1(gc0)+' is '+fm1(gc0-ev0)+' above earned value '+fm1(ev0)+(ev0>0?' (+'+((gc0-ev0)/ev0*100).toFixed(1)+'%)':'')+'. Source: Packages - Plots sheet'+(cx==null?'':Math.abs(cx-gc0)<2?'; the Contracts sheet shows the same certified value':'; the Contracts sheet shows '+fm1(cx)+', which differs, so confirm which is correct')+'.'); }
-  return raw?out:out.filter(function(m){ return !DCIGN[r.key+'|'+m]; });
+  if(rv0<0||ev0<0||gc0<0) add('C04','Negative value in the progress list (revised '+fm1(rv0)+', earned '+fm1(ev0)+', certified '+fm1(gc0)+')','neg:'+rv0+'|'+ev0+'|'+gc0);
+  if(rv0>0&&ev0>rv0*1.0001+1) add('C02','Earned value '+fm1(ev0)+' is above the revised value '+fm1(rv0)+'. Source: Packages - Plots sheet.',Math.round(ev0)+'|'+Math.round(rv0));
+  if(rv0>0&&gc0>rv0*1.0001+1) add('C03','Gross certified '+fm1(gc0)+' is above the revised value '+fm1(rv0)+'. Source: Packages - Plots sheet.',Math.round(gc0)+'|'+Math.round(rv0));
+  if(ev0>=0&&gc0>ev0+1000){ var cx=dcCtrGc(r,cut); add('C01','Gross certified '+fm1(gc0)+' is '+fm1(gc0-ev0)+' above earned value '+fm1(ev0)+(ev0>0?' (+'+((gc0-ev0)/ev0*100).toFixed(1)+'%)':'')+'. Source: Packages - Plots sheet'+(cx==null?'':Math.abs(cx-gc0)<2?'; the Contracts sheet shows the same certified value':'; the Contracts sheet shows '+fm1(cx)+', which differs, so confirm which is correct')+'.',Math.round(gc0)+'|'+Math.round(ev0)); }
+  return raw?out:out.filter(function(m){ return !jsHidden(r,m); });
 }
 function dateIssueList(list,cut){ var o=[]; list.forEach(function(r){ var is=dateIssues(r,cut); if(is.length) o.push({r:r,is:is}); }); return o; }
 function dcBannerHtml(list,cut){
@@ -1983,8 +2041,6 @@ function pkgCard(r){
   var bl=blockersFor(r);
   if(bl.length){ BLKMAP[r.key]={r:r,bl:bl}; meta=meta.replace(/<\/div>$/,'<button type="button" class="blk '+bl[0].cls+'" data-blk="'+esc(r.key||'')+'" aria-haspopup="true">⚠ '+bl.length+' open concern'+(bl.length>1?'s':'')+'</button></div>'); }
   if(pn) h=h.replace(/<\/div>$/,'<div class="pknote"><span class="ni">i</span><span>'+esc(pn)+'</span></div></div>');
-  var di=dateIssues(r,state.cutoff);
-  if(di.length) meta+='<div class="dchk" title="Date check">'+di.map(function(m){ return '<div><span class="ni">!</span><span>'+esc(m)+'</span></div>'; }).join('')+'</div>';
   return h.replace('</h4>','</h4>'+meta);
 }
 var BLKMAP={};
@@ -3866,20 +3922,23 @@ function suSummary(P){
 function suOpenUpload(){
   var mode=suMode(); if(mode==='off'){ toast('You do not have the right to upload site updates',true); return; }
   var t={live:'Your upload goes live straight away.',review:'Your upload waits for an administrator to approve it before it shows on the dashboard.',local:'There is no sign-in on this copy: the upload is applied in this browser only.'}[mode];
-  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button></p><input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
+  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p><input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
 }
 async function suRead(file,okCode,resId){
   var out=document.getElementById(resId||'suRes'); out.innerHTML='Reading…';
-  try{ var wb=XLSX.read(await file.arrayBuffer(),{type:'array'}); SU.parsed=suParse(wb,okCode); out.innerHTML=suSummary(SU.parsed); if(!SU.tok&&model&&!SU.parsed.errs.length){ try{ var pvw=ulPreview(SU.parsed.data); out.innerHTML+='<div class="ulcard" style="margin-top:10px"><b>What this update will change</b>'+ulChanges(pvw,4)+'</div>'; }catch(e){} } var b=document.getElementById('suSend'); if(b) b.disabled=!!SU.parsed.errs.length; }
+  try{ var wb=XLSX.read(await file.arrayBuffer(),{type:'array'}); SU.parsed=suParse(wb,okCode); out.innerHTML=suSummary(SU.parsed); SU.chk=[]; try{ if(model&&!SU.parsed.errs.length){ SU.chk=suChkRows(SU.parsed.data).filter(function(x){ var q=jsState(x.r,x.m); return q==='open'||q==='Rejected'; }); out.innerHTML+=suChkHtml(SU.chk); } }catch(e){ console.warn('upload check',e&&e.message); } if(!SU.tok&&model&&!SU.parsed.errs.length){ try{ var pvw=ulPreview(SU.parsed.data); out.innerHTML+='<div class="ulcard" style="margin-top:10px"><b>What this update will change</b>'+ulChanges(pvw,4)+'</div>'; }catch(e){} } var b=document.getElementById('suSend'); if(b) b.disabled=!!SU.parsed.errs.length; }
   catch(e){ SU.parsed=null; out.innerHTML='<div class="sepnote"><span class="ni">!</span><div>That file could not be read as an Excel workbook.</div></div>'; }
 }
 async function suSubmit(){
-  var P=SU.parsed; if(!P||P.errs.length) return; var b=document.getElementById('suSend'); b.disabled=true; b.textContent='Sending…';
+  var P=SU.parsed; if(!P||P.errs.length) return; var b=document.getElementById('suSend');
+  var JT=[], short=0; document.querySelectorAll('#suModal .sujt').forEach(function(t){ var v=t.value.trim(), x=SU.chk&&SU.chk[+t.getAttribute('data-suj')]; if(!v||!x) return; if(v.length<10) short++; else JT.push({x:x,v:v}); });
+  if(short){ toast('A justification needs at least 10 characters. Complete it or clear it.',true); return; }
+  b.disabled=true; b.textContent='Sending…';
   try{
     if(suMode()==='local'){ var pvl=[]; try{ pvl=ulPreview(P.data); }catch(e){} suMerge([{data:P.data}]); suReload(); toast('Update applied in this browser'); try{ ulSave({route:'site',by:'This browser',label:'Site update applied locally',cut:'',projects:P.codes||[],n:pvl.length,flags:pvl.filter(function(c){ return c.flag; }).length,changes:pvl.slice(0,600)},null); }catch(e){} }
     else{ var j; if(SU.tok){ var r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/site-upload',{method:'POST',headers:{'Content-Type':'application/json','X-KEC-Link':SU.tok},body:JSON.stringify({data:P.data})}); j=await r.json().catch(function(){return {};}); if(!r.ok) throw {message:j.error||('the relay answered '+r.status)}; }
       else j=await accCall('POST','/site-upload',{data:P.data},60000);
-      toast(j.status==='accepted'?'Update accepted and live':'Update sent for approval'); if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } }
+      toast(j.status==='accepted'?'Update accepted and live':'Update sent for approval'); if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } if(JT.length&&ACC.need) await suSaveJust(JT); }
     var m=document.getElementById('suModal'); if(m&&!SU.tok) m.remove(); else document.getElementById('suRes').innerHTML='<div class="sepnote"><span class="ni">✓</span><div>Update received. You can close this page.</div></div>';
   }catch(e){ toast((e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Upload failed'),true); b.disabled=false; b.textContent='Submit update'; }
 }
@@ -4010,12 +4069,33 @@ function concerns(rows){
 }
 
 function dcAllList(){ return model?dateIssueList(rowsAt(state.cutoff),state.cutoff):[]; }
+function dcFull(){ var o=[]; if(!model) return o; rowsAt(state.cutoff).forEach(function(r){ var is=dateIssues(r,state.cutoff,true); if(is.length) o.push({r:r,is:is}); }); return o; }
 function dcCount(L){ return L.reduce(function(n,x){ return n+x.is.length; },0); }
-function paintDc(){ var L=dcAllList(), n=dcCount(L), e=document.getElementById('dcN'); if(e){ e.textContent=n; e.classList.toggle('zero',!n); } }
+function dcPend(){ return (ACC.user&&ACC.user.admin)?JST.pend.filter(function(x){ return !jsHidden(x.r,x.m); }):[]; }
+function paintDc(){ var L=dcAllList(), n=dcCount(L)+dcPend().length, e=document.getElementById('dcN'); if(e){ e.textContent=n; e.classList.toggle('zero',!n); } var a=document.getElementById('alertN'); if(a) a.textContent=n; if(model&&ACC.user&&ACC.user.admin&&!JST.pdone){ JST.pdone=1; jsLoad(); } }
 function dcOpen(){
-  var L=dcAllList(), n=dcCount(L), m=document.getElementById('dcModal'), ni=Object.keys(DCIGN).length;
-  m.innerHTML='<div class="dcp"><div class="dcacts"><button type="button" class="dcx" id="dcClose">Close</button><button type="button" class="dcx" id="dcLog">⬇ Download Excel log</button>'+(n?'<button type="button" class="dcx dcig" id="dcIgnAll">Ignore all</button>':'')+'</div><h3>Data warnings</h3><div class="dcs">'+(n?n+' warning'+(n>1?'s':'')+' in '+L.length+' package'+(L.length>1?'s':'')+' at the '+d2(state.cutoff)+' cut-off. Check these dates and values in the workbook before relying on the figures. The Excel log has the full details and the source sheet of every figure.':'No warnings at the '+d2(state.cutoff)+' cut-off. All dates, progress and certified values passed the checks.')+'</div>'+L.map(function(x){ return '<div class="dci"><b>'+esc(pname(x.r.code))+' · '+esc(pkgL(x.r.code,x.r.pkg))+'</b>'+x.is.map(function(t){ return '<div class="dcw"><span>'+esc(t)+'</span><button type="button" class="dcig" data-ign="'+esc(x.r.key+'|'+t)+'">Ignore</button></div>'; }).join('')+'</div>'; }).join('')+(ni?'<div class="dcs" style="margin:10px 0 0">'+ni+' ignored warning'+(ni>1?'s':'')+' · <a href="#" id="dcRestore">Restore all</a></div>':'')+'</div>';
-  m.classList.add('on'); document.getElementById('dcClose').focus();
+  var L=dcAllList(), n=dcCount(L), F=dcFull(), m=document.getElementById('dcModal'), adm=!!(ACC.user&&ACC.user.admin), nj=0, np=0, ni=Object.keys(DCIGN).length; JSIDX=[];
+  F.forEach(function(x){ x.is.forEach(function(t){ var s=jsState(x.r,t); if(s==='Approved') nj++; if(s==='Pending') np++; }); });
+  var body=F.map(function(x){ return '<div class="dci"><b>'+esc(pname(x.r.code))+' · '+esc(pkgL(x.r.code,x.r.pkg))+'</b>'+x.is.map(function(t){ var k=JSIDX.length; JSIDX.push({r:x.r,m:t}); var s=jsState(x.r,t); return '<div class="dcw'+(s==='Approved'||s==='Ignored'?' jdone':'')+'"><span>'+esc(t)+'</span></div><div class="jd">'+jsDetail(x.r,t,k)+'</div>'; }).join('')+'</div>'; }).join('');
+  var pend=dcPend(), pb=pend.length?'<div class="dcs" style="margin:16px 0 2px"><b>In updates waiting for approval</b> · these figures are not live yet</div>'+pend.map(function(x){ var k=JSIDX.length; JSIDX.push({r:x.r,m:x.m,d:x.d}); return '<div class="dci"><b>'+esc(pname(x.r.code))+' · '+esc(x.r.pkg)+' · sent by '+esc(x.by||'')+'</b><div class="dcw"><span>'+esc(x.m)+'</span></div><div class="jd">'+jsDetail(x.r,x.m,k)+'</div></div>'; }).join(''):'';
+  m.innerHTML='<div class="dcp"><div class="dcacts"><button type="button" class="dcx" id="dcClose">Close</button><button type="button" class="dcx" id="dcLog">⬇ Download Excel log</button>'+(!ACC.need&&n?'<button type="button" class="dcx dcig" id="dcIgnAll">Ignore all</button>':'')+'</div><h3>Data warnings</h3><div class="dcs">'+(F.length?(n?n+' open warning'+(n>1?'s':'')+' at the '+d2(state.cutoff)+' cut-off. ':'No open warnings at the '+d2(state.cutoff)+' cut-off. ')+(nj?nj+' justified. ':'')+(np&&adm?np+' waiting for your approval. ':'')+(ACC.need?'Use Justify to explain a value that is correct as it stands. An administrator approves each justification.':'Sign-in is needed to justify a warning.'):'No warnings at the '+d2(state.cutoff)+' cut-off. All dates, progress and certified values passed the checks.')+'</div>'+(JST.err?'<div class="jerr">'+esc(JST.err)+'</div>':'')+body+pb+(!ACC.need&&ni?'<div class="dcs" style="margin:10px 0 0">'+ni+' ignored warning'+(ni>1?'s':'')+' · <a href="#" id="dcRestore">Restore all</a></div>':'')+'</div>';
+  m.classList.add('on'); var tx=document.getElementById('jText'); if(tx) tx.focus(); else document.getElementById('dcClose').focus();
+}
+function dcJust(a,x){
+  var it=JSIDX[x]; if(!it) return; var r=it.r, m=it.m, j=jsFind(r,m);
+  if(!ACC.need){ if(a==='ignore'){ DCIGN[r.key+'|'+m]=1; dcSaveIgn(); dcOpen(); render(); } return; }
+  var base={key:jsKey(r,m),rule:DCCODE[m]||'C05',code:r.code,pkg:r.pkg,dd:it.d||state.cutoff,warn:m,fp:DCFP[m]==null?m:DCFP[m]};
+  if(a==='add'){ JST.err=''; JST.form={x:x,mode:'add',text:''}; dcOpen(); return; }
+  if(a==='edit'){ JST.err=''; JST.form={x:x,mode:'edit',text:j?j.just:''}; dcOpen(); return; }
+  if(a==='reject'){ JST.err=''; JST.form={x:x,mode:'reject',text:''}; dcOpen(); return; }
+  if(a==='cancel'){ JST.form=null; JST.err=''; dcOpen(); return; }
+  if(a==='save'){ var tx=document.getElementById('jText'), v=tx?tx.value.trim():'', f=JST.form||{};
+    if(f.mode==='reject'){ jsCall({action:'reject',id:j&&j.id,note:v}); return; }
+    if(v.length<10){ JST.err='Write at least 10 characters of justification.'; JST.form.text=v; dcOpen(); return; }
+    if(f.mode==='edit') jsCall({action:'edit',id:j&&j.id,just:v}); else jsCall(Object.assign({action:'add',just:v},base)); return; }
+  if(a==='approve'){ jsCall({action:'approve',id:j&&j.id}); return; }
+  if(a==='remove'){ jsCall({action:'remove',id:j&&j.id}); return; }
+  if(a==='ignore'){ jsCall(Object.assign({action:'ignore'},base)); return; }
 }
 function dcClose(){ document.getElementById('dcModal').classList.remove('on'); }
 /* ---------- Excel log of data warnings ---------- */
@@ -4037,7 +4117,7 @@ function dcLogOnly(r,cut){ var o=[];
 async function dcLog(){
   if(typeof XLSX==='undefined'){ toast('Excel library not loaded',true); return; }
   var cut=state.cutoff, items=[];
-  rowsAt(cut).forEach(function(r){ dateIssues(r,cut,true).forEach(function(t){ items.push({r:r,t:t,c:DCCODE[t]||'C05',ign:!!DCIGN[r.key+'|'+t]}); }); dcLogOnly(r,cut).forEach(function(x){ items.push({r:r,t:x.t,c:x.c,ign:false}); }); });
+  rowsAt(cut).forEach(function(r){ dateIssues(r,cut,true).forEach(function(t){ var js=jsFind(r,t), st=jsState(r,t); items.push({r:r,t:t,c:DCCODE[t]||'C05',ign:st==='Approved'||st==='Ignored',st:st==='open'?'Open':st==='Approved'?'Justified':st==='Pending'?'Pending approval':st,jt:js&&js.just?js.just+' ('+js.by+', '+jsWhen(js.at)+(js.dby?'; decided by '+js.dby:'')+')':'',jd:js&&js.rat?jsWhen(js.rat):''}); }); dcLogOnly(r,cut).forEach(function(x){ items.push({r:r,t:x.t,c:x.c,ign:false}); }); });
   items.sort(function(a,b){ return String(a.r.code)<String(b.r.code)?-1:String(a.r.code)>String(b.r.code)?1:String(a.r.pkg)<String(b.r.pkg)?-1:String(a.r.pkg)>String(b.r.pkg)?1:a.c<b.c?-1:1; });
   var today=new Date(), cutD=new Date(cut+'T00:00:00Z'), nz=function(v){ return v==null||v===''?null:v; }, dt=function(v){ var x=toISO(v); return x?new Date(x+'T00:00:00Z'):null; };
   var idOf=function(i){ return 'W-'+String(i+1).padStart(4,'0'); };
@@ -4052,7 +4132,7 @@ async function dcLog(){
   var H1=['Log ID','Logged on','Cut-off','Project code','Project','Package','Contract No.','Contractor / Vendor','Check code','Warning','Severity','Revised value (SAR)','Planned %','Actual % (Earned ÷ Revised)','Gross certified (SAR)','Earned value (SAR)','Difference (SAR)','Difference % of revised value','Source of figures (sheet / column)','What it means','Possible causes to confirm','Suggested action','Owner','Status','Reviewer comment','Date closed'];
   var ids={};
   var A1=items.map(function(it,i){ var r=it.r, rv=+r.rv||0, ev=+r.ev||0, gc=+r.gc||0, c=DC_CHK[it.c], diff=it.c==='C01'?gc-ev:it.c==='C02'?ev-rv:it.c==='C03'?gc-rv:null; var id=idOf(i); (ids[r.key]=ids[r.key]||[]).push(id);
-    return [id,today,cutD,r.code,pname(r.code),dp(r.pkg),nz(r.cno),nz(r.ctr),it.c,it.t,sevOf(it),rv||null,rv?(+r.pv||0)/rv:null,rv?ev/rv:null,gc,ev,diff,diff!=null&&rv?diff/rv:null,srcOf(it),c.means,c.causes,c.action,'',it.ign?'Ignored':'Open','','']; });
+    return [id,today,cutD,r.code,pname(r.code),dp(r.pkg),nz(r.cno),nz(r.ctr),it.c,it.t,sevOf(it),rv||null,rv?(+r.pv||0)/rv:null,rv?ev/rv:null,gc,ev,diff,diff!=null&&rv?diff/rv:null,srcOf(it),c.means,c.causes,c.action,'',it.st||'Open',it.jt||'',it.jd||'']; });
   var ws1=XLSX.utils.aoa_to_sheet([H1].concat(A1),{cellDates:true});
   for(var q=2;q<=A1.length+1;q++){ ['B','C'].forEach(function(c){ if(ws1[c+q]) ws1[c+q].z='dd-mmm-yy'; }); ['L','O','P','Q'].forEach(function(c){ if(ws1[c+q]) ws1[c+q].z='#,##0;[Red]-#,##0'; }); ['M','N','R'].forEach(function(c){ if(ws1[c+q]) ws1[c+q].z='0.0%'; }); }
   ws1['!cols']=[10,12,12,11,28,24,12,18,9,50,9,16,9,12,16,16,16,12,46,40,50,44,14,10,28,12].map(function(w){return {wch:w};}); ws1['!autofilter']={ref:'A1:Z'+(A1.length+1)};
@@ -4069,7 +4149,7 @@ async function dcLog(){
   ws2['!cols']=[11,28,24,12,18,12,16,14,16,16,16,16,9,9,10,12,12,12,16,10,10,10,10,12,12,8,16,22,20,20,32,18,20,32].map(function(w){return {wch:w};}); ws2['!autofilter']={ref:'A1:AH'+(A2.length+1)};
   /* summary */
   var nOpen=items.filter(function(i){ return !i.ign; }).length, nIgn=items.length-nOpen, allRows=rowsAt(cut).length;
-  var S=[['KEC Project Controls – Data warnings log'],['Created automatically from the data loaded in the dashboard'],[],['Cut-off',cutD],['Log created',today],['Packages checked',allRows],['Packages with a warning',P.length],['Open warnings',nOpen],['Ignored',nIgn],['Resolved',0],[],['Warnings by check','Open','Ignored']];
+  var S=[['KEC Project Controls – Data warnings log'],['Created automatically from the data loaded in the dashboard'],[],['Cut-off',cutD],['Log created',today],['Packages checked',allRows],['Packages with a warning',P.length],['Open warnings',nOpen],['Ignored or justified',nIgn],['Resolved',0],[],['Warnings by check','Open','Ignored or justified']];
   Object.keys(DC_CHK).forEach(function(k){ S.push([k+' – '+DC_CHK[k].n,items.filter(function(i){ return i.c===k&&!i.ign; }).length,items.filter(function(i){ return i.c===k&&i.ign; }).length]); });
   S.push([]); S.push(['Warnings by project','Open']);
   Array.from(new Set(items.map(function(i){ return i.r.code; }))).forEach(function(c){ S.push([pname(c),items.filter(function(i){ return i.r.code===c&&!i.ign; }).length]); });
@@ -4100,7 +4180,7 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
   var cut=state.cutoff, idx=model.snaps.indexOf(cut), prevCut=idx>0?model.snaps[idx-1]:null;
   var rows=rowsAt(cut).filter(inScope).map(function(r){ return derive(r,cut); });
   var view=$('#view');
-  if(!rows.length){ view.innerHTML='<div class="empty">No data for the selected filters at this cut-off.</div>'; $('#alertN').textContent='0'; return; }
+  if(!rows.length){ view.innerHTML='<div class="empty">No data for the selected filters at this cut-off.</div>'; paintDc(); return; }
   var A=agg(rows), AG=agg(rows,undefined,true); /* AG: progress page figures, from the Packages - Plots sheet only */
   var coreRows=rows.filter(function(r){return !isSep(r)&&!isNoInfo(r);}), sepRows=rows.filter(isSep);
   if(!coreRows.length){ coreRows=rows; sepRows=[]; }
@@ -4297,7 +4377,7 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
   var conNote=(selList('C').length||selList('K').length)?' · contractor and package filters do not apply to this log':'';
   var conHtml=sec('concerns','Areas of concern',cc.date?'Concerns log as at '+d2(cc.date)+conNote:'No concerns log loaded')+
     '<div class="card plain"><h3>Open concerns <small>'+cons.length+' listed · '+nHigh+' high impact</small></h3><div class="tbl-wrap" style="max-height:none;overflow:visible">'+conBody+'</div></div>';
-  $('#alertN').textContent=nHigh;
+  paintDc();
 
   var dq=sec('dq','Data notes','What the dashboard did with your files')+'<div class="card plain"><ul class="notes">'+
     (model.issues.length?model.issues.map(function(i){return '<li><b>'+esc(i.t)+':</b> '+i.m+'</li>';}).join(''):'<li>No data issues detected.</li>')+
@@ -4986,18 +5066,18 @@ $('#fileC').addEventListener('change',async function(e){
   toast('Contracts updated from '+f.name);
 });
 $('#tplBtn').addEventListener('click',function(){ if(isUnlocked()) downloadTemplate(); else pwAsk(function(){ downloadTemplate(); }); });
-$('#dcBtn').addEventListener('click',dcOpen);
+$('#dcBtn').addEventListener('click',function(){ dcOpen(); try{ jsLoad(); }catch(e){} });
 document.getElementById('dcModal').addEventListener('click',function(e){
   var t=e.target;
   if(t.id==='dcModal'||t.id==='dcClose'){ dcClose(); return; }
-  var g=t.closest&&t.closest('[data-ign]');
-  if(g){ DCIGN[g.getAttribute('data-ign')]=1; dcSaveIgn(); dcOpen(); render(); return; }
+  var ja=t.closest&&t.closest('[data-ja]');
+  if(ja){ dcJust(ja.getAttribute('data-ja'),+ja.getAttribute('data-jx')); return; }
   if(t.id==='dcLog'){ dcLog(); return; }
   if(t.id==='dcIgnAll'){ dcAllList().forEach(function(x){ x.is.forEach(function(m){ DCIGN[x.r.key+'|'+m]=1; }); }); dcSaveIgn(); dcOpen(); render(); return; }
   if(t.id==='dcRestore'){ e.preventDefault(); DCIGN={}; dcSaveIgn(); dcOpen(); render(); }
 });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') dcClose(); });
-$('#alertBtn').addEventListener('click',function(){ state.page='issues'; state.all=false; render(); window.scrollTo({top:0}); });
+$('#alertBtn').addEventListener('click',function(){ dcOpen(); try{ jsLoad(); }catch(e){} });
 $('#printBtn').addEventListener('click',function(){ window.print(); });
 $('#printAllBtn').addEventListener('click',function(){ if(state.all){ state.all=false; render(); window.scrollTo({top:0}); return; } state.all=true; render(); setTimeout(function(){ window.print(); },80); });
 var prevTheme, themeSwapped=false;
@@ -5100,7 +5180,7 @@ function accApply(){
 }
 function accReapply(){ if(cur.prog){ try{ setData(cur.prog,cur.info,source,sourceKind); }catch(e){} } else render(); }
 function accWhen(fn){ if(ACC.ready) fn(); else ACC.cbs.push(fn); }
-function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} try{ dfixLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
+function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} try{ jsLoad(); }catch(e){} try{ dfixLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
 function accShowLogin(msg){
   var o=document.getElementById('accLogin'); if(!o) return; o.hidden=false; document.body.classList.add('acc-locked');
   o.querySelector('.accerr').textContent=msg||''; var lg=document.querySelector('aside .brand img'), al=document.getElementById('accLogoImg'); if(lg&&al&&!al.getAttribute('src')) al.src=lg.src; var i=o.querySelector('input'); i.value=''; setTimeout(function(){ i.focus(); },50);
