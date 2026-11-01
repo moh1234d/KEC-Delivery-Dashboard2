@@ -1174,7 +1174,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V296</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V298</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1373,7 +1373,7 @@ function toISO(v){
   if(v==null||v==='') return null;
   if(typeof v==='number'&&isFinite(v)){ if(v<20000||v>80000) return null; return new Date(Math.round((v-25569)*864e5)).toISOString().slice(0,10); }
   if(v instanceof Date) return isNaN(v)?null:v.toISOString().slice(0,10);
-  var s=String(v).trim(); if(/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0,10);
+  var s=String(v).trim(); var mi=/^(\d{4})-(\d{2})-(\d{2})/.exec(s); if(mi){ var dd=new Date(Date.UTC(+mi[1],+mi[2]-1,+mi[3])); return (dd.getUTCFullYear()===+mi[1]&&dd.getUTCMonth()===+mi[2]-1&&dd.getUTCDate()===+mi[3])?s.slice(0,10):null; }
   var t=Date.parse(s); if(isNaN(t)) return null; var d=new Date(t); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 function num(v){ if(typeof v==='number') return isFinite(v)?v:null; if(v==null||v==='') return null; var n=parseFloat(String(v).replace(/,/g,'')); return isFinite(n)?n:null; }
@@ -2419,6 +2419,14 @@ function normSite(objs,kind){
   });
   return out;
 }
+/* a tracker row is identified by data date + project + package (+ submittal type for the submittal and quality trackers); only those rows are replaced, the others of that project and date stay */
+function svMergeRows(kind,old,add){
+  if(!add||!add.length) return old||[];
+  var typed=(kind==='e1'||kind==='qa'), lc=function(x){ return String(x==null?'':x).trim().toLowerCase(); };
+  var same=function(o,a){ return o.d===a.d&&lc(o.code)===lc(a.code)&&svPkgMatch(o.pkg,a.pkg)&&(!typed||lc(o.type)===lc(a.type)); };
+  var keep=(old||[]).filter(function(o){ return !add.some(function(a){ return same(o,a); }); });
+  return keep.concat(add);
+}
 function svMerge(old,add){
   if(!add||!add.length) return old||[];
   var dk={}; add.forEach(function(r){ dk[r.d+'|'+String(r.code).toLowerCase()]=1; });
@@ -3054,6 +3062,8 @@ var DB_DATES={prog:['date','ps','pf','ff'],con:['d','target','raised','closed','
 function dbKey(kind,g){ /* g(field) returns the value of a field */
   var c=String(g('code')==null?'':g('code')).trim().toLowerCase();
   if(kind==='prog') return (toISO(g('date'))||'')+'|'+c+'|'+str(g('pkg')).toLowerCase();
+  if(kind==='e1'||kind==='qa') return (toISO(g('d'))||'')+'|'+c+'|'+svN(g('pkg'))+'|'+svN(g('type'));
+  if(kind==='e2'||kind==='mp') return (toISO(g('d'))||'')+'|'+c+'|'+svN(g('pkg'));
   if(kind==='con'){ var id=g('id'); var b=(toISO(g('d'))||'')+'|'+c+'|'; return id?b+'#'+String(id).toLowerCase():b+String(g('pkg')||'').toLowerCase()+'|'+String(g('concern')||'').toLowerCase(); }
   return (toISO(g('d'))||'')+'|'+c;
 }
@@ -3722,6 +3732,11 @@ function suParse(wb,okCode){
     data.prog.forEach(function(r){ var L=pk[String(r.code).toLowerCase()]; if(L&&!L.some(function(p){ return svPkgMatch(p,r.pkg); })){ var admUp=!SU.tok&&(ACC.need===false||(ACC.user&&ACC.user.admin===true)); if(!admUp){ if(errs.length<30) errs.push('Packages - Plots: '+r.pkg+' is not a package of '+r.code+'. Only the administrator can add a new package or plot: ask project controls to add it, then download the template again and pick it from the list.'); } else if(r.ctr&&r.cno&&r.ps){ if(warns.length<20) warns.push('New package: '+r.pkg+' ('+r.code+') will be added with contractor '+r.ctr+', contract '+r.cno+'.'); } else if(errs.length<30) errs.push('Packages - Plots: '+r.pkg+' is not a package of '+r.code+'. To add it as a NEW package, fill its Contractor, Contract No. and Planned Start (grey cells) on that row.'); } });
     ['e1','e2','qa','mp'].forEach(function(k){ data[k].forEach(function(r){ var L=pk[String(r.code).toLowerCase()]; var nm=(model.projects.get(r.code)||{}).name; if(L&&!L.some(function(p){ return svPkgMatch(p,r.pkg); })&&!(nm&&svPkgMatch(nm,r.pkg))&&warns.length<20) warns.push(k.toUpperCase()+': '+r.pkg+' does not match a package of '+r.code+'.'); }); }); }
   if(!data.prog.length&&!data.con.length&&!data.e1.length&&!data.e2.length&&!data.qa.length&&!data.mp.length&&!data.pc.length&&!errs.length) errs.push('The file has no filled rows. Every row needs a Data Date and a Project Code.');
+  /* a Data Date that is filled in but is not a real date is refused with its row number (it used to be dropped without a word) */
+  [[/^packages\s*-\s*plots$/i,'Packages - Plots'],[/^areas\s*of\s*concern$/i,'Areas of Concern'],[/^technical\s*submittals?$/i,'Technical Submittals'],[/^material\s*procurement$/i,'Material Procurement'],[/^quality/i,'Quality Statistics'],[/^manpower$/i,'Manpower']].forEach(function(x){
+    var sn=wb.SheetNames.filter(function(n){ return x[0].test(String(n).trim()); })[0]; if(!sn) return; var rows=[]; try{ rows=suSheetRows(wb.Sheets[sn])||[]; }catch(e){ return; }
+    var bad=0; rows.forEach(function(o,i){ var k=Object.keys(o).filter(function(q){ return /^data\s*date/i.test(String(q).trim()); })[0]; if(!k) return; var v=o[k]; if(v==null||String(v).trim()==='') return; if(!toISO(v)){ bad++; if(bad<=5&&errs.length<30) errs.push(x[1]+', row '+(i+1)+': "'+String(v).slice(0,20)+'" is not a valid Data Date.'); } });
+    if(bad>5) errs.push(x[1]+': '+(bad-5)+' more rows have a Data Date that is not a valid date.'); });
   return {data:data,errs:errs,warns:warns,sum:sum,codes:Object.keys(codes)};
 }
 function sheetsSeen(){ var o=window.KEC_SHEETS||{}, k=Object.keys(o); return k.length?'<br><b>Sheets in the file(s) the dashboard received:</b> '+k.map(function(n){ return '<i>'+esc(n)+'</i> → '+(o[n].map(esc).join(', ')||'no sheets'); }).join(' · '):'<br>No workbook has been read in this session (the built-in sample data is showing).'; }
@@ -3731,7 +3746,7 @@ function suMerge(list){
   list.forEach(function(s){ var d=s.data||s; try{ pcTake(s,d); }catch(e){}
     if(d.prog&&d.prog.length){ var pk=function(r){ return (toISO(r.date)||'')+'|'+str(r.code).toLowerCase()+'|'+str(r.pkg).toLowerCase(); }, seen={}; d.prog.forEach(function(r){ seen[pk(r)]=1; }); cur.prog=(cur.prog||[]).filter(function(r){ return !seen[pk(r)]; }).concat(d.prog); }
     if(d.con&&d.con.length){ var ck=function(c){ var b=c.d+'|'+String(c.code).toLowerCase()+'|'; return c.id?b+'#'+String(c.id).toLowerCase():b+String(c.pkg||'').toLowerCase()+'|'+String(c.concern||'').toLowerCase(); }, cd={}; d.con.forEach(function(c){ cd[ck(c)]=1; }); cur.con=(cur.con||[]).filter(function(c){ return !cd[ck(c)]; }).concat(d.con); }
-    ['e1','e2','qa','mp'].forEach(function(k){ if(d[k]&&d[k].length) cur[k]=svMerge(cur[k],d[k]); }); });
+    ['e1','e2','qa','mp'].forEach(function(k){ if(d[k]&&d[k].length) cur[k]=svMergeRows(k,cur[k],d[k]); }); });
   SU.post={}; K.forEach(function(k){ SU.post[k]=cur[k]; });
 }
 function suReload(){
@@ -3811,11 +3826,11 @@ function suDrawAdmin(){
     else if(s.status==='accepted') acts='<button class="btn" data-sureview="revoke" data-id="'+s.id+'">Take back</button>';
     return '<div class="svch"><span class="svimp '+(s.status==='pending'?'warn':s.status==='accepted'?'good':'bad')+'">'+st[s.status]+'</span><div class="svcb"><b>'+esc(s.by)+' · '+esc(s.projects.join(', '))+'</b><small>'+ago(s.ts)+' · '+Object.keys(s.cnt).filter(function(k){ return s.cnt[k]; }).map(function(k){ return k+' '+s.cnt[k]; }).join(' · ')+'</small>'+
       (D.length?'<p class="'+(s.confirmed?'':'bad')+'"><b>Differs from the contracts file'+(s.confirmed?' (confirmed)':'')+':</b></p><div class="svtw"><table class="svtb"><thead><tr><th>Contract</th><th>Item</th><th class="n">Site team</th><th class="n">Contracts file</th></tr></thead><tbody>'+D.slice(0,12).map(function(d){ return '<tr><td>'+esc(d.code+' · '+d.cno)+'</td><td>'+d.f+'</td><td class="n">'+fm(d.site)+'</td><td class="n">'+fm(d.file)+'</td></tr>'; }).join('')+'</tbody></table></div>'+(s.confirmed?'':'<button class="btn" data-sureview="confirm" data-id="'+s.id+'">Confirm the site team figures</button>'):'')+'</div><div>'+acts+'</div></div>'; }).join('')||'<div class="empty">No submissions yet.</div>';
-  var links=j.links.map(function(l){ var u=location.href.split('#')[0].split('?')[0]+'?site='+l.tok; return '<tr><td>'+esc(l.name)+'</td><td>'+esc(l.projects==='*'?'All projects':l.projects.join(', '))+'</td><td>'+(l.mode==='live'?'Live directly':'Needs approval')+'</td><td>'+(l.revoked?'Revoked':'<input readonly value="'+esc(u)+'" style="width:100%;font-size:11px" onclick="this.select()">')+'</td><td>'+(l.revoked?'':'<button class="btn" data-sulrev="'+l.tok+'">Revoke</button>')+'</td></tr>'; }).join('');
+  var links=j.links.map(function(l){ var u=location.href.split('#')[0].split('?')[0]+'?site='+l.tok; return '<tr><td>'+esc(l.name)+'</td><td>'+esc(l.projects==='*'?'All projects':l.projects.join(', '))+'</td><td>'+(l.mode==='live'?'Live directly':'Needs approval')+'</td><td>'+(l.exp?(l.exp<Date.now()?'<b style="color:#b3261e">Expired</b>':'Until '+new Date(l.exp).toISOString().slice(0,10)):'No end date')+' · '+(l.n||0)+(l.max?' of '+l.max:'')+' upload'+((l.n||0)===1?'':'s')+'</td><td>'+(l.revoked?'Revoked':'<input readonly value="'+esc(u)+'" style="width:100%;font-size:11px" onclick="this.select()">')+'</td><td>'+(l.revoked?'':'<button class="btn" data-sulrev="'+l.tok+'">Revoke</button>')+'</td></tr>'; }).join('');
   var plist=[]; model.projects.forEach(function(p,k){ if(HIDE_PROJ.indexOf(k)<0) plist.push(k); });
   document.getElementById('suAdmB').innerHTML='<h4>Submissions</h4><div class="svchl">'+subs+'</div><h4 style="margin-top:18px">Private upload links</h4><p style="font-size:12.5px;color:var(--mut)">One link per site team. Anyone with the link can upload for the projects you tick, and nothing else.</p>'+
-    (links?'<div class="svtw"><table class="svtb"><thead><tr><th>Name</th><th>Projects</th><th>Mode</th><th>Link</th><th></th></tr></thead><tbody>'+links+'</tbody></table></div>':'')+
-    '<div class="svmg" style="margin-top:8px"><div class="svf h"><label>Link name</label><input id="suLn" type="text" placeholder="e.g. Hilton Hotel site team"></div><div class="svf h"><label>Mode</label><select id="suLm"><option value="review">Needs approval</option><option value="live">Live directly</option></select></div><div class="svf"><label>Projects</label><div style="display:flex;flex-wrap:wrap;gap:4px 14px">'+plist.map(function(k){ return '<label style="text-transform:none;letter-spacing:0;font-weight:500;font-size:12.5px"><input type="checkbox" class="suLp" value="'+esc(k)+'" style="width:auto"> '+esc(pname(k))+'</label>'; }).join('')+'</div></div></div><button class="btn pri" data-sulnew="1">Create link</button>';
+    (links?'<div class="svtw"><table class="svtb"><thead><tr><th>Name</th><th>Projects</th><th>Mode</th><th>Valid · uploads</th><th>Link</th><th></th></tr></thead><tbody>'+links+'</tbody></table></div>':'')+
+    '<div class="svmg" style="margin-top:8px"><div class="svf h"><label>Link name</label><input id="suLn" type="text" placeholder="e.g. Hilton Hotel site team"></div><div class="svf h"><label>Mode</label><select id="suLm"><option value="review">Needs approval</option><option value="live">Live directly</option></select></div><div class="svf h"><label>Valid for (days, 0 = no end date)</label><input id="suLd" type="number" min="0" max="730" value="0"></div><div class="svf h"><label>Max uploads (0 = no limit)</label><input id="suLx" type="number" min="0" max="100000" value="0"></div><div class="svf"><label>Projects</label><div style="display:flex;flex-wrap:wrap;gap:4px 14px">'+plist.map(function(k){ return '<label style="text-transform:none;letter-spacing:0;font-weight:500;font-size:12.5px"><input type="checkbox" class="suLp" value="'+esc(k)+'" style="width:auto"> '+esc(pname(k))+'</label>'; }).join('')+'</div></div></div><button class="btn pri" data-sulnew="1">Create link</button>';
 }
 async function suAdminAct(path,body){ try{ var j=await accCall('POST',path,body,30000); if(path==='/site-review'){ var x=await accCall('GET','/site-admin',null,30000); SU.admin=x; suDrawAdmin(); suUndo(); suSync(); UL.loaded=false; ulLoad(true); } else if(j.links){ SU.admin.links=j.links; suDrawAdmin(); } }catch(e){ toast((e&&e.message)||'Could not save',true); } }
 /* the private link page (no sign-in): ?site=TOKEN */
@@ -3833,7 +3848,7 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
   else if(t.id==='suSend') suSubmit();
   else if(t.hasAttribute('data-sureview')) suAdminAct('/site-review',{id:t.getAttribute('data-id'),action:t.getAttribute('data-sureview')});
   else if(t.hasAttribute('data-sulrev')) suAdminAct('/site-links',{action:'revoke',tok:t.getAttribute('data-sulrev')});
-  else if(t.hasAttribute('data-sulnew')){ var p=Array.prototype.map.call(document.querySelectorAll('.suLp:checked'),function(x){ return x.value; }); suAdminAct('/site-links',{action:'create',name:document.getElementById('suLn').value,mode:document.getElementById('suLm').value,projects:p}); }
+  else if(t.hasAttribute('data-sulnew')){ var p=Array.prototype.map.call(document.querySelectorAll('.suLp:checked'),function(x){ return x.value; }); suAdminAct('/site-links',{action:'create',name:document.getElementById('suLn').value,mode:document.getElementById('suLm').value,days:+(document.getElementById('suLd')||{}).value||0,max:+(document.getElementById('suLx')||{}).value||0,projects:p}); }
 });
 
 /* ---------- render ---------- */
