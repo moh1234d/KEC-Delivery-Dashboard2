@@ -1179,6 +1179,7 @@ body.lyedit .ovwrap .ly-tg{opacity:.4;text-decoration:line-through}
 #ntModal .dcacts{float:right}#ntModal .dcx{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 14px;cursor:pointer}
 #ntModal .dcig{font:inherit;font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:4px 12px;cursor:pointer}#ntModal .jpri{background:#1f3f78;color:#fff;border-color:#1f3f78}#ntModal .jfa{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 #ntModal .jb{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 10px}#ntModal .jb-g{background:#dcf3e6;color:#14663f}#ntModal .jb-p{background:#fbeccd;color:#8a5a00}#ntModal .jb-r{background:#fbdcd7;color:#a32a1e}#ntModal .jerr{background:#fbdcd7;color:#a32a1e;border-radius:8px;padding:8px 12px;font-size:12.5px;margin:6px 0}
+.pkm .cfin{flex-basis:100%;margin-top:2px;color:var(--mut)}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1208,7 +1209,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V307</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V308</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1436,7 +1437,7 @@ function buildModel(progRaw, infoRaw){
     var pc=pkgCanon.get(lc+'|'+pkg.toLowerCase()); if(pc&&pc!==pkg){ pkgRecased[pkg+' → '+pc]=1; pkg=pc; }
     if(caseMap.has(lc)){ var c=caseMap.get(lc); if(c!==code){ recased[code+' → '+c]=1; code=c; } }
     else caseMap.set(lc,code);
-    var o={date:date,code:code,pname:str(r.pname),pkg:pkg,ctr:str(r.ctr),cno:str(r.cno),ps:toISO(r.ps),pf:toISO(r.pf),eot:num(r.eot),rf:toISO(r.rf),scope:str(r.scope),bud:num(r.bud),ff:toISO(r.ff),
+    var o={date:date,code:code,pname:str(r.pname),pkg:pkg,ctr:str(r.ctr),cno:str(r.cno),ps:toISO(r.ps),pf:toISO(r.rf)||toISO(r.pf),cf:toISO(r.pf),eot:num(r.eot),rf:toISO(r.rf),scope:str(r.scope),bud:num(r.bud),ff:toISO(r.ff),
       cv:num(r.cv),vo:num(r.vo),rv:num(r.rv),gc:num(r.gc),pv:num(r.pv),ev:num(r.ev)};
     if(!o.ps||!o.pf){ dropped++; return; }
     if(!o.ff) o.ff=o.pf;
@@ -1791,10 +1792,10 @@ function ctrNote(){
 }
 function agg(rows,cut,noFin){
   var core=rows.filter(function(r){return !isSep(r)&&!isNoInfo(r);}); if(!core.length) core=rows;
-  var a={n:rows.length,rv:0,cv:0,vo:0,gc:0,gcP:0,rvT:0,pv:0,ev:0,pvT:0,evT:0,rvP:0,start:null,pf:null,ff:null,maxDelay:0};
+  var a={n:rows.length,rv:0,cv:0,vo:0,gc:0,gcP:0,rvT:0,pv:0,ev:0,pvT:0,evT:0,rvP:0,start:null,pf:null,cf:null,ff:null,maxDelay:0};
   rows.forEach(function(r){ a.rv+=r.rv;a.cv+=r.cv;a.vo+=r.vo;a.gc+=r.gc;a.gcP+=r.gc;a.rvT+=r.rv;a.pvT+=r.pv;a.evT+=r.ev; });
   core.forEach(function(r){ a.rvP+=r.rv;a.pv+=r.pv;a.ev+=r.ev;
-    var dl=dayDiff(r.pf,r.ff); if(dl>a.maxDelay)a.maxDelay=dl; if(!a.start||r.ps<a.start)a.start=r.ps; if(!a.pf||r.pf>a.pf)a.pf=r.pf; if(!a.ff||r.ff>a.ff)a.ff=r.ff; });
+    var dl=dayDiff(r.pf,r.ff); if(dl>a.maxDelay)a.maxDelay=dl; if(!a.start||r.ps<a.start)a.start=r.ps; if(!a.pf||r.pf>a.pf)a.pf=r.pf; if(!a.cf||(r.cf||r.pf)>a.cf)a.cf=r.cf||r.pf; if(!a.ff||r.ff>a.ff)a.ff=r.ff; });
   /* mandatory (contractual) completion dates supersede the planned finish from the progress list for the project as a whole (2+ packages); a single package always keeps its own planned finish */
   if(MAND.size&&new Set(core.map(function(r){return r.key;})).size>1){ var pcs={}; core.forEach(function(r){ var o=pcs[r.code]||(pcs[r.code]={pf:null,ff:null,md:0}); var dl2=dayDiff(r.pf,r.ff); if(dl2>o.md)o.md=dl2; if(!o.pf||r.pf>o.pf)o.pf=r.pf; if(!o.ff||r.ff>o.ff)o.ff=r.ff; });
     var hit=false, npf=null, nmd=0; Object.keys(pcs).forEach(function(c){ var o=pcs[c], m=MAND.get(c); var pfc=o.pf, md=o.md; if(m){ hit=true; pfc=m; md=Math.max(0,dayDiff(m,o.ff)); } if(!npf||pfc>npf)npf=pfc; if(md>nmd)nmd=md; });
@@ -1906,7 +1907,7 @@ function ucard(title,a,cls,code,photo){
   if(started&&a.act>=0.9999) h+='<div class="usl"><span class="dd '+(dl>0?'warn':'good')+'">'+(dl>0?'−'+dl+' days late':dl<0?'+'+(-dl)+' days early':'on plan')+'</span><div class="sl"><i class="o"></i><div></div><i class="f"></i></div><div class="sd"><div><b>'+fd(a.pf)+'</b>'+(cls==='pk'?'Planned finish':'Planned')+'</div><div><b>'+fd(a.ff)+'</b>Actual completion</div></div></div><div class="donebadge">✔ Completed</div>';
   else if(!started) h+='<div class="usl"><span class="dt" style="font-weight:600;color:var(--mut)">Not started yet'+(a.start?' · planned start '+fd(a.start):'')+'</span></div>';
   else if(dl===0) h+='<div class="usl"><span>On plan</span><span class="tgt"></span><span class="dt">'+fd(a.pf)+'</span><span>Planned = Forecast</span></div>';
-  else h+='<div class="usl"><span class="dd '+(dl>0?(dl>T.delayAmber?'bad':'warn'):'good')+'">'+(dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</span><div class="sl"><i class="o"></i><div></div><i class="f"></i></div><div class="sd"><div><b>'+fd(a.pf)+'</b>'+(cls==='pk'?'Planned finish':'Planned')+'</div><div><b>'+fd(a.ff)+'</b>'+(cls==='pk'?'Forecast finish':'Forecast')+'</div></div></div>';
+  else h+='<div class="usl"><span class="dd '+(dl>0?(dl>T.delayAmber?'bad':'warn'):'good')+'">'+(dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</span><div class="sl"><i class="o"></i><div></div><i class="f"></i></div><div class="sd"><div><b>'+fd(a.pf)+'</b>'+(a.cf&&a.cf!==a.pf?(cls==='pk'?'Revised planned finish':'Revised planned'):(cls==='pk'?'Planned finish':'Planned'))+'</div><div><b>'+fd(a.ff)+'</b>'+(cls==='pk'?'Forecast finish':'Forecast')+'</div></div></div>';
   return h+((code&&mixedDates())?'<div class="ucdd">Data date '+d2(projCut(code,state.cutoff))+'</div>':'')+'</div>';
 }
 function sepList(pj){
@@ -1934,7 +1935,7 @@ function suChkRows(data){
   data.prog.forEach(function(u){ try{
     var code=pcodeOf(u.code)||u.code, hit=null;
     for(var i=model.rows.length-1;i>=0;i--){ var q=model.rows[i]; if(String(q.code).toLowerCase()===String(code).toLowerCase()&&svPkgMatch(q.pkg,u.pkg)){ hit=q; break; } }
-    var r={key:hit?hit.key:(code+'|'+u.pkg),code:hit?hit.code:code,pkg:hit?hit.pkg:u.pkg,date:toISO(u.date)||u.date,ps:toISO(u.ps)||'',pf:toISO(u.pf)||'',ff:toISO(u.ff)||'',cv:+u.cv||0,vo:+u.vo||0,rv:+u.rv||0,gc:+u.gc||0,pv:+u.pv||0,ev:+u.ev||0,cno:hit?hit.cno:'',ctr:hit?hit.ctr:'',stale:false};
+    var r={key:hit?hit.key:(code+'|'+u.pkg),code:hit?hit.code:code,pkg:hit?hit.pkg:u.pkg,date:toISO(u.date)||u.date,ps:toISO(u.ps)||'',pf:toISO(u.rf)||toISO(u.pf)||'',cf:toISO(u.pf)||'',ff:toISO(u.ff)||'',cv:+u.cv||0,vo:+u.vo||0,rv:+u.rv||0,gc:+u.gc||0,pv:+u.pv||0,ev:+u.ev||0,cno:hit?hit.cno:'',ctr:hit?hit.ctr:'',stale:false};
     dateIssues(r,r.date,true).forEach(function(m){ var k=jsKey(r,m)+'~'+DCFP[m]; if(seen[k]) return; seen[k]=1; out.push({r:r,m:m,d:r.date}); });
   }catch(e){} });
   return out;
@@ -2075,7 +2076,7 @@ document.addEventListener('mousemove',function(e){ var t=e.target.closest&&e.tar
   tip.innerHTML=GT[+t.getAttribute('data-gt')]; tip.style.display='block'; tip.style.left=Math.max(8,Math.min(window.innerWidth-280,e.clientX+14))+'px'; tip.style.top=(e.clientY+14)+'px'; });
 function pkgCard(r){
   var h=ucard(pkgL(r.code,r.pkg),agg([r]),'pk'), pn=agg([r]).pkNote;
-  var meta='<div class="pkm">'+chip(r.status)+'<span><b>Contract</b> '+esc(r.cno||'—')+'</span><span><b>Contractor</b> '+esc(r.ctr||'—')+'</span>'+(r.stale?'<span class="warn">carried forward from '+d2(r.date)+'</span>':'')+'</div>';
+  var meta='<div class="pkm">'+chip(r.status)+'<span><b>Contract</b> '+esc(r.cno||'—')+'</span><span><b>Contractor</b> '+esc(r.ctr||'—')+'</span>'+(r.cf&&r.cf!==r.pf?'<span class="cfin"><b>Contract finish</b> '+fd(r.cf)+'</span>':'')+(r.stale?'<span class="warn">carried forward from '+d2(r.date)+'</span>':'')+'</div>';
   var bl=blockersFor(r);
   if(bl.length){ BLKMAP[r.key]={r:r,bl:bl}; meta=meta.replace(/<\/div>$/,'<button type="button" class="blk '+bl[0].cls+'" data-blk="'+esc(r.key||'')+'" aria-haspopup="true">⚠ '+bl.length+' open concern'+(bl.length>1?'s':'')+'</button></div>'); }
   if(pn) h=h.replace(/<\/div>$/,'<div class="pknote"><span class="ni">i</span><span>'+esc(pn)+'</span></div></div>');
