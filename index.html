@@ -1199,7 +1199,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V303</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V304</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3147,6 +3147,19 @@ function dbDelta(subs){
   return {D:D,order:order};
 }
 function dbPick(){ var R=window.KEC_RAW||{}, names=Object.keys(R); return names; }
+function dbSameRows(S,kind,rows,ex){
+  if(!ex.length||rows.length!==ex.length) return false;
+  var c=S.cols, skip={_ser:1,_plp:1,_acp:1,_var:1}, isDate={}; DB_DATES[kind].forEach(function(f){ isDate[f]=1; });
+  for(var i=0;i<rows.length;i++){ var row=S.ws.getRow(ex[i]), rw=rows[i];
+    for(var f in c){ if(skip[f]||rw[f]===undefined) continue; var a=dbV(row.getCell(c[f])), b=rw[f];
+      if(isDate[f]){ if(dbIso(a)!==dbIso(b)) return false; continue; }
+      var an=(a==null||a===''), bn=(b==null||b==='');
+      if(an&&bn) continue; if((f==='pname'||f==='name')&&bn) continue; if(an!==bn) return false;
+      var na=typeof a==='number'?a:(!isNaN(+a)?+a:null), nb=typeof b==='number'?b:(!isNaN(+b)?+b:null);
+      if(na!=null&&nb!=null){ if(Math.abs(na-nb)>0.005) return false; continue; }
+      if(String(a).trim().toLowerCase()!==String(b).trim().toLowerCase()) return false; } }
+  return true;
+}
 async function dbBuild(){
   if(!await loadExcelJS()) throw new Error('The Excel library could not be loaded (needs internet access)');
   var j=await accCall('GET','/site-data',null,30000), subs=(j&&j.subs)||[];
@@ -3170,6 +3183,7 @@ async function dbBuild(){
       var key=dbKey(kind,g); (have[key]=have[key]||[]).push(r); }
     S.last=last; S.have=have; S.todo=[];
     keys.forEach(function(key){ var rows=del.D[kind][key], ex=have[key]||[];
+      if(dbSameRows(S,kind,rows,ex)){ plan.same=(plan.same||0)+rows.length; return; }
       S.todo.push({key:key,rows:rows,ex:ex});
       rows.forEach(function(rw,i){ var upd=i<ex.length; plan.n[upd?'rep':'add']++;
         var proj=pname(rw.code)||rw.code, p=rw.pkg||'', dd=toISO(kind==='prog'?rw.date:rw.d)||'';
@@ -3224,8 +3238,8 @@ function dbName(plan){ var b=String(plan.file||'KEC_Database').replace(/\.[a-z0-
 function dbPreviewHtml(plan,publish){
   var rows=plan.rows, sh={}; rows.forEach(function(r){ sh[r.sheet]=(sh[r.sheet]||0)+1; });
   var tb=function(L){ return '<div class="svtw" style="max-height:340px;overflow:auto"><table class="svtb"><thead><tr><th>Sheet</th><th>Action</th><th>Date</th><th>Project</th><th>Package</th><th>Details</th></tr></thead><tbody>'+L.map(function(r){ return '<tr><td>'+esc(r.sheet)+'</td><td><b>'+esc(r.act)+'</b></td><td>'+(r.date?esc(d2(r.date)):'')+'</td><td>'+esc(r.proj||'')+'</td><td>'+esc(r.pkg||'')+'</td><td>'+esc(r.desc||'')+'</td></tr>'; }).join('')+'</tbody></table></div>'; };
-  if(!rows.length) return '<p>The approved site updates are already part of the file, or no update has been approved yet. Nothing would change.</p>';
-  return '<p><b>'+plan.n.add+'</b> row'+(plan.n.add===1?'':'s')+' added · <b>'+plan.n.rep+'</b> replaced · from <b>'+plan.subs+'</b> approved update'+(plan.subs===1?'':'s')+'. File: <b>'+esc(plan.file)+'</b></p>'+tb(rows.slice(0,300))+(rows.length>300?'<p class="ulsub">Showing the first 300 of '+rows.length+' rows.</p>':'')+
+  if(!rows.length) return '<p>The approved site updates are already part of the file, or no update has been approved yet. Nothing would change.'+(plan.same?' '+plan.same+' row'+(plan.same===1?'':'s')+' already in the Sheet with identical values '+(plan.same===1?'was':'were')+' left out.':'')+'</p>';
+  return '<p><b>'+plan.n.add+'</b> row'+(plan.n.add===1?'':'s')+' added · <b>'+plan.n.rep+'</b> replaced · from <b>'+plan.subs+'</b> approved update'+(plan.subs===1?'':'s')+'. File: <b>'+esc(plan.file)+'</b></p>'+(plan.same?'<p class="jm">'+plan.same+' row'+(plan.same===1?'':'s')+' already in the Sheet with identical values '+(plan.same===1?'was':'were')+' left out.</p>':'')+tb(rows.slice(0,300))+(rows.length>300?'<p class="ulsub">Showing the first 300 of '+rows.length+' rows.</p>':'')+
     (publish?'<div class="sepnote"><span class="ni">i</span><div>'+(DB.info&&DB.info.gs?'Only the rows listed above are written into the Google Sheet; nothing else in it changes. Google keeps every earlier version (File › Version history).':'Publishing replaces the file on Google Drive. Drive keeps the previous version (File › Version history). Charts, pivot tables and macros inside the workbook may not survive the rewrite: check the downloaded copy first if the file has any.')+'</div></div><label style="display:block;margin-top:8px">Note for the version history (optional) <input type="text" id="dbNote" maxlength="200" style="width:100%"></label>':'');
 }
 async function dbRun(act){
