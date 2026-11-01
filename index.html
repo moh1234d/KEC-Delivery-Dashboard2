@@ -1180,6 +1180,12 @@ body.lyedit .ovwrap .ly-tg{opacity:.4;text-decoration:line-through}
 #ntModal .dcig{font:inherit;font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:4px 12px;cursor:pointer}#ntModal .jpri{background:#1f3f78;color:#fff;border-color:#1f3f78}#ntModal .jfa{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 #ntModal .jb{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 10px}#ntModal .jb-g{background:#dcf3e6;color:#14663f}#ntModal .jb-p{background:#fbeccd;color:#8a5a00}#ntModal .jb-r{background:#fbdcd7;color:#a32a1e}#ntModal .jerr{background:#fbdcd7;color:#a32a1e;border-radius:8px;padding:8px 12px;font-size:12.5px;margin:6px 0}
 .pkm .cfin{flex-basis:100%;margin-top:2px;color:var(--mut)}
+.pcl .pcsc.pcs-on{overflow-y:scroll;position:relative;scrollbar-width:auto;scrollbar-color:#c8993a #ece8de}
+.pcl .pcsc.pcs-on::-webkit-scrollbar{width:12px}.pcl .pcsc.pcs-on::-webkit-scrollbar-track{background:#ece8de}.pcl .pcsc.pcs-on::-webkit-scrollbar-thumb{background:#c8993a;border-radius:6px}
+.pcl .pcsc.pcs-on thead th{position:sticky;top:0;z-index:2}
+.pcl .pcsc.pcs-on .pctot td{position:sticky;bottom:-4px;z-index:2;box-shadow:0 -1px 0 #d9d3c4}
+.pcl .pccnt{text-align:right;font-size:12px;font-weight:600;color:var(--mut);padding:6px 4px 0}
+@media print{.pcl .pcsc.pcs-on{max-height:none!important;overflow:visible}.pcl .pcsc.pcs-on thead th,.pcl .pcsc.pcs-on .pctot td{position:static}}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1209,7 +1215,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V308</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V309</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3378,13 +3384,13 @@ function pcDiag(code){ if(!PC.sheet||!PC.t) return ''; var i=PC.info, cs=i&&i.co
 var pcN=function(v){ return v==null||isNaN(v)?'—':Math.round(v).toLocaleString('en-US'); };
 function pcBox(codes){
   pcLoad(); if(PC.sheet&&PC.loaded&&!PC.busy&&Date.now()-PC.t>60000){ PC.loaded=false; pcLoad(); } PC.codes=codes.slice(); var grp=codes.length>1, can=pcCan(), A=pcAwarded(codes), T=pcList(codes);
-  var nh=A.filter(function(a){ return a.g==='hard'; }).length, np=A.length-nh, f=PC.f==='hard'||PC.f==='pmc'?PC.f:'all', S=A.filter(function(a){ return f==='all'||a.g===f; });
+  var nh=A.filter(function(a){ return a.g==='hard'; }).length, np=A.length-nh, f='all', S=A;
   var cv=0, rv=0, aw=0; A.forEach(function(a){ aw+=a.rv; cv+=a.cv; }); var tcv=0, trv=0; S.forEach(function(a){ tcv+=a.cv; trv+=a.rv; });
   var nv=T.filter(function(x){ return x.val!=null; }).length, nx=T.filter(function(x){ return x.date; })[0];
   var kp='<div class="grid g-ov svk" style="grid-template-columns:repeat(4,1fr)">'+kpi('Awarded contracts',String(A.length),nh+' hard cost · '+np+' PMC and supervision','',false,'accent')+kpi('To be awarded',String(T.length),T.length?'potential value known for '+nv:'none listed yet','',false,'good')+'</div>';
   var chip=function(k,l,n){ return '<button type="button" class="pcchip'+(f===k?' on':'')+'" data-pcf="'+k+'">'+l+' <b>'+n+'</b></button>'; };
-  var left='<div class="pcl"><div class="pch"><span class="pct">Awarded contracts</span><span class="sp"></span>'+chip('all','All',A.length)+chip('hard','Hard cost',nh)+chip('pmc','PMC and supervision',np)+'</div>'+
-    (S.length?'<div class="pctw"><table class="svtb pctb"><thead><tr><th>Contract no.</th><th>Vendor</th><th>Scope of work</th><th class="n">Contract value</th><th class="n">Revised value</th></tr></thead><tbody>'+S.map(function(a){ return '<tr><td><b>'+esc(a.cno)+'</b></td><td>'+esc(a.vendor)+'<small class="pcty '+a.g+'">'+(a.g==='hard'?'Hard cost':a.sub==='PMC'?'PMC':'Supervision')+(grp?' · '+esc(pname(a.code)):'')+'</small></td><td>'+esc(a.scope)+'</td><td class="n">'+pcN(a.cv)+'</td><td class="n">'+pcN(a.rv)+'</td></tr>'; }).join('')+'<tr class="pctot"><td></td><td></td><td class="n">Total</td><td class="n">'+pcN(tcv)+'</td><td class="n">'+pcN(trv)+'</td></tr></tbody></table></div>':'<div class="empty">'+(contracts&&contracts.length?'No awarded hard cost, PMC or supervision contracts for this selection.':'The contracts file has not been loaded yet.')+'</div>')+'</div>';
+  var left='<div class="pcl"><div class="pch"><span class="pct">Awarded contracts</span><span class="sp"></span>'+(A.length?'<button type="button" class="btn noprint" data-pcxl="1">Export to Excel</button>':'')+'</div>'+
+    (S.length?'<div class="pctw pcsc"><table class="svtb pctb"><thead><tr><th>Contract no.</th><th>Vendor</th><th>Scope of work</th><th class="n">Contract value</th><th class="n">Revised value</th></tr></thead><tbody>'+S.map(function(a){ return '<tr><td><b>'+esc(a.cno)+'</b></td><td>'+esc(a.vendor)+'<small class="pcty '+a.g+'">'+(a.g==='hard'?'Hard cost':a.sub==='PMC'?'PMC':'Supervision')+(grp?' · '+esc(pname(a.code)):'')+'</small></td><td>'+esc(a.scope)+'</td><td class="n">'+pcN(a.cv)+'</td><td class="n">'+pcN(a.rv)+'</td></tr>'; }).join('')+'<tr class="pctot"><td></td><td></td><td class="n">Total</td><td class="n">'+pcN(tcv)+'</td><td class="n">'+pcN(trv)+'</td></tr></tbody></table></div><div class="pccnt noprint" hidden></div>':'<div class="empty">'+(contracts&&contracts.length?'No awarded hard cost, PMC or supervision contracts for this selection.':'The contracts file has not been loaded yet.')+'</div>')+'</div>';
   var right='<div class="pcr"><div class="pch pcband"><span class="pct">Contracts to be awarded</span><span class="pcn">'+T.length+'</span><span class="sp"></span>'+(PC.sheet?'<button type="button" class="btn noprint pcrl" data-pcreload="1" title="Read the list again from Google Drive">↻</button>':'')+(can?'<button type="button" class="btn noprint" data-pcadd="1">+ Add contract</button>':'')+'</div>'+
     (PC.err?'<div class="sepnote"><span class="ni">i</span><div>'+esc(PC.err)+'</div></div>':'')+
     (T.length?'<div class="pctw"><div class="pchd"><span>Scope of work</span><span>Required at site</span><span class="n">Potential value</span></div>'+T.map(function(x){ var b=pcBar(x.date); return '<div class="pcrow"><div class="pcrg"><span class="pcsc"><b>'+esc(x.scope)+'</b><small>'+(grp?esc(pname(x.code))+' · ':'')+'<i class="pcst">'+esc(pcStat(x))+'</i>'+(codes.map(function(c){ return String(c).toLowerCase(); }).indexOf(String(x.code).trim().toLowerCase())<0?' <i class="pcwr">filed as '+esc(x.code)+(can&&!grp?' · <a href="#" data-pcmove="'+esc(x.id)+'">move to '+esc(codes[0])+'</a>':'')+'</i>':'')+'</small></span><b>'+(x.date?d2(x.date):'—')+'</b><span class="n'+(x.val==null?' mut':'')+'">'+(x.val==null?'Not set':pcN(x.val))+'</span>'+(can?'<span class="pcact noprint"><button type="button" class="pced" data-pcedit="'+esc(x.id)+'" title="Edit this contract">Edit</button><button type="button" class="pced rm" data-pcrm="'+esc(x.id)+'" title="Delete this contract">Delete</button></span>':'<span></span>')+'</div><div class="pcbw"><div class="pcbt"><i style="width:'+b.w+'%;background:'+b.c+'"></i></div><em style="color:'+b.c+'">'+b.t+'</em></div></div>'; }).join('')+'</div><p class="pcnote">The bar fills as the required date gets closer.'+(PC.sheet?' · Kept in the “Contracts to be Awarded” sheet of the contracts workbook on Google Drive; rows typed there by hand show here.'+(PC.t?' '+pcDiag(codes.join(', ')):''):'')+'</p>':'<div class="empty pcempty"><b>Nothing to be awarded yet</b><br>No contracts to be awarded are listed yet.'+(PC.sheet&&PC.t?'<br><small>'+pcDiag(codes.join(', '))+'</small>':'')+''+(can?' Use “+ Add new contract”, or fill the Contracts to be Awarded sheet of the site update template.':'')+'</div>')+'</div>';
@@ -5136,6 +5142,37 @@ $('#fileC').addEventListener('change',async function(e){
 });
 $('#tplBtn').addEventListener('click',function(){ if(isUnlocked()) downloadTemplate(); else pwAsk(function(){ downloadTemplate(); }); });
 $('#dcBtn').addEventListener('click',function(){ dcOpen(); try{ jsLoad(); }catch(e){} });
+function pcFit(w){ var t=w.querySelector('table'), cn=w.parentNode.querySelector('.pccnt'); if(!t||!t.tBodies[0]) return; var rows=t.tBodies[0].rows, n=rows.length-1;
+  if(n<=10){ w.style.maxHeight=''; w.classList.remove('pcs-on'); if(cn) cn.hidden=true; return; }
+  var h=Math.ceil(t.tHead.getBoundingClientRect().height), i; for(i=0;i<10;i++) h+=Math.ceil(rows[i].getBoundingClientRect().height); h+=Math.ceil(rows[rows.length-1].getBoundingClientRect().height)+4; w.style.maxHeight=h+'px'; w.classList.add('pcs-on'); if(cn) cn.hidden=false; pcCount(w); }
+function pcCount(w){ var t=w.querySelector('table'), cn=w.parentNode.querySelector('.pccnt'); if(!t||!cn||!w.classList.contains('pcs-on')) return; var rows=t.tBodies[0].rows, n=rows.length-1, top=w.scrollTop+t.tHead.offsetHeight, bot=w.scrollTop+w.clientHeight-rows[n].offsetHeight, a=0, b=0, i;
+  for(i=0;i<n;i++){ var r=rows[i]; if(r.offsetTop+r.offsetHeight>top+4){ a=i+1; break; } }
+  for(i=n-1;i>=0;i--){ if(rows[i].offsetTop+rows[i].offsetHeight<=bot+8){ b=i+1; break; } }
+  if(w.scrollTop+w.clientHeight>=w.scrollHeight-2) b=n; if(!a) a=1; if(b<a) b=a;
+  cn.textContent='Showing '+a+'\u2013'+b+' of '+n+' contracts'+(b<n?' \u00b7 scroll for more':''); }
+new MutationObserver(function(){ var l=document.querySelectorAll('.pcl .pcsc:not([data-fit])'); for(var k=0;k<l.length;k++){ (function(w){ w.setAttribute('data-fit','1'); requestAnimationFrame(function(){ pcFit(w); }); })(l[k]); } }).observe(document.body,{childList:true,subtree:true});
+document.addEventListener('scroll',function(e){ var w=e.target; if(w&&w.classList&&w.classList.contains('pcsc')) pcCount(w); },true);
+window.addEventListener('resize',function(){ var l=document.querySelectorAll('.pcl .pcsc'); for(var k=0;k<l.length;k++) pcFit(l[k]); });
+window.addEventListener('load',function(){ setTimeout(function(){ var l=document.querySelectorAll('.pcl .pcsc'); for(var k=0;k<l.length;k++) pcFit(l[k]); },600); });
+async function pcExport(){
+  var codes=(PC.codes||[]).slice(), A=pcAwarded(codes), grp=codes.length>1; if(!A.length){ toast('No awarded contracts to export',true); return; }
+  if(!(await loadExcelJS())){ toast('The Excel builder could not load (needs internet access). Try again.',true); return; }
+  var wb=new ExcelJS.Workbook(), ws=wb.addWorksheet('Awarded contracts',{views:[{state:'frozen',ySplit:1}]});
+  var cols=[{h:'Contract no.',w:16},{h:'Vendor',w:30},{h:'Type',w:18}].concat(grp?[{h:'Project',w:30}]:[]).concat([{h:'Scope of work',w:56},{h:'Contract value (SAR)',w:22},{h:'Revised value (SAR)',w:22}]);
+  ws.columns=cols.map(function(c){ return {width:c.w}; });
+  var hr=ws.addRow(cols.map(function(c){ return c.h; })); hr.eachCell(function(c){ c.font={bold:true,color:{argb:'FFFFFFFF'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B2A5E'}}; c.alignment={vertical:'middle'}; }); hr.height=22;
+  var tcv=0, trv=0, nc=cols.length;
+  A.forEach(function(a,i){ tcv+=a.cv||0; trv+=a.rv||0; var typ=a.g==='hard'?'Hard cost':a.sub==='PMC'?'PMC':'Supervision';
+    var r=ws.addRow([a.cno,a.vendor,typ].concat(grp?[pname(a.code)]:[]).concat([a.scope,a.cv==null?null:Math.round(a.cv),a.rv==null?null:Math.round(a.rv)]));
+    r.getCell(nc-1).numFmt='#,##0'; r.getCell(nc).numFmt='#,##0'; r.getCell(nc-2).alignment={wrapText:true,vertical:'top'}; r.getCell(1).font={bold:true};
+    if(i%2) r.eachCell(function(c){ c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFF7F4EE'}}; }); });
+  var tr=ws.addRow(new Array(nc-3).fill('').concat(['Total',Math.round(tcv),Math.round(trv)])); tr.font={bold:true}; tr.getCell(nc-1).numFmt='#,##0'; tr.getCell(nc).numFmt='#,##0';
+  tr.eachCell({includeEmpty:true},function(c){ c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFECE8DE'}}; c.border={top:{style:'thin',color:{argb:'FF999999'}}}; });
+  ws.autoFilter={from:{row:1,column:1},to:{row:1+A.length,column:nc}};
+  var nm=grp?'Selection':String(pname(codes[0])||codes[0]||'Project').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,''), d=new Date(), ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  await xpSave(await wb.xlsx.writeBuffer(),'KEC_Awarded_Contracts_'+nm+'_'+ds+'.xlsx');
+}
+document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-pcxl]'); if(!b) return; e.preventDefault(); b.disabled=true; pcExport().catch(function(er){ toast((er&&er.message)||'The export failed',true); }).then(function(){ b.disabled=false; }); });
 var NT={d:null,busy:false,find:null,err:''};
 function ntHrs(id,v){ var o=''; for(var h=0;h<24;h++) o+='<option value="'+h+'"'+(h===v?' selected':'')+'>'+String(h).padStart(2,'0')+':00</option>'; return '<select id="'+id+'">'+o+'</select>'; }
 function ntOpen(){ var m=document.getElementById('ntModal'); if(!m) return; m.classList.add('on'); m.innerHTML='<div class="dcp"><h3>Notifications</h3><div class="dcs">Loading…</div></div>'; ntLoad(); }
