@@ -1186,6 +1186,32 @@ body.lyedit .ovwrap .ly-tg{opacity:.4;text-decoration:line-through}
 .pcl .pcsc.pcs-on .pctot td{position:sticky;bottom:-4px;z-index:2;box-shadow:0 -1px 0 #d9d3c4}
 .pcl .pccnt{text-align:right;font-size:12px;font-weight:600;color:var(--mut);padding:6px 4px 0}
 @media print{.pcl .pcsc.pcs-on{max-height:none!important;overflow:visible}.pcl .pcsc.pcs-on thead th,.pcl .pcsc.pcs-on .pctot td{position:static}}
+.suen{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:8px 0;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px}.suen label{display:flex;gap:6px;align-items:center;cursor:pointer}.suen small{color:var(--mut)}
+/* V311 arrange sections */
+.pfbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:8px 0 12px;padding:10px 14px;border:1.5px dashed var(--accent);border-radius:12px;background:var(--card);font-size:13px}
+.pfbar b{font-size:14px}.pfbar small{color:var(--mut);flex:1 1 260px}.pfbar .pfl{color:var(--mut)}
+.pfseg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.pfseg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 13px;min-height:36px;cursor:pointer;font:inherit}.pfseg button:last-child{border-right:0}
+.pfseg button.on{background:var(--accent);color:#fff}
+.pfbar .btn{min-height:36px}
+.pf-ctl{margin-left:auto;display:inline-flex;gap:6px;align-items:center;align-self:center}
+.pf-b,.pf-h{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);font-size:13px;line-height:1;padding:0;cursor:pointer}
+.pf-b:disabled{opacity:.35;cursor:default}
+.pf-h{cursor:grab;touch-action:none;letter-spacing:-2px;font-weight:700;user-select:none;-webkit-user-select:none}
+body.pf-arr .sec{padding:6px 8px 6px 4px;border:1px solid var(--line);border-radius:10px;background:var(--card);align-items:center}
+body.pf-arr .sec.pf-drag{opacity:.55;border-color:var(--accent)}
+body.pf-arr .sec-bar{display:none}
+.pf-ind{position:fixed;height:4px;border-radius:3px;background:var(--accent);z-index:60;pointer-events:none;display:none}
+.ucs.big[data-pfc="1"]{grid-template-columns:minmax(0,1fr)!important}
+.ucs.big[data-pfc="2"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.ucs.big[data-pfc="3"]{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.ucs.big[data-pfc="4"]{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+@media(max-width:1000px){.ucs.big[data-pfc="4"]{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:820px){.ucs.big[data-pfc="3"],.ucs.big[data-pfc="4"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:560px){.ucs.big[data-pfc]{grid-template-columns:minmax(0,1fr)!important}}
+@media(pointer:coarse){.pf-b,.pf-h{width:46px;height:46px;font-size:16px}.pfseg button{min-height:44px;padding:8px 16px}.pfbar .btn{min-height:44px}}
+@media print{.pfbar,.pf-ctl,[data-pfarr]{display:none!important}.ucs.big[data-pfc]{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))!important}}
+.svtools{flex-wrap:wrap}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1215,7 +1241,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V309</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V311</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1990,7 +2016,7 @@ function muPaint(){
   var rows=[];
   MU.items.forEach(function(s){
     var pr=esc((s.projects||[]).slice(0,3).join(', ')+((s.projects||[]).length>3?' …':'')), by=s.reviewed&&s.reviewed.by&&s.reviewed.by!=='auto'?s.reviewed.by:'';
-    if(s.status==='pending') rows.push('<div class="mub warn"><b>Waiting for approval</b> · your update ('+pr+') was sent '+svStamp(s.ts)+'. An administrator has been notified. This message goes away when it is decided.</div>');
+    if(s.status==='pending') rows.push('<div class="mub warn"><b>Waiting for approval</b>'+(s.entry==='mod'?' · modification':s.entry==='new'?' · new entry':'')+' · your update ('+pr+') was sent '+svStamp(s.ts)+'. An administrator has been notified. This message goes away when it is decided.</div>');
     else if(by&&(MU.dismiss===false||!MU.seen[s.id])&&Date.now()-s.ts<(MU.days||14)*864e5){
       var when=s.reviewed&&s.reviewed.ts?svStamp(s.reviewed.ts):'';
       if(s.status==='accepted') rows.push('<div class="mub good"><b>Approved</b> · your update ('+pr+') was approved by '+esc(by)+' '+when+' and is now live.'+(s.partial&&s.partial.rejected&&s.partial.rejected.length?' Not included: '+esc(s.partial.rejected.join(', '))+'.':'')+'<button type="button" data-mud="'+esc(s.id)+'">Dismiss</button></div>');
@@ -3729,6 +3755,119 @@ document.addEventListener('click',function(e){
   var s=t.closest('.sec'); if(!s) return; var h=!s.classList.contains('sec-c'); if(h) SECC[secKey(s)]=1; else delete SECC[secKey(s)]; secApply(s,h); secSave(); e.stopPropagation();
 },true);
 
+/* ===== Arrange sections (V311): each user orders the Site view sections and picks the package cards per row; saved per user ===== */
+var PF={d:{site:{order:[],cols:0},grp:{order:[],cols:0}},ts:0,k:'',loaded:false,syncing:false,old:false,arr:false,work:null,def:null,cols:0,compact:true,kind:'site'};
+function pfKey(){ return 'kec_pref.v1.'+String((ACC.need&&ACC.user&&ACC.user.name)||'device').toLowerCase(); }
+function pfFix(d){ d=(d&&typeof d==='object')?d:{}; ['site','grp'].forEach(function(k){ var o=d[k]&&typeof d[k]==='object'?d[k]:{}; d[k]={order:Array.isArray(o.order)?o.order.filter(function(x){ return typeof x==='string'; }).slice(0,30):[],cols:[0,1,2,3,4].indexOf(o.cols)>=0?o.cols:0}; }); return d; }
+function pfLocal(){ try{ var j=JSON.parse(localStorage.getItem(pfKey())||'null'); if(j&&j.d){ PF.d=pfFix(j.d); PF.ts=j.ts||0; } }catch(e){} }
+function pfLocalSave(){ try{ localStorage.setItem(pfKey(),JSON.stringify({d:PF.d,ts:PF.ts})); }catch(e){} }
+function pfIdentity(){ if(PF.k!==pfKey()){ PF.k=pfKey(); PF.d=pfFix(null); PF.ts=0; PF.loaded=false; pfLocal(); } }
+async function pfLoad(){
+  if(PF.loaded||PF.syncing||!ulRelay()) return; PF.syncing=true; var k=PF.k;
+  try{ var j=await accCall('GET','/prefs',null,15000); if(k===PF.k&&j&&j.data&&(j.ts||0)>PF.ts){ PF.d=pfFix(j.data); PF.ts=j.ts; pfLocalSave(); if(!PF.arr) render(); } }
+  catch(e){ if(e&&(e.status===404||e.status===405)) PF.old=true; }
+  PF.syncing=false; PF.loaded=true;
+}
+function pfUnits(){
+  var pages=[].slice.call(document.querySelectorAll('#view .sitepg')), units=[];
+  pages.forEach(function(pg,pi){ var cur=null; [].slice.call(pg.children).forEach(function(n){
+    if(n.classList.contains('svft')){ cur=null; return; }
+    if(n.classList.contains('sec')){ cur={id:n.id,nodes:[n],pg:pi}; units.push(cur); } else if(cur&&!n.classList.contains('sec-bar')) cur.nodes.push(n); }); });
+  return {pages:pages,units:units};
+}
+function pfOrderIds(){ return pfUnits().units.map(function(u){ return u.id; }); }
+function pfApply(order){
+  var U=pfUnits(); if(!U.units.length) return;
+  var ids=U.units.map(function(u){ return u.id; });
+  var want=(order||[]).filter(function(i,k,a){ return ids.indexOf(i)>=0&&a.indexOf(i)===k; });
+  var res=ids.slice(), k=0; ids.forEach(function(id,i){ if(want.indexOf(id)>=0) res[i]=want[k++]; });
+  var by={}; U.units.forEach(function(u){ by[u.id]=u; }); var q=0;
+  U.pages.forEach(function(pg,pi){ var n=U.units.filter(function(u){ return u.pg===pi; }).length, ft=null; [].forEach.call(pg.children,function(c){ if(c.classList.contains('svft')) ft=c; });
+    for(var j=0;j<n;j++){ by[res[q++]].nodes.forEach(function(nd){ pg.insertBefore(nd,ft); }); } });
+  try{ window.dispatchEvent(new Event('resize')); }catch(e){}
+}
+function pfKind(){ return (typeof SV!=='undefined'&&SV.cur&&SV.cur.grp)?'grp':'site'; }
+function pfCols(n){ var s=document.getElementById('svP'); if(!s) return; var g=s.nextElementSibling; while(g&&!secStop(g)){ if(g.classList&&g.classList.contains('ucs')){ if(n) g.setAttribute('data-pfc',String(n)); else g.removeAttribute('data-pfc'); } g=g.nextElementSibling; } }
+function pfBar(){
+  var b=document.getElementById('pfBar'), has=!!document.querySelector('#view #svP ~ .ucs.big, #view #svP + .ucs');
+  if(!PF.arr){ if(b) b.remove(); return; }
+  var h='<b>Arrange sections</b><small>Drag the handle or use the arrows. Printing always keeps the standard A3 order.</small>'+
+    (has?'<span class="pfl">Package cards per row</span><span class="pfseg" role="group" aria-label="Package cards per row">'+[0,1,2,3,4].map(function(n){ return '<button type="button" data-pfcols="'+n+'" class="'+(PF.cols===n?'on':'')+'" aria-pressed="'+(PF.cols===n)+'">'+(n?n:'Auto')+'</button>'; }).join('')+'</span>':'')+
+    '<span class="pfseg" role="group" aria-label="View while arranging"><button type="button" data-pfcomp="1" class="'+(PF.compact?'on':'')+'">Compact</button><button type="button" data-pfcomp="0" class="'+(PF.compact?'':'on')+'">Full</button></span>'+
+    '<span class="sp" style="flex:1"></span><button type="button" class="btn" data-pfreset="1">Reset to standard</button><button type="button" class="btn" data-pfcancel="1">Cancel</button><button type="button" class="btn pri" data-pfsave="1">Save my layout</button>';
+  if(!b){ b=document.createElement('div'); b.id='pfBar'; b.className='pfbar'; var t=document.querySelector('#view .svtools'); if(t) t.parentNode.insertBefore(b,t.nextSibling); else { var p=document.querySelector('#view .sitepg'); if(p) p.parentNode.insertBefore(b,p); } }
+  b.innerHTML=h;
+}
+function pfDecor(){
+  var ids=pfOrderIds();
+  [].slice.call(document.querySelectorAll('#view .sitepg>.sec')).forEach(function(s){ var c=s.querySelector('.pf-ctl'); if(!PF.arr){ if(c) c.remove(); return; }
+    var i=ids.indexOf(s.id); if(!c){ c=document.createElement('span'); c.className='pf-ctl'; s.appendChild(c); }
+    c.innerHTML='<button type="button" class="pf-b" data-pfmv="-1" aria-label="Move section up"'+(i<=0?' disabled':'')+'>&#9650;</button><button type="button" class="pf-b" data-pfmv="1" aria-label="Move section down"'+(i>=ids.length-1?' disabled':'')+'>&#9660;</button><span class="pf-h" data-pfdrag="1" role="button" aria-label="Drag to move this section" title="Drag to move">&#8942;&#8942;</span>'; });
+}
+function pfPost(){
+  pfIdentity();
+  var on=state.page==='site'&&!state.gprint&&document.querySelector('#view .sitepg');
+  document.body.classList.toggle('pf-arr',!!(on&&PF.arr));
+  if(!on){ if(state.page!=='site') PF.arr=false; return; }
+  PF.kind=pfKind(); PF.def=pfOrderIds();
+  var t=document.querySelector('#view .svtools');
+  if(t&&!t.querySelector('[data-pfarr]')){ var b=document.createElement('button'); b.type='button'; b.className='btn'; b.setAttribute('data-pfarr','1'); b.textContent='Arrange sections'; b.title='Move the sections and choose the card layout. Saved for your user.'; var pr=t.querySelector('#svPrint'); t.insertBefore(b,pr||null); }
+  var sv=PF.d[PF.kind];
+  pfApply(PF.arr&&PF.work?PF.work:sv.order);
+  pfCols(PF.arr?PF.cols:sv.cols);
+  if(PF.arr){ if(PF.compact) [].slice.call(document.querySelectorAll('#view .sec')).forEach(function(s){ secApply(s,true); }); else [].slice.call(document.querySelectorAll('#view .sec')).forEach(function(s){ secApply(s,!!SECC[secKey(s)]); }); }
+  pfBar(); pfDecor();
+  if(!PF.loaded) pfLoad();
+}
+function pfStart(){ var sv=PF.d[pfKind()]; PF.arr=true; PF.work=pfOrderIds(); PF.cols=sv.cols; render(); try{ window.scrollTo({top:0}); }catch(e){} }
+function pfStop(){ PF.arr=false; PF.work=null; render(); }
+function pfMove(id,to){ var a=PF.work; if(!a) return; var i=a.indexOf(id); if(i<0) return; to=Math.max(0,Math.min(a.length-1,to)); if(to===i) return; a.splice(i,1); a.splice(to,0,id); pfApply(a); PF.work=pfOrderIds(); pfDecor(); }
+async function pfSave(btn){
+  var o=PF.work||[], same=o.length===PF.def.length&&o.every(function(x,i){ return x===PF.def[i]; });
+  PF.d[PF.kind]={order:same?[]:o.slice(),cols:PF.cols}; PF.ts=Date.now(); pfLocalSave();
+  var shared=false, err='';
+  if(btn) btn.disabled=true;
+  if(ulRelay()&&!PF.old){ try{ var j=await accCall('POST','/prefs',{data:PF.d,ts:PF.ts},20000); if(j&&j.ts){ PF.ts=j.ts; pfLocalSave(); } shared=true; }catch(e){ if(e&&(e.status===404||e.status===405)) PF.old=true; else err=(e&&e.message)||'The layout could not be sent to the relay'; } }
+  PF.arr=false; PF.work=null; render();
+  toast(shared||!ulRelay()&&!PF.old?(shared?'Your layout is saved':'Your layout is saved on this device'):(err||'Saved on this device only. Deploy relay V39 to keep it for your user on every device.'),!shared&&ulRelay());
+}
+var PFD=null, PFI=null;
+function pfRectOf(u){ var t=1e9,b=-1e9,l=1e9,r=-1e9; u.nodes.forEach(function(n){ if(!n.offsetParent&&n.getBoundingClientRect().height===0) return; var q=n.getBoundingClientRect(); if(!q.height) return; t=Math.min(t,q.top); b=Math.max(b,q.bottom); l=Math.min(l,q.left); r=Math.max(r,q.right); }); return b<t?null:{t:t,b:b,l:l,r:r}; }
+function pfInd(show,x,y,w){ if(!PFI){ PFI=document.createElement('div'); PFI.className='pf-ind'; document.body.appendChild(PFI); } PFI.style.display=show?'block':'none'; if(show){ PFI.style.left=x+'px'; PFI.style.top=y+'px'; PFI.style.width=w+'px'; } }
+function pfDragMove(e){
+  var D=PFD; if(!D) return; D.last=e; var U=pfUnits(), best=null, bd=1e12, y=e.clientY;
+  U.units.forEach(function(u){ var q=pfRectOf(u); if(!q) return; var d=(y>=q.t&&y<=q.b)?-1:Math.min(Math.abs(y-q.t),Math.abs(y-q.b)); if(d<bd){ bd=d; best={u:u,q:q}; } });
+  if(!best){ pfInd(false); D.to=null; return; }
+  var sec=best.u.nodes[0].getBoundingClientRect(), before=y<(best.q.t+Math.min(best.q.b,best.q.t+sec.height+40))/2;
+  if(best.u.nodes.length>1&&y>sec.bottom+8&&best.q.b-best.q.t>sec.height+80) before=y<(best.q.t+best.q.b)/2;
+  D.to={id:best.u.id,before:before};
+  pfInd(true,best.q.l,before?best.q.t-3:best.q.b+1,best.q.r-best.q.l);
+}
+function pfAuto(){ if(!PFD||PFD.raf) return; var tick=function(){ var D=PFD; if(!D) return; var y=D.last.clientY, dy=y<80?-16:(y>window.innerHeight-80?16:0); if(dy){ window.scrollBy(0,dy); pfDragMove(D.last); } D.raf=requestAnimationFrame(tick); }; PFD.raf=requestAnimationFrame(tick); }
+function pfDragEnd(drop){
+  var D=PFD; if(!D) return; PFD=null; if(D.raf) cancelAnimationFrame(D.raf); pfInd(false);
+  var s=document.getElementById(D.id); if(s) s.classList.remove('pf-drag');
+  if(drop&&D.to&&D.to.id!==D.id){ var a=PF.work.filter(function(x){ return x!==D.id; }), i=a.indexOf(D.to.id); a.splice(D.to.before?i:i+1,0,D.id); var from=PF.work.indexOf(D.id); PF.work=a; pfApply(a); PF.work=pfOrderIds(); pfDecor(); var el=document.getElementById(D.id); if(el) try{ el.scrollIntoView({block:'nearest'}); }catch(x){} }
+}
+document.addEventListener('pointerdown',function(e){
+  var h=e.target.closest&&e.target.closest('[data-pfdrag]'); if(!h||!PF.arr||e.button) return; e.preventDefault();
+  var s=h.closest('.sec'); if(!s) return; PFD={id:s.id,last:e,to:null}; s.classList.add('pf-drag'); try{ h.setPointerCapture(e.pointerId); }catch(x){} pfAuto();
+},true);
+document.addEventListener('pointermove',function(e){ if(PFD){ e.preventDefault(); pfDragMove(e); } },true);
+document.addEventListener('pointerup',function(){ pfDragEnd(true); },true);
+document.addEventListener('pointercancel',function(){ pfDragEnd(false); },true);
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&PF.arr){ if(PFD) pfDragEnd(false); else pfStop(); } });
+document.addEventListener('click',function(e){
+  var t=e.target&&e.target.closest?e.target.closest('[data-pfarr],[data-pfmv],[data-pfcols],[data-pfcomp],[data-pfreset],[data-pfcancel],[data-pfsave]'):null; if(!t) return;
+  if(t.hasAttribute('data-pfarr')){ pfStart(); }
+  else if(t.hasAttribute('data-pfmv')){ var s=t.closest('.sec'); if(s&&PF.work){ var i=PF.work.indexOf(s.id); pfMove(s.id,i+parseInt(t.getAttribute('data-pfmv'),10)); var el=document.getElementById(s.id); if(el){ var nb=el.querySelector('[data-pfmv="'+t.getAttribute('data-pfmv')+'"]'); if(nb&&!nb.disabled) try{ nb.focus({preventScroll:true}); }catch(x){} try{ el.scrollIntoView({block:'nearest'}); }catch(x){} } } }
+  else if(t.hasAttribute('data-pfcols')){ PF.cols=parseInt(t.getAttribute('data-pfcols'),10); pfCols(PF.cols); pfBar(); }
+  else if(t.hasAttribute('data-pfcomp')){ PF.compact=t.getAttribute('data-pfcomp')==='1'; render(); }
+  else if(t.hasAttribute('data-pfreset')){ PF.work=(PF.def||[]).slice(); PF.cols=0; render(); }
+  else if(t.hasAttribute('data-pfcancel')){ pfStop(); }
+  else if(t.hasAttribute('data-pfsave')){ pfSave(t); }
+});
+
 /* ---- manpower block (V299): latest data date, by package, values + variance, summary cards, table ---- */
 function svMpModel(sc,cut,grp,codes){
   var lcs=(codes||[]).map(function(q){ return String(q).toLowerCase(); }), by={};
@@ -3997,25 +4136,51 @@ function suSummary(P){
 function suOpenUpload(){
   var mode=suMode(); if(mode==='off'){ toast('You do not have the right to upload site updates',true); return; }
   var t={live:'Your upload goes live straight away.',review:'Your upload waits for an administrator to approve it before it shows on the dashboard.',local:'There is no sign-in on this copy: the upload is applied in this browser only.'}[mode];
-  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p><input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
+  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p>'+(suMode()==='local'?'':'<div class="suen"><b>This upload is</b><label><input type="radio" name="suEntry" value="new"> New entry <small>adds new rows to the database</small></label><label><input type="radio" name="suEntry" value="mod"> Modification <small>changes existing rows (only the cells you fill in)</small></label></div>')+'<input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suEnt"></div><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
 }
 async function suRead(file,okCode,resId){
   var out=document.getElementById(resId||'suRes'); out.innerHTML='Reading…';
-  try{ var wb=XLSX.read(await file.arrayBuffer(),{type:'array'}); SU.parsed=suParse(wb,okCode); out.innerHTML=suSummary(SU.parsed); SU.chk=[]; try{ if(model&&!SU.parsed.errs.length){ SU.chk=suChkRows(SU.parsed.data).filter(function(x){ var q=jsState(x.r,x.m); return q==='open'||q==='Rejected'; }); out.innerHTML+=suChkHtml(SU.chk); } }catch(e){ console.warn('upload check',e&&e.message); } if(!SU.tok&&model&&!SU.parsed.errs.length){ try{ var pvw=ulPreview(SU.parsed.data); out.innerHTML+='<div class="ulcard" style="margin-top:10px"><b>What this update will change</b>'+ulChanges(pvw,4)+'</div>'; }catch(e){} } var b=document.getElementById('suSend'); if(b) b.disabled=!!SU.parsed.errs.length; }
+  try{ var wb=XLSX.read(await file.arrayBuffer(),{type:'array'}); SU.parsed=suParse(wb,okCode); out.innerHTML=suSummary(SU.parsed); SU.chk=[]; try{ if(model&&!SU.parsed.errs.length){ SU.chk=suChkRows(SU.parsed.data).filter(function(x){ var q=jsState(x.r,x.m); return q==='open'||q==='Rejected'; }); out.innerHTML+=suChkHtml(SU.chk); } }catch(e){ console.warn('upload check',e&&e.message); } if(!SU.tok&&model&&!SU.parsed.errs.length){ try{ var pvw=ulPreview(SU.parsed.data); out.innerHTML+='<div class="ulcard" style="margin-top:10px"><b>What this update will change</b>'+ulChanges(pvw,4)+'</div>'; }catch(e){} } suBtn(); suCheckEntry(); }
   catch(e){ SU.parsed=null; out.innerHTML='<div class="sepnote"><span class="ni">!</span><div>That file could not be read as an Excel workbook.</div></div>'; }
 }
+var SUE={n:0,block:false,left:null};
+function suEntryOn(){ return suMode()!=='local'&&!SU.tok; }
+function suBtn(){ var b=document.getElementById('suSend'); if(!b) return; var P=SU.parsed; b.disabled=!P||!!P.errs.length||(suEntryOn()&&!SU.entry)||SUE.block; b.title=(suEntryOn()&&!SU.entry)?'Choose New entry or Modification first':''; }
+function suEntHtml(j){
+  var lst=function(a){ return a.slice(0,15).map(function(x){ return '<div class="suci">'+esc(x.date?d2(x.date):'')+' · <b>'+esc(pname(x.code))+'</b>'+(x.pkg&&x.pkg!==x.code?' · '+esc(x.pkg):'')+'</div>'; }).join('')+(a.length>15?'<div class="jm">and '+(a.length-15)+' more</div>':''); };
+  if(SU.entry==='new'&&j.nDups){ SUE.block=true; return '<div class="sepnote suchk" style="border-color:var(--bad)"><span class="ni">!</span><div><b>You selected New entry, but '+j.nDups+' row'+(j.nDups>1?'s':'')+' already exist'+(j.nDups>1?'':'s')+' in the database</b><div class="jm" style="margin:2px 0 6px">Did you mean Modification? New entry cannot add a row that is already there.</div>'+lst(j.dups)+'<div style="margin-top:8px"><button type="button" class="btn pri" data-suen="mod">Switch to Modification</button></div></div></div>'; }
+  if(SU.entry==='mod'){
+    var h='', total=SUE.rows||0;
+    if(j.nNf){ h+='<div class="sepnote suchk" style="border-color:var(--warn)"><span class="ni">!</span><div><b>'+j.nNf+' row'+(j.nNf>1?'s':'')+' do not exist yet and will be skipped</b><div class="jm" style="margin:2px 0 6px">A modification can only change rows that already exist (same data date, project and package). Upload these rows again as New entry.</div>'+lst(j.notFound)+'</div></div>'; }
+    if(total&&j.nNf>=total){ SUE.block=true; return h+'<div class="sepnote"><span class="ni">!</span><div>None of the rows exist yet, so there is nothing to modify. Choose <b>New entry</b>.</div></div>'; }
+    if(j.changes){ h+='<div class="sepnote" style="border-color:var(--good)"><span class="ni">✓</span><div><b>'+j.changes+' cell'+(j.changes>1?'s':'')+' will change</b>'+(j.unchanged?' · '+j.unchanged+' row'+(j.unchanged>1?'s are':' is')+' identical':'')+(j.sample||[]).slice(0,8).map(function(x){ return '<div class="suci">'+esc(pname(x.code))+(x.pkg&&x.pkg!==x.code?' · '+esc(x.pkg):'')+' · <b>'+esc(x.f)+'</b>: '+esc(x.b===''?'(empty)':String(x.b))+' → '+esc(String(x.a))+'</div>'; }).join('')+'</div></div>'; }
+    else if(!j.nNf) h+='<div class="sepnote"><span class="ni">i</span><div>Nothing in this file differs from the database.</div></div>';
+    return h; }
+  return '';
+}
+async function suCheckEntry(){
+  var box=document.getElementById('suEnt'); if(!box) return; SUE.block=false; box.innerHTML=''; var P=SU.parsed;
+  if(!suEntryOn()||!SU.entry||!P||P.errs.length){ suBtn(); return; }
+  var my=++SUE.n; box.innerHTML='<div class="jm">Checking the file against the database…</div>'; SUE.block=true; suBtn();
+  try{ var j=await accCall('POST','/site-check',{data:P.data,entry:SU.entry},60000); if(my!==SUE.n) return; SUE.block=false; SUE.rows=['prog','con','e1','e2','qa','mp'].reduce(function(n,k){ return n+((P.data[k]||[]).length); },0); if(j.checked===false){ box.innerHTML=''; } else box.innerHTML=suEntHtml(j); }
+  catch(e){ if(my!==SUE.n) return; SUE.block=true; box.innerHTML='<div class="sepnote"><span class="ni">!</span><div>'+esc((e&&e.status===404)?'The relay is older than V38. Deploy relay V38 to use New entry / Modification.':((e&&e.message)||'The file could not be checked'))+'</div></div>'; }
+  suBtn();
+}
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.name==='suEntry'){ SU.entry=t.value; suCheckEntry(); } });
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-suen]'); if(!t) return; var v=t.getAttribute('data-suen'), r=document.querySelector('input[name=suEntry][value='+v+']'); if(r){ r.checked=true; SU.entry=v; suCheckEntry(); } });
 async function suSubmit(){
   var P=SU.parsed; if(!P||P.errs.length) return; var b=document.getElementById('suSend');
+  if(suEntryOn()&&!SU.entry){ toast('Choose New entry or Modification first',true); return; }
   var JT=[], short=0; document.querySelectorAll('#suModal .sujt').forEach(function(t){ var v=t.value.trim(), x=SU.chk&&SU.chk[+t.getAttribute('data-suj')]; if(!v||!x) return; if(v.length<10) short++; else JT.push({x:x,v:v}); });
   if(short){ toast('A justification needs at least 10 characters. Complete it or clear it.',true); return; }
   b.disabled=true; b.textContent='Sending…';
   try{
     if(suMode()==='local'){ var pvl=[]; try{ pvl=ulPreview(P.data); }catch(e){} suMerge([{data:P.data}]); suReload(); toast('Update applied in this browser'); try{ ulSave({route:'site',by:'This browser',label:'Site update applied locally',cut:'',projects:P.codes||[],n:pvl.length,flags:pvl.filter(function(c){ return c.flag; }).length,changes:pvl.slice(0,600)},null); }catch(e){} }
     else{ var j; if(SU.tok){ var r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/site-upload',{method:'POST',headers:{'Content-Type':'application/json','X-KEC-Link':SU.tok},body:JSON.stringify({data:P.data})}); j=await r.json().catch(function(){return {};}); if(!r.ok) throw {message:j.error||('the relay answered '+r.status)}; }
-      else j=await accCall('POST','/site-upload',{data:P.data},60000);
-      toast(j.status==='accepted'?'Update accepted and live':'Update sent for approval'); try{ muLoad(); }catch(e){} if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } if(JT.length&&ACC.need) await suSaveJust(JT); }
+      else j=await accCall('POST','/site-upload',{data:P.data,entry:suEntryOn()?SU.entry:undefined},60000);
+      toast((j.status==='accepted'?'Update accepted and live':'Update sent for approval')+(j.entry==='mod'?' (modification'+(j.notFound?', '+j.notFound+' row'+(j.notFound>1?'s':'')+' skipped':'')+')':j.entry==='new'?' (new entry)':'')); try{ muLoad(); }catch(e){} if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } if(JT.length&&ACC.need) await suSaveJust(JT); }
     var m=document.getElementById('suModal'); if(m&&!SU.tok) m.remove(); else document.getElementById('suRes').innerHTML='<div class="sepnote"><span class="ni">✓</span><div>Update received. You can close this page.</div></div>';
-  }catch(e){ toast((e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Upload failed'),true); b.disabled=false; b.textContent='Submit update'; }
+  }catch(e){ toast((e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Upload failed'),true); b.disabled=false; b.textContent='Submit update'; if(e&&e.status===409) suCheckEntry(); }
 }
 /* admin: submissions and private links */
 async function suOpenAdmin(){
@@ -4023,13 +4188,19 @@ async function suOpenAdmin(){
   try{ var j=await accCall('GET','/site-admin',null,30000); SU.admin=j; suDrawAdmin(); }
   catch(e){ document.getElementById('suAdmB').innerHTML='<div class="empty">'+esc(e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Could not load')+'</div>'; }
 }
+function suModsHtml(s){
+  if(s.entry!=='mod') return '';
+  var h='<p><b>Modification:</b> '+(s.nMods||0)+' cell'+((s.nMods||0)===1?'':'s')+' change'+(s.nNf?' · '+s.nNf+' row'+(s.nNf>1?'s':'')+' skipped because they do not exist yet':'')+'</p>';
+  if((s.mods||[]).length) h+='<div class="svtw"><table class="svtb"><thead><tr><th>Project · package</th><th>Date</th><th>Field</th><th class="n">Before</th><th class="n">After</th></tr></thead><tbody>'+s.mods.slice(0,25).map(function(m){ return '<tr><td>'+esc(pname(m.code)+(m.pkg&&m.pkg!==m.code?' · '+m.pkg:''))+'</td><td>'+esc(m.date?d2(m.date):'')+'</td><td>'+esc(m.f)+'</td><td class="n">'+esc(m.b===''?'(empty)':String(m.b))+'</td><td class="n"><b>'+esc(String(m.a))+'</b></td></tr>'; }).join('')+'</tbody></table></div>'+((s.mods||[]).length>25?'<div class="jm">and '+(s.nMods-25)+' more changes</div>':'');
+  return h;
+}
 function suDrawAdmin(){
   var j=SU.admin, st={pending:'Waiting for approval',accepted:'Live',rejected:'Rejected',revoked:'Revoked'}, ago=function(t){ return svStamp(t); };
   var subs=j.subs.map(function(s){ var D=(s.status==='accepted'||s.status==='pending')?suDiscrepancies(s.data):[], acts='';
     if(s.status==='pending') acts='<button class="btn pri" data-sureview="approve" data-id="'+s.id+'">Approve</button> <button class="btn" data-sureview="reject" data-id="'+s.id+'">Reject</button>';
     else if(s.status==='accepted') acts='<button class="btn" data-sureview="revoke" data-id="'+s.id+'">Take back</button>';
-    return '<div class="svch"><span class="svimp '+(s.status==='pending'?'warn':s.status==='accepted'?'good':'bad')+'">'+st[s.status]+'</span><div class="svcb"><b>'+esc(s.by)+' · '+esc(s.projects.join(', '))+'</b><small>'+ago(s.ts)+' · '+Object.keys(s.cnt).filter(function(k){ return s.cnt[k]; }).map(function(k){ return k+' '+s.cnt[k]; }).join(' · ')+(s.sheet?' · '+(s.sheet.ok?'In the Sheet ('+s.sheet.add+' added, '+s.sheet.rep+' replaced'+(s.sheet.same?', '+s.sheet.same+' unchanged':'')+')':'<b style="color:#b3261e">Not written to the Sheet: '+esc(s.sheet.err||'error')+'</b>'):'')+'</small>'+
-      (D.length?'<p class="'+(s.confirmed?'':'bad')+'"><b>Differs from the contracts file'+(s.confirmed?' (confirmed)':'')+':</b></p><div class="svtw"><table class="svtb"><thead><tr><th>Contract</th><th>Item</th><th class="n">Site team</th><th class="n">Contracts file</th></tr></thead><tbody>'+D.slice(0,12).map(function(d){ return '<tr><td>'+esc(d.code+' · '+d.cno)+'</td><td>'+d.f+'</td><td class="n">'+fm(d.site)+'</td><td class="n">'+fm(d.file)+'</td></tr>'; }).join('')+'</tbody></table></div>'+(s.confirmed?'':'<button class="btn" data-sureview="confirm" data-id="'+s.id+'">Confirm the site team figures</button>'):'')+'</div><div>'+acts+'</div></div>'; }).join('')||'<div class="empty">No submissions yet.</div>';
+    return '<div class="svch"><span class="svimp '+(s.status==='pending'?'warn':s.status==='accepted'?'good':'bad')+'">'+st[s.status]+'</span><div class="svcb"><b>'+esc(s.by)+' · '+esc(s.projects.join(', '))+'</b><small>'+ago(s.ts)+(s.entry?' · <b>'+(s.entry==='mod'?'Modification':'New entry')+'</b>':'')+' · '+Object.keys(s.cnt).filter(function(k){ return s.cnt[k]; }).map(function(k){ return k+' '+s.cnt[k]; }).join(' · ')+(s.sheet?' · '+(s.sheet.ok?'In the Sheet ('+s.sheet.add+' added, '+s.sheet.rep+' replaced'+(s.sheet.same?', '+s.sheet.same+' unchanged':'')+')':'<b style="color:#b3261e">Not written to the Sheet: '+esc(s.sheet.err||'error')+'</b>'):'')+'</small>'+
+      suModsHtml(s)+(D.length?'<p class="'+(s.confirmed?'':'bad')+'"><b>Differs from the contracts file'+(s.confirmed?' (confirmed)':'')+':</b></p><div class="svtw"><table class="svtb"><thead><tr><th>Contract</th><th>Item</th><th class="n">Site team</th><th class="n">Contracts file</th></tr></thead><tbody>'+D.slice(0,12).map(function(d){ return '<tr><td>'+esc(d.code+' · '+d.cno)+'</td><td>'+d.f+'</td><td class="n">'+fm(d.site)+'</td><td class="n">'+fm(d.file)+'</td></tr>'; }).join('')+'</tbody></table></div>'+(s.confirmed?'':'<button class="btn" data-sureview="confirm" data-id="'+s.id+'">Confirm the site team figures</button>'):'')+'</div><div>'+acts+'</div></div>'; }).join('')||'<div class="empty">No submissions yet.</div>';
   var links=j.links.map(function(l){ var u=location.href.split('#')[0].split('?')[0]+'?site='+l.tok; return '<tr><td>'+esc(l.name)+'</td><td>'+esc(l.projects==='*'?'All projects':l.projects.join(', '))+'</td><td>'+(l.mode==='live'?'Live directly':'Needs approval')+'</td><td>'+(l.exp?(l.exp<Date.now()?'<b style="color:#b3261e">Expired</b>':'Until '+new Date(l.exp).toISOString().slice(0,10)):'No end date')+' · '+(l.n||0)+(l.max?' of '+l.max:'')+' upload'+((l.n||0)===1?'':'s')+'</td><td>'+(l.revoked?'Revoked':'<input readonly value="'+esc(u)+'" style="width:100%;font-size:11px" onclick="this.select()">')+'</td><td>'+(l.revoked?'':'<button class="btn" data-sulrev="'+l.tok+'">Revoke</button>')+'</td></tr>'; }).join('');
   var plist=[]; model.projects.forEach(function(p,k){ if(HIDE_PROJ.indexOf(k)<0) plist.push(k); });
   document.getElementById('suAdmB').innerHTML='<h4>Submissions</h4><div class="svchl">'+subs+'</div><h4 style="margin-top:18px">Private upload links</h4><p style="font-size:12.5px;color:var(--mut)">One link per site team. Anyone with the link can upload for the projects you tick, and nothing else.</p>'+
@@ -4248,7 +4419,7 @@ function navTrack(){ var sn=navSnap(), sig=JSON.stringify(sn);
   NAV.last=sig; NAV.lastState=sn;
   var b=document.getElementById('backBtn'); if(b) b.disabled=!NAV.stack.length; }
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('#backBtn'); if(!b||!NAV.stack.length) return; var p=NAV.stack.pop(); Object.assign(state,p); NAV.skip=true; render(); window.scrollTo({top:0}); });
-function render(){ render0.apply(this,arguments); try{ lyPost(); }catch(e){ console.warn('layout',e&&e.message); } try{ phPost(); }catch(e){ console.warn('photos',e&&e.message); } try{ secPost(); }catch(e){ console.warn('sections',e&&e.message); } }
+function render(){ render0.apply(this,arguments); try{ lyPost(); }catch(e){ console.warn('layout',e&&e.message); } try{ phPost(); }catch(e){ console.warn('photos',e&&e.message); } try{ secPost(); }catch(e){ console.warn('sections',e&&e.message); } try{ pfPost(); }catch(e){ console.warn('arrange',e&&e.message); } }
 function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc();
   destroyCharts();
   renderShell();
