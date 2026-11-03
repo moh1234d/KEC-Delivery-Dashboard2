@@ -1241,7 +1241,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V311</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V312</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -5866,7 +5866,46 @@ var RPMX=1, CNMAX=2;
 function pgMode(){ return (RP.cfg&&RP.cfg.pages==='one')?'one':'two'; }
 function slideMax(s,P,cut){ var m=1; (s.cards||[]).forEach(function(c){ var rr=cardRows(P,c); if(!rr.length) return; var a=agg(rr,cut,true); if(a.pf&&a.ff){ var d=dayDiff(a.pf,a.ff); if(d>m) m=d; } }); return m; }
 function cnOff(c){ return c.nc===true; }
-function cardConcerns(c,cut,s){
+/* ===== Area of concern for the monthly report (V312): the only source is the Google Sheet "Area of concern for CO monthly report", next to the progress database ===== */
+var AOC={rows:null,head:[],file:null,busy:false,err:'',ts:0};
+function aocMap(head,rows){
+  var ix={}; head.forEach(function(h,i){ var l=String(h||'').toLowerCase().trim(); if(!l) return;
+    if(/^project code$|^code$/.test(l)) ix.code=i; else if(/^project( name)?$/.test(l)) ix.name=i; else if(/^package|^plot/.test(l)) ix.pkg=i; else if(/^concern|^challenge$|^area of concern/.test(l)) ix.concern=i;
+    else if(/^impact|^severity|^priority/.test(l)) ix.impact=i; else if(/action/.test(l)) ix.action=i; else if(/^owner|^responsible/.test(l)) ix.owner=i; else if(/^target/.test(l)) ix.target=i; else if(/^status$/.test(l)) ix.status=i; });
+  var byName={}; try{ model.projects.forEach(function(p,c){ byName[String((p&&p.name)||pname(c)).toLowerCase()]=c; }); }catch(e){}
+  var g=function(r,k){ return ix[k]==null?'':String(r[ix[k]]||'').trim(); };
+  return rows.map(function(r,i){ var code=g(r,'code'), nm=g(r,'name'); if(!code&&nm) code=byName[nm.toLowerCase()]||''; var raw={}; head.forEach(function(h,j){ if(h) raw[h]=r[j]; });
+    return {id:'aoc:'+i,code:code,lc:String(code).toLowerCase(),pkg:g(r,'pkg'),concern:g(r,'concern'),impact:g(r,'impact'),action:g(r,'action'),owner:g(r,'owner'),target:g(r,'target'),status:g(r,'status'),raw:raw}; })
+   .filter(function(x){ return x.concern; });
+}
+function aocRefresh(){ try{ if(document.getElementById('rptBody')&&RP&&RP.cfg){ drawView(); if(document.getElementById('rptSetup')) drawSetup(); } }catch(e){ console.warn('aoc',e&&e.message); } }
+function aocLoad(force){
+  if(AOC.busy||(AOC.rows!==null&&!force)) return;
+  if(ACC.need===null||(ACC.need&&!ACC.token)) return;
+  if(!ulRelay()){ AOC.rows=[]; AOC.err='The relay is not connected, so the Area of concern file cannot be read.'; return; }
+  AOC.busy=true;
+  accCall('GET','/aoc',null,40000).then(function(j){ AOC.head=j.head||[]; AOC.rows=aocMap(AOC.head,j.rows||[]); AOC.file=j.file||null; AOC.err=''; AOC.busy=false; AOC.ts=Date.now(); aocRefresh(); })
+   .catch(function(e){ AOC.rows=[]; AOC.busy=false; AOC.err=(e&&(e.status===404||e.status===405))?'The relay does not read the Area of concern file yet. Deploy relay V40.':((e&&e.message)||'The Area of concern file could not be read'); aocRefresh(); });
+}
+function aocConcerns(c,s){
+  aocLoad();
+  var set=(c.pk||[]).slice(), lc=String(c.code).toLowerCase(), sib=!set.length&&(s.cards||[]).some(function(o){ return o!==c&&o.code===c.code&&(o.pk||[]).length; });
+  var L=(AOC.rows||[]).filter(function(x){ if(x.lc!==lc) return false; var p=x.pkg; return set.length?(!p||set.some(function(n){ return svPkgMatch(n,p); })):(sib?!p:true); });
+  if(set.length) L=L.filter(function(x){ return x.pkg||set.some(function(n){ var nn=svN(n); return nn&&svHas(svN((x.concern||'')+' '+(x.action||'')),nn); }); });
+  return L.slice().sort(function(a,b){ return (/critical/i.test(b.impact)?1:0)-(/critical/i.test(a.impact)?1:0); });
+}
+function aocNone(){ return AOC.err?'Area of concern file not available':'No areas of concern at this cut-off'; }
+function aocNote(){
+  var h=' <span class="aocn">';
+  if(AOC.busy||AOC.rows===null) h+='Reading the file…';
+  else if(AOC.err) h+='<b style="color:#b3261e">'+esc(AOC.err)+'</b>';
+  else h+=esc((AOC.file&&AOC.file.name)||'Area of concern file')+': '+AOC.rows.length+' row'+(AOC.rows.length===1?'':'s')+' with a concern'+(AOC.head.length?' · columns: '+esc(AOC.head.join(', ')):'')+(AOC.file&&AOC.file.created?' · the file was just created, it is empty':'');
+  return h+(AOC.file&&AOC.file.url?' · <a href="'+esc(AOC.file.url)+'" target="_blank" rel="noopener">Open the file</a>':'')+' · <a href="#" data-aocrl="1">Reload</a></span>';
+}
+document.addEventListener('click',function(e){ var t=e.target&&e.target.closest?e.target.closest('[data-aocrl]'):null; if(!t) return; e.preventDefault(); AOC.rows=null; aocLoad(true); try{ if(document.getElementById('rptSetup')) drawSetup(); }catch(x){} });
+
+function cardConcerns(c,cut,s){ if(cnOff(c)) return []; return aocConcerns(c,s); }
+function cardConcernsOld(c,cut,s){
   if(cnOff(c)) return [];
   var set=(c.pk||[]).slice(), L=[], sib=!set.length&&(s.cards||[]).some(function(o){ return o!==c&&o.code===c.code&&(o.pk||[]).length; });
   try{ svChalLoad(); L=svChalList({code:c.code,lc:String(c.code).toLowerCase(),ok:function(p){ return set.length?(!p||set.some(function(n){ return svPkgMatch(n,p); })):(sib?!p:true); }},cut).all; }catch(e){ L=[]; }
@@ -5884,8 +5923,8 @@ function pageProgress(s,i,N,P,cut){
     var any=cols.some(function(x){ return x.shown.length||x.more>0; });
     if(first){ body+='<div class="rp-sec">'+ed('s:'+s.id+':sec','Progress information')+'</div>'; first=false; }
     body+='<div class="rp-g" style="grid-template-columns:repeat('+k+',1fr)">'+ch.map(function(c){ return rcard(c,P,cut); }).join('')+'</div>';
-    if(any) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-g" style="grid-template-columns:repeat('+k+',1fr);align-items:start">'+cols.map(function(x,j){ var h=x.shown.map(function(y){ return cnHtml(y,ch[j].t); }).join(''); if(x.more>0) h+='<div class="rp-more">+ '+x.more+' more high / critical concern'+(x.more>1?'s':'')+' in the Site view</div>'; if(!h) h='<div class="rp-cnn">'+(cnOff(ch[j])?'Not shown':'No high / critical concerns')+'</div>'; return '<div class="rp-gc">'+h+'</div>'; }).join('')+'</div>';
-    else if(ch.some(function(c){ return !cnOff(c); })) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-cnn" style="text-align:left">No open high / critical concerns at this cut-off.</div>';
+    if(any) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-g" style="grid-template-columns:repeat('+k+',1fr);align-items:start">'+cols.map(function(x,j){ var h=x.shown.map(function(y){ return cnHtml(y,ch[j].t); }).join(''); if(x.more>0) h+='<div class="rp-more">+ '+x.more+' more area'+(x.more>1?'s':'')+' of concern</div>'; if(!h) h='<div class="rp-cnn">'+(cnOff(ch[j])?'Not shown':(AOC.err?aocNone():'No areas of concern'))+'</div>'; return '<div class="rp-gc">'+h+'</div>'; }).join('')+'</div>';
+    else if(ch.some(function(c){ return !cnOff(c); })) body+='<div class="rp-sec rp-aoc">'+ed('s:'+s.id+':aoc','Area of concern')+'</div><div class="rp-cnn" style="text-align:left">'+aocNone()+'.</div>';
   }
   var nk='s:'+s.id+':note', note=ov(nk,'');
   return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+'</div><div class="rp-pgb">'+body+'</div></div>'+((RP.ed||note)?'<div class="rp-note">'+ed(nk,'')+'</div>':'')+'<div class="rp-pn">'+(i+1)+' / '+N+'</div>';
@@ -5969,7 +6008,7 @@ function scHtml(sc){
   }).join('');
 }
 /* ----- concern card (default for every template) ----- */
-function cnHead(x,lab){ var cr=/critical/i.test(x.impact||''); return (lab?String(lab).toUpperCase()+' / ':'')+(x.pkg?x.pkg+(cr?' · Critical':''):(cr?'CRITICAL':'HIGH')); }
+function cnHead(x,lab){ var cr=/critical/i.test(x.impact||''); return (lab?String(lab).toUpperCase()+' / ':'')+(x.pkg?x.pkg+(cr?' · Critical':''):(cr?'CRITICAL':(/high/i.test(x.impact||'')?'HIGH':'CONCERN'))); }
 function cnHtml(x,lab){
   return '<div class="rp-xc"><div class="rp-xh">'+esc(cnHead(x,lab))+'</div><h5 class="rp-xt">'+esc(x.concern||'')+'</h5>'+(x.action?'<div class="rp-xa">Action taken</div><div class="rp-xp">'+esc(x.action)+'</div>':'')+'</div>';
 }
@@ -6086,7 +6125,7 @@ function sceneProgress(s,P,cut,pg){
   if(hasC){
     var yh=56+rows*ch+(rows-1)*gap+26, top=yh+26;
     sc.push(bT(X0,yh,500,18,'Priority concerns',{fs:13,b:1,up:1,ls:1.5,k:K+'aoc'}));
-    if(!list.length){ var nh=Math.min(70,bot-top); sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,'No open high / critical concerns at this cut-off',{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
+    if(!list.length){ var nh=Math.min(70,bot-top); sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,aocNone(),{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
     else list.forEach(function(o,i){ concernCard(sc,o,X0+(i%cc)*(cwc+gap),top+Math.floor(i/cc)*(hc+12),cwc,hc,s.id,i); });
   }
   sc.push(bT(X0,PH-35,400,12,'KEC | Delivery Department',{fs:8,c:GR,up:1,ls:1,k:K+'ft'}));
@@ -6450,7 +6489,7 @@ function drawSetup(){
   var opt=function(sel){ return (sel?'':'<option value="" selected>Choose a project…</option>')+projs.map(function(c){ return '<option value="'+esc(c)+'"'+(c===sel?' selected':'')+'>'+esc(pname(c))+' ('+esc(c)+')</option>'; }).join(''); };
   var h=(RP.msg?'<div class="rp-msg">'+esc(RP.msg)+'</div>':'')+
    tplBox()+(tplB()?'':'<div class="rp-bx"><h5>Cover page</h5><div class="rp-g2"><div><label>Small heading</label><input type="text" data-f="kicker" value="'+esc(c0.kicker||'')+'"></div><div style="grid-column:span 2"><label>Title</label><input type="text" data-f="title" value="'+esc(c0.title||'')+'"></div></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The data date follows the latest cut-off in the dashboard ('+esc(dd(cutIso()))+').</p></div>')+
-   (tplB()?'':'<div class="rp-bx"><h5>Pages for each slide</h5><select data-f="pages"><option value="two"'+(pgMode()==='two'?' selected':'')+'>Two pages: progress information with Area of concern, then a progress photos page</option><option value="one"'+(pgMode()==='one'?' selected':'')+'>One page: cards and photos together (the previous layout)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Area of concern lists the open High and Critical challenges (from the Site view) under the card of the same project or package. The progress photos page appears only when the slide has photos.</p></div>')+
+   (tplB()?'':'<div class="rp-bx"><h5>Pages for each slide</h5><select data-f="pages"><option value="two"'+(pgMode()==='two'?' selected':'')+'>Two pages: progress information with Area of concern, then a progress photos page</option><option value="one"'+(pgMode()==='one'?' selected':'')+'>One page: cards and photos together (the previous layout)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Area of concern shows the rows of the Google Sheet file “Area of concern for CO monthly report” under the card of the same project or package.'+aocNote()+' The progress photos page appears only when the slide has photos.</p></div>')+
    '<div class="rp-bx"><h5>Overview page (page 1)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="ov.on"'+(ovOn()?' checked':'')+'> Include an overview page: every project by planned completion month, with a photo</label>'+
    '<label>Style</label><select data-f="ov.style"><option value="a"'+(((c0.ov&&c0.ov.style)||"a")==="a"?' selected':'')+'>Style A: milestones evenly spaced, alternating above and below</option><option value="b"'+(((c0.ov&&c0.ov.style)||"a")==="b"?' selected':'')+'>Style B: true time scale with delay bars and the data date</option><option value="c"'+(((c0.ov&&c0.ov.style)||"a")==="c"?' selected':'')+'>Style C: as Style A, with forecast completion dates</option></select>'+
    '<p style="margin:8px 0 0;font-size:12px;color:#5b6784">Each card below appears as one project (the picture is the project\'s default photo, the same one shown on the dashboard cards, not a progress photo). Untick a card to leave it out.</p></div>';
