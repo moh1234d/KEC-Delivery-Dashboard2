@@ -1254,7 +1254,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V316</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V318</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -5912,7 +5912,8 @@ function aocConcerns(c,s){
   aocLoad();
   var set=(c.pk||[]).slice(), lc=String(c.code).toLowerCase(), sib=!set.length&&(s.cards||[]).some(function(o){ return o!==c&&o.code===c.code&&(o.pk||[]).length; });
   var L=(AOC.rows||[]).filter(function(x){ if(x.lc!==lc) return false; var p=x.pkg; return set.length?(!p||set.some(function(n){ return svPkgMatch(n,p); })):(sib?!p:true); });
-  if(set.length) L=L.filter(function(x){ return x.pkg||set.some(function(n){ var nn=svN(n); return nn&&svHas(svN((x.concern||'')+' '+(x.action||'')),nn); }); });
+  var firstOf=((s.cards||[]).filter(function(o){ return o.code===c.code; })[0]===c);
+  if(set.length) L=L.filter(function(x){ return x.pkg||firstOf||set.some(function(n){ var nn=svN(n); return nn&&svHas(svN((x.concern||'')+' '+(x.action||'')),nn); }); });
   return L.slice().sort(function(a,b){ return (/critical/i.test(b.impact)?1:0)-(/critical/i.test(a.impact)?1:0); });
 }
 function aocNone(){ return AOC.err?'Area of concern file not available':'No areas of concern at this cut-off'; }
@@ -6029,9 +6030,9 @@ function scHtml(sc){
   }).join('');
 }
 /* ----- concern card (default for every template) ----- */
-function cnHead(x,lab){ var cr=/critical/i.test(x.impact||''); return (lab?String(lab).toUpperCase()+' / ':'')+(x.pkg?x.pkg+(cr?' · Critical':''):(cr?'CRITICAL':(/high/i.test(x.impact||'')?'HIGH':'CONCERN'))); }
+function cnHead(x,lab){ var cr=/critical/i.test(x.impact||''); return x.pkg?x.pkg+(cr?' · Critical':''):(cr?'CRITICAL':(/high/i.test(x.impact||'')?'HIGH':'')); }
 function cnHtml(x,lab){
-  return '<div class="rp-xc"><div class="rp-xh">'+esc(cnHead(x,lab))+'</div><h5 class="rp-xt">'+esc(x.concern||'')+'</h5>'+(x.action?'<div class="rp-xa">Action taken</div><div class="rp-xp">'+esc(x.action)+'</div>':'')+'</div>';
+  return '<div class="rp-xc">'+(cnHead(x,lab)?'<div class="rp-xh">'+esc(cnHead(x,lab))+'</div>':'')+'<h5 class="rp-xt">'+esc(x.concern||'')+'</h5>'+(x.action?'<div class="rp-xa">Action taken</div><div class="rp-xp">'+esc(x.action)+'</div>':'')+'</div>';
 }
 /* ----- data for one progress card ----- */
 function bCardData(c,P,cut){
@@ -6114,7 +6115,7 @@ function progCard(sc,c,P,cut,x,y,w,h){
 function concernCard(sc,o,x,y,w,h,sid,i){
   var x1=o.x, K='n:'+sid+':'+i+':', z=Math.max(1,Math.min(1.3,h/124)), iw=w-34, hd=fit(cnHead(x1,o.lab),iw,14*z,10.5*z,true,1.1);
   sc.push(bR(x,y,w,h,{f:'#fff',rd:12,sh:1})); sc.push(bR(x,y,6,h,{f:RD}));
-  sc.push(bT(x+20,y+10*z,iw,14*z,hd.s,{fs:10.5*z,c:RD,b:1,k:K+'h'}));
+  if(hd.s) sc.push(bT(x+20,y+10*z,iw,14*z,hd.s,{fs:10.5*z,c:RD,b:1,k:K+'h'}));
   var tf=fit(x1.concern||'',iw,36*z,13*z,true,1.18), th=Math.round(tf.n*13*z*1.18)+1, ty=y+28*z;
   sc.push(bT(x+20,ty,iw,th,tf.s,{fs:13*z,b:1,lh:1.18,k:K+'t'}));
   if(x1.action){
