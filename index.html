@@ -1225,6 +1225,14 @@ body.pf-arr .sec-bar{display:none}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .svprof .svstg{color:#e8c27a}}
 @media (max-width:760px){.svprof{flex-direction:column}.svprof .svph,.svprof .svph .ph,.svprof .svph .phx{width:100%}.svprof .svph .ph,.svprof .svph .phx{height:auto;aspect-ratio:300/152}.svprof .svfacts{grid-template-columns:repeat(2,minmax(0,1fr))}.svprof .svpt b{overflow-wrap:anywhere}}
 @media (min-width:761px) and (max-width:1100px){.svprof .svfacts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.rp-rsl .rp-xp{display:block;-webkit-line-clamp:unset;overflow:visible;font-size:11.5px}.rp-rsl .rp-xp div+div{margin-top:3px}
+/* V320 concern card resize handles (Edit text mode, Template B) */
+.rp-rsl .rp-cz{position:absolute;pointer-events:none;outline:1.5px dashed rgba(200,150,62,.9);outline-offset:-1px;border-radius:12px;z-index:4}
+.rp-rsl .rp-ch{position:absolute;pointer-events:auto;background:#c8963e;border-radius:5px;box-shadow:0 1px 4px rgba(0,0,0,.35);touch-action:none;z-index:5}
+.rp-rsl .rp-ch[data-cd=e]{right:-6px;top:50%;margin-top:-20px;width:11px;height:40px;cursor:ew-resize}
+.rp-rsl .rp-ch[data-cd=s]{bottom:-6px;left:50%;margin-left:-20px;height:11px;width:40px;cursor:ns-resize}
+.rp-rsl .rp-ch[data-cd=se]{right:-8px;bottom:-8px;width:16px;height:16px;cursor:nwse-resize;border-radius:50%}
+.rp-rsl .rp-czd{outline-style:solid;background:rgba(200,150,62,.07)}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1254,7 +1262,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V318</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V320</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -5911,9 +5919,10 @@ function aocLoad(force){
 function aocConcerns(c,s){
   aocLoad();
   var set=(c.pk||[]).slice(), lc=String(c.code).toLowerCase(), sib=!set.length&&(s.cards||[]).some(function(o){ return o!==c&&o.code===c.code&&(o.pk||[]).length; });
+  var firstAll=(function(){ var all=[]; ((RP&&RP.cfg&&RP.cfg.slides)||[s]).forEach(function(sl){ (sl.cards||[]).forEach(function(o){ if(o.code===c.code&&cardOk(o)&&!cnOff(o)) all.push(o); }); }); return !all.length||all[0]===c; })();
   var L=(AOC.rows||[]).filter(function(x){ if(x.lc!==lc) return false; var p=x.pkg; return set.length?(!p||set.some(function(n){ return svPkgMatch(n,p); })):(sib?!p:true); });
-  var firstOf=((s.cards||[]).filter(function(o){ return o.code===c.code; })[0]===c);
-  if(set.length) L=L.filter(function(x){ return x.pkg||firstOf||set.some(function(n){ var nn=svN(n); return nn&&svHas(svN((x.concern||'')+' '+(x.action||'')),nn); }); });
+  if(!set.length&&!firstAll) L=[];
+  if(set.length) L=L.filter(function(x){ return x.pkg||firstAll||set.some(function(n){ var nn=svN(n); return nn&&svHas(svN((x.concern||'')+' '+(x.action||'')),nn); }); });
   return L.slice().sort(function(a,b){ return (/critical/i.test(b.impact)?1:0)-(/critical/i.test(a.impact)?1:0); });
 }
 function aocNone(){ return AOC.err?'Area of concern file not available':'No areas of concern at this cut-off'; }
@@ -6017,9 +6026,11 @@ function scHtml(sc){
     var pos='left:'+p.x+'px;top:'+p.y+'px;width:'+p.w+'px;height:'+p.h+'px;';
     if(p.t==='r') return '<div style="position:absolute;'+pos+(p.f?'background:'+rgba(p.f,p.a)+';':'')+(p.bd?'border:1px solid '+p.bd+';box-sizing:border-box;':'')+(p.rd?'border-radius:'+p.rd+'px;':'')+(p.sh===2?'box-shadow:0 4px 14px rgba(20,44,59,.38);':p.sh?'box-shadow:0 1px 7px rgba(20,44,59,.16);':'')+'"></div>';
     if(p.t==='e') return '<div style="position:absolute;'+pos+'box-sizing:border-box;border-radius:50%;'+(p.f?'background:'+p.f+';':'')+(p.bd?'border:'+p.bw+'px solid '+p.bd+';':'')+'"></div>';
+    if(p.t==='cz') return (RP.ed&&tplB())?'<div class="rp-cz" style="'+pos+'" data-cnk="'+esc(p.k)+'"><i class="rp-ch" data-cd="e" title="Drag to change the width"></i><i class="rp-ch" data-cd="s" title="Drag to change the height"></i><i class="rp-ch" data-cd="se" title="Drag to resize"></i></div>':'';
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
       if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove all stamps</button>';
+      if(p.k==='cnrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnreset">Reset card sizes</button>':'';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'"></label>';
       return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
@@ -6031,8 +6042,13 @@ function scHtml(sc){
 }
 /* ----- concern card (default for every template) ----- */
 function cnHead(x,lab){ var cr=/critical/i.test(x.impact||''); return x.pkg?x.pkg+(cr?' · Critical':''):(cr?'CRITICAL':(/high/i.test(x.impact||'')?'HIGH':'')); }
+function cnActLines(a){ return String(a||'').replace(/\r/g,'').split(/\n+|\s+(?=\d+\s*[.)]\s*\S)/).map(function(t){ return t.replace(/\s+/g,' ').trim(); }).filter(Boolean); }
+function cnActHtml(a){ return cnActLines(a).map(function(t){ return '<div>'+esc(t)+'</div>'; }).join(''); }
+function fitL(lines,w,fs,lh){ var out=[],n=0; lines.forEach(function(t){ var f=fit(t,w,1e4,fs,false,lh); out.push(f.s); n+=f.n; }); return {s:out.join('\n'),n:n}; }
+function cnNeed(x,w){ var z=1, tl=fit(x.concern||'',w,200,13*z,true,1.18), al=x.action?fitL(cnActLines(x.action),w,8.5*z,1.28).n:0; return Math.ceil(28*z+tl.n*13*z*1.18+1+(x.action?9*z+15*z+al*8.5*z*1.28:0)+12); }
+function cnKey(x){ var id=''; try{ Object.keys(x.raw||{}).forEach(function(h){ if(!id&&/^challenge\s*id$/i.test(String(h).trim())&&x.raw[h]) id=String(x.raw[h]); }); }catch(e){} return String(x.lc||x.code||'')+'|'+String(id||x.concern||'').toLowerCase().replace(/\s+/g,' ').trim().slice(0,70); }
 function cnHtml(x,lab){
-  return '<div class="rp-xc">'+(cnHead(x,lab)?'<div class="rp-xh">'+esc(cnHead(x,lab))+'</div>':'')+'<h5 class="rp-xt">'+esc(x.concern||'')+'</h5>'+(x.action?'<div class="rp-xa">Action taken</div><div class="rp-xp">'+esc(x.action)+'</div>':'')+'</div>';
+  return '<div class="rp-xc">'+(cnHead(x,lab)?'<div class="rp-xh">'+esc(cnHead(x,lab))+'</div>':'')+'<h5 class="rp-xt">'+esc(x.concern||'')+'</h5>'+(x.action?'<div class="rp-xa">Action taken</div><div class="rp-xp">'+cnActHtml(x.action)+'</div>':'')+'</div>';
 }
 /* ----- data for one progress card ----- */
 function bCardData(c,P,cut){
@@ -6120,7 +6136,7 @@ function concernCard(sc,o,x,y,w,h,sid,i){
   sc.push(bT(x+20,ty,iw,th,tf.s,{fs:13*z,b:1,lh:1.18,k:K+'t'}));
   if(x1.action){
     var ya=ty+th+9*z; sc.push(bT(x+20,ya,iw,12*z,'Action taken',{fs:9.5*z,c:GD,b:1,ls:1.2,up:1,k:K+'al'}));
-    var ah=y+h-(ya+15*z)-8; if(ah>=11){ var af=fit(x1.action,iw,ah,9.5*z,false,1.28); sc.push(bT(x+20,ya+15*z,iw,ah,af.s,{fs:9.5*z,c:GR,lh:1.28,k:K+'a'})); }
+    var ah=y+h-(ya+15*z)-8; if(ah>=11){ var al=cnActLines(x1.action), afs=9.5*z, af=fitL(al,iw,afs,1.28); while(af.n*afs*1.28>ah&&afs>7){ afs-=.5; af=fitL(al,iw,afs,1.28); } sc.push(bT(x+20,ya+15*z,iw,ah,af.s,{fs:afs,c:GR,lh:1.28,k:K+'a'})); }
   }
 }
 function sceneProgress(s,P,cut,pg){
@@ -6135,6 +6151,7 @@ function sceneProgress(s,P,cut,pg){
   var X0=312, W=PW-312-32, gap=14, cols=n<=2?1:(n===4?2:3), rows=Math.max(1,Math.ceil(n/cols)), ch0=rows>2?100:(PH<760?110:118), cwid=(W-(cols-1)*gap)/cols, bot=PH-59, hasC=cards.some(function(c){ return !cnOff(c); }), list=[], cc=n<=2?2:3, cwc=(W-(cc-1)*gap)/cc, hc0=118, rC=0, ch=ch0, hc=hc0;
   if(hasC){
     cards.forEach(function(c){ var L=cardConcerns(c,cut,s), left=Math.max(0,CNMAX-(RPBUD[c.code]||0)), shn=L.slice(0,left); RPBUD[c.code]=(RPBUD[c.code]||0)+shn.length; shn.forEach(function(x){ list.push({x:x,lab:c.t}); }); });
+    var need0=0; list.forEach(function(o){ need0=Math.max(need0,cnNeed(o.x,cwc-34)); }); hc0=Math.min(Math.max(hc0,need0),Math.round(PH*.4));
     var av0=bot-(56+rows*ch0+(rows-1)*gap+52), mxR=Math.max(1,Math.floor((av0+12)/(hc0+12)));
     if(list.length){ rC=Math.ceil(list.length/cc); if(rC>mxR){ list=list.slice(0,mxR*cc); rC=mxR; } } else rC=0;
   }
@@ -6148,7 +6165,11 @@ function sceneProgress(s,P,cut,pg){
     var yh=56+rows*ch+(rows-1)*gap+26, top=yh+26;
     sc.push(bT(X0,yh,500,18,'Priority concerns',{fs:13,b:1,up:1,ls:1.5,k:K+'aoc'}));
     if(!list.length){ var nh=Math.min(70,bot-top); sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,aocNone(),{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
-    else list.forEach(function(o,i){ concernCard(sc,o,X0+(i%cc)*(cwc+gap),top+Math.floor(i/cc)*(hc+12),cwc,hc,s.id,i); });
+    else{ var CB=(RP.cfg&&RP.cfg.cnbox)||{}, cxp=X0, cyp=top, rowH=0, anyB=0;
+      list.forEach(function(o,i){ var k=cnKey(o.x), b=CB[k], w1=cwc, h1=hc; if(b&&b.w>0){ w1=Math.max(190,Math.min(W,Math.round(b.w*PW))); anyB=1; } if(b&&b.h>0){ h1=Math.max(84,Math.round(b.h*PH)); anyB=1; }
+        if(cxp>X0&&cxp+w1>X0+W+1){ cxp=X0; cyp+=rowH+12; rowH=0; } h1=Math.min(h1,Math.max(84,bot-cyp));
+        concernCard(sc,o,cxp,cyp,w1,h1,s.id,i); sc.push({t:'cz',k:k,x:cxp,y:cyp,w:w1,h:h1}); cxp+=w1+gap; rowH=Math.max(rowH,h1); });
+      if(anyB) sc.push({t:'pc',k:'cnrst',x:X0+W-190,y:yh-4,w:190,h:24,si:si,ci:-1,pi:-1}); }
   }
   sc.push(bT(X0,PH-35,400,12,'KEC | Delivery Department',{fs:8,c:GR,up:1,ls:1,k:K+'ft'}));
   if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1});
@@ -6324,6 +6345,22 @@ async function pvCleanGlobal(btn){
   toast(n?n+' of '+list.length+' photo'+(list.length>1?'s':'')+' cleaned. Use Restore original on a photo to undo.':'No stamp was found in any photo.',!n||!!RP.pvLocal);
 }
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-pv="cleanglobal"]'); if(b){ e.preventDefault(); pvCleanGlobal(b); } });
+/* resize a concern card: drag its right edge, bottom edge or corner (Edit text mode, Template B) */
+var CZ=null;
+document.addEventListener('pointerdown',function(e){
+  var h=e.target.closest&&e.target.closest('.rp-ch'); if(!h||e.button||!tplB()) return; var box=h.parentNode, rs=box.closest('.rp-rs'); if(!rs) return;
+  CZ={box:box,k:box.getAttribute('data-cnk'),hd:h.getAttribute('data-cd'),sc:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,l:parseFloat(box.style.left),t:parseFloat(box.style.top),w:parseFloat(box.style.width),h:parseFloat(box.style.height),mv:0};
+  try{ h.setPointerCapture(e.pointerId); }catch(x){} box.classList.add('rp-czd'); e.preventDefault();
+});
+document.addEventListener('pointermove',function(e){ if(!CZ) return; var dx=(e.clientX-CZ.sx)/CZ.sc, dy=(e.clientY-CZ.sy)/CZ.sc; if(Math.abs(dx)+Math.abs(dy)>2) CZ.mv=1;
+  var X0=312, maxW=PW-32-CZ.l, maxH=PH-59-CZ.t;
+  if(CZ.hd.indexOf('e')>=0) CZ.box.style.width=Math.max(190,Math.min(maxW,CZ.w+dx))+'px';
+  if(CZ.hd.indexOf('s')>=0) CZ.box.style.height=Math.max(84,Math.min(maxH,CZ.h+dy))+'px'; });
+function czUp(e){ if(!CZ) return; var d=CZ; CZ=null; d.box.classList.remove('rp-czd'); if(!d.mv) return;
+  var r4=function(v){ return Math.round(v*10000)/10000; }; RP.cfg.cnbox=RP.cfg.cnbox||{}; var o=RP.cfg.cnbox[d.k]||{};
+  if(d.hd.indexOf('e')>=0) o.w=r4(parseFloat(d.box.style.width)/PW); if(d.hd.indexOf('s')>=0) o.h=r4(parseFloat(d.box.style.height)/PH); RP.cfg.cnbox[d.k]=o; dirty(); drawViewB(); }
+document.addEventListener('pointerup',czUp); document.addEventListener('pointercancel',czUp);
+document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-pv="cnreset"]'); if(!b) return; e.preventDefault(); RP.cfg.cnbox={}; dirty(); drawViewB(); toast('Concern card sizes reset to automatic.'); });
 var DR=null;
 function pvDown(e){
   var o=e.target.closest&&e.target.closest('.rp-vc'); if(!o||e.button||e.target.closest('.rp-vb')) return;
