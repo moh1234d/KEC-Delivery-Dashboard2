@@ -1273,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V326</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V327</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -3665,7 +3665,7 @@ function pSiteGroup(rows,coreRows,cut){
   var pv=null, eac=null, anyX=false;
   if(FV&&FV.lines.length){ FV.lines.forEach(function(l){ if(l.pvoS!=null||l.eacS!=null) anyX=true; pv=(pv||0)+(l.pvoS||0); eac=(eac||0)+(l.eacS||0); }); }
   var fin=svFinHtml(AF,anyX,pv,eac,codes);
-  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>forecast finish after planned finish</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
+  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>latest forecast finish after latest revised planned finish</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
   /* trackers by project */
   var sumP=function(arr,tk,f){ return codes.map(function(c){ var L=svLatest(arr,svGrpScope(c),cut,tk); return {c:c,L:L,t:L.length?f(L):null}; }); };
   var e1r=sumP(cur.e1,'type',function(L){ return {tot:svSum(L,'tot'),sub:svSum(L,'sub'),app:svSum(L,'app'),rev:svSum(L,'rev'),rvw:svSum(L,'rvw'),ns:svSum(L,'ns')}; }), anyE1=e1r.some(function(x){ return x.t; });
@@ -3746,7 +3746,7 @@ function pSiteBuild(rows,coreRows,cut){
   /* manpower + trends canvases */
   var mpAny=(cur.mp||[]).some(function(x){ return String(x.code).toLowerCase()===sc.lc; });
   var M=svMpHtml(svMpModel(sc,cut,false,null));
-  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>forecast finish after planned finish</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
+  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>latest forecast finish after latest revised planned finish</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
   /* challenges */
   var CL=svChalList(sc,cut), open=CL.all.filter(function(x){ return !/^closed/i.test(x.status); }), closed=CL.all.length-open.length;
   var O={High:0,Medium:1,Low:2}; open.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
@@ -3948,7 +3948,7 @@ function svCfgs(){
   var MPm=svMpModel(sc,cut,!!SV.cur.grp,SV.cur.grp?SV.cur.codes:null);
   if(MPm&&MPm.rows.length){ out.svMp=function(){ return svMpCfg(MPm,ink,line,acc); }; if(MPm.trend.length>1) out.svMpT=function(){ return svMpTrend(MPm,ink,line,acc); }; }
   var P=[],A=[],Od=[],L=[];
-  model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.maxDelay||0); });
+  model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.pf&&a.ff?dayDiff(a.pf,a.ff):0); });
   var halo=cssv('--card')||'#fff';
   var lbl=function(o){ return {id:'svLbl',afterDatasetsDraw:function(ch){ var c=ch.ctx; c.save(); c.font='600 10.5px Inter,system-ui,sans-serif'; c.textAlign='center'; c.lineJoin='round'; c.lineWidth=4; var drawn=[];
       o.forEach(function(d){ var meta=ch.getDatasetMeta(d.i); if(!meta||meta.hidden) return; var data=ch.data.datasets[d.i].data, lastX=null;
