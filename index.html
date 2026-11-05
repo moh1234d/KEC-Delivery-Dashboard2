@@ -1243,6 +1243,7 @@ body.pf-arr .sec-bar{display:none}
 #rptRoot .rp-rb.rp-dy{background:#c8963e;border-color:#c8963e;color:#1b1b1b}
 /* V324 copy tab */
 .rp-rsl .rp-cg{position:absolute;right:12px;top:-11px;pointer-events:auto;background:#14304f;color:#fff;font:700 11px/1 Carlito,Calibri,Arial,sans-serif;letter-spacing:.04em;padding:5px 11px;border-radius:999px;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.35);font-style:normal}
+.rp-rsl .rp-vdel{background:#b9544b!important;color:#fff!important}.rp-rsl .rp-vdel.rp-dga{background:#8f2d24!important;outline:2px solid #fff}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1272,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V324</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V325</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -6042,6 +6043,8 @@ function scHtml(sc){
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
       if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove all stamps</button>';
+      if(p.k==='sdup') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="sdup" data-sid="'+esc(p.sid)+'">Duplicate slide</button>':'';
+      if(p.k==='sdelv') return (RP.ed&&tplB())?'<button type="button" class="rp-va rp-vdel" style="'+pos+'border:0" data-pv="sdelv" data-sid="'+esc(p.sid)+'">Delete slide</button>':'';
       if(p.k==='paste') return (RP.ed&&tplB()&&RP.clip)?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="paste" data-sid="'+esc(p.sid)+'">Paste '+({card:'card',concern:'concern card',photo:'photo',text:'text'}[RP.clip.kind]||'')+'</button>':'';
       if(p.k==='undel') return (RP.ed&&tplB()&&(RP.undo||[]).length)?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="undel">Undo delete ('+RP.undo.length+')</button>':'';
       if(p.k==='cnrestore') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnrestore">Show hidden concerns ('+p.n+')</button>':'';
@@ -6198,6 +6201,7 @@ function sceneProgress(s,P,cut,pg){
   if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1});
   (s.tx||[]).forEach(function(t){ var tw=Math.max(80,Math.min(PW-40,t.w||260)), tfs=Math.max(8,Math.min(44,t.fs||13)), tx0=Math.max(0,Math.min(PW-tw,Math.round((t.x==null?.3:t.x)*PW))), ty0=Math.round((t.y==null?.4:t.y)*PH), nl=fit(ov('tx:'+t.id,t.s),tw,1e4,tfs,!!t.b,1.25).n; sc.push(bT(tx0,ty0,tw,Math.ceil(nl*tfs*1.25)+6,t.s,{fs:tfs,c:'#14304f',b:t.b?1:0,lh:1.25,k:'tx:'+t.id})); });
   sc.push({t:'pc',k:'paste',x:X0+210,y:24,w:150,h:24,si:si,ci:-1,pi:-1,sid:s.id});
+  sc.push({t:'pc',k:'sdup',x:48,y:PH-212,w:190,h:30,si:si,ci:-1,pi:-1,sid:s.id}); sc.push({t:'pc',k:'sdelv',x:48,y:PH-174,w:190,h:30,si:si,ci:-1,pi:-1,sid:s.id});
   return {sc:sc,bg:CRM,sid:s.id};
 }
 function photoRects(n,L,X,Y,W,H,g){
@@ -6370,6 +6374,25 @@ async function pvCleanGlobal(btn){
   toast(n?n+' of '+list.length+' photo'+(list.length>1?'s':'')+' cleaned. Use Restore original on a photo to undo.':'No stamp was found in any photo.',!n||!!RP.pvLocal);
 }
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-pv="cleanglobal"]'); if(b){ e.preventDefault(); pvCleanGlobal(b); } });
+/* ----- duplicate a slide: cards, photos (stored as new copies), texts and the moved positions are copied ----- */
+async function slideDup(sid){
+  var S=RP.cfg.slides||[], ix=S.findIndex(function(x){ return x.id===sid; }); if(ix<0) return;
+  var n=JSON.parse(JSON.stringify(S[ix])), map={}; n.id=uid(); n.frame=String(n.frame||'').replace(/ \(copy\)$/,'')+' (copy)';
+  try{
+    for(var i=0;i<(n.cards||[]).length;i++){ var c=n.cards[i], oid0=c.id, ph=[]; c.id=uid(); map[oid0]=c.id; for(var j=0;j<(c.ph||[]).length;j++) ph.push(await pvClone(c.ph[j])); c.ph=ph; }
+    var sph=[]; for(var k=0;k<(n.ph||[]).length;k++) sph.push(await pvClone(n.ph[k])); n.ph=sph;
+    (n.tx||[]).forEach(function(t){ t.id=uid(); });
+  }catch(x){ return toast((x&&x.message)||'Could not duplicate the slide.',true); }
+  if(RP.cfg.cmv) Object.keys(map).forEach(function(o){ var m=RP.cfg.cmv['p:'+o]; if(m) RP.cfg.cmv['p:'+map[o]]={dx:m.dx,dy:m.dy}; });
+  S.splice(ix+1,0,n); dirty(); RP.msg='Slide duplicated: the copy is right after the original. Press Save changes to keep it.';
+  if(RP.mode==='setup') drawSetup(); else{ if(tplB()) drawViewB(); else drawView(); try{ toast('Slide duplicated. It is right after the original.'); }catch(e){} }
+}
+document.addEventListener('click',function(e){
+  var du=e.target.closest&&e.target.closest('[data-pv="sdup"]'); if(du){ e.preventDefault(); slideDup(du.getAttribute('data-sid')); return; }
+  var dl=e.target.closest&&e.target.closest('[data-pv="sdelv"]'); if(!dl) return; e.preventDefault(); var sid=dl.getAttribute('data-sid'), kk='slide:'+sid, now=Date.now();
+  if(RP.armK!==kk||now-(RP.armT||0)>4000){ RP.armK=kk; RP.armT=now; dl.textContent='Click again to delete slide'; dl.classList.add('rp-dga'); setTimeout(function(){ if(RP.armK===kk&&Date.now()-RP.armT>=3900){ RP.armK=null; if(dl.isConnected){ dl.textContent='Delete slide'; dl.classList.remove('rp-dga'); } } },4000); return; }
+  RP.armK=null; var S=RP.cfg.slides||[], ix=S.findIndex(function(x){ return x.id===sid; }); if(ix<0) return; RP.undo=RP.undo||[]; RP.undo.push({t:'s',ix:ix,slide:S[ix]}); S.splice(ix,1); dirty(); drawViewB(); toast('Slide deleted. Use Undo delete to bring it back, then Save changes.');
+});
 /* ----- copy and paste (Template B, Edit mode): cards, concern cards, photos and texts ----- */
 function clipSet(c,msg){ RP.clip=c; RP.clipAt=Date.now(); try{ if(c.kind==='text'&&navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(c.s).catch(function(){}); }catch(e){} toast(msg+' Open any slide and press Paste (or Ctrl+V).'); drawViewB(); }
 function cardById(id){ var r=null; (RP.cfg.slides||[]).forEach(function(sl){ (sl.cards||[]).forEach(function(c){ if(c.id===id) r=c; }); }); return r; }
@@ -6432,6 +6455,7 @@ document.addEventListener('click',function(e){
   var u=e.target.closest&&e.target.closest('[data-pv="undel"]'); if(u){ e.preventDefault(); var z=(RP.undo||[]).pop(); if(!z) return;
     if(z.t==='p'){ var sl2=(RP.cfg.slides||[])[z.si]; if(sl2){ sl2.cards=sl2.cards||[]; sl2.cards.splice(Math.min(z.ix,sl2.cards.length),0,z.card); if(z.mv){ RP.cfg.cmv=RP.cfg.cmv||{}; RP.cfg.cmv['p:'+z.card.id]=z.mv; } } }
     else if(z.t==='n'&&RP.cfg.cnhide) delete RP.cfg.cnhide[z.key];
+    else if(z.t==='s'){ RP.cfg.slides.splice(Math.min(z.ix,RP.cfg.slides.length),0,z.slide); }
     else if(z.t==='x'){ var sl4=(RP.cfg.slides||[]).filter(function(x){ return x.id===z.sid; })[0]; if(sl4){ sl4.xcn=sl4.xcn||[]; if(sl4.xcn.indexOf(z.key)<0) sl4.xcn.push(z.key); } }
     dirty(); drawViewB(); return; }
   var rr=e.target.closest&&e.target.closest('[data-pv="cnrestore"]'); if(rr){ e.preventDefault(); RP.cfg.cnhide={}; dirty(); drawViewB(); toast('All hidden concerns are shown again.'); }
@@ -6675,7 +6699,7 @@ function drawSetup(){
        '<div class="rp-row"><button class="rp-sb" data-r="cup" data-s="'+si+'" data-c="'+ci+'">↑</button><button class="rp-sb" data-r="cdn" data-s="'+si+'" data-c="'+ci+'">↓</button><button class="rp-sb rp-d" data-r="cdel" data-s="'+si+'" data-c="'+ci+'">Remove card</button></div></div>';
     });
     h+=(s.layout==='side'?'<div class="rp-row"><b style="font-size:12px;color:#5b6784">Photos for this slide</b>'+thumbs(s.ph,si,-1)+'</div>':'')+
-     '<div class="rp-row"><button class="rp-sb" data-r="cadd" data-s="'+si+'">+ Add card</button><span style="flex:1"></span><button class="rp-sb" data-r="sup" data-s="'+si+'">Slide ↑</button><button class="rp-sb" data-r="sdn" data-s="'+si+'">Slide ↓</button><button class="rp-sb rp-d" data-r="sdel" data-s="'+si+'">Remove slide</button></div></div>';
+     '<div class="rp-row"><button class="rp-sb" data-r="cadd" data-s="'+si+'">+ Add card</button><span style="flex:1"></span><button class="rp-sb" data-r="sup" data-s="'+si+'">Slide ↑</button><button class="rp-sb" data-r="sdn" data-s="'+si+'">Slide ↓</button><button class="rp-sb" data-r="sdup" data-s="'+si+'" title="Add a copy of this slide (cards, photos and texts) right after it">Duplicate slide</button><button class="rp-sb rp-d" data-r="sdel" data-s="'+si+'">Remove slide</button></div></div>';
   });
   var inUse={}; c0.slides.forEach(function(sl){ (sl.cards||[]).forEach(function(cc){ if(cc.code) inUse[cc.code]=1; }); });
   var miss=projs.filter(function(c){ return !inUse[c]; });
@@ -6753,6 +6777,7 @@ function onClick(e){
   else if(a==='cadd'){ s.cards.push({id:uid(),t:'',code:'',pk:[],ph:[]}); RP.msg='A new card was added at the end of the slide. It stays out of the report until it has a title and a project.'; }
   else if(a==='cup') mv(s.cards,ci,-1); else if(a==='cdn') mv(s.cards,ci,1); else if(a==='cdel') s.cards.splice(ci,1);
   else if(a==='prem'){ var tgt=ci>=0?s.cards[ci]:s, i=+t.getAttribute('data-i'), p=tgt.ph[i]; if(p){ tgt.ph.splice(i,1); delete RP.ph[p.id]; accCall('PUT','/report-photo',{id:p.id,data:null},15000).catch(function(){}); } }
+  else if(a==='sdup'){ slideDup(s&&s.id); return; }
   else return;
   dirty(); drawSetup();
 }
