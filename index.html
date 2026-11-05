@@ -1240,6 +1240,7 @@ body.pf-arr .sec-bar{display:none}
 /* V322 delete tab */
 .rp-rsl .rp-dg{position:absolute;left:12px;top:-11px;pointer-events:auto;background:#b9544b;color:#fff;font:700 11px/1 Carlito,Calibri,Arial,sans-serif;letter-spacing:.04em;padding:5px 11px;border-radius:999px;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.35);font-style:normal}
 .rp-rsl .rp-dga{background:#8f2d24;outline:2px solid #fff}
+#rptRoot .rp-rb.rp-dy{background:#c8963e;border-color:#c8963e;color:#1b1b1b}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1269,7 +1270,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V322</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V323</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -6266,7 +6267,7 @@ document.addEventListener('click',function(e){
   var cur=l.fs||p.fs/(l.fs?1:1); if(a==='fs+'||a==='fs-'){ var base=p.fs; l.fs=Math.max(5,Math.min(140,Math.round((base+(a==='fs+'?1:-1)*(4/3))*100)/100)); }
   else if(a==='w+') l.dw=(l.dw||0)+40; else if(a==='w-') l.dw=(l.dw||0)-40;
   else if(a==='rs'){ delete RP.ov.l[RP.sel]; }
-  drawViewB();
+  dirty(); drawViewB();
 });
 /* drag the gold grip to move a text */
 var TD=null;
@@ -6276,14 +6277,14 @@ document.addEventListener('pointerdown',function(e){
   try{ g.setPointerCapture(e.pointerId); }catch(x){} tbUpdate(); e.preventDefault();
 });
 document.addEventListener('pointermove',function(e){ if(!TD) return; var dx=(e.clientX-TD.sx)/TD.k2, dy=(e.clientY-TD.sy)/TD.k2; if(Math.abs(dx)+Math.abs(dy)>2) TD.mv=1; TD.box.style.left=(TD.l+dx)+'px'; TD.box.style.top=(TD.t+dy)+'px'; });
-function tdUp(e){ if(!TD) return; var d=TD; TD=null; if(!d.mv) return; var dx=parseFloat(d.box.style.left)-d.l, dy=parseFloat(d.box.style.top)-d.t, l=tbLay(d.k); l.dx=(l.dx||0)+dx; l.dy=(l.dy||0)+dy; drawViewB(); }
+function tdUp(e){ if(!TD) return; var d=TD; TD=null; if(!d.mv) return; var dx=parseFloat(d.box.style.left)-d.l, dy=parseFloat(d.box.style.top)-d.t, l=tbLay(d.k); l.dx=(l.dx||0)+dx; l.dy=(l.dy||0)+dy; dirty(); drawViewB(); }
 document.addEventListener('pointerup',tdUp); document.addEventListener('pointercancel',tdUp);
 function drawViewB(){ if(!RP._v&&hasDraft()){ RP._v=1; var real=RP.cfg; RP.cfg=visCfg(real); try{ return drawViewB0(); }finally{ RP.cfg=real; RP._v=0; } } return drawViewB0(); }
 function drawViewB0(){
   var body=document.getElementById('rptBody'), cut=RP.cut, P=pool(cut), SC=bScenes(P,cut), w=Math.min(PW,Math.max(320,body.clientWidth-24)), sc=w/PW;
   body.innerHTML=SC.map(function(s){ return '<div class="rp-rs" style="width:'+w+'px;height:'+(PH*sc)+'px"><div class="rp-rsl rp-b" style="width:'+PW+'px;height:'+PH+'px;transform:scale('+sc+');background:'+s.bg+'">'+scHtml(s.sc)+'</div></div>'; }).join('');
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+' · '+sizeOf().n+(RP.dirty?' · unsaved settings':'');
-  var sv=document.getElementById('rptSave'); if(sv) sv.hidden=!RP.dirty;
+  saveUi();
   var rr=document.getElementById('rptRoot'), tb=document.getElementById('rptTb');
   if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><button data-tb="rs">Reset this text</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
   tbUpdate();
@@ -6521,7 +6522,7 @@ async function pptx(){
 function ensure(){
   var r=document.getElementById('rptRoot'); if(r) return r;
   r=document.createElement('div'); r.id='rptRoot';
-  r.innerHTML='<div class="rp-rbar"><b>Progress report<small id="rptSub"></small></b><button class="rp-rb" data-r="edit" id="rptEdit">Edit text</button><button class="rp-rb" data-r="rst" id="rptRst" hidden>Reset edits</button><button class="rp-rb" data-r="mode" id="rptMode">Setup</button><button class="rp-rb" data-r="save" id="rptSave" hidden>Save settings</button><button class="rp-rb" data-pv="cleanglobal" id="rptClean" title="Remove the burned-in date, time and location stamps from every photo in the report">Remove all stamps</button><button class="rp-rb" data-r="pptx" id="rptPptx" title="Editable PowerPoint slides in the Template B layout, at the chosen page size">Export PPTX</button><button class="rp-rb rp-p" data-r="pdf" id="rptPdf">Download PDF</button><button class="rp-rb" data-r="close">Close</button></div><div class="rp-hint" id="rptHint" hidden>Click any text on a slide to change it, then press Download PDF. Edits are for this PDF only: the dashboard data is not changed. In Template B, hover a photo to drag it, resize it with the gold handles (corner keeps the shape, the side handles change width or height, and Crop / Stretch chooses how the picture fills a changed shape), change it or remove it, or use Add photos. Titles and cards are changed in Setup.</div><div class="rp-rbody" id="rptBody"></div><div class="rp-rsetup" id="rptSetup" hidden></div>';
+  r.innerHTML='<div class="rp-rbar"><b>Progress report<small id="rptSub"></small></b><button class="rp-rb" data-r="edit" id="rptEdit">Edit text</button><button class="rp-rb" data-r="rst" id="rptRst" hidden>Reset edits</button><button class="rp-rb" data-r="mode" id="rptMode">Setup</button><button class="rp-rb" data-r="save" id="rptSave" title="Save the report: layout, cards, text edits and photos">Save changes</button><button class="rp-rb" data-pv="cleanglobal" id="rptClean" title="Remove the burned-in date, time and location stamps from every photo in the report">Remove all stamps</button><button class="rp-rb" data-r="pptx" id="rptPptx" title="Editable PowerPoint slides in the Template B layout, at the chosen page size">Export PPTX</button><button class="rp-rb rp-p" data-r="pdf" id="rptPdf">Download PDF</button><button class="rp-rb" data-r="close">Close</button></div><div class="rp-hint" id="rptHint" hidden>Click any text on a slide to change it, then press Download PDF. Press Save changes to keep your edits for this data date; the dashboard data is never changed. In Template B, hover a photo to drag it, resize it with the gold handles (corner keeps the shape, the side handles change width or height, and Crop / Stretch chooses how the picture fills a changed shape), change it or remove it, or use Add photos. Titles and cards are changed in Setup.</div><div class="rp-rbody" id="rptBody"></div><div class="rp-rsetup" id="rptSetup" hidden></div>';
   document.body.appendChild(r);
   r.addEventListener('click',onClick); r.addEventListener('input',onInput); r.addEventListener('change',onChange);
   window.addEventListener('resize',function(){ if(r.classList.contains('on')&&RP.mode==='view') drawView(); });
@@ -6544,7 +6545,7 @@ function drawView(){
 function setMode(m){
   RP.mode=m; var b=document.getElementById('rptBody'), s=document.getElementById('rptSetup');
   b.hidden=m!=='view'; s.hidden=m!=='setup';
-  document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=m!=='setup'; document.getElementById('rptPdf').hidden=m!=='view'; document.getElementById('rptPptx').hidden=m!=='view'; document.getElementById('rptClean').hidden=m!=='view'; document.getElementById('rptEdit').hidden=m!=='view'; if(m!=='view'){ document.getElementById('rptRst').hidden=true; document.getElementById('rptHint').hidden=true; }
+  document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=false; document.getElementById('rptSave').textContent=m==='view'?(RP.dirty?'Save changes ●':'Save changes'):'Save settings'; document.getElementById('rptPdf').hidden=m!=='view'; document.getElementById('rptPptx').hidden=m!=='view'; document.getElementById('rptClean').hidden=m!=='view'; document.getElementById('rptEdit').hidden=m!=='view'; if(m!=='view'){ document.getElementById('rptRst').hidden=true; document.getElementById('rptHint').hidden=true; }
   if(m==='view') drawView(); else drawSetup();
 }
 async function fetchPhotos(){
@@ -6565,6 +6566,7 @@ async function open(){
   actLog('report','Opened the progress report'); var r=ensure(); r.classList.add('on'); RP.cut=cutIso(); RP.mode='view'; if(RP.ov.cut!==RP.cut) RP.ov={cut:RP.cut,v:{}};
   if(!RP.cut){ document.getElementById('rptBody').innerHTML='<p style="color:#fff;padding:20px">Load the progress data first.</p>'; return; }
   if(!RP.loaded) await load();
+  try{ edRestore(); }catch(e){}
   try{ svChalLoad(); }catch(e){} setMode('view'); fetchPhotos(); ovWarm();
 }
 function close(){ var r=document.getElementById('rptRoot'); if(r) r.classList.remove('on'); }
@@ -6578,10 +6580,11 @@ function pdf(){
   setTimeout(function(){ window.print(); },200);
 }
 async function save(){
-  var b=document.getElementById('rptSave'); b.disabled=true; b.textContent='Saving…';
-  try{ await accCall('PUT','/report',{cfg:RP.cfg},30000); RP.dirty=false; RP.msg='Saved. The report layout and photos stay in the dashboard for the next time.'; }
+  var b=document.getElementById('rptSave'), ok=false; b.disabled=true; b.textContent='Saving…';
+  try{ edKeep(); await accCall('PUT','/report',{cfg:RP.cfg},30000); RP.dirty=false; ok=true; RP.msg='Saved. The report layout, text edits and photos stay in the dashboard for the next time.'; }
   catch(e){ RP.msg=(e&&e.message)||'Could not save.'; }
-  b.disabled=false; b.textContent='Save settings'; drawSetup();
+  b.disabled=false; b.textContent=RP.mode==='view'?'Save changes':'Save settings';
+  if(RP.mode==='setup') drawSetup(); else{ try{ toast(RP.msg,!ok); }catch(x){} if(tplB()) drawViewB(); else drawView(); saveUi(); }
 }
 /* ----- setup screen ----- */
 function pkgsOf(code){ var m={}, o=[]; (model.rows||[]).forEach(function(r){ if(r.code===code&&!m[r.pkg]){ m[r.pkg]=1; o.push(r.pkg); } }); return o; }
@@ -6622,9 +6625,14 @@ function drawSetup(){
 }
 function slideOf(t){ return RP.cfg.slides[+t.getAttribute('data-s')]; }
 function cardOf(t){ var s=slideOf(t); return s&&s.cards[+t.getAttribute('data-c')]; }
-function dirty(){ RP.dirty=true; }
+function saveUi(){ var sb=document.getElementById('rptSave'); if(sb){ sb.classList.toggle('rp-dy',!!RP.dirty); if(RP.mode==='view') sb.textContent=RP.dirty?'Save changes ●':'Save changes'; }
+  var su=document.getElementById('rptSub'); if(su) su.textContent=su.textContent.replace(/ · unsaved (settings|changes)$/,'')+(RP.dirty?' · unsaved changes':''); }
+function dirty(){ RP.dirty=true; saveUi(); }
+function edKeep(){ var o=RP.ov||{}, hv=Object.keys(o.v||{}).length||Object.keys(o.l||{}).length; RP.cfg.edits=RP.cfg.edits||{}; if(hv) RP.cfg.edits[RP.cut]={v:JSON.parse(JSON.stringify(o.v||{})),l:JSON.parse(JSON.stringify(o.l||{}))}; else delete RP.cfg.edits[RP.cut];
+  var ks=Object.keys(RP.cfg.edits).sort().reverse(); ks.slice(12).forEach(function(k){ delete RP.cfg.edits[k]; }); }
+function edRestore(){ var e=RP.cfg&&RP.cfg.edits&&RP.cfg.edits[RP.cut]; if(!e) return; if(Object.keys(RP.ov.v||{}).length||Object.keys(RP.ov.l||{}).length) return; RP.ov={cut:RP.cut,v:JSON.parse(JSON.stringify(e.v||{})),l:JSON.parse(JSON.stringify(e.l||{}))}; }
 function onInput(e){
-  var t=e.target, ek=t.getAttribute&&t.getAttribute('data-ek'); if(ek){ RP.ov.v[ek]=t.textContent; var rs=document.getElementById('rptRst'); if(rs) rs.hidden=false; return; }
+  var t=e.target, ek=t.getAttribute&&t.getAttribute('data-ek'); if(ek){ RP.ov.v[ek]=t.textContent; dirty(); var rs=document.getElementById('rptRst'); if(rs) rs.hidden=false; return; }
   var f=t.getAttribute&&t.getAttribute('data-f'); if(!f||t.type==='checkbox'||t.type==='file') return;
   if(f&&f.indexOf('b.')===0){ RP.cfg.b=RP.cfg.b||{}; RP.cfg.b[f.slice(2)]=t.value; }
   else if(f==='kicker'||f==='title') RP.cfg[f]=t.value;
@@ -6669,12 +6677,12 @@ async function addPhotos(inp){
 function mv(a,i,d){ var j=i+d; if(j<0||j>=a.length) return; var x=a[i]; a[i]=a[j]; a[j]=x; }
 function onClick(e){
   var t=e.target.closest&&e.target.closest('[data-r]'); if(!t||t.tagName==='INPUT') return; var a=t.getAttribute('data-r');
-  if(a==='close') return close();
+  if(a==='close'){ if(RP.dirty&&!RP.closeArm){ RP.closeArm=1; try{ toast('You have unsaved changes. Press Save changes, or press Close again to leave without saving.',true); }catch(x){} setTimeout(function(){ RP.closeArm=0; },6000); return; } RP.closeArm=0; if(RP.dirty){ RP.dirty=false; RP.loaded=false; } return close(); }
   if(a==='mode') return setMode(RP.mode==='view'?'setup':'view');
   if(a==='pdf') return pdf();
   if(a==='pptx') return pptx();
   if(a==='edit'){ RP.ed=!RP.ed; return drawView(); }
-  if(a==='rst'){ RP.ov={cut:RP.cut,v:{}}; return drawView(); }
+  if(a==='rst'){ RP.ov={cut:RP.cut,v:{}}; dirty(); return drawView(); }
   if(a==='save') return save();
   var S=RP.cfg.slides, si=+t.getAttribute('data-s'), ci=+t.getAttribute('data-c'), s=S[si];
   if(a==='reset'){ if(RP.confirm!=='reset'){ RP.confirm='reset'; return drawSetup(); } RP.confirm=''; RP.cfg=defCfg(); dirty(); RP.msg='The standard layout is back. Photos are not attached to it yet.'; return drawSetup(); }
