@@ -1241,6 +1241,8 @@ body.pf-arr .sec-bar{display:none}
 .rp-rsl .rp-dg{position:absolute;left:12px;top:-11px;pointer-events:auto;background:#b9544b;color:#fff;font:700 11px/1 Carlito,Calibri,Arial,sans-serif;letter-spacing:.04em;padding:5px 11px;border-radius:999px;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.35);font-style:normal}
 .rp-rsl .rp-dga{background:#8f2d24;outline:2px solid #fff}
 #rptRoot .rp-rb.rp-dy{background:#c8963e;border-color:#c8963e;color:#1b1b1b}
+/* V324 copy tab */
+.rp-rsl .rp-cg{position:absolute;right:12px;top:-11px;pointer-events:auto;background:#14304f;color:#fff;font:700 11px/1 Carlito,Calibri,Arial,sans-serif;letter-spacing:.04em;padding:5px 11px;border-radius:999px;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.35);font-style:normal}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1270,7 +1272,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V323</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V324</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -6035,18 +6037,19 @@ function scHtml(sc){
     var pos='left:'+p.x+'px;top:'+p.y+'px;width:'+p.w+'px;height:'+p.h+'px;';
     if(p.t==='r') return '<div style="position:absolute;'+pos+(p.f?'background:'+rgba(p.f,p.a)+';':'')+(p.bd?'border:1px solid '+p.bd+';box-sizing:border-box;':'')+(p.rd?'border-radius:'+p.rd+'px;':'')+(p.sh===2?'box-shadow:0 4px 14px rgba(20,44,59,.38);':p.sh?'box-shadow:0 1px 7px rgba(20,44,59,.16);':'')+'"></div>';
     if(p.t==='e') return '<div style="position:absolute;'+pos+'box-sizing:border-box;border-radius:50%;'+(p.f?'background:'+p.f+';':'')+(p.bd?'border:'+p.bw+'px solid '+p.bd+';':'')+'"></div>';
-    if(p.t==='cm') return (RP.ed&&tplB())?'<div class="rp-cm" style="'+pos+'" data-cmk="'+esc(p.k)+'" data-x0="'+p.x+'" data-y0="'+p.y+'"><i class="rp-mg" title="Drag to move this card">✥ Move card</i><i class="rp-dg" data-dk="'+esc(p.k)+'" title="Delete this card from the report">✕ Delete</i></div>':'';
+    if(p.t==='cm') return (RP.ed&&tplB())?'<div class="rp-cm" style="'+pos+'" data-cmk="'+esc(p.k)+'" data-x0="'+p.x+'" data-y0="'+p.y+'"><i class="rp-mg" title="Drag to move this card">✥ Move card</i><i class="rp-dg" data-dk="'+esc(p.k)+'" title="Delete this card from the report">✕ Delete</i><i class="rp-cg" data-cgk="'+esc(p.k)+'" title="Copy this card, then paste it on any slide">⧉ Copy</i></div>':'';
     if(p.t==='cz') return (RP.ed&&tplB())?'<div class="rp-cz" style="'+pos+'" data-cnk="'+esc(p.k)+'"><i class="rp-ch" data-cd="e" title="Drag to change the width"></i><i class="rp-ch" data-cd="s" title="Drag to change the height"></i><i class="rp-ch" data-cd="se" title="Drag to resize"></i></div>':'';
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
       if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove all stamps</button>';
+      if(p.k==='paste') return (RP.ed&&tplB()&&RP.clip)?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="paste" data-sid="'+esc(p.sid)+'">Paste '+({card:'card',concern:'concern card',photo:'photo',text:'text'}[RP.clip.kind]||'')+'</button>':'';
       if(p.k==='undel') return (RP.ed&&tplB()&&(RP.undo||[]).length)?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="undel">Undo delete ('+RP.undo.length+')</button>':'';
       if(p.k==='cnrestore') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnrestore">Show hidden concerns ('+p.n+')</button>':'';
       if(p.k==='cmrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cmreset">Reset card positions</button>':'';
       if(p.k==='cnrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnreset">Reset card sizes</button>':'';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'"></label>';
-      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
+      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
@@ -6166,6 +6169,7 @@ function sceneProgress(s,P,cut,pg){
   var X0=312, W=PW-312-32, gap=14, cols=n<=2?1:(n===4?2:3), rows=Math.max(1,Math.ceil(n/cols)), ch0=rows>2?100:(PH<760?110:118), cwid=(W-(cols-1)*gap)/cols, bot=PH-59, hasC=cards.some(function(c){ return !cnOff(c); }), list=[], cc=n<=2?2:3, cwc=(W-(cc-1)*gap)/cc, hc0=118, rC=0, ch=ch0, hc=hc0;
   if(hasC){
     cards.forEach(function(c){ var L=cardConcerns(c,cut,s), left=Math.max(0,CNMAX-(RPBUD[c.code]||0)), shn=L.slice(0,left); RPBUD[c.code]=(RPBUD[c.code]||0)+shn.length; shn.forEach(function(x){ list.push({x:x,lab:c.t}); }); });
+    (s.xcn||[]).forEach(function(xk){ var rw=(AOC.rows||[]).filter(function(r){ return cnKey(r)===xk; })[0]; if(rw) list.push({x:rw,lab:'',extra:true}); });
     var need0=0; list.forEach(function(o){ need0=Math.max(need0,cnNeed(o.x,cwc-34)); }); hc0=Math.min(Math.max(hc0,need0),Math.round(PH*.4));
     var av0=bot-(56+rows*ch0+(rows-1)*gap+52), mxR=Math.max(1,Math.floor((av0+12)/(hc0+12)));
     if(list.length){ rC=Math.ceil(list.length/cc); if(rC>mxR){ list=list.slice(0,mxR*cc); rC=mxR; } } else rC=0;
@@ -6182,7 +6186,7 @@ function sceneProgress(s,P,cut,pg){
     sc.push(bT(X0,yh,500,18,'Priority concerns',{fs:13,b:1,up:1,ls:1.5,k:K+'aoc'}));
     if(!list.length){ var nh=Math.min(70,bot-top); sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,aocNone(),{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
     else{ var CB=(RP.cfg&&RP.cfg.cnbox)||{}, cxp=X0, cyp=top, rowH=0, anyB=0; anyCB=0;
-      list.forEach(function(o,i){ var k=cnKey(o.x), b=CB[k], w1=cwc, h1=hc; if(b&&b.w>0){ w1=Math.max(190,Math.min(W,Math.round(b.w*PW))); anyB=1; } if(b&&b.h>0){ h1=Math.max(84,Math.round(b.h*PH)); anyB=1; }
+      list.forEach(function(o,i){ var k=o.extra?s.id+'@@'+cnKey(o.x):cnKey(o.x), b=CB[k], w1=cwc, h1=hc; if(b&&b.w>0){ w1=Math.max(190,Math.min(W,Math.round(b.w*PW))); anyB=1; } if(b&&b.h>0){ h1=Math.max(84,Math.round(b.h*PH)); anyB=1; }
         if(cxp>X0&&cxp+w1>X0+W+1){ cxp=X0; cyp+=rowH+12; rowH=0; } h1=Math.min(h1,Math.max(84,bot-cyp));
         var n1=sc.length; concernCard(sc,o,cxp,cyp,w1,h1,s.id,i); sc.push({t:'cz',k:k,x:cxp,y:cyp,w:w1,h:h1}); if(cardMove(sc,n1,'n:'+k,cxp,cyp,w1,h1)) anyM=1; cxp+=w1+gap; rowH=Math.max(rowH,h1); });
       anyCB=anyB; if(anyB) sc.push({t:'pc',k:'cnrst',x:X0+W-190,y:yh-4,w:190,h:24,si:si,ci:-1,pi:-1}); }
@@ -6192,7 +6196,9 @@ function sceneProgress(s,P,cut,pg){
   var nHid=Object.keys((RP.cfg&&RP.cfg.cnhide)||{}).length; if(hasC&&nHid) sc.push({t:'pc',k:'cnrestore',n:nHid,x:X0+W-(anyCB?390:190),y:(56+rows*ch+(rows-1)*gap+26)-4,w:190,h:24,si:si,ci:-1,pi:-1});
   sc.push(bT(X0,PH-35,400,12,'KEC | Delivery Department',{fs:8,c:GR,up:1,ls:1,k:K+'ft'}));
   if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1});
-  return {sc:sc,bg:CRM};
+  (s.tx||[]).forEach(function(t){ var tw=Math.max(80,Math.min(PW-40,t.w||260)), tfs=Math.max(8,Math.min(44,t.fs||13)), tx0=Math.max(0,Math.min(PW-tw,Math.round((t.x==null?.3:t.x)*PW))), ty0=Math.round((t.y==null?.4:t.y)*PH), nl=fit(ov('tx:'+t.id,t.s),tw,1e4,tfs,!!t.b,1.25).n; sc.push(bT(tx0,ty0,tw,Math.ceil(nl*tfs*1.25)+6,t.s,{fs:tfs,c:'#14304f',b:t.b?1:0,lh:1.25,k:'tx:'+t.id})); });
+  sc.push({t:'pc',k:'paste',x:X0+210,y:24,w:150,h:24,si:si,ci:-1,pi:-1,sid:s.id});
+  return {sc:sc,bg:CRM,sid:s.id};
 }
 function photoRects(n,L,X,Y,W,H,g){
   var por=L.filter(function(x){ return x.p.h>x.p.w; }).length*2>n, R=[], i;
@@ -6225,7 +6231,7 @@ function scenePhotos(s){
     sc.push(bT(cx+10,cy+ih,iw-20,BAR,x.cap||'',{fs:10,c:'#fff',b:1,ls:.8,up:1,va:'m',k:'p:'+x.p.id+':cap'}));
     sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cl:!!x.p.oid,cov:cov,free:!!(bx&&isFinite(bx.h))});
   });
-  return {sc:sc,bg:CRM};
+  return {sc:sc,bg:CRM,sid:s.id};
 }
 function sceneEnd(){
   var b=bc(), sc=[];
@@ -6257,7 +6263,7 @@ function tbFind(k){ var r=null; (RP.scn||[]).forEach(function(o){ o.sc.forEach(f
 function tbUpdate(){
   var tb=document.getElementById('rptTb'); if(!tb) return; tb.hidden=!(RP.ed&&tplB()); if(tb.hidden) return;
   var p=RP.sel?tbFind(RP.sel):null, has=!!p; tb.querySelector('[data-tbv=name]').textContent=has?'“'+String(p.s).replace(/\s+/g,' ').slice(0,34)+(String(p.s).length>34?'…':'')+'”':'none: click a text on a slide';
-  tb.querySelector('[data-tbv=fs]').textContent=has?(Math.round(p.fs*75)/100)+' pt':'–'; [].forEach.call(tb.querySelectorAll('button'),function(b){ b.disabled=!has; });
+  tb.querySelector('[data-tbv=fs]').textContent=has?(Math.round(p.fs*75)/100)+' pt':'–'; [].forEach.call(tb.querySelectorAll('button'),function(b){ b.disabled=!has; }); var dtb=tb.querySelector('[data-tc=dt]'); if(dtb) dtb.disabled=!(has&&/^tx:/.test(RP.sel||''));
 }
 function tbLay(k){ RP.ov.l=RP.ov.l||{}; return RP.ov.l[k]||(RP.ov.l[k]={}); }
 document.addEventListener('mousedown',function(e){ if(e.target.closest&&e.target.closest('#rptTb button')) e.preventDefault(); });
@@ -6286,7 +6292,7 @@ function drawViewB0(){
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+' · '+sizeOf().n+(RP.dirty?' · unsaved settings':'');
   saveUi();
   var rr=document.getElementById('rptRoot'), tb=document.getElementById('rptTb');
-  if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><button data-tb="rs">Reset this text</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
+  if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><button data-tb="rs">Reset this text</button><button data-tc="cp">Copy text</button><button data-tc="dt" title="Only for texts you pasted">Delete pasted text</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
   tbUpdate();
   var rt=document.getElementById('rptRoot'); if(rt&&!rt._pv){ rt._pv=1; rt.addEventListener('click',pvClick); rt.addEventListener('change',pvChange); rt.addEventListener('pointerdown',pvDown); rt.addEventListener('pointermove',pvMove); rt.addEventListener('pointerup',pvUp); rt.addEventListener('pointercancel',pvUp); }
   body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!(Object.keys(RP.ov.v).length||Object.keys(RP.ov.l||{}).length); var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
@@ -6364,17 +6370,69 @@ async function pvCleanGlobal(btn){
   toast(n?n+' of '+list.length+' photo'+(list.length>1?'s':'')+' cleaned. Use Restore original on a photo to undo.':'No stamp was found in any photo.',!n||!!RP.pvLocal);
 }
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-pv="cleanglobal"]'); if(b){ e.preventDefault(); pvCleanGlobal(b); } });
+/* ----- copy and paste (Template B, Edit mode): cards, concern cards, photos and texts ----- */
+function clipSet(c,msg){ RP.clip=c; RP.clipAt=Date.now(); try{ if(c.kind==='text'&&navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(c.s).catch(function(){}); }catch(e){} toast(msg+' Open any slide and press Paste (or Ctrl+V).'); drawViewB(); }
+function cardById(id){ var r=null; (RP.cfg.slides||[]).forEach(function(sl){ (sl.cards||[]).forEach(function(c){ if(c.id===id) r=c; }); }); return r; }
+function clipCopyKey(k){
+  if(/^p:/.test(k)){ var c=cardById(k.slice(2)); if(c) clipSet({kind:'card',card:JSON.parse(JSON.stringify(c)),label:c.t||'card'},'Card copied.'); }
+  else if(/^n:/.test(k)){ var kk=k.slice(2), ix=kk.indexOf('@@'); if(ix>=0) kk=kk.slice(ix+2); clipSet({kind:'concern',key:kk,label:'concern'},'Concern card copied.'); } }
+function clipCopyText(){ var p=RP.sel?tbFind(RP.sel):null; if(!p) return toast('Click a text first, then copy it.',true); clipSet({kind:'text',s:String(p.s||'').replace(/\s+/g,' ').trim(),fs:p.fs,b:p.b,w:p.w,label:'text'},'Text copied.'); }
+async function pvClone(q){
+  if(!RP.ph[q.id]){ try{ await fetchPhotos(); }catch(e){} }
+  var id=uid(), n={id:id,w:q.w,h:q.h}, d=RP.ph[q.id];
+  if(d){ RP.ph[id]=d; try{ await accCall('PUT','/report-photo',{id:id,data:d},30000); }catch(e){ RP.pvLocal=1; } }
+  if(q.oid&&RP.ph[q.oid]){ var o2=uid(); RP.ph[o2]=RP.ph[q.oid]; try{ await accCall('PUT','/report-photo',{id:o2,data:RP.ph[q.oid]},30000); }catch(e){ RP.pvLocal=1; } n.oid=o2; }
+  return n; }
+async function clipPaste(sid){
+  var c=RP.clip; if(!c) return toast('Nothing copied yet. Use a Copy tab or button first.',true);
+  var s=(RP.cfg.slides||[]).filter(function(x){ return x.id===sid; })[0]; if(!s) return toast('Scroll to the slide where it should go, then paste.',true);
+  try{
+    if(c.kind==='card'){ var n=JSON.parse(JSON.stringify(c.card)); n.id=uid(); n.t=String(n.t||'').replace(/ \(copy\)$/,'')+' (copy)'; var ph=[]; for(var i=0;i<(n.ph||[]).length;i++) ph.push(await pvClone(n.ph[i])); n.ph=ph; s.cards=s.cards||[]; s.cards.push(n); }
+    else if(c.kind==='concern'){ s.xcn=s.xcn||[]; if(s.xcn.indexOf(c.key)>=0) return toast('This concern card is already on this slide.',true); s.xcn.push(c.key); }
+    else if(c.kind==='photo'){ s.ph=s.ph||[]; if(s.ph.length>=4) return toast('A slide can hold up to 4 added photos.',true); s.ph.push(await pvClone(c.q)); }
+    else if(c.kind==='text'){ s.tx=s.tx||[]; var k=s.tx.length; s.tx.push({id:uid(),s:c.s,fs:Math.max(9,Math.min(40,c.fs||13)),b:c.b?1:0,w:Math.max(120,Math.min(520,c.w||260)),x:Math.min(.7,.3+.03*k),y:Math.min(.8,.4+.03*k)}); }
+  }catch(x){ return toast((x&&x.message)||'Could not paste.',true); }
+  dirty(); drawViewB(); toast('Pasted. Press Save changes to keep it.'+(RP.pvLocal?' (A photo is kept only until this page is closed: the dashboard could not store it.)':''));
+}
+function curSlideId(){ var el=[].slice.call(document.querySelectorAll('#rptBody .rp-b')), mid=window.innerHeight/2, best=null, bd=1e9; el.forEach(function(e,i){ var r=e.getBoundingClientRect(), d=(r.top<=mid&&r.bottom>=mid)?0:Math.min(Math.abs(r.top-mid),Math.abs(r.bottom-mid)); if(d<bd){ bd=d; best=i; } }); var sc=best==null?null:(RP.scn||[])[best]; return sc&&sc.sid||null; }
+document.addEventListener('click',function(e){
+  var cg=e.target.closest&&e.target.closest('.rp-cg'); if(cg&&tplB()){ e.preventDefault(); clipCopyKey(cg.getAttribute('data-cgk')); return; }
+  var pb=e.target.closest&&e.target.closest('[data-pv="paste"]'); if(pb){ e.preventDefault(); clipPaste(pb.getAttribute('data-sid')); return; }
+  var tc=e.target.closest&&e.target.closest('#rptTb [data-tc]'); if(!tc||!tplB()) return; var a=tc.getAttribute('data-tc');
+  if(a==='cp') clipCopyText();
+  else if(a==='dt'&&RP.sel&&/^tx:/.test(RP.sel)){ var id=RP.sel.slice(3); (RP.cfg.slides||[]).forEach(function(sl){ sl.tx=(sl.tx||[]).filter(function(t){ return t.id!==id; }); }); if(RP.ov.l) delete RP.ov.l[RP.sel]; delete RP.ov.v[RP.sel]; RP.sel=null; dirty(); drawViewB(); toast('Pasted text deleted.'); }
+});
+document.addEventListener('pointerdown',function(e){ var t=e.target; if(!t||!t.closest) return; var cardTab=t.closest('.rp-mg,.rp-ch,.rp-dg,.rp-cg'); if(cardTab){ var bx=cardTab.parentNode, k=bx.getAttribute('data-cmk')||bx.getAttribute('data-cnk'); if(k){ if(/^[pn]:/.test(k)===false&&bx.getAttribute('data-cnk')) k='n:'+k; RP.lastSel={t:'card',k:k,at:Date.now()}; } return; }
+  var vc=t.closest('.rp-vc'); if(vc) RP.lastSel={t:'photo',si:+vc.getAttribute('data-si'),ci:+vc.getAttribute('data-ci'),pi:+vc.getAttribute('data-pi'),at:Date.now()}; },true);
+document.addEventListener('focusin',function(e){ if(e.target&&e.target.getAttribute&&e.target.getAttribute('data-ek')) RP.selAt=Date.now(); });
+function clipActive(){ var rt=document.getElementById('rptRoot'); return !!(rt&&rt.classList.contains('on')&&RP.mode==='view'&&RP.ed&&tplB()); }
+document.addEventListener('keydown',function(e){
+  if(!(e.ctrlKey||e.metaKey)||(e.key||'').toLowerCase()!=='c'||!clipActive()) return;
+  var sel=window.getSelection?String(window.getSelection()||'').replace(/\s+/g,' ').trim():'';
+  if(sel){ RP.clip={kind:'text',s:sel,fs:13,label:'text'}; RP.clipAt=Date.now(); return; }
+  var ae=document.activeElement; if(ae&&ae.closest&&ae.closest('.rp-ed')&&!sel&&!RP.lastSel) return;
+  var ls=RP.lastSel, tAt=RP.selAt||0;
+  if(ls&&ls.at>=tAt){ e.preventDefault(); if(ls.t==='card') clipCopyKey(ls.k); else{ var ow=pvOwner(ls.si,ls.ci), q=ow&&ow.ph[ls.pi]; if(q) clipSet({kind:'photo',q:{id:q.id,w:q.w,h:q.h,oid:q.oid},label:'photo'},'Photo copied.'); } }
+  else if(RP.sel){ e.preventDefault(); clipCopyText(); } });
+document.addEventListener('paste',function(e){
+  if(!clipActive()) return; var ae=document.activeElement; if(ae&&ae.closest&&ae.closest('.rp-ed')) return;
+  var sid=curSlideId(); if(!sid){ if(RP.clip){ e.preventDefault(); toast('Scroll to a progress slide, then paste.',true); } return; }
+  if(RP.clip){ e.preventDefault(); clipPaste(sid); return; }
+  var t=e.clipboardData&&e.clipboardData.getData('text'); if(t&&t.trim()){ e.preventDefault(); RP.clip={kind:'text',s:t.replace(/\s+/g,' ').trim(),fs:13,label:'text'}; clipPaste(sid); } });
 /* delete a card: first click arms it, second click within 4 seconds deletes (progress card: removed from the slide; concern card: hidden from the report only) */
 document.addEventListener('click',function(e){
   var d=e.target.closest&&e.target.closest('.rp-dg'); if(d){ e.preventDefault(); if(!tplB()) return; var k=d.getAttribute('data-dk'), now=Date.now();
     if(RP.armK!==k||now-(RP.armT||0)>4000){ RP.armK=k; RP.armT=now; d.textContent='Click again to delete'; d.classList.add('rp-dga'); setTimeout(function(){ if(RP.armK===k&&Date.now()-RP.armT>=3900){ RP.armK=null; if(d.isConnected){ d.textContent='✕ Delete'; d.classList.remove('rp-dga'); } } },4000); return; }
     RP.armK=null; RP.undo=RP.undo||[];
     if(/^p:/.test(k)){ var id=k.slice(2), done=0; (RP.cfg.slides||[]).forEach(function(sl,si){ var ix=(sl.cards||[]).findIndex(function(c){ return c.id===id; }); if(ix>=0&&!done){ RP.undo.push({t:'p',si:si,ix:ix,card:sl.cards[ix],mv:(RP.cfg.cmv||{})[k]}); sl.cards.splice(ix,1); done=1; } }); if(RP.cfg.cmv) delete RP.cfg.cmv[k]; }
-    else if(/^n:/.test(k)){ var kk=k.slice(2); RP.cfg.cnhide=RP.cfg.cnhide||{}; RP.cfg.cnhide[kk]=1; RP.undo.push({t:'n',key:kk}); }
+    else if(/^n:/.test(k)){ var kk=k.slice(2), at0=kk.indexOf('@@');
+      if(at0>=0){ var sid2=kk.slice(0,at0), key2=kk.slice(at0+2), sl3=(RP.cfg.slides||[]).filter(function(x){ return x.id===sid2; })[0]; if(sl3&&sl3.xcn){ sl3.xcn=sl3.xcn.filter(function(q){ return q!==key2; }); RP.undo.push({t:'x',sid:sid2,key:key2}); } }
+      else{ RP.cfg.cnhide=RP.cfg.cnhide||{}; RP.cfg.cnhide[kk]=1; RP.undo.push({t:'n',key:kk}); } }
     dirty(); drawViewB(); toast('Card deleted from the report. Use Undo delete to bring it back, then Save settings.'); return; }
   var u=e.target.closest&&e.target.closest('[data-pv="undel"]'); if(u){ e.preventDefault(); var z=(RP.undo||[]).pop(); if(!z) return;
     if(z.t==='p'){ var sl2=(RP.cfg.slides||[])[z.si]; if(sl2){ sl2.cards=sl2.cards||[]; sl2.cards.splice(Math.min(z.ix,sl2.cards.length),0,z.card); if(z.mv){ RP.cfg.cmv=RP.cfg.cmv||{}; RP.cfg.cmv['p:'+z.card.id]=z.mv; } } }
     else if(z.t==='n'&&RP.cfg.cnhide) delete RP.cfg.cnhide[z.key];
+    else if(z.t==='x'){ var sl4=(RP.cfg.slides||[]).filter(function(x){ return x.id===z.sid; })[0]; if(sl4){ sl4.xcn=sl4.xcn||[]; if(sl4.xcn.indexOf(z.key)<0) sl4.xcn.push(z.key); } }
     dirty(); drawViewB(); return; }
   var rr=e.target.closest&&e.target.closest('[data-pv="cnrestore"]'); if(rr){ e.preventDefault(); RP.cfg.cnhide={}; dirty(); drawViewB(); toast('All hidden concerns are shown again.'); }
 });
@@ -6440,6 +6498,8 @@ function pvUp(e){
   dirty(); drawViewB();
 }
 function pvClick(e){
+  var cpy=e.target.closest&&e.target.closest('[data-pv="cpy"]');
+  if(cpy){ e.preventDefault(); var ow0=pvOwner(+cpy.getAttribute('data-si'),+cpy.getAttribute('data-ci')), q0=ow0&&ow0.ph[+cpy.getAttribute('data-pi')]; if(q0) clipSet({kind:'photo',q:{id:q0.id,w:q0.w,h:q0.h,oid:q0.oid},label:'photo'},'Photo copied.'); return; }
   var cl=e.target.closest&&e.target.closest('[data-pv="clean"],[data-pv="cleanall"]');
   if(cl){ e.preventDefault(); pvCleanRun(cl); return; }
   var ft=e.target.closest&&e.target.closest('[data-pv="fit"]');
