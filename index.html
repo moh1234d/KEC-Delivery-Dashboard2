@@ -1273,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V325</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V326</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -6247,7 +6247,8 @@ function sceneEnd(){
   return {sc:sc,bg:NV};
 }
 function applyLay(out){
-  var L=(RP.ov&&RP.ov.l)||{};
+  var L=(RP.ov&&RP.ov.l)||{}, TH=(RP.cfg&&RP.cfg.thide)||{};
+  if(Object.keys(TH).length) out.forEach(function(o){ o.sc=o.sc.filter(function(p){ return !(p.t==='x'&&p.k&&TH[p.k]); }); });
   out.forEach(function(o){ o.sc.forEach(function(p){ if(p.t!=='x'||!p.k) return; var l=L[p.k]; if(!l) return;
     p.x+=l.dx||0; p.y+=l.dy||0; if(l.dw) p.w=Math.max(30,p.w+l.dw);
     if(l.fs){ var r=l.fs/p.fs; if(p.ls) p.ls=p.ls*r; p.fs=l.fs; p.h=p.h*Math.max(1,r); }
@@ -6267,7 +6268,7 @@ function tbFind(k){ var r=null; (RP.scn||[]).forEach(function(o){ o.sc.forEach(f
 function tbUpdate(){
   var tb=document.getElementById('rptTb'); if(!tb) return; tb.hidden=!(RP.ed&&tplB()); if(tb.hidden) return;
   var p=RP.sel?tbFind(RP.sel):null, has=!!p; tb.querySelector('[data-tbv=name]').textContent=has?'“'+String(p.s).replace(/\s+/g,' ').slice(0,34)+(String(p.s).length>34?'…':'')+'”':'none: click a text on a slide';
-  tb.querySelector('[data-tbv=fs]').textContent=has?(Math.round(p.fs*75)/100)+' pt':'–'; [].forEach.call(tb.querySelectorAll('button'),function(b){ b.disabled=!has; }); var dtb=tb.querySelector('[data-tc=dt]'); if(dtb) dtb.disabled=!(has&&/^tx:/.test(RP.sel||''));
+  tb.querySelector('[data-tbv=fs]').textContent=has?(Math.round(p.fs*75)/100)+' pt':'–'; [].forEach.call(tb.querySelectorAll('button'),function(b){ b.disabled=!has; }); var rtb=tb.querySelector('[data-tc=rt]'), nth=Object.keys((RP.cfg&&RP.cfg.thide)||{}).length; if(rtb){ rtb.hidden=!nth; rtb.disabled=false; rtb.textContent='Show deleted texts ('+nth+')'; }
 }
 function tbLay(k){ RP.ov.l=RP.ov.l||{}; return RP.ov.l[k]||(RP.ov.l[k]={}); }
 document.addEventListener('mousedown',function(e){ if(e.target.closest&&e.target.closest('#rptTb button')) e.preventDefault(); });
@@ -6296,7 +6297,7 @@ function drawViewB0(){
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+' · '+sizeOf().n+(RP.dirty?' · unsaved settings':'');
   saveUi();
   var rr=document.getElementById('rptRoot'), tb=document.getElementById('rptTb');
-  if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><button data-tb="rs">Reset this text</button><button data-tc="cp">Copy text</button><button data-tc="dt" title="Only for texts you pasted">Delete pasted text</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
+  if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><button data-tb="rs">Reset this text</button><button data-tc="cp">Copy text</button><button data-tc="dt" title="Delete the selected text from the report (Undo delete brings it back)">Delete text</button><button data-tc="rt" hidden>Show deleted texts</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
   tbUpdate();
   var rt=document.getElementById('rptRoot'); if(rt&&!rt._pv){ rt._pv=1; rt.addEventListener('click',pvClick); rt.addEventListener('change',pvChange); rt.addEventListener('pointerdown',pvDown); rt.addEventListener('pointermove',pvMove); rt.addEventListener('pointerup',pvUp); rt.addEventListener('pointercancel',pvUp); }
   body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!(Object.keys(RP.ov.v).length||Object.keys(RP.ov.l||{}).length); var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
@@ -6423,6 +6424,8 @@ document.addEventListener('click',function(e){
   var pb=e.target.closest&&e.target.closest('[data-pv="paste"]'); if(pb){ e.preventDefault(); clipPaste(pb.getAttribute('data-sid')); return; }
   var tc=e.target.closest&&e.target.closest('#rptTb [data-tc]'); if(!tc||!tplB()) return; var a=tc.getAttribute('data-tc');
   if(a==='cp') clipCopyText();
+  else if(a==='rt'){ RP.cfg.thide={}; dirty(); drawViewB(); toast('All deleted texts are shown again.'); }
+  else if(a==='dt'&&RP.sel&&!/^tx:/.test(RP.sel)){ var tk=RP.sel; RP.cfg.thide=RP.cfg.thide||{}; RP.cfg.thide[tk]=1; RP.undo=RP.undo||[]; RP.undo.push({t:'t',key:tk}); RP.sel=null; dirty(); drawViewB(); toast('Text deleted. Use Undo delete or Show deleted texts to bring it back, and Save changes to keep the change.'); }
   else if(a==='dt'&&RP.sel&&/^tx:/.test(RP.sel)){ var id=RP.sel.slice(3); (RP.cfg.slides||[]).forEach(function(sl){ sl.tx=(sl.tx||[]).filter(function(t){ return t.id!==id; }); }); if(RP.ov.l) delete RP.ov.l[RP.sel]; delete RP.ov.v[RP.sel]; RP.sel=null; dirty(); drawViewB(); toast('Pasted text deleted.'); }
 });
 document.addEventListener('pointerdown',function(e){ var t=e.target; if(!t||!t.closest) return; var cardTab=t.closest('.rp-mg,.rp-ch,.rp-dg,.rp-cg'); if(cardTab){ var bx=cardTab.parentNode, k=bx.getAttribute('data-cmk')||bx.getAttribute('data-cnk'); if(k){ if(/^[pn]:/.test(k)===false&&bx.getAttribute('data-cnk')) k='n:'+k; RP.lastSel={t:'card',k:k,at:Date.now()}; } return; }
@@ -6455,6 +6458,7 @@ document.addEventListener('click',function(e){
   var u=e.target.closest&&e.target.closest('[data-pv="undel"]'); if(u){ e.preventDefault(); var z=(RP.undo||[]).pop(); if(!z) return;
     if(z.t==='p'){ var sl2=(RP.cfg.slides||[])[z.si]; if(sl2){ sl2.cards=sl2.cards||[]; sl2.cards.splice(Math.min(z.ix,sl2.cards.length),0,z.card); if(z.mv){ RP.cfg.cmv=RP.cfg.cmv||{}; RP.cfg.cmv['p:'+z.card.id]=z.mv; } } }
     else if(z.t==='n'&&RP.cfg.cnhide) delete RP.cfg.cnhide[z.key];
+    else if(z.t==='t'){ if(RP.cfg.thide) delete RP.cfg.thide[z.key]; }
     else if(z.t==='s'){ RP.cfg.slides.splice(Math.min(z.ix,RP.cfg.slides.length),0,z.slide); }
     else if(z.t==='x'){ var sl4=(RP.cfg.slides||[]).filter(function(x){ return x.id===z.sid; })[0]; if(sl4){ sl4.xcn=sl4.xcn||[]; if(sl4.xcn.indexOf(z.key)<0) sl4.xcn.push(z.key); } }
     dirty(); drawViewB(); return; }
