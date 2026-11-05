@@ -1273,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V327</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V328</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1955,7 +1955,8 @@ function photoTile(code,title){
   return '<img class="ph" src="'+esc(url)+'" alt="" loading="lazy" referrerpolicy="no-referrer" data-ini="'+esc(ini)+'">';
 }
 var HIDE_PROJ=['MG-HT/ML','MG-BS','AL-HH','AL-HC']; /* not offered in the Project filter list */
-var PKGONLY={'N03-RSD':'Skeleton package only'};
+var PKGONLY={}; /* V328: no hard-coded package labels any more */
+var PKGCARDS={'N03-RSD':1}; /* V328: projects that show one card per package and an overall card in the overview */
 function sepNote(rs,where){
   if(!rs.length) return '';
   return '<div class="sepnote"><span class="ni">i</span><div>'+rs.map(function(r){ var st=r.ps?' (planned start '+fd(r.ps)+')':''; return '<b>'+esc(dp(r.pkg))+'</b> is not started yet'+st; }).join(' · ')+'.</div></div>';
@@ -1991,8 +1992,13 @@ var DCFP={}; var JST={items:[],pend:[],me:'',ok:false,busy:false,err:'',form:nul
 function jsKey(r,m){ return (DCCODE[m]||'C05')+'|'+r.code+'|'+r.pkg; }
 function jsFind(r,m){ var k=jsKey(r,m), f=DCFP[m]==null?m:DCFP[m], hit=null; JST.items.forEach(function(x){ if(x.key===k&&x.fp===f&&x.status!=='Removed') hit=x; }); return hit; }
 function jsState(r,m){ if(!ACC.need) return DCIGN[r.key+'|'+m]?'Ignored':'open'; var j=jsFind(r,m); return j?j.status:'open'; }
+function cnoCount(mm,code,ck){ if(!mm._cc){ var by={}, lat={}; mm.rows.forEach(function(r){ var k=String(r.code).toLowerCase()+'|'+r.pkg; if(!lat[k]||r.date>=lat[k].date) lat[k]=r; }); Object.keys(lat).forEach(function(k){ var r=lat[k], q=String(r.code).toLowerCase()+'|'+ckey(r.cno); by[q]=(by[q]||0)+1; }); mm._cc=by; } return mm._cc[String(code).toLowerCase()+'|'+ck]||0; }
+function c10Find(code,ck){ var lc=String(code).toLowerCase(); for(var i=0;i<(contracts||[]).length;i++){ var c=contracts[i]; if(c.lc===lc&&c.key===ck) return c; } return null; }
+function c10Dec(r){ var d=null, k='C10|'+r.code+'|'+r.pkg; (JST.items||[]).forEach(function(x){ if(x.rule==='C10'&&x.status==='Approved'&&x.key===k){ if(/use the contracts database/i.test(x.just||'')) d='db'; else if(/use the site value/i.test(x.just||'')) d='site'; } }); return d; }
+var C10SIG=null;
+function c10Apply(){ if(!model) return; var sg=[]; model.rows.forEach(function(r){ var d=c10Dec(r); if(d) sg.push(r.key+'='+d); }); var s=JSON.stringify(Array.from(new Set(sg)).sort()); if(C10SIG===null){ C10SIG=s; if(s!=='[]') try{ suReload(); }catch(e){} return; } if(s!==C10SIG){ C10SIG=s; try{ suReload(); }catch(e){} } }
 function jsHidden(r,m){ var s=jsState(r,m); return s==='Approved'||s==='Ignored'; }
-function jsLoad(){ if(!ACC.need||!ACC.token) return; accCall('GET','/justify',null,15000).then(function(j){ if(j&&Array.isArray(j.items)){ JST.items=j.items; JST.me=j.me||''; JST.ok=true; paintDc(); var m=document.getElementById('dcModal'); if(m&&m.classList.contains('on')) dcOpen(); }
+function jsLoad(){ if(!ACC.need||!ACC.token) return; accCall('GET','/justify',null,15000).then(function(j){ if(j&&Array.isArray(j.items)){ JST.items=j.items; JST.me=j.me||''; JST.ok=true; try{ c10Apply(); }catch(e){} paintDc(); var m=document.getElementById('dcModal'); if(m&&m.classList.contains('on')) dcOpen(); }
     if(ACC.user&&ACC.user.admin&&model) accCall('GET','/site-admin',null,30000).then(function(a){ JST.pend=[]; ((a&&a.subs)||[]).filter(function(q){ return q.status==='pending'&&q.data; }).forEach(function(q){ suChkRows(q.data).forEach(function(x){ x.by=q.by; JST.pend.push(x); }); }); paintDc(); var m2=document.getElementById('dcModal'); if(m2&&m2.classList.contains('on')) dcOpen(); }).catch(function(){}); }).catch(function(){}); }
 function suChkRows(data){
   var out=[], seen={}; if(!model||!data||!data.prog) return out;
@@ -2021,7 +2027,8 @@ function jsDetail(r,m,x){
     var lab=JST.form.mode==='reject'?'Reason for rejecting (optional)':'Justification (at least 10 characters)';
     return '<div class="jf"><label>'+lab+'</label><textarea id="jText" rows="3" maxlength="800">'+esc(JST.form.text||'')+'</textarea><div class="jfa">'+B('save',JST.form.mode==='reject'?'Reject':'Save','jpri')+B('cancel','Cancel')+'</div></div>';
   }
-  if(st==='open') btn=B('add','Justify')+(adm?B('ignore','Ignore'):'');
+  if(st==='open'&&adm&&DCCODE[m]==='C10') btn=B('dbdec','Use Contracts database','jgo')+B('sitedec','Use site value')+B('add','Keep difference (justify)')+B('ignore','Ignore');
+  else if(st==='open') btn=B('add','Justify')+(adm?B('ignore','Ignore'):'');
   else if(st==='Pending') h='<span class="jb jb-p">Pending approval</span>'; else if(st==='Rejected') h='<span class="jb jb-r">Rejected</span>';
   else if(st==='Approved') h='<span class="jb jb-g">Justified</span>'; else if(st==='Ignored') h='<span class="jb jb-n">Ignored</span>';
   if(j){
@@ -2078,6 +2085,14 @@ function dateIssues(r,cut,raw){
   if(rv0>0&&ev0>rv0*1.0001+1) add('C02','Earned value '+fm1(ev0)+' is above the revised value '+fm1(rv0)+'. Source: Packages - Plots sheet.',Math.round(ev0)+'|'+Math.round(rv0));
   if(rv0>0&&gc0>rv0*1.0001+1) add('C03','Gross certified '+fm1(gc0)+' is above the revised value '+fm1(rv0)+'. Source: Packages - Plots sheet.',Math.round(gc0)+'|'+Math.round(rv0));
   if(ev0>=0&&gc0>ev0+1000){ var cx=dcCtrGc(r,cut); add('C01','Gross certified '+fm1(gc0)+' is '+fm1(gc0-ev0)+' above earned value '+fm1(ev0)+(ev0>0?' (+'+((gc0-ev0)/ev0*100).toFixed(1)+'%)':'')+'. Source: Packages - Plots sheet'+(cx==null?'':Math.abs(cx-gc0)<2?'; the Contracts sheet shows the same certified value':'; the Contracts sheet shows '+fm1(cx)+', which differs, so confirm which is correct')+'.',Math.round(gc0)+'|'+Math.round(ev0)); }
+  try{ var ck10=r.cno?ckey(r.cno):'', c10=ck10&&contracts&&contracts.length?c10Find(r.code,ck10):null;
+    if(c10&&r.cno!==r.pkg&&model&&cnoCount(model,r.code,ck10)===1){
+      var sh10=c10.share==null?1:c10.share, cvD=c10.cv*sh10, voD=c10.voS!=null?c10.voS:c10.vo*sh10, rvD=c10.shrv!=null?c10.shrv:cvD+voD,
+          cvS=r.cvSite!=null?+r.cvSite:(+r.cv||0), voS=r.voSite!=null?+r.voSite:(+r.vo||0), rvS=r.rvSite!=null?+r.rvSite:(+r.rv||0);
+      if(cvS>0&&(Math.abs(cvS-cvD)>1000||Math.abs(voS-voD)>1000||Math.abs(rvS-rvD)>1000)){
+        var parts=[]; if(Math.abs(cvS-cvD)>1000) parts.push('contract value '+fm1(cvS)+' vs '+fm1(cvD)); if(Math.abs(voS-voD)>1000) parts.push('approved VOs '+fm1(voS)+' vs '+fm1(voD)); if(Math.abs(rvS-rvD)>1000) parts.push('revised value '+fm1(rvS)+' vs '+fm1(rvD));
+        add('C10','Values for '+c10.cno+' differ from the Contracts database (site / progress list vs database): '+parts.join('; ')+'. The administrator decides which to use.',[cvS,voS,rvS,cvD,voD,rvD].map(function(v){ return Math.round(v); }).join('|')); } }
+  }catch(e){}
   return raw?out:out.filter(function(m){ return !jsHidden(r,m); });
 }
 function dateIssueList(list,cut){ var o=[]; list.forEach(function(r){ var is=dateIssues(r,cut); if(is.length) o.push({r:r,is:is}); }); return o; }
@@ -4143,8 +4158,10 @@ function suModal(id,title,body,foot){ var o=document.getElementById(id); if(o) o
 function suLookupRows(){ var by={}, nm={};
   (model&&model.rows||[]).forEach(function(r){ var k=r.code+'|'+r.pkg; if(!by[k]||r.date>=by[k].date) by[k]=r; });
   (model&&model.projects||new Map()).forEach(function(p,c){ nm[c]=p&&p.name||c; });
+  var cc={}; Object.keys(by).forEach(function(k){ var q=by[k]; if(q.pkg===nm[q.code]||!q.cno||q.cno===q.pkg) return; var kk=q.code+'|'+ckey(q.cno); cc[kk]=(cc[kk]||0)+1; }); /* a contract shared by several packages is not looked up: each package carries its own share, typed in the sheet */
   var out=[]; Object.keys(nm).forEach(function(c){ out.push({code:c,pkg:nm[c],name:nm[c],ctr:'',cno:'',ps:''}); });
-  Object.keys(by).forEach(function(k){ var r=by[k]; if(r.pkg===nm[r.code]) return; out.push({code:r.code,pkg:r.pkg,name:nm[r.code]||r.code,ctr:r.ctr==='Unassigned'?'':r.ctr,cno:r.cno===r.pkg?'':r.cno,ps:r.ps?Math.round(Date.parse(r.ps+'T00:00:00Z')/864e5)+25569:''}); });
+  Object.keys(by).forEach(function(k){ var r=by[k]; if(r.pkg===nm[r.code]) return; var cn=r.cno===r.pkg?'':r.cno, ct=(cn&&cc[r.code+'|'+ckey(cn)]===1)?(contracts||[]).filter(function(c){ return c.lc===String(r.code).toLowerCase()&&c.key===ckey(cn); })[0]:null, ser=function(d){ return d?Math.round(Date.parse(d+'T00:00:00Z')/864e5)+25569:''; };
+    out.push({code:r.code,pkg:r.pkg,name:nm[r.code]||r.code,ctr:r.ctr==='Unassigned'?'':r.ctr,cno:cn,ps:r.ps?Math.round(Date.parse(r.ps+'T00:00:00Z')/864e5)+25569:'',pf:ct?ser(ct.rcomp):'',cv:ct?Math.round(ct.cv*(ct.share==null?1:ct.share)*100)/100:'',vo:ct?Math.round((ct.voS!=null?ct.voS:ct.vo*(ct.share==null?1:ct.share))*100)/100:''}); });
   out.sort(function(a,b){ return a.code.toLowerCase()<b.code.toLowerCase()?-1:a.code.toLowerCase()>b.code.toLowerCase()?1:(a.pkg.toLowerCase()<b.pkg.toLowerCase()?-1:1); });
   return out.slice(0,398); }
 async function suTplBuild(){
@@ -4153,8 +4170,8 @@ async function suTplBuild(){
     var z=await JSZip.loadAsync(u), f=z.file('xl/worksheets/sheet3.xml'); if(!f) return u.buffer; var x=await f.async('string');
     var hs=/<c r="A1" s="(\d+)"/.exec(x), ds=/<c r="G2" s="(\d+)"/.exec(x); if(!hs||!ds) return u.buffer;
     var E=function(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }, T=function(ref,v){ return v===''||v==null?'':'<c r="'+ref+'" t="inlineStr"><is><t xml:space="preserve">'+E(v)+'</t></is></c>'; };
-    var rows=suLookupRows(), sd='<sheetData><row r="1">'+['Key','Project Code','Package/Plot','Project Name','Contractor / Consultant','Contract No.','Planned Start'].map(function(h,k){ return '<c r="'+'ABCDEFG'[k]+'1" s="'+hs[1]+'" t="inlineStr"><is><t>'+h+'</t></is></c>'; }).join('')+'</row>';
-    for(var r=2;r<=400;r++){ var o=rows[r-2]; sd+='<row r="'+r+'"><c r="A'+r+'"><f>'+(o?'B'+r+'&amp;"|"&amp;C'+r:'IF(B'+r+'="","",B'+r+'&amp;"|"&amp;C'+r+')')+'</f></c>'+(o?T('B'+r,o.code)+T('C'+r,o.pkg)+T('D'+r,o.name)+T('E'+r,o.ctr)+T('F'+r,o.cno):'')+'<c r="G'+r+'" s="'+ds[1]+'"'+(o&&o.ps?'><v>'+o.ps+'</v></c>':'/>')+'</row>'; }
+    var rows=suLookupRows(), sd='<sheetData><row r="1">'+['Key','Project Code','Package/Plot','Project Name','Contractor / Consultant','Contract No.','Planned Start','Planned Finish','Contract Value','Approved Vos'].map(function(h,k){ return '<c r="'+'ABCDEFGHIJ'[k]+'1" s="'+hs[1]+'" t="inlineStr"><is><t>'+h+'</t></is></c>'; }).join('')+'</row>';
+    for(var r=2;r<=400;r++){ var o=rows[r-2]; sd+='<row r="'+r+'"><c r="A'+r+'"><f>'+(o?'B'+r+'&amp;"|"&amp;C'+r:'IF(B'+r+'="","",B'+r+'&amp;"|"&amp;C'+r+')')+'</f></c>'+(o?T('B'+r,o.code)+T('C'+r,o.pkg)+T('D'+r,o.name)+T('E'+r,o.ctr)+T('F'+r,o.cno):'')+'<c r="G'+r+'" s="'+ds[1]+'"'+(o&&o.ps?'><v>'+o.ps+'</v></c>':'/>')+'<c r="H'+r+'" s="'+ds[1]+'"'+(o&&o.pf?'><v>'+o.pf+'</v></c>':'/>')+(o&&o.cv!==''&&o.cv!=null?'<c r="I'+r+'"><v>'+o.cv+'</v></c>':'')+(o&&o.vo!==''&&o.vo!=null?'<c r="J'+r+'"><v>'+o.vo+'</v></c>':'')+'</row>'; }
     x=x.replace(/<sheetData>[\s\S]*<\/sheetData>/,sd+'</sheetData>'); z.file('xl/worksheets/sheet3.xml',x);
     /* Lists sheet: Project Code, Project Name and Package columns follow the dashboard; Impact, Status and type lists stay as they are */
     var lf=z.file('xl/worksheets/sheet2.xml'); if(lf){ var lx=await lf.async('string'), keep={}; (lx.match(/<row r="\d+">[\s\S]*?<\/row>/g)||[]).forEach(function(rw){ var rn=+/r="(\d+)"/.exec(rw)[1]; keep[rn]=(rw.match(/<c r="[D-G]\d+"[\s\S]*?<\/c>/g)||[]).join(''); });
@@ -4164,6 +4181,17 @@ async function suTplBuild(){
       lx=lx.replace(/<sheetData>[\s\S]*<\/sheetData>/,ls+'</sheetData>').replace(/<dimension ref="[^"]*"\/>/,'<dimension ref="A1:G'+(LN+1)+'"/>'); z.file('xl/worksheets/sheet2.xml',lx);
       /* every project-code drop-down reads the whole live list, so a new project appears by itself */
       for(var n=3;n<=10;n++){ var sf=z.file('xl/worksheets/sheet'+n+'.xml'); if(!sf) continue; var sx=await sf.async('string'); if(sx.indexOf('Lists!$A$2:$A$10')<0) continue; z.file('xl/worksheets/sheet'+n+'.xml',sx.split('=Lists!$A$2:$A$10').join('OFFSET(Lists!$A$2,0,0,MAX(1,COUNTA(Lists!$A$2:$A$300)),1)')); } }
+    /* Packages - Plots: Planned Finish, Contract Value, Approved VOs and Revised Value come from the contract number (grey = looked up; type over a cell only to override) */
+    var pf=z.file('xl/worksheets/sheet4.xml'), stf=z.file('xl/styles.xml');
+    if(pf&&stf){ var px=await pf.async('string'), sx2=await stf.async('string'), gn=33;
+      var mc=/<cellXfs count="(\d+)"/.exec(sx2); if(mc){ gn=+mc[1]; sx2=sx2.replace(/<cellXfs count="\d+">/,'<cellXfs count="'+(gn+1)+'">').replace('</cellXfs>','<xf numFmtId="3" fontId="9" fillId="7" borderId="1" pivotButton="0" quotePrefix="0" xfId="0"/></cellXfs>'); z.file('xl/styles.xml',sx2);
+        var gcol=function(ci,r){ return 'IFERROR(IF(INDEX(Lookup!$'+ci+'$2:$'+ci+'$400,MATCH(B'+r+'&amp;"|"&amp;D'+r+',Lookup!$A$2:$A$400,0))=0,"",INDEX(Lookup!$'+ci+'$2:$'+ci+'$400,MATCH(B'+r+'&amp;"|"&amp;D'+r+',Lookup!$A$2:$A$400,0))),"")'; };
+        var cix=function(ref){ var l=/^[A-Z]+/.exec(ref)[0]; return l.length*100+l.charCodeAt(l.length-1); };
+        px=px.replace(/<row r="(\d+)"([^>]*)>([\s\S]*?)<\/row>/g,function(m0,rn,at,body){ var r=+rn; if(r<6||r>306) return m0;
+          var cells={}; (body.match(/<c r="[A-Z]+\d+"[^>]*?(?:\/>|>[\s\S]*?<\/c>)/g)||[]).forEach(function(c){ cells[/r="([A-Z]+)\d+"/.exec(c)[1]]=c; });
+          cells.H='<c r="H'+r+'" s="28"><f>'+gcol('H',r)+'</f><v></v></c>'; cells.L='<c r="L'+r+'" s="'+gn+'"><f>'+gcol('I',r)+'</f><v></v></c>'; cells.M='<c r="M'+r+'" s="'+gn+'"><f>'+gcol('J',r)+'</f><v></v></c>'; cells.N='<c r="N'+r+'" s="'+gn+'"><f>IF(ISNUMBER(L'+r+'),L'+r+'+N(M'+r+'),"")</f><v></v></c>';
+          return '<row r="'+rn+'"'+at+'>'+Object.keys(cells).sort(function(a,b){ return cix(a)-cix(b); }).map(function(k){ return cells[k]; }).join('')+'</row>'; });
+        z.file('xl/worksheets/sheet4.xml',px); } }
     return await z.generateAsync({type:'arraybuffer',compression:'DEFLATE'});
   }catch(e){ return u.buffer; } }
 async function suTplDownload(){ try{ var buf=await suTplBuild(); xpSave(buf,'KEC_Site_Update_Template_v2.4.xlsx'); }catch(e){ toast('The template could not be prepared',true); } }
@@ -4371,6 +4399,8 @@ function dcJust(a,x){
   var it=JSIDX[x]; if(!it) return; var r=it.r, m=it.m, j=jsFind(r,m);
   if(!ACC.need){ if(a==='ignore'){ DCIGN[r.key+'|'+m]=1; dcSaveIgn(); dcOpen(); render(); } return; }
   var base={key:jsKey(r,m),rule:DCCODE[m]||'C05',code:r.code,pkg:r.pkg,dd:it.d||state.cutoff,warn:m,fp:DCFP[m]==null?m:DCFP[m]};
+  if(a==='dbdec'){ jsCall(Object.assign({action:'add',just:'DECISION: use the Contracts database values for this contract (administrator choice)'},base)); return; }
+  if(a==='sitedec'){ jsCall(Object.assign({action:'add',just:'DECISION: use the site value for this contract, the Contracts database figures are replaced here (administrator choice)'},base)); return; }
   if(a==='add'){ JST.err=''; JST.form={x:x,mode:'add',text:''}; dcOpen(); return; }
   if(a==='edit'){ JST.err=''; JST.form={x:x,mode:'edit',text:j?j.just:''}; dcOpen(); return; }
   if(a==='reject'){ JST.err=''; JST.form={x:x,mode:'reject',text:''}; dcOpen(); return; }
@@ -4394,7 +4424,8 @@ var DC_CHK={
  C06:{n:'Forecast finish passed, progress incomplete',rule:'Forecast finish earlier than the cut-off while progress is below 100%',thr:'-',sev:'Medium',where:'Data warnings, Excel log',means:'The forecast finish is in the past but the package is not complete.',causes:'Forecast not updated',action:'Update the forecast finish date.'},
  C07:{n:'Actual progress fell vs previous cut-off',rule:'Actual % lower than at the previous cut-off',thr:'More than 2 percentage points',sev:'High',where:'Data warnings, Excel log',means:'Earned value went down compared with the previous cut-off.',causes:'VO reduced; earned value corrected; package re-baselined; a new contract not in the last update',action:'Check what changed between the two cut-offs and confirm the reduction is intended.'},
  C08:{n:'Zero progress data',rule:'Planned, earned and certified all zero although the planned start has passed',thr:'-',sev:'Low',where:'Excel log only',means:'No progress data is recorded for a package that should have started.',causes:'Package not yet loaded in the progress list; plan not entered',action:'Confirm the start status with the site team and update the progress list.'},
- C09:{n:'No matching contract',rule:'Package has no contract number or a zero revised value',thr:'-',sev:'Medium',where:'Excel log only',means:'The package cannot be tied to a contract value.',causes:'Contract number missing in the progress list; contract not in the Contracts sheet',action:'Add the contract number or the contract line.'}
+ C09:{n:'No matching contract',rule:'Package has no contract number or a zero revised value',thr:'-',sev:'Medium',where:'Excel log only',means:'The package cannot be tied to a contract value.',causes:'Contract number missing in the progress list; contract not in the Contracts sheet',action:'Add the contract number or the contract line.'},
+ C10:{n:'Contract values differ from the Contracts database',rule:'Contract value, approved VOs or revised value of a package (single-package contract) differ from the Contracts database',thr:'Difference above SAR 1,000',sev:'High',where:'Data warnings, Alerts, Excel log',means:'The progress list or a site update carries different contract figures than the Contracts database, so the % complete depends on which one is used.',causes:'VOs updated in one place only; contract value typed wrongly; Contracts database not updated',action:'Administrator decides: use the Contracts database, use the site value, or keep the difference with a justification.'}
 };
 function dcLogOnly(r,cut){ var o=[];
   if((+r.rv||0)>0&&!(+r.pv)&&!(+r.ev)&&!(+r.gc)&&r.ps&&r.ps<cut) o.push({c:'C08',t:'Planned, earned and certified are all zero although the planned start ('+fd(r.ps)+') has passed'});
@@ -4407,13 +4438,13 @@ async function dcLog(){
   items.sort(function(a,b){ return String(a.r.code)<String(b.r.code)?-1:String(a.r.code)>String(b.r.code)?1:String(a.r.pkg)<String(b.r.pkg)?-1:String(a.r.pkg)>String(b.r.pkg)?1:a.c<b.c?-1:1; });
   var today=new Date(), cutD=new Date(cut+'T00:00:00Z'), nz=function(v){ return v==null||v===''?null:v; }, dt=function(v){ var x=toISO(v); return x?new Date(x+'T00:00:00Z'):null; };
   var idOf=function(i){ return 'W-'+String(i+1).padStart(4,'0'); };
-  var sevOf=function(it){ var r=it.r,rv=+r.rv||0; if(it.c==='C01') return rv&&((+r.gc||0)-(+r.ev||0))/rv>=0.10?'High':'Medium'; return {C02:'High',C03:'High',C04:'High',C05:'Medium',C06:'Medium',C07:'High',C08:'Low',C09:'Medium'}[it.c]; };
+  var sevOf=function(it){ var r=it.r,rv=+r.rv||0; if(it.c==='C01') return rv&&((+r.gc||0)-(+r.ev||0))/rv>=0.10?'High':'Medium'; return {C02:'High',C03:'High',C04:'High',C05:'Medium',C06:'Medium',C07:'High',C08:'Low',C09:'Medium',C10:'High'}[it.c]; };
   var crossOf=function(r){ var x=dcCtrGc(r,cut); return x==null?null:x; };
   var srcOf=function(it){ var r=it.r, x=crossOf(r); if(it.c==='C01') return 'Earned value: Packages - Plots sheet. Gross certified: Packages - Plots sheet'+(x!=null?' | Contracts sheet shows '+Math.round(x).toLocaleString('en-US')+(Math.abs(x-(+r.gc||0))<2?' - MATCHES':' - DIFFERENT, sources disagree'):'');
     if(it.c==='C02'||it.c==='C03'||it.c==='C04') return 'Packages - Plots sheet (Revised Value, Earned Value, Gross Certified)';
     if(it.c==='C07') return 'Packages - Plots sheet (Earned Value and Revised Value at the previous cut-off and at '+d2(cut)+')';
     if(it.c==='C08') return 'Packages - Plots sheet (Planned Value, Earned Value, Gross Certified all 0)';
-    if(it.c==='C09') return 'Packages - Plots and Contracts sheets';
+    if(it.c==='C09'||it.c==='C10') return 'Packages - Plots and Contracts sheets';
     return 'Packages - Plots sheet (Planned / Forecast Start and Finish dates)'; };
   var H1=['Log ID','Logged on','Cut-off','Project code','Project','Package','Contract No.','Contractor / Vendor','Check code','Warning','Severity','Revised value (SAR)','Planned %','Actual % (Earned ÷ Revised)','Gross certified (SAR)','Earned value (SAR)','Difference (SAR)','Difference % of revised value','Source of figures (sheet / column)','What it means','Possible causes to confirm','Suggested action','Owner','Status','Reviewer comment','Date closed'];
   var ids={};
@@ -4710,7 +4741,9 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
           var allr=pg2.rows.filter(function(r){ return FRAME_TOTAL[f].indexOf(r.code)>=0; });
           cards.push(ucard(f+' · overall',agg(allr),'tot').replace('<h4>','<h4><span class="ovl">OVERALL</span>'));
         }
-        pjf.forEach(function(g){ cards.push(ucard(pname(g.name),g.a,'',g.name,true)); });
+        pjf.forEach(function(g){ var pr=g.rows.filter(function(r){ return !isSep(r); });
+          if(PKGCARDS[g.name]&&pr.length>1){ pr.forEach(function(r){ cards.push(ucard(pkgL(r.code,r.pkg),agg([r]),'pk')); }); cards.push(ucard(pname(g.name),g.a,'tot',g.name,true).replace('<h4>','<h4><span class="ovl">OVERALL</span>')); }
+          else cards.push(ucard(pname(g.name),g.a,'',g.name,true)); });
         sepList(pjf).forEach(function(c){ cards.push(c); });
         var n=cards.length, span2=n>3?'':(n===3?' s3':(n===2?' s2':' s1'));
         return '<div class="pbox'+span2+'"><h3>'+esc(pg2.name)+(f?' · '+esc(f):'')+'<small>'+pjf.length+' project'+(pjf.length>1?'s':'')+'</small></h3><div class="ucs">'+cards.join('')+'</div></div>';
@@ -5030,7 +5063,11 @@ function setData(progRaw,infoRaw,src,kind){
   var m=buildModel(progRaw,infoRaw);
   if(!m.rows.length) throw new Error('No usable progress rows found.');
   /* contracts whose approved VOs come from the contracts sheet, not the progress list (CNT-0939: sheet value is the correct one, told by the user on 12 Oct 26) */
-  m.rows.forEach(function(r){ if(!VO_FROM_SHEET[ckey(r.cno)]) return; var c=contracts.filter(function(x){ return x.lc===String(r.code).toLowerCase()&&x.key===ckey(r.cno); })[0]; if(c){ r.vo=c.vo; r.rv=(r.cv||0)+c.vo; } });
+  m.rows.forEach(function(r){ r.cvSite=r.cv; r.voSite=r.vo; r.rvSite=r.rv; var ck=ckey(r.cno), c=contracts.filter(function(x){ return x.lc===String(r.code).toLowerCase()&&x.key===ck; })[0]; if(!c) return; var d=c10Dec(r);
+    if(VO_FROM_SHEET[ck]&&d!=='site'){ r.vo=c.vo; r.rv=(r.cv||0)+c.vo; }
+    else if(d==='db'&&cnoCount(m,r.code,ck)===1){ var sh=c.share==null?1:c.share; r.cv=c.cv*sh; r.vo=(c.voS!=null?c.voS:c.vo*sh); r.rv=c.shrv!=null?c.shrv:r.cv+r.vo; } });
+  var sdc={}; m.rows.forEach(function(r){ if(c10Dec(r)==='site') sdc[String(r.code).toLowerCase()+'|'+ckey(r.cno)]=r; });
+  if(Object.keys(sdc).length) contracts=contracts.map(function(c){ var r=sdc[c.lc+'|'+c.key]; if(!r||cnoCount(m,r.code,c.key)!==1) return c; var sh=c.share==null||c.share===0?1:c.share, n=Object.assign({},c); n.cv=(r.cvSite||0)/sh; n.vo=(r.voSite||0)/sh; n.voS=r.voSite||0; n.shrv=(r.cvSite||0)+(r.voSite||0); return n; });
   if(NOTES.size) m.rows.forEach(function(r){ var n=noteOf(r); if(n&&n.actual&&r.rv&&r.ev/r.rv>=0.9999) r.ff=n.actual; });
   if(NOTES.size) m.rows.forEach(function(r){ var n=noteOf(r); if(n&&n.fc&&r.ff&&r.ff<r.date&&!(r.rv&&r.ev/r.rv>=0.9999)&&(!n.since||r.date>=n.since)){ r.ff=n.fc; r.fcApplied=true; } });
   if(PKMAND.size) m.rows.forEach(function(r){ var k=PKMAND.get(String(r.code).toLowerCase()+'|'+String(r.pkg).trim().toLowerCase()); if(k) r.pf=k; });
