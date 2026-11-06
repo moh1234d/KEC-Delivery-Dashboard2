@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V333</title>
+<title>TEST · KEC Project Controls Dashboard · V334</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1273,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V333</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V334</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1410,7 +1410,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V333';
+var APP_VER='V334';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6409,10 +6409,11 @@ function drawViewB0(){
 }
 /* ----- remove burned-in date, time and location stamps from a photo (canvas, in place) ----- */
 function stampClean(cv){ return stampRun(cv,218,70)||stampRun(cv,150,45); }
-function stampRun(cv,TW,TD){
+function stampRun(cv,TW,TD,forced){
   var W=cv.width, H=cv.height, ctx=cv.getContext('2d'), im=ctx.getImageData(0,0,W,H), d=im.data, N=W*H, i, x, y;
   var lum=new Uint8Array(N); for(i=0;i<N;i++) lum[i]=(d[i*4]*77+d[i*4+1]*150+d[i*4+2]*29)>>8;
   var wh=new Uint8Array(N); for(i=0;i<N;i++){ var r=d[i*4],g=d[i*4+1],b=d[i*4+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b); wh[i]=(mn>=TW&&mx-mn<=46)?1:0; }
+  var lines; if(forced){ lines=forced; } else {
   var st=new Uint8Array(N), R=2, band=Math.round(H*.26);
   for(y=0;y<H;y++){ if(y>band&&y<H-band) continue; for(x=0;x<W;x++){ i=y*W+x; if(!wh[i]) continue; var ok=false, l0=lum[i];
     for(var dy=-R;dy<=R&&!ok;dy++){ var yy=y+dy; if(yy<0||yy>=H) continue; for(var dx=-R;dx<=R;dx++){ var xx=x+dx; if(xx<0||xx>=W) continue; if(l0-lum[yy*W+xx]>TD){ ok=true; break; } } }
@@ -6433,11 +6434,13 @@ function stampRun(cv,TW,TD){
     var gap=Math.max(A1.x0,B1.x0)-Math.min(A1.x1,B1.x1); if(ov>=hh*.5&&gap<=hh*7){ A1.g=A1.g.concat(B1.g); A1.x0=Math.min(A1.x0,B1.x0); A1.x1=Math.max(A1.x1,B1.x1); A1.y0=Math.min(A1.y0,B1.y0); A1.y1=Math.max(A1.y1,B1.y1); A1.h=hh; lines.splice(j,1); mg=true; } } }
   lines=lines.filter(function(L){ return L.g.length>=6&&(L.x1-L.x0)>=L.h*4; });
   if(!lines.length) return 0;
+  }
   /* mask: every near-white pixel inside the text boxes, grown to cover outline and shadow */
   var mk=new Uint8Array(N), m=Math.max(3,Math.round(H*.006)), bx0=W,bx1=0,by0=H,by1=0;
   lines.forEach(function(L){ var ya=Math.max(0,L.y0-m), yb=Math.min(H-1,L.y1+m), xa=Math.max(0,L.x0-m), xb=Math.min(W-1,L.x1+m);
     for(var yy=ya;yy<=yb;yy++) for(var xx=xa;xx<=xb;xx++) if(wh[yy*W+xx]) for(var ey=-2;ey<=2;ey++) for(var ex=-2;ex<=2;ex++){ var qy=yy+ey, qx=xx+ex; if(qy>=0&&qy<H&&qx>=0&&qx<W) mk[qy*W+qx]=1; }
     bx0=Math.min(bx0,xa); bx1=Math.max(bx1,xb); by0=Math.min(by0,ya); by1=Math.max(by1,yb); });
+  if(forced){ var cnt=0; for(i=0;i<N;i++) cnt+=mk[i]; if(cnt<8) return 0; }
   /* fill by diffusion from the surrounding pixels */
   var pad=6, X0=Math.max(0,bx0-pad), X1=Math.min(W-1,bx1+pad), Y0=Math.max(0,by0-pad), Y1=Math.min(H-1,by1+pad), w=X1-X0+1, h=Y1-Y0+1, ch=[0,1,2];
   var A=new Float32Array(w*h*3), K=new Uint8Array(w*h);
@@ -6448,12 +6451,23 @@ function stampRun(cv,TW,TD){
   for(y=0;y<h;y++) for(x=0;x<w;x++){ var t4=y*w+x; if(!K[t4]) continue; var s2=((y+Y0)*W+(x+X0))*4; d[s2]=A[t4*3]; d[s2+1]=A[t4*3+1]; d[s2+2]=A[t4*3+2]; }
   ctx.putImageData(im,0,0); return lines.length;
 }
+/* V334: the AI (Claude, through the relay /photo-text) says where the burned-in text is; only inside those boxes the near-white text pixels are filled. Nothing runs unless the user presses Remove stamps. */
+async function pvFindText(cv){
+  var sc=Math.min(1,1000/Math.max(cv.width,cv.height)), c2=document.createElement('canvas'); c2.width=Math.round(cv.width*sc); c2.height=Math.round(cv.height*sc); c2.getContext('2d').drawImage(cv,0,0,c2.width,c2.height);
+  var j=await accCall('POST','/photo-text',{data:c2.toDataURL('image/jpeg',.82)},60000);
+  return (j&&j.boxes)||[];
+}
+function stampBoxes(cv,bx){
+  var W=cv.width,H=cv.height, pd=Math.max(2,Math.round(H*.004));
+  var L=(bx||[]).map(function(q){ var x0=Math.max(0,Math.round(q.x/1000*W)-pd), y0=Math.max(0,Math.round(q.y/1000*H)-pd), x1=Math.min(W-1,Math.round((q.x+q.w)/1000*W)+pd), y1=Math.min(H-1,Math.round((q.y+q.h)/1000*H)+pd); return {x0:x0,x1:x1,y0:y0,y1:y1,h:y1-y0+1,g:[]}; }).filter(function(o){ return o.x1>o.x0&&o.y1>o.y0; });
+  if(!L.length) return 0; return stampRun(cv,165,0,L);
+}
 function cleanOn(){ return !!(RP.cfg&&RP.cfg.clean===true); } /* V333: no automatic stamp removal; it runs only when this setting is switched on, or from the Remove all stamps button */
 async function pvClean(q){
   if(q.oid){ var t=q.id; q.id=q.oid; q.oid=t; return 1; }
   var src=RP.ph[q.id]; if(!src) return 0; var im=await loadImg(src); if(!im) return 0;
   var cv=document.createElement('canvas'); cv.width=im.width; cv.height=im.height; cv.getContext('2d').drawImage(im,0,0);
-  if(!stampClean(cv)) return 0;
+  var bx=await pvFindText(cv); if(!bx.length) return 0; if(!stampBoxes(cv,bx)) return 0;
   var id=uid(), data=cv.toDataURL('image/jpeg',.88); RP.ph[id]=data; try{ await accCall('PUT','/report-photo',{id:id,data:data},30000); }catch(e){ RP.pvLocal=1; }
   q.oid=q.id; q.id=id; return 1;
 }
@@ -6467,17 +6481,17 @@ async function pvCleanRun(btn){
   var q0=(function(){ var o=pvOwner(si,+btn.getAttribute('data-ci')); return o&&o.ph[+btn.getAttribute('data-pi')]; })(); if(q0&&!q0.oid) return pvCleanGlobal(btn);
   if(all){ var sl=(RP.cfg.slides||[])[si]; if(!sl) return; (sl.cards||[]).concat([sl]).forEach(function(o){ (o.ph||[]).forEach(function(q){ if(!q.oid) list.push(q); }); }); }
   else{ var o=pvOwner(si,+btn.getAttribute('data-ci')), q=o&&o.ph[+btn.getAttribute('data-pi')]; if(q) list.push(q); }
-  if(!list.length) return; toast('Looking for date, time and location stamps…'); RP.pvLocal=0; var n=0, was=!all&&list[0].oid;
+  if(!list.length) return; toast('Asking Claude where the date, time and location text is…'); RP.pvLocal=0; var n=0, was=!all&&list[0].oid;
   try{ for(var i=0;i<list.length;i++) n+=await pvClean(list[i]); }catch(x){ return toast((x&&x.message)||'Could not process the picture.',true); }
-  if(!n){ toast('No stamp was found. Photos with very faint or unusual stamps can be replaced with a clean copy.',true); return; }
+  if(!n){ toast('Claude found no burned-in date, time or location text. The photo was not changed.',true); return; }
   dirty(); drawViewB(); toast(was?'Original restored.':n+' photo'+(n>1?'s':'')+' cleaned. Use Restore original on a photo to undo.',!!RP.pvLocal);
 }
 async function pvCleanGlobal(btn){
   var list=[]; (RP.cfg.slides||[]).forEach(function(sl){ (sl.cards||[]).concat([sl]).forEach(function(o){ (o.ph||[]).forEach(function(q){ if(!q.oid) list.push(q); }); }); });
-  if(!list.length) return toast('There are no photos left to clean.'); if(btn){ btn.disabled=true; } toast('Looking for date, time and location stamps in '+list.length+' photo'+(list.length>1?'s':'')+'…'); RP.pvLocal=0; var n=0;
+  if(!list.length) return toast('There are no photos left to clean.'); if(btn){ btn.disabled=true; } toast('Asking Claude to check '+list.length+' photo'+(list.length>1?'s':'')+' for date, time and location text…'); RP.pvLocal=0; var n=0;
   try{ await fetchPhotos(); for(var i=0;i<list.length;i++) n+=await pvClean(list[i]); }catch(x){ if(btn) btn.disabled=false; return toast((x&&x.message)||'Could not process the pictures.',true); }
   if(btn) btn.disabled=false; if(n){ dirty(); drawView(); }
-  toast(n?n+' of '+list.length+' photo'+(list.length>1?'s':'')+' cleaned. Use Restore original on a photo to undo.':'No stamp was found in any photo.',!n||!!RP.pvLocal);
+  toast(n?n+' of '+list.length+' photo'+(list.length>1?'s':'')+' cleaned. Use Restore original on a photo to undo.':'Claude found no burned-in text in any photo. Nothing was changed.',!n||!!RP.pvLocal);
 }
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-pv="cleanglobal"]'); if(b){ e.preventDefault(); pvCleanGlobal(b); } });
 /* ----- duplicate a slide: cards, photos (stored as new copies), texts and the moved positions are copied ----- */
@@ -6658,7 +6672,7 @@ async function pvChange(e){
 }
 function tplBox(){
   var b=bc(), tx='margin:8px 0 0;font-size:12px;color:#5b6784';
-  var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="clean"'+(cleanOn()?' checked':'')+'> Automatically remove burned-in date, time and location stamps when photos are added or replaced (off by default; the Remove all stamps button still works on request)</label></div>';
+  var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><p style="'+tx+'">Photos are never changed when added or replaced. Press Remove stamps on a photo (or Remove all stamps) and Claude will find any burned-in date, time or location text and remove only that. Restore original undoes it.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Cover page (Template B)</h5><div class="rp-g2"><div><label>Department</label><input type="text" data-f="b.dept" value="'+esc(b.dept)+'"></div><div><label>First line</label><input type="text" data-f="b.l1" value="'+esc(b.l1)+'"></div><div><label>Subtitle</label><input type="text" data-f="b.sub" value="'+esc(b.sub)+'"></div></div><label style="margin-top:8px">Title (Enter starts a second line)</label><textarea data-f="b.title" rows="2" style="width:100%;font:inherit;padding:6px 8px;border:1px solid #c9d1e0;border-radius:6px">'+esc(b.title)+'</textarea><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="b.end"'+(b.end?' checked':'')+'> Add a closing "Thank you" slide</label><p style="'+tx+'">The month and year follow the data date ('+esc(dd(cutIso()))+'). Template B uses one progress page and one photos page for each slide, and the overview shows the planned or forecast style only.</p></div>';
   return h;
@@ -6851,7 +6865,7 @@ function onChange(e){
 }
 function shrink(file){
   return new Promise(function(res,rej){ var u=URL.createObjectURL(file), im=new Image();
-    im.onload=function(){ var s=Math.min(1,1400/Math.max(im.width,im.height)), w=Math.round(im.width*s), h=Math.round(im.height*s), cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); try{ if(cleanOn()) stampClean(cv); }catch(e){}
+    im.onload=function(){ var s=Math.min(1,1400/Math.max(im.width,im.height)), w=Math.round(im.width*s), h=Math.round(im.height*s), cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); 
       var q=.84, d; do{ d=cv.toDataURL('image/jpeg',q); q-=.08; }while(d.length>850000&&q>.3); URL.revokeObjectURL(u); res({data:d,w:w,h:h}); };
     im.onerror=function(){ URL.revokeObjectURL(u); rej(new Error('Could not read '+file.name)); }; im.src=u; });
 }
