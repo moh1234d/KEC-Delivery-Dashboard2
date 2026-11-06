@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V332</title>
+<title>TEST · KEC Project Controls Dashboard · V333</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1273,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V332</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V333</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1410,7 +1410,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V332';
+var APP_VER='V333';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6448,7 +6448,7 @@ function stampRun(cv,TW,TD){
   for(y=0;y<h;y++) for(x=0;x<w;x++){ var t4=y*w+x; if(!K[t4]) continue; var s2=((y+Y0)*W+(x+X0))*4; d[s2]=A[t4*3]; d[s2+1]=A[t4*3+1]; d[s2+2]=A[t4*3+2]; }
   ctx.putImageData(im,0,0); return lines.length;
 }
-function cleanOn(){ return !(RP.cfg&&RP.cfg.clean===false); }
+function cleanOn(){ return !!(RP.cfg&&RP.cfg.clean===true); } /* V333: no automatic stamp removal; it runs only when this setting is switched on, or from the Remove all stamps button */
 async function pvClean(q){
   if(q.oid){ var t=q.id; q.id=q.oid; q.oid=t; return 1; }
   var src=RP.ph[q.id]; if(!src) return 0; var im=await loadImg(src); if(!im) return 0;
@@ -6658,7 +6658,7 @@ async function pvChange(e){
 }
 function tplBox(){
   var b=bc(), tx='margin:8px 0 0;font-size:12px;color:#5b6784';
-  var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="clean"'+(cleanOn()?' checked':'')+'> Remove burned-in date, time and location stamps from photos when they are added</label></div>';
+  var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="clean"'+(cleanOn()?' checked':'')+'> Automatically remove burned-in date, time and location stamps when photos are added or replaced (off by default; the Remove all stamps button still works on request)</label></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Cover page (Template B)</h5><div class="rp-g2"><div><label>Department</label><input type="text" data-f="b.dept" value="'+esc(b.dept)+'"></div><div><label>First line</label><input type="text" data-f="b.l1" value="'+esc(b.l1)+'"></div><div><label>Subtitle</label><input type="text" data-f="b.sub" value="'+esc(b.sub)+'"></div></div><label style="margin-top:8px">Title (Enter starts a second line)</label><textarea data-f="b.title" rows="2" style="width:100%;font:inherit;padding:6px 8px;border:1px solid #c9d1e0;border-radius:6px">'+esc(b.title)+'</textarea><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="b.end"'+(b.end?' checked':'')+'> Add a closing "Thank you" slide</label><p style="'+tx+'">The month and year follow the data date ('+esc(dd(cutIso()))+'). Template B uses one progress page and one photos page for each slide, and the overview shows the planned or forecast style only.</p></div>';
   return h;
