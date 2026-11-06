@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V331</title>
+<title>TEST · KEC Project Controls Dashboard · V332</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1273,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V331</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V332</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1410,7 +1410,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V331';
+var APP_VER='V332';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -1453,7 +1453,7 @@ var mm = function(n){ return n==null||isNaN(n)?'—':(Math.abs(n)<5e4&&n!==0?(n/
 var sgn = function(n,dp,u){ if(n==null||isNaN(n)) return '—'; return (n>0?'+':n<0?'−':'')+Math.abs(n).toFixed(dp)+(u||''); };
 var spiCls = function(s){ return s==null?'':s>=T.spiAmber?'good':s>=T.spiRed?'warn':'bad'; };
 var cssv = function(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
-function toast(msg,err){ var h=$('#toastHost'); h.innerHTML='<div class="toast'+(err?' err':'')+'">'+esc(msg)+'</div>'; clearTimeout(toast.t); toast.t=setTimeout(function(){h.innerHTML='';},4200); }
+function toast(msg,err,ms){ var h=$('#toastHost'); h.innerHTML='<div class="toast'+(err?' err':'')+'">'+esc(msg)+'</div>'; clearTimeout(toast.t); toast.t=setTimeout(function(){h.innerHTML='';},ms||4200); }
 
 /* ---------- column mapping ---------- */
 var canon = function(s){ return String(s==null?'':s).toLowerCase().replace(/\s+/g,' ').trim(); };
@@ -4422,12 +4422,39 @@ function dcOpen(){
   m.innerHTML='<div class="dcp"><div class="dcacts"><button type="button" class="dcx" id="dcClose">Close</button><button type="button" class="dcx" id="dcLog">⬇ Download Excel log</button>'+(!ACC.need&&n?'<button type="button" class="dcx dcig" id="dcIgnAll">Ignore all</button>':'')+'</div><h3>Data warnings</h3><div class="dcs">'+(F.length?(n?n+' open warning'+(n>1?'s':'')+' at the '+d2(state.cutoff)+' cut-off. ':'No open warnings at the '+d2(state.cutoff)+' cut-off. ')+(nj?nj+' justified. ':'')+(np&&adm?np+' waiting for your approval. ':'')+(ACC.need?'Use Justify to explain a value that is correct as it stands. An administrator approves each justification.':'Sign-in is needed to justify a warning.'):'No warnings at the '+d2(state.cutoff)+' cut-off. All dates, progress and certified values passed the checks.')+'</div>'+(JST.err?'<div class="jerr">'+esc(JST.err)+'</div>':'')+body+pb+(!ACC.need&&ni?'<div class="dcs" style="margin:10px 0 0">'+ni+' ignored warning'+(ni>1?'s':'')+' · <a href="#" id="dcRestore">Restore all</a></div>':'')+'</div>';
   m.classList.add('on'); var tx=document.getElementById('jText'); if(tx) tx.focus(); else document.getElementById('dcClose').focus();
 }
+
+/* V332: C10 decisions. The values of both sides, and the write of the site value into the Contracts file on Drive (relay V44 /contract-update). */
+function c10Vals(r){ try{ var ck=r.cno?ckey(r.cno):'', c=ck&&contracts&&contracts.length?c10Find(r.code,ck):null; if(!c) return null;
+  var sh=c.share==null?1:c.share, cvD=c.cv*sh, voD=c.voS!=null?c.voS:c.vo*sh, rvD=c.shrv!=null?c.shrv:cvD+voD,
+      cvS=r.cvSite!=null?+r.cvSite:(+r.cv||0), voS=r.voSite!=null?+r.voSite:(+r.vo||0), rvS=r.rvSite!=null?+r.rvSite:(+r.rv||0);
+  return {cno:c.cno||r.cno,sh:sh||1,site:{cv:cvS,vo:voS,rv:rvS},db:{cv:cvD,vo:voD,rv:rvD}}; }catch(e){ return null; } }
+function c10Txt(o){ var f=function(n){ return Math.round(n).toLocaleString('en-US'); }; return 'contract value '+f(o.cv)+', approved VOs '+f(o.vo)+', revised '+f(o.rv); }
+function c10Site(r,base){
+  if(JST.busy) return; var v=c10Vals(r);
+  var rec=function(extra){ jsCall(Object.assign({action:'add',just:('DECISION: use the site value for this contract, the Contracts database figures are replaced here (administrator choice).'+(v?' '+v.cno+' · site list: '+c10Txt(v.site)+' · Contracts database was: '+c10Txt(v.db)+'.':'')+' '+extra).slice(0,790)},base)); };
+  if(!v){ rec('Contracts file on Drive not changed (contract not found in the Contracts database).'); return; }
+  var dcv=Math.abs(v.site.cv-v.db.cv)>1000, dvo=Math.abs(v.site.vo-v.db.vo)>1000, drv=Math.abs(v.site.rv-v.db.rv)>1000, body={cno:v.cno,code:r.code,note:'C10 decision, site value used'};
+  if(dcv) body.cv=Math.round(v.site.cv/v.sh*100)/100;
+  if(dvo) body.vo=Math.round(v.site.vo/v.sh*100)/100;
+  if(!dcv&&!dvo&&drv) body.vo=Math.round((v.site.rv-v.db.cv)/v.sh*100)/100; /* only the revised value differs: it is contract value + VOs, so the VOs carry the change */
+  JST.busy=true; JST.err=''; dcOpen();
+  accCall('POST','/contract-update',body,40000).then(function(j){
+    JST.busy=false; var a=(j&&j.rows&&j.rows[0])||null;
+    var msg=a?'Contracts file on Drive updated: '+v.cno+' contract value '+Math.round(a.before.cv).toLocaleString('en-US')+' → '+Math.round(a.after.cv).toLocaleString('en-US')+', approved VOs '+Math.round(a.before.vo).toLocaleString('en-US')+' → '+Math.round(a.after.vo).toLocaleString('en-US')+', revised value '+Math.round(a.before.rv).toLocaleString('en-US')+' → '+Math.round(a.after.rv).toLocaleString('en-US'):'Contracts file on Drive updated for '+v.cno;
+    toast(msg+'. The revised value stays a formula.',false,9000);
+    rec(msg+' (by relay).');
+  }).catch(function(e){
+    JST.busy=false;
+    if(e&&e.status===501){ toast('Contracts file on Drive is not set up on the relay, so it was not changed. The decision is logged.',true,7000); rec('Contracts file on Drive NOT changed: not set up on the relay.'); return; }
+    JST.err='The Contracts file on Drive was not updated: '+((e&&e.message)||'error')+'. Nothing was recorded, try again.'; dcOpen();
+  });
+}
 function dcJust(a,x){
   var it=JSIDX[x]; if(!it) return; var r=it.r, m=it.m, j=jsFind(r,m);
   if(!ACC.need){ if(a==='ignore'){ DCIGN[r.key+'|'+m]=1; dcSaveIgn(); dcOpen(); render(); } return; }
   var base={key:jsKey(r,m),rule:DCCODE[m]||'C05',code:r.code,pkg:r.pkg,dd:it.d||state.cutoff,warn:m,fp:DCFP[m]==null?m:DCFP[m]};
-  if(a==='dbdec'){ jsCall(Object.assign({action:'add',just:'DECISION: use the Contracts database values for this contract (administrator choice)'},base)); return; }
-  if(a==='sitedec'){ jsCall(Object.assign({action:'add',just:'DECISION: use the site value for this contract, the Contracts database figures are replaced here (administrator choice)'},base)); return; }
+  if(a==='dbdec'){ var v1=c10Vals(r); jsCall(Object.assign({action:'add',just:'DECISION: use the Contracts database values for this contract (administrator choice).'+(v1?' '+v1.cno+' · site list: '+c10Txt(v1.site)+' · Contracts database kept: '+c10Txt(v1.db)+'. Contracts file on Drive not changed.':'')},base)); return; }
+  if(a==='sitedec'){ c10Site(r,base); return; }
   if(a==='add'){ JST.err=''; JST.form={x:x,mode:'add',text:''}; dcOpen(); return; }
   if(a==='edit'){ JST.err=''; JST.form={x:x,mode:'edit',text:j?j.just:''}; dcOpen(); return; }
   if(a==='reject'){ JST.err=''; JST.form={x:x,mode:'reject',text:''}; dcOpen(); return; }
