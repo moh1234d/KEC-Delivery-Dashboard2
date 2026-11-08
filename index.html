@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V338</title>
+<title>TEST · KEC Project Controls Dashboard · V339</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V338</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V339</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1412,7 +1412,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V338';
+var APP_VER='V339';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6164,7 +6164,7 @@ function scHtml(sc){
       if(p.k==='cnrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnreset">Reset card sizes</button>':'';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'"></label>';
-      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
+      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="rotl" title="Rotate this photo 90° to the left" '+at+'>↺</button><button type="button" class="rp-vb" data-pv="rotr" title="Rotate this photo 90° to the right" '+at+'>↻ Rotate</button><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
@@ -6527,6 +6527,19 @@ async function pvClean(q){
   var id=uid(), data=cv.toDataURL('image/jpeg',.88); RP.ph[id]=data; try{ await accCall('PUT','/report-photo',{id:id,data:data},30000); }catch(e){ RP.pvLocal=1; }
   q.oid=q.id; q.id=id; return 1;
 }
+/* V339: rotate a photo by 90° (the rotated picture is stored, so the screen, the PDF and the PowerPoint all show it the same way; the original kept for Restore original is turned too) */
+function pvUsed(id){ var n=0; (RP.cfg.slides||[]).forEach(function(sl){ [sl].concat(sl.cards||[]).forEach(function(o){ (o.ph||[]).forEach(function(q){ if(q&&(q.id===id||q.oid===id)) n++; }); }); }); return n; }
+async function pvRotImg(id,dir){
+  var src=RP.ph[id]; if(!src) return null; var im=await loadImg(src); if(!im) return null;
+  var w=im.width, h=im.height, cv=document.createElement('canvas'); cv.width=h; cv.height=w; var x=cv.getContext('2d'); x.translate(h/2,w/2); x.rotate(dir*Math.PI/2); x.drawImage(im,-w/2,-h/2);
+  var nid=uid(), data=cv.toDataURL('image/jpeg',.9); RP.ph[nid]=data; try{ await accCall('PUT','/report-photo',{id:nid,data:data},30000); }catch(e){ RP.pvLocal=1; } return {id:nid,w:cv.width,h:cv.height};
+}
+async function pvRotate(q,dir){
+  var oldId=q.id, oldO=q.oid, a=await pvRotImg(oldId,dir); if(!a) throw new Error('The photo could not be read.');
+  q.id=a.id; q.w=a.w; q.h=a.h; if(q.box&&q.box.fit==='fill') q.box.fit='cover';
+  if(oldO){ var b=await pvRotImg(oldO,dir); if(b) q.oid=b.id; else delete q.oid; }
+  [oldId,oldO].forEach(function(id){ if(id&&!pvUsed(id)){ delete RP.ph[id]; accCall('PUT','/report-photo',{id:id,data:null},15000).catch(function(){}); } });
+}
 /* ----- photo controls in the preview ----- */
 function pvOwner(si,ci){ var s=(RP.cfg.slides||[])[si]; if(!s) return null; var t=ci>=0?(s.cards||[]).filter(cardOk)[ci]:s; if(t) t.ph=t.ph||[]; return t; }
 async function pvStore(file){ var o=await shrink(file), id=uid(); RP.ph[id]=o.data; try{ await accCall('PUT','/report-photo',{id:id,data:o.data},30000); }catch(e){ RP.pvLocal=1; } return {id:id,w:o.w,h:o.h}; }
@@ -6703,6 +6716,9 @@ function pvUp(e){
 function pvClick(e){
   var cpy=e.target.closest&&e.target.closest('[data-pv="cpy"]');
   if(cpy){ e.preventDefault(); var ow0=pvOwner(+cpy.getAttribute('data-si'),+cpy.getAttribute('data-ci')), q0=ow0&&ow0.ph[+cpy.getAttribute('data-pi')]; if(q0) clipSet({kind:'photo',q:{id:q0.id,w:q0.w,h:q0.h,oid:q0.oid},label:'photo'},'Photo copied.'); return; }
+  var ro=e.target.closest&&e.target.closest('[data-pv="rotl"],[data-pv="rotr"]');
+  if(ro){ e.preventDefault(); var ow1=pvOwner(+ro.getAttribute('data-si'),+ro.getAttribute('data-ci')), q1=ow1&&ow1.ph[+ro.getAttribute('data-pi')]; if(!q1||RP.rotBusy) return; RP.rotBusy=1; RP.pvLocal=0;
+    pvRotate(q1,ro.getAttribute('data-pv')==='rotr'?1:-1).then(function(){ dirty(); drawViewB(); toast(RP.pvLocal?'Rotated, but the dashboard could not store it. It stays only until this page is closed.':'Photo rotated. Press Save settings to keep it.',!!RP.pvLocal); }).catch(function(x){ toast((x&&x.message)||'Could not rotate the photo.',true); }).then(function(){ RP.rotBusy=0; }); return; }
   var cl=e.target.closest&&e.target.closest('[data-pv="clean"],[data-pv="cleanall"]');
   if(cl){ e.preventDefault(); pvCleanRun(cl); return; }
   var ft=e.target.closest&&e.target.closest('[data-pv="fit"]');
