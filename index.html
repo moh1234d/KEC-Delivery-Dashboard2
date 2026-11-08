@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V336</title>
+<title>TEST · KEC Project Controls Dashboard · V337</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1001,7 +1001,7 @@ body.rptp .rp-vc,body.rptp .rp-va{display:none!important}
 .rp-tb button:disabled{opacity:.45;cursor:default}
 .rp-tb .rp-tbh{opacity:.7;margin-left:auto}
 .rp-gr{position:absolute;left:-9px;top:-9px;width:18px;height:18px;line-height:18px;text-align:center;font-style:normal;font-size:12px;background:#ba965a;color:#fff;border-radius:4px;cursor:move;z-index:5;touch-action:none;box-shadow:0 0 3px rgba(0,0,0,.5)}
-body.rptp .rp-gr{display:none!important}
+body.rptp .rp-gr,body.rptp .rp-th{display:none!important} .rp-th{position:absolute;display:none;background:#ba965a;z-index:5;touch-action:none;border-radius:4px;box-shadow:0 0 3px rgba(0,0,0,.45)} .rp-rsl [data-tk]:hover .rp-th,.rp-rsl [data-tk]:focus-within .rp-th,.rp-rsl .rp-thd .rp-th{display:block} .rp-th[data-th=e]{right:-6px;top:50%;margin-top:-13px;width:10px;height:26px;cursor:ew-resize} .rp-th[data-th=s]{bottom:-6px;left:50%;margin-left:-13px;height:10px;width:26px;cursor:ns-resize} .rp-th[data-th=se]{right:-7px;bottom:-7px;width:13px;height:13px;cursor:nwse-resize;border-radius:50%}
 .rp-editing .rp-vc{display:none}
 .rp-vc{cursor:move;touch-action:none}
 .rp-vc.rp-drag{opacity:1;background:rgba(20,44,59,.25);outline:3px dashed #ba965a;outline-offset:-3px}
@@ -1273,7 +1273,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V336</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V337</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1410,7 +1410,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V336';
+var APP_VER='V337';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6134,7 +6134,7 @@ function bE(x,y,w,h,o){ o=o||{}; return {t:'e',x:x,y:y,w:w,h:h,f:o.f||null,bd:o.
 function bL(x1,y1,x2,y2,c,w){ return {t:'l',x:Math.min(x1,x2),y:Math.min(y1,y2),w:Math.abs(x2-x1),h:Math.abs(y2-y1),c:c,lw:w||1}; }
 function bI(x,y,w,h,src,o){ o=o||{}; return {t:'i',x:x,y:y,w:w,h:h,src:src,fit:o.fit||'fill',keep:!!o.keep}; }
 function bT(x,y,w,h,s,o){ o=o||{}; var d=String(s==null?'':s); var v=o.k?String(ov(o.k,d)):d;
-  return {t:'x',x:x,y:y,w:w,h:h,s:v,d:d,fs:o.fs||12,c:o.c||NV,b:!!o.b,al:o.al||'l',va:o.va||'t',ls:o.ls||0,lh:o.lh||1.15,k:o.k||'',up:!!o.up,serif:!!o.serif,it:!!o.it}; }
+  return {t:'x',x:x,y:y,w:w,h:h,s:v,d:d,fs:o.fs||12,c:o.c||NV,b:!!o.b,al:o.al||'l',va:o.va||'t',ls:o.ls||0,lh:o.lh||1.15,k:o.k||'',up:!!o.up,serif:!!o.serif,it:!!o.it,full:o.full==null?null:String(o.full)}; }
 function fit(s,w,h,fs,bold,lh){
   s=String(s==null?'':s).replace(/\s+/g,' ').trim(); var cw=fs*(bold?.56:.5), per=Math.max(3,Math.floor(w/cw)), maxL=Math.max(1,Math.floor(h/(fs*(lh||1.2)))), lines=[], cur='';
   s.split(' ').forEach(function(wd){ var t=cur?cur+' '+wd:wd; if(t.length<=per||!cur) cur=t; else{ lines.push(cur); cur=wd; } }); if(cur) lines.push(cur);
@@ -6164,7 +6164,7 @@ function scHtml(sc){
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
-    return '<div style="position:absolute;'+pos+'display:flex;align-items:'+al+';overflow:'+(RP.ed||p.ovr?'visible':'hidden')+'"'+(p.k&&RP.ed?' data-tk="'+esc(p.k)+'"':'')+'>'+(p.k&&RP.ed?'<i class="rp-gr" data-gk="'+esc(p.k)+'" title="Drag to move this text">✥</i>':'')+'<div style="'+st+'">'+(p.k?ed(p.k,p.d):esc(p.s))+'</div></div>';
+    return '<div style="position:absolute;'+pos+'display:flex;align-items:'+al+';overflow:'+(RP.ed||p.ovr?'visible':'hidden')+'"'+(p.k&&RP.ed?' data-tk="'+esc(p.k)+'"':'')+'>'+(p.k&&RP.ed?'<i class="rp-gr" data-gk="'+esc(p.k)+'" title="Drag to move this text">✥</i><i class="rp-th" data-th="e" title="Drag to change the width"></i><i class="rp-th" data-th="s" title="Drag to change the height"></i><i class="rp-th" data-th="se" title="Drag to resize"></i>':'')+'<div style="'+st+'">'+(p.k?ed(p.k,p.d):esc(p.s))+'</div></div>';
   }).join('');
 }
 /* ----- concern card (default for every template) ----- */
@@ -6231,7 +6231,7 @@ function sceneOverview(P,cut){
     sc.push(bT(lx+6,cy+6,cw-12,84,ini,{fs:24,b:1,c:'#8a93a3',al:'c',va:'m'}));
     if(u) sc.push(bI(lx+6,cy+6,cw-12,84,u,{fit:'cover'}));
     sc.push(bT(lx+4,cy+96,cw-8,20,ovMY(x.pf),{fs:14.5,b:1,c:col,al:'c',k:'ov:'+x.code+':d'}));
-    var nm=fit(x.t||'',cw-8,28,10.5,true,1.15); sc.push(bT(lx+4,cy+117,cw-8,28,nm.s,{fs:10.5,b:1,al:'c',lh:1.15,k:'ov:'+x.code+':n'}));
+    var nm=fit(x.t||'',cw-8,28,10.5,true,1.15); sc.push(bT(lx+4,cy+117,cw-8,28,nm.s,{fs:10.5,b:1,al:'c',lh:1.15,k:'ov:'+x.code+':n',full:x.t||''}));
     sc.push(bT(lx+4,cy+147,cw-8,12,x.fr||'',{fs:8.5,c:GR,al:'c',k:'ov:'+x.code+':f'}));
     sc.push(bT(lx+4,cy+160,cw-8,12,'Progress '+pct(x.act),{fs:8.5,c:GR,al:'c',k:'ov:'+x.code+':p'}));
     sc.push(bE(cx-15,mid-15,30,30,{f:'#fff',bd:col,bw:2.5}));
@@ -6244,7 +6244,7 @@ function progCard(sc,c,P,cut,x,y,w,h){
   var K='c:'+c.id+':', d=bCardData(c,P,cut), zv=Math.max(1,Math.min(1.45,h/118)), z=Math.max(1,Math.min(zv,w*.0029)), al=isAll(c), tf=fit(c.t||'',w-32-(al?74:0),22*z,14.5*z,true,1.1);
   sc.push(al?bR(x,y,w,h,{f:'#fbf6ea',bd:GD,rd:12,sh:1}):bR(x,y,w,h,{f:'#fff',rd:12,sh:1}));
   if(al) sc.push(bT(x+w-86,y+13*zv,72,12,'Overall',{fs:7.5*z,c:GD,b:1,ls:1.6,up:1,al:'r',k:K+'tag'}));
-  sc.push(bT(x+16,y+10*zv,w-32-(al?74:0),22*z,tf.s,{fs:14.5*z,b:1,up:1,k:K+'t'}));
+  sc.push(bT(x+16,y+10*zv,w-32-(al?74:0),22*z,tf.s,{fs:14.5*z,b:1,up:1,k:K+'t',full:c.t||''}));
   var by=[y+46*zv,y+72*zv], rows=[['Planned',GD,'plan'],['Actual',NV,'act']], th=6*z, lw=78*z, rw=66*z, trk=al?'#e6dfcd':TRK;
   rows.forEach(function(r,j){
     sc.push(bT(x+16,by[j]-3*z,62*z,12*z,r[0],{fs:7.5*z,c:GR,b:1,ls:1.3,up:1,k:K+'l'+r[2]}));
@@ -6262,7 +6262,7 @@ function concernCard(sc,o,x,y,w,h,sid,i){
   sc.push(bR(x,y,w,h,{f:'#fff',rd:12,sh:1})); sc.push(bR(x,y,6,h,{f:RD}));
   if(hd.s) sc.push(bT(x+20,y+10*z,iw,14*z,hd.s,{fs:10.5*z,c:RD,b:1,k:K+'h'}));
   var tf=fit(x1.concern||'',iw,36*z,13*z,true,1.18), th=Math.round(tf.n*13*z*1.18)+1, ty=y+28*z;
-  sc.push(bT(x+20,ty,iw,th,tf.s,{fs:13*z,b:1,lh:1.18,k:K+'t'}));
+  sc.push(bT(x+20,ty,iw,th,tf.s,{fs:13*z,b:1,lh:1.18,k:K+'t',full:x1.concern||''}));
   if(x1.action){
     var ya=ty+th+9*z; sc.push(bT(x+20,ya,iw,12*z,'Action taken',{fs:9.5*z,c:GD,b:1,ls:1.2,up:1,k:K+'al'}));
     var ah=y+h-(ya+15*z)-8; if(ah>=11){ var al=cnActLines(x1.action), afs=9.5*z, af=fitL(al,iw,afs,1.28); while(af.n*afs*1.28>ah&&afs>7){ afs-=.5; af=fitL(al,iw,afs,1.28); } sc.push(bT(x+20,ya+15*z,iw,ah,af.s,{fs:afs,c:GR,lh:1.28,k:K+'a'})); }
@@ -6365,10 +6365,16 @@ function sceneEnd(){
 function applyLay(out){
   var L=(RP.ov&&RP.ov.l)||{}, TH=(RP.cfg&&RP.cfg.thide)||{};
   if(Object.keys(TH).length) out.forEach(function(o){ o.sc=o.sc.filter(function(p){ return !(p.t==='x'&&p.k&&TH[p.k]); }); });
-  out.forEach(function(o){ o.sc.forEach(function(p){ if(p.t!=='x'||!p.k) return; var l=L[p.k]; if(!l) return;
+  var DH={}, gp=function(k){ var m=/^(n:[^:]*:[^:]*:)/.exec(k); return m?m[1]:''; };
+  out.forEach(function(o){ o.sc.forEach(function(p){ if(p.t!=='x'||!p.k) return; p.y0=p.y; var l=L[p.k]; if(!l) return;
     p.x+=l.dx||0; p.y+=l.dy||0; if(l.dw) p.w=Math.max(30,p.w+l.dw);
     if(l.fs){ var r=l.fs/p.fs; if(p.ls) p.ls=p.ls*r; p.fs=l.fs; p.h=p.h*Math.max(1,r); }
+    if(l.dh){ p.h=Math.max(10,p.h+l.dh); var g=gp(p.k); if(g&&l.dh) (DH[g]=DH[g]||[]).push([p.y0,l.dh]); }
+    /* V337: a text that the layout had cut with "…" is fitted again from its full text to the new box size */
+    if(p.full!=null&&(l.dw||l.dh)&&p.s===p.d){ var f=fit(p.full,p.w,p.h,p.fs,p.b,p.lh); p.s=p.d=f.s; }
     p.ovr=1; }); });
+  /* in a concern box, the texts below a taller text move down with it */
+  if(Object.keys(DH).length) out.forEach(function(o){ o.sc.forEach(function(p){ if(p.t!=='x'||!p.k) return; var g=gp(p.k); if(!g||!DH[g]) return; DH[g].forEach(function(e){ if(p.y0>e[0]+.5) p.y+=e[1]; }); }); });
   return out;
 }
 function bScenes(P,cut){
@@ -6392,10 +6398,23 @@ document.addEventListener('focusin',function(e){ var k=e.target&&e.target.getAtt
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('#rptTb [data-tb]'); if(!b||!RP.sel||!tplB()) return; var a=b.getAttribute('data-tb'), p=tbFind(RP.sel); if(!p) return; var l=tbLay(RP.sel);
   var cur=l.fs||p.fs/(l.fs?1:1); if(a==='fs+'||a==='fs-'){ var base=p.fs; l.fs=Math.max(5,Math.min(140,Math.round((base+(a==='fs+'?1:-1)*(4/3))*100)/100)); }
-  else if(a==='w+') l.dw=(l.dw||0)+40; else if(a==='w-') l.dw=(l.dw||0)-40;
+  else if(a==='w+') l.dw=(l.dw||0)+40; else if(a==='w-') l.dw=(l.dw||0)-40; else if(a==='h+') l.dh=(l.dh||0)+16; else if(a==='h-') l.dh=(l.dh||0)-16;
   else if(a==='rs'){ delete RP.ov.l[RP.sel]; }
   dirty(); drawViewB();
 });
+/* V337: drag the gold handles on a text box to change its width and height */
+var TH=null;
+document.addEventListener('pointerdown',function(e){
+  var h=e.target.closest&&e.target.closest('.rp-th'); if(!h||e.button||!tplB()) return; var box=h.parentNode, rs=box.closest('.rp-rs'); if(!rs) return;
+  RP.sel=box.getAttribute('data-tk'); TH={k:RP.sel,box:box,hd:h.getAttribute('data-th'),sc:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,w:parseFloat(box.style.width),h:parseFloat(box.style.height),mv:0};
+  try{ h.setPointerCapture(e.pointerId); }catch(x){} box.classList.add('rp-thd'); tbUpdate(); e.preventDefault();
+});
+document.addEventListener('pointermove',function(e){ if(!TH) return; var dx=(e.clientX-TH.sx)/TH.sc, dy=(e.clientY-TH.sy)/TH.sc; if(Math.abs(dx)+Math.abs(dy)>2) TH.mv=1;
+  if(TH.hd.indexOf('e')>=0) TH.box.style.width=Math.max(30,Math.min(PW,TH.w+dx))+'px';
+  if(TH.hd.indexOf('s')>=0) TH.box.style.height=Math.max(10,Math.min(PH,TH.h+dy))+'px'; });
+function thUp(e){ if(!TH) return; var d=TH; TH=null; d.box.classList.remove('rp-thd'); if(!d.mv) return; var l=tbLay(d.k);
+  if(d.hd.indexOf('e')>=0) l.dw=Math.round((l.dw||0)+parseFloat(d.box.style.width)-d.w); if(d.hd.indexOf('s')>=0) l.dh=Math.round((l.dh||0)+parseFloat(d.box.style.height)-d.h); dirty(); drawViewB(); }
+document.addEventListener('pointerup',thUp); document.addEventListener('pointercancel',thUp);
 /* drag the gold grip to move a text */
 var TD=null;
 document.addEventListener('pointerdown',function(e){
@@ -6413,7 +6432,7 @@ function drawViewB0(){
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+' · '+sizeOf().n+(RP.dirty?' · unsaved settings':'');
   saveUi();
   var rr=document.getElementById('rptRoot'), tb=document.getElementById('rptTb');
-  if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><button data-tb="rs">Reset this text</button><button data-tc="cp">Copy text</button><button data-tc="dt" title="Delete the selected text from the report (Undo delete brings it back)">Delete text</button><button data-tc="rt" hidden>Show deleted texts</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
+  if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><span>Box height <button data-tb="h-">−</button><button data-tb="h+">+</button></span><button data-tb="rs">Reset this text</button><button data-tc="cp">Copy text</button><button data-tc="dt" title="Delete the selected text from the report (Undo delete brings it back)">Delete text</button><button data-tc="rt" hidden>Show deleted texts</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it, and the gold handles on its edges to resize it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
   tbUpdate();
   var rt=document.getElementById('rptRoot'); if(rt&&!rt._pv){ rt._pv=1; rt.addEventListener('click',pvClick); rt.addEventListener('change',pvChange); rt.addEventListener('pointerdown',pvDown); rt.addEventListener('pointermove',pvMove); rt.addEventListener('pointerup',pvUp); rt.addEventListener('pointercancel',pvUp); }
   body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!(Object.keys(RP.ov.v).length||Object.keys(RP.ov.l||{}).length); var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
