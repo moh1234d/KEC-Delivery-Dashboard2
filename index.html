@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V341</title>
+<title>TEST · KEC Project Controls Dashboard · V342</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V341</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V342</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1412,7 +1412,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V341';
+var APP_VER='V342';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6012,7 +6012,8 @@ function overview(P,cut,N){
 }
 
 /* ----- two pages per slide: page 1 = progress information + area of concern, page 2 = progress photos ----- */
-var RPMX=1, CNMAX=2; /* V336: the limit is now the setting cfg.cnmax (2,3,4,5 or all; default all) */ function cnMax(){ var v=RP.cfg&&RP.cfg.cnmax; return (v>=1&&v<=20)?+v:99; }
+var RPMX=1, CNMAX=2; /* V336: the limit is now the setting cfg.cnmax (2,3,4,5 or all; default all) */ function cnSep(){ return !(RP.cfg&&RP.cfg.cnsep==='off'); } var _mc=null; function txW(t,fs,ls){ try{ _mc=_mc||document.createElement('canvas').getContext('2d'); _mc.font='bold '+fs+'px Lato,Helvetica,Arial,sans-serif'; return _mc.measureText(t).width+ls*t.length; }catch(e){ return t.length*(fs*.62+ls); } }
+function cnMax(){ var v=RP.cfg&&RP.cfg.cnmax; return (v>=1&&v<=20)?+v:99; }
 function pgMode(){ return (RP.cfg&&RP.cfg.pages==='one')?'one':'two'; }
 function slideMax(s,P,cut){ var m=1; (s.cards||[]).forEach(function(c){ var rr=cardRows(P,c); if(!rr.length) return; var a=agg(rr,cut,true); if(a.pf&&a.ff){ var d=dayDiff(a.pf,a.ff); if(d>m) m=d; } }); return m; }
 function cnOff(c){ return c.nc===true; }
@@ -6296,34 +6297,41 @@ function sceneProgress(s,P,cut,pg){
   sc.push(bR(48,306,92,2,{f:'#ffffff',a:.55}));
   sc.push(bT(48,326,222,50,'Progress &\nareas of concern',{fs:17,c:'#fff',b:1,up:1,lh:1.2,k:K+'side'}));
   var CB0=(RP.cfg&&RP.cfg.cnbox)||{}, anyPB=cards.some(function(c){ var b=c.id&&CB0['p:'+c.id]; return b&&(b.w>0||b.h>0); });
-  var X0=312, W=PW-312-32, gap=14, cols=n<=2?1:(n===4?2:3), rows=Math.max(1,Math.ceil(n/cols)), ch0=rows>2?100:(PH<760?110:118), cwid=(W-(cols-1)*gap)/cols, bot=PH-59, hasC=cards.some(function(c){ return !cnOff(c); }), list=[], cc=n<=2?2:3, cwc=(W-(cc-1)*gap)/cc, hc0=118, rC=0, ch=ch0, hc=hc0, hidN=0;
-  var flowCards=function(chh){ var cx=X0, cy=56, rh=0, o=[]; cards.forEach(function(c){ var b=c.id&&CB0['p:'+c.id], w1=cwid, h1=chh; if(b&&b.w>0) w1=Math.max(200,Math.min(W,Math.round(b.w*PW))); if(b&&b.h>0) h1=Math.max(96,Math.round(b.h*PH)); if(cx>X0&&cx+w1>X0+W+1){ cx=X0; cy+=rh+gap; rh=0; } o.push({x:cx,y:cy,w:w1,h:h1}); cx+=w1+gap; rh=Math.max(rh,h1); }); return {pos:o,bottom:cy+rh}; };
+  var X0=312, W=PW-312-32, gap=14, cols=n===2?2:(n<2?1:(n===4?2:3)), rows=Math.max(1,Math.ceil(n/cols)), ch0=rows>2?100:(PH<760?110:118), pgp=(n===2&&cnSep())?30:gap, cwid=(W-(cols-1)*pgp)/cols, bot=PH-59, hasC=cards.some(function(c){ return !cnOff(c); }), list=[], cc=n<=2?2:3, cwc=(W-(cc-1)*gap)/cc, hc0=118, rC=0, grp=null, ch=ch0, hc=hc0, hidN=0;
+  var flowCards=function(chh){ var cx=X0, cy=56, rh=0, o=[]; cards.forEach(function(c){ var b=c.id&&CB0['p:'+c.id], w1=cwid, h1=chh; if(b&&b.w>0) w1=Math.max(200,Math.min(W,Math.round(b.w*PW))); if(b&&b.h>0) h1=Math.max(96,Math.round(b.h*PH)); if(cx>X0&&cx+w1>X0+W+1){ cx=X0; cy+=rh+gap; rh=0; } o.push({x:cx,y:cy,w:w1,h:h1}); cx+=w1+pgp; rh=Math.max(rh,h1); }); return {pos:o,bottom:cy+rh}; };
   var fb0=flowCards(ch0).bottom;
   if(hasC){
     cards.forEach(function(c){ var L=cardConcerns(c,cut,s), left=Math.max(0,cnMax()-(RPBUD[c.code]||0)), shn=L.slice(0,left); RPBUD[c.code]=(RPBUD[c.code]||0)+shn.length; shn.forEach(function(x){ list.push({x:x,lab:c.t}); }); });
     (s.xcn||[]).forEach(function(xk){ var rw=(AOC.rows||[]).filter(function(r){ return cnKey(r)===xk; })[0]; if(rw) list.push({x:rw,lab:'',extra:true}); });
     var need0=0; list.forEach(function(o){ need0=Math.max(need0,cnNeed(o.x,cwc-34)); }); hc0=Math.min(Math.max(hc0,need0),Math.round(PH*.4));
-    if(list.length) bot-=40; var av0=bot-(fb0+52), mxR=Math.max(1,Math.floor((av0+12)/(hc0+12)));
-    if(list.length){ rC=Math.ceil(list.length/cc); if(rC>mxR){ var hf=Math.floor((av0+12)/rC)-12; if(hf>=92){ hc0=hf; mxR=rC; } else { hidN=list.length-mxR*cc; list=list.slice(0,mxR*cc); rC=mxR; } } /* V336: shrink the concern boxes to fit all of them when they still stay readable; otherwise a note says how many are not shown */ } else rC=0;
+    if(list.length) bot-=40;
+    /* V342: with two project cards the concerns are split into one column per building, with a labelled header and a separator line */
+    var labs=[]; list.forEach(function(o){ if(!o.extra&&labs.indexOf(o.lab)<0) labs.push(o.lab); });
+    if(list.length&&n===2&&labs.length===2&&cnSep()){ grp=labs; cwc=(W-30)/2; var ct=[0,0]; list.forEach(function(o){ if(!o.extra) o.g=labs.indexOf(o.lab),ct[o.g]++; }); list.forEach(function(o){ if(o.extra){ o.g=ct[0]<=ct[1]?0:1; ct[o.g]++; } }); list.sort(function(a,b){ return a.g-b.g; }); }
+    var av0=bot-(fb0+52)-(grp?24:0), mxR=Math.max(1,Math.floor((av0+12)/(hc0+12)));
+    if(grp&&list.length){ var gc=[0,1].map(function(g){ return list.filter(function(o){ return o.g===g; }).length; }); rC=Math.max(gc[0],gc[1]); if(rC>mxR){ var hf2=Math.floor((av0+12)/rC)-12; if(hf2>=92){ hc0=hf2; mxR=rC; } else{ var kept=[0,0]; var l2=list.filter(function(o){ if(kept[o.g]<mxR){ kept[o.g]++; return true; } return false; }); hidN=list.length-l2.length; list=l2; rC=mxR; } } }
+    else if(list.length){ rC=Math.ceil(list.length/cc); if(rC>mxR){ var hf=Math.floor((av0+12)/rC)-12; if(hf>=92){ hc0=hf; mxR=rC; } else { hidN=list.length-mxR*cc; list=list.slice(0,mxR*cc); rC=mxR; } } /* V336: shrink the concern boxes to fit all of them when they still stay readable; otherwise a note says how many are not shown */ } else rC=0;
   }
   /* use the free height: the cards grow with the page instead of leaving a gap */
   var nat=fb0+(hasC?52+(rC?rC*hc0+(rC-1)*12:70):0), extra=Math.max(0,bot-nat);
   if(!anyPB){ if(!hasC) ch=Math.min(ch0*1.6,ch0+extra/rows);
-  else{ var gP=Math.min(ch0*.5,extra*.5/rows); ch=ch0+gP; if(rC) hc=hc0+Math.min(hc0*.7,(extra-gP*rows)/rC); } }
+  else{ var side=(n===2&&cols===2), gP=Math.min(ch0*(side?.12:.5),extra*.5/rows); ch=ch0+gP; if(rC) hc=hc0+Math.min(hc0*(side?.2:.7),(extra-gP*rows)/rC); } }
   else if(hasC&&rC) hc=hc0+Math.min(hc0*.7,extra/rC);
   sc.push(bT(X0,28,500,18,'Progress summary',{fs:13,b:1,up:1,ls:1.5,k:K+'sec'}));
   var anyM=0, anyCB=0, anyB=0;
   var fl=flowCards(ch);
   cards.forEach(function(c,i){ var q=fl.pos[i], px=q.x, py=q.y, n0=sc.length; progCard(sc,c,P,cut,px,py,q.w,q.h); if(c.id){ sc.push({t:'cz',k:'p:'+c.id,x:px,y:py,w:q.w,h:q.h}); if(cardMove(sc,n0,'p:'+c.id,px,py,q.w,q.h)) anyM=1; } });
   if(hasC){
-    var yh=fl.bottom+26, top=yh+26;
+    var yh=fl.bottom+26, top=yh+26+(grp?24:0);
     sc.push(bT(X0,yh,500,18,'Priority concerns',{fs:13,b:1,up:1,ls:1.5,k:K+'aoc'}));
     if(list.length){ var lgy=PH-68, lgx=X0; sc.push(bR(X0,PH-76,W,1,{f:'#ddd6c8'})); sc.push(bR(lgx,lgy+2,11,11,{f:RD,rd:3})); sc.push(bT(lgx+17,lgy,92,15,'Action needed',{fs:10.5,c:'#44566b',b:1,va:'m',k:K+'lg1'})); sc.push(bR(lgx+122,lgy+2,11,11,{f:YL,rd:3})); sc.push(bT(lgx+139,lgy,70,15,'Watch list',{fs:10.5,c:'#44566b',b:1,va:'m',k:K+'lg2'})); } /* V341 legend: a key under the concern boxes */
     if(!list.length){ var nh=Math.min(70,bot-top); sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,aocNone(),{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
-    else{ var CB=(RP.cfg&&RP.cfg.cnbox)||{}, cxp=X0, cyp=top, rowH=0; anyB=0; anyCB=0;
+    else{ var CB=(RP.cfg&&RP.cfg.cnbox)||{}, cxp=X0, cyp=top, rowH=0, colY=[top,top], gBot=top; anyB=0; anyCB=0;
+      if(grp){ grp.forEach(function(lb,g){ var hx=X0+g*(cwc+30), hw=Math.min(cwc*.8,txW(String(lb).toUpperCase(),10,1.7)); sc.push(bT(hx,yh+22,hw+6,14,lb,{fs:10,c:'#14304f',b:1,up:1,ls:2.2,va:'m',k:K+'gh'+g})); sc.push(bR(hx+hw+14,yh+29,Math.max(10,cwc-hw-14),1,{f:GD,a:.6})); }); }
       list.forEach(function(o,i){ var k=o.extra?s.id+'@@'+cnKey(o.x):cnKey(o.x), b=CB[k], w1=cwc, h1=hc; if(b&&b.w>0){ w1=Math.max(190,Math.min(W,Math.round(b.w*PW))); anyB=1; } if(b&&b.h>0){ h1=Math.max(84,Math.round(b.h*PH)); anyB=1; }
-        if(cxp>X0&&cxp+w1>X0+W+1){ cxp=X0; cyp+=rowH+12; rowH=0; } h1=Math.min(h1,Math.max(84,bot-cyp));
-        var n1=sc.length; concernCard(sc,o,cxp,cyp,w1,h1,s.id,i); sc.push({t:'cz',k:k,x:cxp,y:cyp,w:w1,h:h1}); if(cardMove(sc,n1,'n:'+k,cxp,cyp,w1,h1)) anyM=1; cxp+=w1+gap; rowH=Math.max(rowH,h1); });
+        if(grp){ cxp=X0+o.g*(cwc+30); cyp=colY[o.g]; } else if(cxp>X0&&cxp+w1>X0+W+1){ cxp=X0; cyp+=rowH+12; rowH=0; } h1=Math.min(h1,Math.max(84,bot-cyp));
+        var n1=sc.length; concernCard(sc,o,cxp,cyp,w1,h1,s.id,i); sc.push({t:'cz',k:k,x:cxp,y:cyp,w:w1,h:h1}); if(cardMove(sc,n1,'n:'+k,cxp,cyp,w1,h1)) anyM=1; if(grp){ colY[o.g]=cyp+h1+12; gBot=Math.max(gBot,cyp+h1); } else{ cxp+=w1+gap; rowH=Math.max(rowH,h1); } });
+      if(grp){ var lx=Math.round(X0+cwc+15), l0=yh+20, l1=Math.max(gBot,top+hc0), lm=(l0+l1)/2; sc.push(bR(lx,l0,1,l1-l0,{f:GD,a:.75})); sc.push(bR(lx-7,lm-7,15,15,{f:CRM})); sc.push(bP(lx-5.5,lm-5.5,12,12,[[6,0],[12,6],[6,12],[0,6]],GD)); }
       anyCB=anyB; }
     if(hidN>0) sc.push(bT(X0+W-420,yh-2,420,16,'+ '+hidN+' more area'+(hidN>1?'s':'')+' of concern not shown. Delete or shrink cards to fit them.',{fs:10,c:RD,b:1,al:'r',k:K+'hid'}));
     if(anyB||anyPB) sc.push({t:'pc',k:'cnrst',x:X0+W-190,y:yh-4-(hidN>0?20:0),w:190,h:24,si:si,ci:-1,pi:-1});
@@ -6749,6 +6757,7 @@ async function pvChange(e){
 function tplBox(){
   var b=bc(), tx='margin:8px 0 0;font-size:12px;color:#5b6784';
   var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><p style="'+tx+'">Photos are never changed when added or replaced. Press Remove stamps on a photo (or Remove all stamps) and Claude will find any burned-in date, time or location text and remove only that. Restore original undoes it.</p></div>';
+  h+='<div class="rp-bx"><h5>Separate concerns by building</h5><select data-f="cnsep"><option value="on"'+(RP.cfg.cnsep!=='off'?' selected':'')+'>On: one column per building, with a separator</option><option value="off"'+(RP.cfg.cnsep==='off'?' selected':'')+'>Off: one mixed list</option></select><p style="'+tx+'">On slides that show two projects, each project gets its own labelled column of concerns, with a gold separator between them.</p></div>';
   h+='<div class="rp-bx"><h5>Concerns shown per project</h5><select data-f="cnmax">'+['2','3','4','5','all'].map(function(v){ var cur=(RP.cfg.cnmax>=1&&RP.cfg.cnmax<=20)?String(RP.cfg.cnmax):'all'; return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+(v==='all'?'All concerns':v+' concerns')+'</option>'; }).join('')+'</select><p style="'+tx+'">How many areas of concern each project shows on the slide. Any concern can still be deleted on the slide (Edit text), and a note tells you when some do not fit.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Cover page (Template B)</h5><div class="rp-g2"><div><label>Department</label><input type="text" data-f="b.dept" value="'+esc(b.dept)+'"></div><div><label>First line</label><input type="text" data-f="b.l1" value="'+esc(b.l1)+'"></div><div><label>Subtitle</label><input type="text" data-f="b.sub" value="'+esc(b.sub)+'"></div></div><label style="margin-top:8px">Title (Enter starts a second line)</label><textarea data-f="b.title" rows="2" style="width:100%;font:inherit;padding:6px 8px;border:1px solid #c9d1e0;border-radius:6px">'+esc(b.title)+'</textarea><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="b.end"'+(b.end?' checked':'')+'> Add a closing "Thank you" slide</label><p style="'+tx+'">The month and year follow the data date ('+esc(dd(cutIso()))+'). Template B uses one progress page and one photos page for each slide, and the overview shows the planned or forecast style only.</p></div>';
@@ -6937,7 +6946,7 @@ function onChange(e){
   else if(f==='c.nc'){ cardOf(t).nc=!t.checked; dirty(); }
   else if(f==='pages'){ RP.cfg.pages=t.value; dirty(); }
   else if(f==='tpl'){ RP.cfg.tpl=t.value; dirty(); drawSetup(); }
-  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
+  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnsep'){ RP.cfg.cnsep=t.value==='off'?'off':'on'; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
   else if(f==='clean'){ RP.cfg.clean=!!t.checked; dirty(); }
   else if(f==='b.end'){ RP.cfg.b=RP.cfg.b||{}; RP.cfg.b.end=!!t.checked; dirty(); }
   else if(t.getAttribute&&t.getAttribute('data-r')==='file') addPhotos(t);
