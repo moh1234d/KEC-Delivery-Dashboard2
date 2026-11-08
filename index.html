@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V342</title>
+<title>TEST · KEC Project Controls Dashboard · V343</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V342</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V343</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1412,7 +1412,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V342';
+var APP_VER='V343';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6151,8 +6151,8 @@ function scHtml(sc){
     if(p.t==='r') return '<div style="position:absolute;'+pos+(p.f?'background:'+rgba(p.f,p.a)+';':'')+(p.bd?'border:1px solid '+p.bd+';box-sizing:border-box;':'')+(p.rd?'border-radius:'+p.rd+'px;':'')+(p.sh===2?'box-shadow:0 4px 14px rgba(20,44,59,.38);':p.sh?'box-shadow:0 1px 7px rgba(20,44,59,.16);':'')+'"></div>';
     if(p.t==='pg') return '<div style="position:absolute;'+pos+'background:'+p.f+';clip-path:polygon('+p.pts.map(function(q){ return q[0]+'px '+q[1]+'px'; }).join(',')+')"></div>';
     if(p.t==='e') return '<div style="position:absolute;'+pos+'box-sizing:border-box;border-radius:50%;'+(p.f?'background:'+p.f+';':'')+(p.bd?'border:'+p.bw+'px solid '+p.bd+';':'')+'"></div>';
-    if(p.t==='cm') return (RP.ed&&tplB())?'<div class="rp-cm" style="'+pos+'" data-cmk="'+esc(p.k)+'" data-x0="'+p.x+'" data-y0="'+p.y+'"><i class="rp-mg" title="Drag to move this card">✥ Move card</i><i class="rp-dg" data-dk="'+esc(p.k)+'" title="Delete this card from the report">✕ Delete</i>'+(/^p:/.test(p.k)?'<i class="rp-bg" data-bgk="'+esc(p.k)+'" title="Add a Completed badge to this card">★ Badge</i>':'')+'<i class="rp-cg" data-cgk="'+esc(p.k)+'" title="Copy this card, then paste it on any slide">⧉ Copy</i></div>':'';
-    if(p.t==='cz') return (RP.ed&&tplB())?'<div class="rp-cz" style="'+pos+'" data-cnk="'+esc(p.k)+'"><i class="rp-ch" data-cd="e" title="Drag to change the width"></i><i class="rp-ch" data-cd="s" title="Drag to change the height"></i><i class="rp-ch" data-cd="se" title="Drag to resize"></i></div>':'';
+    if(p.t==='cm') return (RP.ed&&tplB())?'<div class="rp-cm" style="'+pos+'" data-cmk="'+esc(p.k)+'" data-x0="'+p.x+'" data-y0="'+p.y+'"><i class="rp-mg" title="Drag to move this card">✥ Move card</i>'+(p.nd?'':'<i class="rp-dg" data-dk="'+esc(p.k)+'" title="Delete this item from the report">✕ Delete</i>')+(/^p:/.test(p.k)?'<i class="rp-bg" data-bgk="'+esc(p.k)+'" title="Add a Completed badge to this card">★ Badge</i>':'')+(/^o:/.test(p.k)?'':'<i class="rp-cg" data-cgk="'+esc(p.k)+'" title="Copy this card, then paste it on any slide">⧉ Copy</i>')+'</div>':'';
+    if(p.t==='cz') return (RP.ed&&tplB())?'<div class="rp-cz" style="'+pos+'" data-cnk="'+esc(p.k)+'"'+(/^o:/.test(p.k)?' data-mw="24" data-mh="8"':'')+'><i class="rp-ch" data-cd="e" title="Drag to change the width"></i><i class="rp-ch" data-cd="s" title="Drag to change the height"></i><i class="rp-ch" data-cd="se" title="Drag to resize"></i></div>':'';
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
       if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove all stamps</button>';
@@ -6181,6 +6181,17 @@ function cnActLines(a){ return String(a||'').replace(/\r/g,'').split(/\n+|\s+(?=
 function cnActHtml(a){ return cnActLines(a).map(function(t){ return '<div>'+esc(t)+'</div>'; }).join(''); }
 function fitL(lines,w,fs,lh){ var out=[],n=0; lines.forEach(function(t){ var f=fit(t,w,1e4,fs,false,lh); out.push(f.s); n+=f.n; }); return {s:out.join('\n'),n:n}; }
 function cnNeed(x,w){ var z=1, tl=fit(x.concern||'',w,200,13*z,true,1.18), al=x.action?fitL(cnActLines(x.action),w,8.5*z,1.28).n:0; return Math.ceil(28*z+tl.n*13*z*1.18+1+(x.action?9*z+15*z+al*8.5*z*1.28:0)+12); }
+/* V343: any other item of a slide (logo, legend, "no concerns" box, separator, lines, project columns): move, resize (scaled) and, on progress slides, delete */
+function objBox(sc,n0,key,x,y,w,h,o){ o=o||{}; var nw=o.nw||PW, nh=o.nh||PH, H=(RP.cfg&&RP.cfg.ohide)||{}, i, p;
+  if(H[key]){ sc.length=n0; return {gone:1}; }
+  var b=((RP.cfg&&RP.cfg.cnbox)||{})[key]||{}, w1=w, h1=h, rz=0;
+  if(o.rs!==false){ if(b.w>0){ w1=Math.max(24,Math.min(nw-x,Math.round(b.w*nw))); rz=1; } if(o.uni) h1=Math.round(w1*h/w); else if(b.h>0){ h1=Math.max(8,Math.min(nh-y,Math.round(b.h*nh))); rz=1; } }
+  if(rz&&(w1!==w||h1!==h)){ var sx=w1/w, sy=h1/h; for(i=n0;i<sc.length;i++){ p=sc[i]; p.x=x+(p.x-x)*sx; p.y=y+(p.y-y)*sy; p.w*=sx; p.h*=sy; if(p.t==='pg') p.pts=p.pts.map(function(q){ return [q[0]*sx,q[1]*sy]; }); } }
+  if(o.rs!==false) sc.push({t:'cz',k:key,x:x,y:y,w:w1,h:h1,uni:o.uni?1:0});
+  var m=((RP.cfg&&RP.cfg.cmv)||{})[key]||{}, dx=Math.max(-x,Math.min(nw-x-w1,Math.round((m.dx||0)*nw))), dy=Math.max(-y,Math.min(nh-y-h1,Math.round((m.dy||0)*nh)));
+  if(dx||dy) for(i=n0;i<sc.length;i++){ sc[i].x+=dx; sc[i].y+=dy; }
+  sc.push({t:'cm',k:key,x:x+dx,y:y+dy,w:w1,h:h1,nd:o.nodel?1:0}); return {mv:!!(dx||dy),rz:rz};
+}
 function cardMove(sc,n0,key,x,y,w,h){ var m=(RP.cfg&&RP.cfg.cmv&&RP.cfg.cmv[key])||{}, dx=Math.max(-x,Math.min(PW-x-w,Math.round((m.dx||0)*PW))), dy=Math.max(-y,Math.min(PH-y-h,Math.round((m.dy||0)*PH)));
   if(dx||dy) for(var i=n0;i<sc.length;i++){ sc[i].x+=dx; sc[i].y+=dy; } sc.push({t:'cm',k:key,x:x+dx,y:y+dy,w:w,h:h}); return !!(dx||dy); }
 function cnKey(x){ var id=''; try{ Object.keys(x.raw||{}).forEach(function(h){ if(!id&&/^challenge\s*id$/i.test(String(h).trim())&&x.raw[h]) id=String(x.raw[h]); }); }catch(e){} return String(x.lc||x.code||'')+'|'+String(id||x.concern||'').toLowerCase().replace(/\s+/g,' ').trim().slice(0,70); }
@@ -6201,7 +6212,7 @@ function bCardData(c,P,cut){
 function sceneCover(cut){
   var b=bc(), my=monthYear(cut), sc=[], lw=200;
   sc.push(bI(0,0,1122,793,RB_IMG.cover169&&PW!==1122?RB_IMG.cover169:RB_IMG.cover));
-  sc.push(bI(64,30,lw,lw/RB_IMG.logoR,RB_IMG.logoW,{keep:1}));
+  var nl0=sc.length; sc.push(bI(64,30,lw,lw/RB_IMG.logoR,RB_IMG.logoW,{keep:1})); objBox(sc,nl0,'o:cover:logo',64,30,lw,lw/RB_IMG.logoR,{uni:1,nw:1122,nh:793,nodel:1});
   sc.push(bT(64,114,560,20,b.dept,{fs:13,c:GD,b:1,ls:4.5,up:1,k:'b:dept'}));
   sc.push(bT(64,262,760,64,b.l1,{fs:48,c:GD,ls:8,up:1,k:'b:l1'}));
   sc.push(bT(64,334,820,132,b.title,{fs:44,c:'#fff',b:1,up:1,lh:1.12,k:'b:title'}));
@@ -6225,14 +6236,14 @@ function sceneOverview(P,cut){
   sc.push(bR(0,0,1122,86,{f:NV}));
   sc.push(bT(40,17,780,14,st==='c'?'Forecast completion dates':'Planned completion dates',{fs:10.5,c:GD,b:1,ls:1.6,up:1,k:'ov:sub'}));
   sc.push(bT(40,36,820,34,'Projects Overview',{fs:22,c:'#fff',b:1,up:1,ls:.6,k:'ov:title'}));
-  sc.push(bI(1122-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW,{keep:1}));
+  var nl2=sc.length; sc.push(bI(1122-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW,{keep:1})); objBox(sc,nl2,'o:ov:logo',1122-40-150,14,150,150/RB_IMG.logoR,{uni:1,nw:1122,nh:793,nodel:1});
   if(!n){ sc.push(bT(46,200,900,30,'No project in the report has a completion date at this cut-off.',{fs:15,c:GR})); return {sc:sc,bg:CRM}; }
   var mid=432, X0=46, W=1030, cw=Math.max(92,Math.min(134,Math.floor(W/n*2)-14)), ch=176;
   sc.push(bR(X0,mid-6,W,12,{f:'#ddd8ce',rd:6}));
   it.forEach(function(x,i){ sc.push(bR(X0+i*W/n,mid-6,W/n,12,{f:OVC[i%7],a:.38})); });
   it.forEach(function(x,i){
     var cx=X0+(i+.5)/n*W, col=OVC[i%7], up=i%2===0, cy=up?mid-62-ch:mid+62, lx=cx-cw/2, u=ovUrl(x);
-    sc.push(bL(cx,up?cy+ch:mid+15,cx,up?mid-15:cy,col,2));
+    var noc=sc.length; sc.push(bL(cx,up?cy+ch:mid+15,cx,up?mid-15:cy,col,2));
     sc.push(bR(lx,cy,cw,ch,{f:'#fff',rd:12,sh:1}));
     var ini=String(x.t||x.code).replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/).slice(0,2).map(function(w){ return w.charAt(0).toUpperCase(); }).join('')||'?';
     sc.push(bR(lx+6,cy+6,cw-12,84,{f:'#e8eaf0',rd:6}));
@@ -6242,6 +6253,7 @@ function sceneOverview(P,cut){
     var nm=fit(x.t||'',cw-8,28,10.5,true,1.15); sc.push(bT(lx+4,cy+117,cw-8,28,nm.s,{fs:10.5,b:1,al:'c',lh:1.15,k:'ov:'+x.code+':n',full:x.t||''}));
     sc.push(bT(lx+4,cy+147,cw-8,12,x.fr||'',{fs:8.5,c:GR,al:'c',k:'ov:'+x.code+':f'}));
     sc.push(bT(lx+4,cy+160,cw-8,12,'Progress '+pct(x.act),{fs:8.5,c:GR,al:'c',k:'ov:'+x.code+':p'}));
+    objBox(sc,noc,'o:ov:'+x.code,lx,cy,cw,ch,{nw:1122,nh:793,nodel:1});
     sc.push(bE(cx-15,mid-15,30,30,{f:'#fff',bd:col,bw:2.5}));
     sc.push(bT(cx-15,mid-15,30,30,p2(i+1),{fs:11.5,b:1,c:col,al:'c',va:'m',k:'ov:'+x.code+':i'}));
   });
@@ -6289,12 +6301,13 @@ function concernCard(sc,o,x,y,w,h,sid,i){
 }
 function sceneProgress(s,P,cut,pg){
   var si=(RP.cfg.slides||[]).indexOf(s), sc=[], cards=s.cards||[], n=cards.length, K='s:'+s.id+':';
+  var oM=0, oZ=0, oo=function(r){ if(r.mv) oM=1; if(r.rz) oZ=1; return r; }, OK='o:'+s.id+':', n00;
   sc.push(bR(0,0,286,PH,{f:NV}));
-  sc.push(bL(24,56,24,PH-56,GD,1.5));
-  sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW));
+  n00=sc.length; sc.push(bL(24,56,24,PH-56,GD,1.5)); oo(objBox(sc,n00,OK+'vl',16,56,16,PH-56,{rs:false}));
+  n00=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); oo(objBox(sc,n00,OK+'logo',48,34,150,150/RB_IMG.logoR,{uni:1}));
   if(s.title){ sc.push(bT(48,148,222,52,s.title,{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'})); sc.push(bT(48,206,222,60,s.frame||'',{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'})); }
   else sc.push(bT(48,148,222,100,s.frame||'',{fs:22,c:GD,up:1,ls:1.4,lh:1.15,k:K+'frame'}));
-  sc.push(bR(48,306,92,2,{f:'#ffffff',a:.55}));
+  n00=sc.length; sc.push(bR(48,306,92,2,{f:'#ffffff',a:.55})); oo(objBox(sc,n00,OK+'hr',48,300,92,14));
   sc.push(bT(48,326,222,50,'Progress &\nareas of concern',{fs:17,c:'#fff',b:1,up:1,lh:1.2,k:K+'side'}));
   var CB0=(RP.cfg&&RP.cfg.cnbox)||{}, anyPB=cards.some(function(c){ var b=c.id&&CB0['p:'+c.id]; return b&&(b.w>0||b.h>0); });
   var X0=312, W=PW-312-32, gap=14, cols=n===2?2:(n<2?1:(n===4?2:3)), rows=Math.max(1,Math.ceil(n/cols)), ch0=rows>2?100:(PH<760?110:118), pgp=(n===2&&cnSep())?30:gap, cwid=(W-(cols-1)*pgp)/cols, bot=PH-59, hasC=cards.some(function(c){ return !cnOff(c); }), list=[], cc=n<=2?2:3, cwc=(W-(cc-1)*gap)/cc, hc0=118, rC=0, grp=null, ch=ch0, hc=hc0, hidN=0;
@@ -6324,22 +6337,22 @@ function sceneProgress(s,P,cut,pg){
   if(hasC){
     var yh=fl.bottom+26, top=yh+26+(grp?24:0);
     sc.push(bT(X0,yh,500,18,'Priority concerns',{fs:13,b:1,up:1,ls:1.5,k:K+'aoc'}));
-    if(list.length){ var lgy=PH-68, lgx=X0; sc.push(bR(X0,PH-76,W,1,{f:'#ddd6c8'})); sc.push(bR(lgx,lgy+2,11,11,{f:RD,rd:3})); sc.push(bT(lgx+17,lgy,92,15,'Action needed',{fs:10.5,c:'#44566b',b:1,va:'m',k:K+'lg1'})); sc.push(bR(lgx+122,lgy+2,11,11,{f:YL,rd:3})); sc.push(bT(lgx+139,lgy,70,15,'Watch list',{fs:10.5,c:'#44566b',b:1,va:'m',k:K+'lg2'})); } /* V341 legend: a key under the concern boxes */
-    if(!list.length){ var nh=Math.min(70,bot-top); sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,aocNone(),{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); }
+    if(list.length){ var lgy=PH-68, lgx=X0, nlg=sc.length; sc.push(bR(X0,PH-76,W,1,{f:'#ddd6c8'})); sc.push(bR(lgx,lgy+2,11,11,{f:RD,rd:3})); sc.push(bT(lgx+17,lgy,92,15,'Action needed',{fs:10.5,c:'#44566b',b:1,va:'m',k:K+'lg1'})); sc.push(bR(lgx+122,lgy+2,11,11,{f:YL,rd:3})); sc.push(bT(lgx+139,lgy,70,15,'Watch list',{fs:10.5,c:'#44566b',b:1,va:'m',k:K+'lg2'})); oo(objBox(sc,nlg,OK+'lg',X0,PH-76,W,24)); } /* V341 legend: a key under the concern boxes */
+    if(!list.length){ var nh=Math.min(70,bot-top), nnc=sc.length; sc.push(bR(X0,top,W,nh,{f:'#fff',rd:12,sh:1})); sc.push(bT(X0,top,W,nh,aocNone(),{fs:11,c:GR,al:'c',va:'m',up:1,ls:1,k:K+'nocn'})); oo(objBox(sc,nnc,OK+'nocn',X0,top,W,nh)); }
     else{ var CB=(RP.cfg&&RP.cfg.cnbox)||{}, cxp=X0, cyp=top, rowH=0, colY=[top,top], gBot=top; anyB=0; anyCB=0;
       if(grp){ grp.forEach(function(lb,g){ var hx=X0+g*(cwc+30), hw=Math.min(cwc*.8,txW(String(lb).toUpperCase(),10,1.7)); sc.push(bT(hx,yh+22,hw+6,14,lb,{fs:10,c:'#14304f',b:1,up:1,ls:2.2,va:'m',k:K+'gh'+g})); sc.push(bR(hx+hw+14,yh+29,Math.max(10,cwc-hw-14),1,{f:GD,a:.6})); }); }
       list.forEach(function(o,i){ var k=o.extra?s.id+'@@'+cnKey(o.x):cnKey(o.x), b=CB[k], w1=cwc, h1=hc; if(b&&b.w>0){ w1=Math.max(190,Math.min(W,Math.round(b.w*PW))); anyB=1; } if(b&&b.h>0){ h1=Math.max(84,Math.round(b.h*PH)); anyB=1; }
         if(grp){ cxp=X0+o.g*(cwc+30); cyp=colY[o.g]; } else if(cxp>X0&&cxp+w1>X0+W+1){ cxp=X0; cyp+=rowH+12; rowH=0; } h1=Math.min(h1,Math.max(84,bot-cyp));
         var n1=sc.length; concernCard(sc,o,cxp,cyp,w1,h1,s.id,i); sc.push({t:'cz',k:k,x:cxp,y:cyp,w:w1,h:h1}); if(cardMove(sc,n1,'n:'+k,cxp,cyp,w1,h1)) anyM=1; if(grp){ colY[o.g]=cyp+h1+12; gBot=Math.max(gBot,cyp+h1); } else{ cxp+=w1+gap; rowH=Math.max(rowH,h1); } });
-      if(grp){ var lx=Math.round(X0+cwc+15), l0=yh+20, l1=Math.max(gBot,top+hc0), lm=(l0+l1)/2; sc.push(bR(lx,l0,1,l1-l0,{f:GD,a:.75})); sc.push(bR(lx-7,lm-7,15,15,{f:CRM})); sc.push(bP(lx-5.5,lm-5.5,12,12,[[6,0],[12,6],[6,12],[0,6]],GD)); }
+      if(grp){ var lx=Math.round(X0+cwc+15), l0=yh+20, l1=Math.max(gBot,top+hc0), lm=(l0+l1)/2, nsp=sc.length; sc.push(bR(lx,l0,1,l1-l0,{f:GD,a:.75})); sc.push(bR(lx-7,lm-7,15,15,{f:CRM})); sc.push(bP(lx-5.5,lm-5.5,12,12,[[6,0],[12,6],[6,12],[0,6]],GD)); oo(objBox(sc,nsp,OK+'sep',lx-8,l0,16,l1-l0,{rs:false})); }
       anyCB=anyB; }
     if(hidN>0) sc.push(bT(X0+W-420,yh-2,420,16,'+ '+hidN+' more area'+(hidN>1?'s':'')+' of concern not shown. Delete or shrink cards to fit them.',{fs:10,c:RD,b:1,al:'r',k:K+'hid'}));
-    if(anyB||anyPB) sc.push({t:'pc',k:'cnrst',x:X0+W-190,y:yh-4-(hidN>0?20:0),w:190,h:24,si:si,ci:-1,pi:-1});
+    if(anyB||anyPB||oZ) sc.push({t:'pc',k:'cnrst',x:X0+W-190,y:yh-4-(hidN>0?20:0),w:190,h:24,si:si,ci:-1,pi:-1});
   }
-  if(!hasC&&anyPB) sc.push({t:'pc',k:'cnrst',x:X0+W-190,y:fl.bottom+4,w:190,h:24,si:si,ci:-1,pi:-1});
-  if(anyM) sc.push({t:'pc',k:'cmrst',x:X0+W-190,y:24,w:190,h:24,si:si,ci:-1,pi:-1});
-  sc.push({t:'pc',k:'undel',x:X0+W-(anyM?390:190),y:24,w:190,h:24,si:si,ci:-1,pi:-1});
-  var nHid=Object.keys((RP.cfg&&RP.cfg.cnhide)||{}).length; if(hasC&&nHid) sc.push({t:'pc',k:'cnrestore',n:nHid,x:X0+W-(anyCB?390:190),y:(56+rows*ch+(rows-1)*gap+26)-4,w:190,h:24,si:si,ci:-1,pi:-1});
+  if(!hasC&&(anyPB||oZ)) sc.push({t:'pc',k:'cnrst',x:X0+W-190,y:fl.bottom+4,w:190,h:24,si:si,ci:-1,pi:-1});
+  if(anyM||oM) sc.push({t:'pc',k:'cmrst',x:X0+W-190,y:24,w:190,h:24,si:si,ci:-1,pi:-1});
+  sc.push({t:'pc',k:'undel',x:X0+W-((anyM||oM)?390:190),y:24,w:190,h:24,si:si,ci:-1,pi:-1});
+  var nHid=Object.keys((RP.cfg&&RP.cfg.cnhide)||{}).length+Object.keys((RP.cfg&&RP.cfg.ohide)||{}).length; if(hasC&&nHid) sc.push({t:'pc',k:'cnrestore',n:nHid,x:X0+W-(anyCB?390:190),y:(56+rows*ch+(rows-1)*gap+26)-4,w:190,h:24,si:si,ci:-1,pi:-1});
   sc.push(bT(X0,PH-35,400,12,'KEC | Delivery Department',{fs:8,c:GR,up:1,ls:1,k:K+'ft'}));
   if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1});
   (s.tx||[]).forEach(function(t){ var tw=Math.max(80,Math.min(PW-40,t.w||260)), tfs=Math.max(8,Math.min(44,t.fs||13)), tx0=Math.max(0,Math.min(PW-tw,Math.round((t.x==null?.3:t.x)*PW))), ty0=Math.round((t.y==null?.4:t.y)*PH), nl=fit(ov('tx:'+t.id,t.s),tw,1e4,tfs,!!t.b,1.25).n; sc.push(bT(tx0,ty0,tw,Math.ceil(nl*tfs*1.25)+6,t.s,{fs:tfs,c:'#14304f',b:t.b?1:0,lh:1.25,k:'tx:'+t.id})); });
@@ -6363,7 +6376,7 @@ function scenePhotos(s){
   sc.push(bR(0,0,PW,86,{f:NV}));
   sc.push(bT(40,17,780,14,kick,{fs:10.5,c:GD,b:1,ls:1.6,up:1,k:K+'pk'}));
   sc.push(bT(40,36,820,34,'Construction progress  |  Site photographs',{fs:22,c:'#fff',b:1,up:1,ls:.6,k:K+'pt'}));
-  sc.push(bI(PW-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW));
+  var nl3=sc.length; sc.push(bI(PW-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl3,'o:ph:'+s.id+':logo',PW-40-150,14,150,150/RB_IMG.logoR,{uni:1,nodel:1});
   if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-176,y:26,w:166,h:34,si:si,ci:-1,pi:-1});
   if((s.ph||[]).length<4) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1});
   if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-176-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
@@ -6383,7 +6396,7 @@ function scenePhotos(s){
 function sceneEnd(){
   var b=bc(), sc=[];
   sc.push(bI(0,0,1122,793,RB_IMG.end169&&PW!==1122?RB_IMG.end169:RB_IMG.end)); sc.push(bR(0,0,1122,793,{f:NV,a:.6}));
-  sc.push(bI(64,30,200,200/RB_IMG.logoR,RB_IMG.logoW,{keep:1}));
+  var nl1=sc.length; sc.push(bI(64,30,200,200/RB_IMG.logoR,RB_IMG.logoW,{keep:1})); objBox(sc,nl1,'o:end:logo',64,30,200,200/RB_IMG.logoR,{uni:1,nw:1122,nh:793,nodel:1});
   sc.push(bT(64,132,560,20,b.dept,{fs:13,c:GD,b:1,ls:4.5,up:1,k:'b:dept2'}));
   sc.push(bT(64,350,820,80,'Thank you',{fs:58,c:'#fff',b:1,up:1,ls:10,k:'b:thanks'}));
   sc.push(bR(64,450,96,3,{f:GD}));
@@ -6654,15 +6667,17 @@ document.addEventListener('click',function(e){
     else if(/^n:/.test(k)){ var kk=k.slice(2), at0=kk.indexOf('@@');
       if(at0>=0){ var sid2=kk.slice(0,at0), key2=kk.slice(at0+2), sl3=(RP.cfg.slides||[]).filter(function(x){ return x.id===sid2; })[0]; if(sl3&&sl3.xcn){ sl3.xcn=sl3.xcn.filter(function(q){ return q!==key2; }); RP.undo.push({t:'x',sid:sid2,key:key2}); } }
       else{ RP.cfg.cnhide=RP.cfg.cnhide||{}; RP.cfg.cnhide[kk]=1; RP.undo.push({t:'n',key:kk}); } }
+    else if(/^o:/.test(k)){ RP.cfg.ohide=RP.cfg.ohide||{}; RP.cfg.ohide[k]=1; RP.undo.push({t:'o',key:k}); }
     dirty(); drawViewB(); toast('Card deleted from the report. Use Undo delete to bring it back, then Save settings.'); return; }
   var u=e.target.closest&&e.target.closest('[data-pv="undel"]'); if(u){ e.preventDefault(); var z=(RP.undo||[]).pop(); if(!z) return;
     if(z.t==='p'){ var sl2=(RP.cfg.slides||[])[z.si]; if(sl2){ sl2.cards=sl2.cards||[]; sl2.cards.splice(Math.min(z.ix,sl2.cards.length),0,z.card); if(z.mv){ RP.cfg.cmv=RP.cfg.cmv||{}; RP.cfg.cmv['p:'+z.card.id]=z.mv; } } }
     else if(z.t==='n'&&RP.cfg.cnhide) delete RP.cfg.cnhide[z.key];
+    else if(z.t==='o'&&RP.cfg.ohide) delete RP.cfg.ohide[z.key];
     else if(z.t==='t'){ if(RP.cfg.thide) delete RP.cfg.thide[z.key]; }
     else if(z.t==='s'){ RP.cfg.slides.splice(Math.min(z.ix,RP.cfg.slides.length),0,z.slide); }
     else if(z.t==='x'){ var sl4=(RP.cfg.slides||[]).filter(function(x){ return x.id===z.sid; })[0]; if(sl4){ sl4.xcn=sl4.xcn||[]; if(sl4.xcn.indexOf(z.key)<0) sl4.xcn.push(z.key); } }
     dirty(); drawViewB(); return; }
-  var rr=e.target.closest&&e.target.closest('[data-pv="cnrestore"]'); if(rr){ e.preventDefault(); RP.cfg.cnhide={}; dirty(); drawViewB(); toast('All hidden concerns are shown again.'); }
+  var rr=e.target.closest&&e.target.closest('[data-pv="cnrestore"]'); if(rr){ e.preventDefault(); RP.cfg.cnhide={}; RP.cfg.ohide={}; dirty(); drawViewB(); toast('All hidden concerns and items are shown again.'); }
 });
 /* move a card: drag the gold "Move card" tab (Edit text mode, Template B) */
 var CM=null;
@@ -6682,13 +6697,13 @@ document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.
 var CZ=null;
 document.addEventListener('pointerdown',function(e){
   var h=e.target.closest&&e.target.closest('.rp-ch'); if(!h||e.button||!tplB()) return; var box=h.parentNode, rs=box.closest('.rp-rs'); if(!rs) return;
-  CZ={box:box,k:box.getAttribute('data-cnk'),hd:h.getAttribute('data-cd'),sc:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,l:parseFloat(box.style.left),t:parseFloat(box.style.top),w:parseFloat(box.style.width),h:parseFloat(box.style.height),mv:0};
+  CZ={box:box,mw:+box.getAttribute('data-mw')||0,mh:+box.getAttribute('data-mh')||0,k:box.getAttribute('data-cnk'),hd:h.getAttribute('data-cd'),sc:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,l:parseFloat(box.style.left),t:parseFloat(box.style.top),w:parseFloat(box.style.width),h:parseFloat(box.style.height),mv:0};
   try{ h.setPointerCapture(e.pointerId); }catch(x){} box.classList.add('rp-czd'); e.preventDefault();
 });
 document.addEventListener('pointermove',function(e){ if(!CZ) return; var dx=(e.clientX-CZ.sx)/CZ.sc, dy=(e.clientY-CZ.sy)/CZ.sc; if(Math.abs(dx)+Math.abs(dy)>2) CZ.mv=1;
   var X0=312, maxW=PW-32-CZ.l, maxH=PH-59-CZ.t;
-  if(CZ.hd.indexOf('e')>=0) CZ.box.style.width=Math.max(/^p:/.test(CZ.k||'')?200:190,Math.min(maxW,CZ.w+dx))+'px';
-  if(CZ.hd.indexOf('s')>=0) CZ.box.style.height=Math.max(/^p:/.test(CZ.k||'')?96:84,Math.min(maxH,CZ.h+dy))+'px'; });
+  if(CZ.hd.indexOf('e')>=0) CZ.box.style.width=Math.max(CZ.mw||(/^p:/.test(CZ.k||'')?200:190),Math.min(maxW,CZ.w+dx))+'px';
+  if(CZ.hd.indexOf('s')>=0) CZ.box.style.height=Math.max(CZ.mh||(/^p:/.test(CZ.k||'')?96:84),Math.min(maxH,CZ.h+dy))+'px'; });
 function czUp(e){ if(!CZ) return; var d=CZ; CZ=null; d.box.classList.remove('rp-czd'); if(!d.mv) return;
   var r4=function(v){ return Math.round(v*10000)/10000; }; RP.cfg.cnbox=RP.cfg.cnbox||{}; var o=RP.cfg.cnbox[d.k]||{};
   if(d.hd.indexOf('e')>=0) o.w=r4(parseFloat(d.box.style.width)/PW); if(d.hd.indexOf('s')>=0) o.h=r4(parseFloat(d.box.style.height)/PH); RP.cfg.cnbox[d.k]=o; dirty(); drawViewB(); }
