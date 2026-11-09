@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V348</title>
+<title>TEST · KEC Project Controls Dashboard · V349</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V348</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V349</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1412,7 +1412,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V348';
+var APP_VER='V349';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4189,8 +4189,8 @@ function suLookupRows(){ var by={}, nm={};
   (model&&model.projects||new Map()).forEach(function(p,c){ nm[c]=p&&p.name||c; });
   var cc={}; Object.keys(by).forEach(function(k){ var q=by[k]; if(q.pkg===nm[q.code]||!q.cno||q.cno===q.pkg) return; var kk=q.code+'|'+ckey(q.cno); cc[kk]=(cc[kk]||0)+1; }); /* a contract shared by several packages is not looked up: each package carries its own share, typed in the sheet */
   var out=[]; Object.keys(nm).forEach(function(c){ out.push({code:c,pkg:nm[c],name:nm[c],ctr:'',cno:'',ps:''}); });
-  Object.keys(by).forEach(function(k){ var r=by[k]; if(r.pkg===nm[r.code]) return; var cn=r.cno===r.pkg?'':r.cno, ct=(cn&&cc[r.code+'|'+ckey(cn)]===1)?(contracts||[]).filter(function(c){ return c.lc===String(r.code).toLowerCase()&&c.key===ckey(cn); })[0]:null, ser=function(d){ return d?Math.round(Date.parse(d+'T00:00:00Z')/864e5)+25569:''; };
-    out.push({code:r.code,pkg:r.pkg,name:nm[r.code]||r.code,ctr:r.ctr==='Unassigned'?'':r.ctr,cno:cn,ps:r.ps?Math.round(Date.parse(r.ps+'T00:00:00Z')/864e5)+25569:'',pf:r.cf?ser(r.cf):(ct?ser(ct.rcomp):''),cv:r.cv>0?r.cv:(ct?Math.round(ct.cv*(ct.share==null?1:ct.share)*100)/100:''),vo:r.vo>0?r.vo:(ct?Math.round((ct.voS!=null?ct.voS:ct.vo*(ct.share==null?1:ct.share))*100)/100:'')}); });
+  Object.keys(by).forEach(function(k){ var r=by[k]; if(r.pkg===nm[r.code]) return; var cn=r.cno===r.pkg?'':r.cno, np=cn?(cc[r.code+'|'+ckey(cn)]||1):1, ct=(cn&&np>=1)?(contracts||[]).filter(function(c){ return c.lc===String(r.code).toLowerCase()&&c.key===ckey(cn); })[0]:null, ser=function(d){ return d?Math.round(Date.parse(d+'T00:00:00Z')/864e5)+25569:''; };
+    out.push({code:r.code,pkg:r.pkg,name:nm[r.code]||r.code,ctr:r.ctr==='Unassigned'?'':r.ctr,cno:cn,ps:r.ps?Math.round(Date.parse(r.ps+'T00:00:00Z')/864e5)+25569:'',pf:r.cf?ser(r.cf):(ct?ser(ct.rcomp):''),cv:np>1?(ct?Math.round(ct.cv*(ct.share==null?1:ct.share)/np*100)/100:(r.cv>0?r.cv:'')):(r.cv>0?r.cv:(ct?Math.round(ct.cv*(ct.share==null?1:ct.share)*100)/100:'')),vo:np>1?'':(r.vo>0?r.vo:(ct?Math.round((ct.voS!=null?ct.voS:ct.vo*(ct.share==null?1:ct.share))*100)/100:''))}); });
   out.sort(function(a,b){ return a.code.toLowerCase()<b.code.toLowerCase()?-1:a.code.toLowerCase()>b.code.toLowerCase()?1:(a.pkg.toLowerCase()<b.pkg.toLowerCase()?-1:1); });
   return out.slice(0,398); }
 async function suTplBuild(){
@@ -4267,6 +4267,7 @@ async function suPrefill(z,codes){
       /* Material Procurement: Total Material Number = Local + Out of country (every row) */
       if(n===7) body=body.replace(new RegExp('<c r="F'+r+'"[^>]*?(?:/>|>[\\s\\S]*?</c>)'),'<c r="F'+r+'" s="26"><f>IF(AND(G'+r+'="",H'+r+'=""),"",N(G'+r+')+N(H'+r+'))</f><v></v></c>');
       return '<row r="'+rn+'"'+at+'>'+body+'</row>'; });
+    if(n===4&&x.indexOf('data-lk-hl')<0&&/<\/conditionalFormatting>/.test(x)){ var hl=['E','F','H','L'].map(function(c,i){ return '<conditionalFormatting sqref="'+c+'6:'+c+'306"><cfRule type="expression" priority="'+(20+i)+'" dxfId="2"><formula>AND($B6&lt;&gt;"",$D6&lt;&gt;"",'+c+'6="")</formula></cfRule></conditionalFormatting>'; }).join(''); var li=x.lastIndexOf('</conditionalFormatting>')+24; x=x.slice(0,li)+hl+x.slice(li); }
     z.file('xl/worksheets/sheet'+n+'.xml',x); }
 }
 async function suTplDownload(){ try{ var buf=await suTplBuild(); xpSave(buf,'KEC_Site_Update_Template_v2.4.xlsx'); }catch(e){ toast('The template could not be prepared',true); } }
