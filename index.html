@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V344</title>
+<title>TEST · KEC Project Controls Dashboard · V348</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V344</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V348</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1412,7 +1412,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V344';
+var APP_VER='V348';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4190,12 +4190,13 @@ function suLookupRows(){ var by={}, nm={};
   var cc={}; Object.keys(by).forEach(function(k){ var q=by[k]; if(q.pkg===nm[q.code]||!q.cno||q.cno===q.pkg) return; var kk=q.code+'|'+ckey(q.cno); cc[kk]=(cc[kk]||0)+1; }); /* a contract shared by several packages is not looked up: each package carries its own share, typed in the sheet */
   var out=[]; Object.keys(nm).forEach(function(c){ out.push({code:c,pkg:nm[c],name:nm[c],ctr:'',cno:'',ps:''}); });
   Object.keys(by).forEach(function(k){ var r=by[k]; if(r.pkg===nm[r.code]) return; var cn=r.cno===r.pkg?'':r.cno, ct=(cn&&cc[r.code+'|'+ckey(cn)]===1)?(contracts||[]).filter(function(c){ return c.lc===String(r.code).toLowerCase()&&c.key===ckey(cn); })[0]:null, ser=function(d){ return d?Math.round(Date.parse(d+'T00:00:00Z')/864e5)+25569:''; };
-    out.push({code:r.code,pkg:r.pkg,name:nm[r.code]||r.code,ctr:r.ctr==='Unassigned'?'':r.ctr,cno:cn,ps:r.ps?Math.round(Date.parse(r.ps+'T00:00:00Z')/864e5)+25569:'',pf:ct?ser(ct.rcomp):'',cv:ct?Math.round(ct.cv*(ct.share==null?1:ct.share)*100)/100:'',vo:ct?Math.round((ct.voS!=null?ct.voS:ct.vo*(ct.share==null?1:ct.share))*100)/100:''}); });
+    out.push({code:r.code,pkg:r.pkg,name:nm[r.code]||r.code,ctr:r.ctr==='Unassigned'?'':r.ctr,cno:cn,ps:r.ps?Math.round(Date.parse(r.ps+'T00:00:00Z')/864e5)+25569:'',pf:r.cf?ser(r.cf):(ct?ser(ct.rcomp):''),cv:r.cv>0?r.cv:(ct?Math.round(ct.cv*(ct.share==null?1:ct.share)*100)/100:''),vo:r.vo>0?r.vo:(ct?Math.round((ct.voS!=null?ct.voS:ct.vo*(ct.share==null?1:ct.share))*100)/100:'')}); });
   out.sort(function(a,b){ return a.code.toLowerCase()<b.code.toLowerCase()?-1:a.code.toLowerCase()>b.code.toLowerCase()?1:(a.pkg.toLowerCase()<b.pkg.toLowerCase()?-1:1); });
   return out.slice(0,398); }
 async function suTplBuild(){
   var b=atob(SU_TPL), u=new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i]=b.charCodeAt(i);
-  try{ if(!(await loadJSZip())||!model||!model.rows||!model.rows.length) return u.buffer;
+  try{ if(!(await loadJSZip())) return u.buffer;
+    if(!model||!model.rows||!model.rows.length){ var z0=await JSZip.loadAsync(u); await suPrefill(z0,[]); return await z0.generateAsync({type:'arraybuffer',compression:'DEFLATE'}); }
     var z=await JSZip.loadAsync(u), f=z.file('xl/worksheets/sheet3.xml'); if(!f) return u.buffer; var x=await f.async('string');
     var hs=/<c r="A1" s="(\d+)"/.exec(x), ds=/<c r="G2" s="(\d+)"/.exec(x); if(!hs||!ds) return u.buffer;
     var E=function(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }, T=function(ref,v){ return v===''||v==null?'':'<c r="'+ref+'" t="inlineStr"><is><t xml:space="preserve">'+E(v)+'</t></is></c>'; };
@@ -4218,11 +4219,56 @@ async function suTplBuild(){
         var cix=function(ref){ var l=/^[A-Z]+/.exec(ref)[0]; return l.length*100+l.charCodeAt(l.length-1); };
         px=px.replace(/<row r="(\d+)"([^>]*)>([\s\S]*?)<\/row>/g,function(m0,rn,at,body){ var r=+rn; if(r<6||r>306) return m0;
           var cells={}; (body.match(/<c r="[A-Z]+\d+"[^>]*?(?:\/>|>[\s\S]*?<\/c>)/g)||[]).forEach(function(c){ cells[/r="([A-Z]+)\d+"/.exec(c)[1]]=c; });
-          cells.H='<c r="H'+r+'" s="28"><f>'+gcol('H',r)+'</f><v></v></c>'; cells.L='<c r="L'+r+'" s="'+gn+'"><f>'+gcol('I',r)+'</f><v></v></c>'; cells.M='<c r="M'+r+'" s="'+gn+'"><f>'+gcol('J',r)+'</f><v></v></c>'; cells.N='<c r="N'+r+'" s="'+gn+'"><f>IF(ISNUMBER(L'+r+'),L'+r+'+N(M'+r+'),"")</f><v></v></c>';
+          cells.H='<c r="H'+r+'" s="28"><f>'+gcol('H',r)+'</f><v></v></c>'; cells.L='<c r="L'+r+'" s="'+gn+'"><f>'+gcol('I',r)+'</f><v></v></c>'; cells.M='<c r="M'+r+'" s="17"/>'; cells.N='<c r="N'+r+'" s="'+gn+'"><f>IF(ISNUMBER(L'+r+'),L'+r+'+N(M'+r+'),"")</f><v></v></c>';
           return '<row r="'+rn+'"'+at+'>'+Object.keys(cells).sort(function(a,b){ return cix(a)-cix(b); }).map(function(k){ return cells[k]; }).join('')+'</row>'; });
         z.file('xl/worksheets/sheet4.xml',px); } }
+    await suPrefill(z,suSelCodes());
     return await z.generateAsync({type:'arraybuffer',compression:'DEFLATE'});
   }catch(e){ return u.buffer; } }
+/* V345: the template is pre-filled for the project selected when "Site update" was pressed, from the last saved data. The example rows are removed. */
+function suSelCodes(){ var c=state.project?[state.project]:((state.mP||[]).slice()); return c.filter(function(x){ return !!x; }); }
+function suSer(iso){ return iso?Math.round(Date.parse(iso+'T00:00:00Z')/864e5)+25569:''; }
+function suPrefillData(codes){
+  var lc=function(v){ return String(v==null?'':v).toLowerCase(); }, set={}; codes.forEach(function(c){ set[lc(c)]=1; });
+  var inSel=function(r){ return !!set[lc(r.code)]; }, cmp=function(a,b){ return lc(a.code)<lc(b.code)?-1:lc(a.code)>lc(b.code)?1:(lc(a.pkg)<lc(b.pkg)?-1:lc(a.pkg)>lc(b.pkg)?1:0); };
+  var pk={}; (model.rows||[]).filter(inSel).forEach(function(r){ var k=lc(r.code)+'|'+lc(r.pkg); if(!pk[k]||r.date>=pk[k].date) pk[k]=r; });
+  var pkgs=Object.keys(pk).map(function(k){ return {code:pk[k].code,pkg:pk[k].pkg}; }).sort(cmp), D={};
+  D.prog=pkgs.map(function(p){ var r=pk[lc(p.code)+'|'+lc(p.pkg)], o={B:{s:p.code},D:{s:p.pkg}}, e=r.eot>0?Math.round(r.eot):0;
+    return o; });
+  /* the rows of the last saved update for each project / package */
+  var latest=function(list,byPkg){ var mx={}; (list||[]).filter(inSel).forEach(function(r){ var k=lc(r.code)+(byPkg?'|'+lc(r.pkg):''); if(!mx[k]||r.d>mx[k]) mx[k]=r.d; }); return (list||[]).filter(function(r){ return inSel(r)&&r.d===mx[lc(r.code)+(byPkg?'|'+lc(r.pkg):'')]; }); };
+  D.con=latest(cur.con,false).map(function(c){ var o={C:{s:c.code},E:{s:c.pkg},F:{s:c.concern},G:{s:c.impact},H:{s:c.action},I:{s:c.owner},K:{s:c.status}}; if(c.id) o.A={s:c.id}; if(c.target) o.J={n:suSer(c.target)}; if(c.raised) o.L={n:suSer(c.raised)}; if(c.closed) o.M={n:suSer(c.closed)}; return o; });
+  var E1T=['Shop Drawing','Material Submittal','Method Statement','As-Built Drawing'], e1=[], seenC={};
+  /* Technical Submittals: 4 rows (one per submittal type) for each package; plots that share one contract (same contractor, identical buildings) share one set, the user adds more if needed */
+  pkgs.forEach(function(p){ var r=pk[lc(p.code)+'|'+lc(p.pkg)], cn=String(r.cno||'').replace(/\s+/g,'').toLowerCase(); if(cn&&cn!==lc(p.pkg)){ var ck=lc(p.code)+'|'+cn; if(seenC[ck]) return; seenC[ck]=1; } E1T.forEach(function(t){ e1.push({code:p.code,pkg:p.pkg,type:t}); }); });
+  var has2={}; var e2=latest(cur.e2,true).map(function(r){ return {code:r.code,pkg:r.pkg,type:r.type}; }).sort(function(a,b){ return cmp(a,b)||(lc(a.type)<lc(b.type)?-1:1); });
+  D.e1=e1.map(function(r){ return {B:{s:r.code},D:{s:r.pkg},E:{s:r.type}}; });
+  e2.forEach(function(r){ has2[lc(r.code)+'|'+lc(r.pkg)]=1; });
+  pkgs.forEach(function(p){ if(!has2[lc(p.code)+'|'+lc(p.pkg)]) e2.push({code:p.code,pkg:p.pkg,type:''}); }); e2.sort(function(a,b){ return cmp(a,b)||0; });
+  D.e2=e2.map(function(r){ return {B:{s:r.code},D:{s:r.pkg},E:{s:r.type}}; });
+  var qa=[]; pkgs.forEach(function(p){ ['NCR','Site Instructions'].forEach(function(t){ qa.push({B:{s:p.code},D:{s:p.pkg},E:{s:t}}); }); }); D.qa=qa;
+  var mp=latest(cur.mp,true).map(function(r){ return {code:r.code,pkg:r.pkg}; }).sort(cmp); if(!mp.length) mp=pkgs; D.mp=mp.map(function(r){ return {B:{s:r.code},D:{s:r.pkg}}; });
+  D.pc=[]; return D;
+}
+async function suPrefill(z,codes){
+  var D=codes.length?suPrefillData(codes):{}, E=function(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+  var map={4:'prog',5:'con',6:'e1',7:'e2',8:'qa',9:'mp',10:'pc'};
+  for(var n=4;n<=10;n++){ var f=z.file('xl/worksheets/sheet'+n+'.xml'); if(!f) continue; var x=await f.async('string'), list=(D[map[n]]||[]).slice(0,300), last=n===10?305:306;
+    var sty7={}; (/<row r="7"[^>]*>([\s\S]*?)<\/row>/.exec(x)||[0,''])[1].replace(/<c r="([A-Z]+)7"[^>]*? s="(\d+)"/g,function(c,col,sv){ sty7[col]=sv; return c; });
+    x=x.replace(/<row r="(\d+)"([^>]*)>([\s\S]*?)<\/row>/g,function(m0,rn,at,body){ var r=+rn; if(r<6||r>last) return m0;
+      /* example values go; formulas and styles stay */
+      body=body.replace(/<c r="([A-Z]+\d+)"([^>]*?)(\/>|>([\s\S]*?)<\/c>)/g,function(c,ref,attr,tail,inner){ if(!inner||/<f[ >]/.test(inner)) return c; var sm=/ s="(\d+)"/.exec(attr); return '<c r="'+ref+'"'+(sm?' s="'+sm[1]+'"':'')+'/>'; });
+      if(r===6&&sty7) body=body.replace(/<c r="([A-Z]+)6"([^>]*?)(\/>|>)/g,function(c,col,attr,t){ var m=sty7[col]; if(!m) return c; return '<c r="'+col+'6"'+attr.replace(/ s="\d+"/,'')+' s="'+m+'"'+t; });
+      if(n===4) body=body.replace(new RegExp('<c r="J'+r+'"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'),function(c,attr){ var sm=/ s="(\d+)"/.exec(attr); return '<c r="J'+r+'"'+(sm?' s="'+sm[1]+'"':'')+'/>'; });
+      var o=list[r-6];
+      if(o) Object.keys(o).forEach(function(col){ var v=o[col]; if(v==null||(v.s!=null&&String(v.s)==='')&&v.n==null) return;
+        body=body.replace(new RegExp('<c r="'+col+r+'"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'),function(c,attr){ var sm=/ s="(\d+)"/.exec(attr), sa=sm?' s="'+sm[1]+'"':'';
+          return v.n!=null?'<c r="'+col+r+'"'+sa+'><v>'+v.n+'</v></c>':'<c r="'+col+r+'"'+sa+' t="inlineStr"><is><t xml:space="preserve">'+E(v.s)+'</t></is></c>'; }); });
+      /* Material Procurement: Total Material Number = Local + Out of country (every row) */
+      if(n===7) body=body.replace(new RegExp('<c r="F'+r+'"[^>]*?(?:/>|>[\\s\\S]*?</c>)'),'<c r="F'+r+'" s="26"><f>IF(AND(G'+r+'="",H'+r+'=""),"",N(G'+r+')+N(H'+r+'))</f><v></v></c>');
+      return '<row r="'+rn+'"'+at+'>'+body+'</row>'; });
+    z.file('xl/worksheets/sheet'+n+'.xml',x); }
+}
 async function suTplDownload(){ try{ var buf=await suTplBuild(); xpSave(buf,'KEC_Site_Update_Template_v2.4.xlsx'); }catch(e){ toast('The template could not be prepared',true); } }
 function suSummary(P){
   var nm={prog:'Packages - Plots',con:'Areas of Concern',e1:'Technical Submittals',e2:'Material Procurement',qa:'Quality Statistics',mp:'Manpower',pc:'Contracts to be Awarded'};
