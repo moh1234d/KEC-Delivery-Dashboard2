@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V356</title>
+<title>TEST · KEC Project Controls Dashboard · V357</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1279,7 +1279,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V356</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V357</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1416,7 +1416,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V356';
+var APP_VER='V357';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -1514,9 +1514,12 @@ function buildModel(progRaw, infoRaw){
   });
   var pkgCanon=new Map(), pkgRecased={};
   progRaw.slice().sort(function(a,b){ var x=toISO(a.date)||'', y=toISO(b.date)||''; return x<y?-1:x>y?1:0; }).forEach(function(r){ var c=str(r.code).toLowerCase(), p=str(r.pkg); if(c&&p) pkgCanon.set(c+'|'+p.toLowerCase(),p); });
-  var recased={}, missing=[], noCtr=0, dup=0, rows=[], seen=new Map(), dropped=0;
+  /* V357 F-030: Infra / infra are one project. With no Projects Info spelling, the most used spelling is the project's code (a tie: the first alphabetically), whatever the order of the rows */
+  { var spell={}; progRaw.forEach(function(r){ var c=str(r.code); if(!c) return; var l=c.toLowerCase(); (spell[l]=spell[l]||{})[c]=(spell[l][c]||0)+1; });
+    Object.keys(spell).forEach(function(l){ if(caseMap.has(l)) return; var best=Object.keys(spell[l]).sort(function(a,b){ return spell[l][b]-spell[l][a]||(a<b?-1:a>b?1:0); })[0]; caseMap.set(l,best); }); }
+  var recased={}, missing=[], noCtr=0, dup=0, dupCase={}, rows=[], seen=new Map(), dropped=0;
   progRaw.forEach(function(r){
-    var date=toISO(r.date), code=str(r.code), pkg=str(r.pkg);
+    var date=toISO(r.date), code=str(r.code), pkg=str(r.pkg), oc=code;
     if(!date||!code||!pkg){ dropped++; return; }
     var lc=code.toLowerCase();
     var pc=pkgCanon.get(lc+'|'+pkg.toLowerCase()); if(pc&&pc!==pkg){ pkgRecased[pkg+' → '+pc]=1; pkg=pc; }
@@ -1533,8 +1536,8 @@ function buildModel(progRaw, infoRaw){
     if(o.cv==null) o.cv=o.rv-o.vo;
     if(!o.ctr){ o.ctr='Unassigned'; noCtr++; }
     if(!o.cno) o.cno=pkg;
-    o.key=code+'|'+pkg;
-    var dk=date+'|'+o.key; if(seen.has(dk)){ dup++; rows[seen.get(dk)]=o; return; }
+    o.key=code+'|'+pkg; o.oc=oc;
+    var dk=date+'|'+o.key; if(seen.has(dk)){ dup++; var pr=rows[seen.get(dk)]; if(pr&&pr.oc!==oc) dupCase[d2(date)+' · '+pr.oc+' / '+oc+' · '+pkg]=1; rows[seen.get(dk)]=o; return; }
     seen.set(dk,rows.length); rows.push(o);
   });
   rows.sort(function(a,b){ return a.date<b.date?-1:a.date>b.date?1:0; });
@@ -1559,6 +1562,7 @@ function buildModel(progRaw, infoRaw){
   if(missing.length) issues.push({t:'Blank values',m:missing.length+' row(s) have blank revised/planned/earned values and are treated as zero: '+missing.slice(0,4).map(esc).join('; ')+(missing.length>4?' …':'')+'.'});
   if(noCtr) issues.push({t:'No contractor',m:noCtr+' row(s) have no contractor and are shown as “Unassigned”.'});
   if(dup) issues.push({t:'Duplicate rows',m:dup+' duplicate date/package row(s) found — the last one in the file was used.'});
+  if(Object.keys(dupCase).length) issues.push({t:'Same project written two ways',m:'These rows are the same project spelled with different letter case, so one replaced the other (the later row in the file was kept): '+Object.keys(dupCase).slice(0,8).join('; ')+(Object.keys(dupCase).length>8?' … +'+(Object.keys(dupCase).length-8)+' more':'')+'. Use one spelling in the sheet.'});
   if(dropped) issues.push({t:'Rows skipped',m:dropped+' row(s) skipped because Data Date, Project Code, Package or planned dates were missing.'});
   return {rows:rows,info:info,projects:projects,snaps:snaps,issues:issues,partial:partial};
 }
