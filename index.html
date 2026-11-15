@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V368</title>
+<title>TEST · KEC Project Controls Dashboard · V369</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1098,6 +1098,7 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 .pcs{margin:6px 0 4px}.pcg{display:grid;grid-template-columns:minmax(0,1.75fr) 2px minmax(0,1fr);gap:0 22px;align-items:start}.pcsep{align-self:stretch;background:var(--bar-g);border-radius:2px;opacity:.7}
 .pch{display:flex;align-items:center;gap:8px;margin:0 0 10px;flex-wrap:wrap}.pch .sp{flex:1}.pct{font-size:17px;font-weight:700}
 .pcchip{font:600 12px inherit;font-family:inherit;border:1px solid var(--bar-g);background:var(--card);color:var(--ink);border-radius:20px;padding:5px 12px;cursor:pointer}.pcchip b{margin-left:3px}.pcchip.on{background:#0b2a5e;color:#fff;border-color:#0b2a5e}
+.mplb{float:right;font-size:12px;font-weight:500;color:var(--mut);cursor:pointer}.mplb input{vertical-align:middle;margin-right:4px}
 .trasat{font-size:11px;color:var(--mut);margin:2px 0 4px}.trdq{font-size:12px;background:#fbeccd;color:#8a5a00;border-radius:8px;padding:6px 10px;margin:4px 0}[data-theme=dark] .trdq{background:#3a2e12;color:#f0c76a}
 .trset{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--mut);margin:2px 0 10px}.trset input,.trset select{background:var(--chipbg);border:1px solid var(--line);border-radius:6px;color:var(--ink);padding:3px 6px;font:inherit}.trset input{width:54px}
 .trt{width:100%;border-collapse:collapse;font-size:13px}.trt th{font-size:10.5px;letter-spacing:.04em;color:var(--mut);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);line-height:1.25}.trt th.n,.trt td.n{text-align:right;font-variant-numeric:tabular-nums}.trt th.c,.trt td.c{text-align:center}
@@ -1293,7 +1294,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V368</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V369</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1431,7 +1432,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V368';
+var APP_VER='V369';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4073,7 +4074,7 @@ function svMpHtml(m){
   var cc='<div class="card plain"><div class="mpt">By '+(m.grp?'project':'package')+' · data date '+d2(m.d)+'</div><div class="chart-box" style="height:'+h+'px"><canvas id="svMp"></canvas></div></div>';
   return t+(one?'<div class="mpone">'+kp+cc+'</div>':kp+cc)+
     svTable([m.grp?'Project':'Package / plot','Planned','Actual','Variance','Actual % of plan'],rows,foot)+
-    (m.trend.length>1?'<div class="card plain"><div class="mpt">Total manpower by data date</div><div class="chart-box" style="height:230px"><canvas id="svMpT"></canvas></div></div>':'');
+    (m.trend.length>1?'<div class="card plain"><div class="mpt">Total manpower by data date <label class="mplb"><input type="checkbox" id="mpLbl"'+(MPL.on?' checked':'')+'> Show values</label></div><div class="chart-box" style="height:270px"><canvas id="svMpT"></canvas></div></div>':'');
 }
 function svMpCfg(m,ink,line,acc){
   var good=cssv('--good'), bad=cssv('--bad'), halo=cssv('--card')||'#fff';
@@ -4087,8 +4088,20 @@ function svMpCfg(m,ink,line,acc){
   var o={responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{position:'top',align:'end',labels:{color:ink,boxWidth:12,usePointStyle:true}}},scales:{x:{ticks:{color:ink,maxRotation:0,autoSkip:false},grid:{display:false}},y:{beginAtZero:true,grace:'18%',ticks:{color:ink,precision:0},grid:{color:line}}},barPercentage:.8,categoryPercentage:.7,datasets:{bar:{maxBarThickness:56}}};
   return {type:'bar',data:{labels:m.rows.map(function(r){ return wrap(r.k); }),datasets:[{label:'Planned',data:m.rows.map(function(r){ return r.pl; }),backgroundColor:'#b9b09e',borderRadius:4},{label:'Actual',data:m.rows.map(function(r){ return r.ac; }),backgroundColor:acc,borderRadius:4}]},options:o,plugins:[lab]};
 }
+/* V369: value pills on the manpower chart (Option B): Actual pill, Planned pill, and the gap Actual - Planned */
+var MPL={on:true};
+try{ var _m=JSON.parse(localStorage.getItem('kec.mpl.v1')||'null'); if(_m&&_m.on===false) MPL.on=false; }catch(e){}
+function mpPill(c,x,y,t,fg,bg,fs){ c.font='600 '+fs+'px system-ui,-apple-system,Segoe UI,sans-serif'; var w=c.measureText(t).width+fs*1.1, hh=fs*1.7, r=hh/2, l=x-w/2, tp=y-hh/2;
+  c.beginPath(); c.moveTo(l+r,tp); c.arcTo(l+w,tp,l+w,tp+hh,r); c.arcTo(l+w,tp+hh,l,tp+hh,r); c.arcTo(l,tp+hh,l,tp,r); c.arcTo(l,tp,l+w,tp,r); c.closePath(); c.fillStyle=bg; c.fill(); c.fillStyle=fg; c.textAlign='center'; c.textBaseline='middle'; c.fillText(t,x,y+.5); }
+var mpPlug={id:'mpb',afterDatasetsDraw:function(ch){ if(!MPL.on) return; var c=ch.ctx, pl=ch.getDatasetMeta(0).data, ac=ch.getDatasetMeta(1).data, dp=ch.data.datasets[0].data, da=ch.data.datasets[1].data, fs=ch.width<520?9.5:11, dark=document.documentElement.getAttribute('data-theme')==='dark'||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches&&document.documentElement.getAttribute('data-theme')!=='light');
+  var accC=ch.data.datasets[1].borderColor, gb=dark?'rgba(255,255,255,.16)':'#e8e4da', gf=dark?'#e8e4da':'#4d493e'; c.save();
+  for(var i=0;i<da.length;i++){ if(!ac[i]||!pl[i]||da[i]==null||dp[i]==null) continue; var up=da[i]>=dp[i], gap=da[i]-dp[i];
+    mpPill(c,ac[i].x,ac[i].y+(up?-17:17),String(Math.round(da[i])),'#fff',accC,fs); mpPill(c,pl[i].x,pl[i].y+(up?17:-17),String(Math.round(dp[i])),gf,gb,fs-.5);
+    var gc=gap>=0?(dark?'#7ad9a4':'#1f7a4d'):(dark?'#ff9a92':'#b3261e'), gbg=gap>=0?(dark?'rgba(46,160,100,.22)':'#eaf5ee'):(dark?'rgba(220,70,60,.22)':'#fbeae8');
+    mpPill(c,ac[i].x+26,(ac[i].y+pl[i].y)/2,(gap>0?'+':'')+Math.round(gap),gc,gbg,fs-1); }
+  c.restore(); }};
 function svMpTrend(m,ink,line,acc){
-  return {type:'line',data:{labels:m.trend.map(function(x){ return d2(x.d); }),datasets:[{label:'Planned',data:m.trend.map(function(x){ return x.pl; }),borderColor:'#b9b09e',borderDash:[6,4],pointRadius:3,tension:.2},{label:'Actual',data:m.trend.map(function(x){ return x.ac; }),borderColor:acc,backgroundColor:acc,pointRadius:3,tension:.2}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,right:12}},plugins:{legend:{position:'top',align:'end',labels:{color:ink,boxWidth:12,usePointStyle:true}}},scales:{x:{ticks:{color:ink},grid:{display:false}},y:{beginAtZero:true,ticks:{color:ink,precision:0},grid:{color:line}}}}};
+  return {type:'line',data:{labels:m.trend.map(function(x){ return d2(x.d); }),datasets:[{label:'Planned',data:m.trend.map(function(x){ return x.pl; }),borderColor:'#b9b09e',borderDash:[6,4],pointRadius:3,tension:.2},{label:'Actual',data:m.trend.map(function(x){ return x.ac; }),borderColor:acc,backgroundColor:acc,pointRadius:3,tension:.2}]},plugins:[mpPlug],options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:26,right:8,left:4,bottom:10}},plugins:{legend:{position:'top',align:'end',labels:{color:ink,boxWidth:12,usePointStyle:true}}},scales:{x:{offset:true,ticks:{color:ink},grid:{display:false}},y:{beginAtZero:true,grace:'12%',ticks:{color:ink,precision:0},grid:{color:line}}}}};
 }
 function svCfgs(){
   var sc=SV.cur.sc, cut=SV.cur.cut, ink=cssv('--mut'), line=cssv('--line'), acc=cssv('--accent'), bad=cssv('--bad'), out={};
@@ -4261,7 +4274,8 @@ function dqRun(){
     if(nsp.length) out.push({dq:1,code:nsp[0].code,t:'Package not in the approved list',m:nsp.length+' package(s) in the progress data are not in the <b>Packages List</b> / <b>Plots List</b> of the live Sheet: '+nsp.slice(0,6).map(function(r){ return '<b>'+esc(r.pkg)+'</b> ('+esc(r.code)+')'; }).join('; ')+(nsp.length>6?' …':'')+'. Administrator: add it to the list, or map the old spelling on the <b>Package Aliases</b> tab.'}); }
   model.dqN=out.length; out.forEach(function(i){ model.issues.push(i); });
 }
-document.addEventListener('change',function(e){ var t=e.target; if(!t) return; if(t.id==='dqSil'||t.id==='dqChg'){ var v=parseFloat(t.value); if(!(v>0&&v<=365)){ t.value=t.id==='dqSil'?DQ.silent:DQ.chg; return; } if(t.id==='dqSil') DQ.silent=v; else DQ.chg=v; dqSave(); dqRun(); try{ render(); }catch(x){} } });
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='mpLbl'){ MPL.on=!!t.checked; try{ localStorage.setItem('kec.mpl.v1',JSON.stringify(MPL)); }catch(x){} try{ var ch=Chart.getChart(document.getElementById('svMpT')); if(ch) ch.draw(); }catch(x){} return; }
+  if(!t) return; if(t.id==='dqSil'||t.id==='dqChg'){ var v=parseFloat(t.value); if(!(v>0&&v<=365)){ t.value=t.id==='dqSil'?DQ.silent:DQ.chg; return; } if(t.id==='dqSil') DQ.silent=v; else DQ.chg=v; dqSave(); dqRun(); try{ render(); }catch(x){} } });
 function suParse(wb,okCode){
   var errs=[], warns=[], data={ver:0,prog:[],con:[],e1:[],e2:[],qa:[],mp:[],pc:[]}, sum=[];
   var ins=wb.Sheets['Instructions'], v=ins&&ins['B5']?parseFloat(String(ins['B5'].v)):NaN;
