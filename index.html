@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V367</title>
+<title>TEST · KEC Project Controls Dashboard · V368</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1293,7 +1293,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V367</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V368</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1431,7 +1431,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V367';
+var APP_VER='V368';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -2695,8 +2695,12 @@ function svScope(rows,cut){
     ok:function(pkg){ if(!filt||this.single) return true; return names.some(function(n){ return svPkgMatch(n,pkg); }); }};
 }
 function svLatest(arr,sc,cut,tk){
-  var m={}; accRows(arr||[],'code').forEach(function(x){
-    if(String(x.code).toLowerCase()!==sc.lc||x.d>cut||!sc.ok(x.pkg)) return;
+  var m={}, xs=accRows(arr||[],'code').filter(function(x){ return String(x.code).toLowerCase()===sc.lc&&x.d<=cut&&sc.ok(x.pkg); });
+  if(tk==='e1'){ /* V368: a row without trade that has exactly the same figures as a traded row of the same date, package and type is the same row without its trade name (e.g. the Sheet has no Trade column): drop it, so it is not counted twice or shown as Unassigned */
+    var tup=function(x){ return [x.d,svN(x.pkg),svN(x.type),x.tot,x.plan,x.sub,x.app,x.rev,x.rvw,x.ns].join('|'); }, tr={};
+    xs.forEach(function(x){ if(x.trade) tr[tup(x)]=1; });
+    xs=xs.filter(function(x){ return x.trade||!tr[tup(x)]; }); }
+  xs.forEach(function(x){
     var k=svN(x.pkg)+'|'+(tk==='e1'?svN(x.type)+'|'+svN(x.trade):tk?svN(x[tk]):''); if(!m[k]||x.d>=m[k].d) m[k]=x; });
   var out=Object.keys(m).map(function(k){ return m[k]; });
   if(tk==='e1'){ /* V358: per package + type the newest split wins: a newer update with trades replaces an older one without trades (and the other way round), so nothing is counted twice; rows of the same date are all kept */
