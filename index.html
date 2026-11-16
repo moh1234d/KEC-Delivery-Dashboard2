@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V371</title>
+<title>TEST · KEC Project Controls Dashboard · V372</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -335,6 +335,17 @@ nav a .pnb[hidden]{display:none}
 .g-ov{grid-template-columns:repeat(6,1fr)}
 .g-top.g7{grid-template-columns:repeat(7,1fr)}
 .boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px;grid-auto-flow:dense}
+.boxes.pgm{position:relative;border:2px solid var(--side);border-radius:0 22px 22px 0;padding:12px 16px 8px 60px;margin-top:18px;background:color-mix(in srgb,var(--card) 35%,transparent)}
+.pgm .pgtab{position:absolute;left:0;top:0;bottom:0;width:42px;background:var(--side);color:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pgm .pgtab span{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;font-size:16px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.pgm .pgs{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font-size:12.5px;color:var(--mut);margin-bottom:2px}.pgs b{color:var(--ink)}.pgs b.bad{color:var(--bad)}.pgs b.warn{color:var(--warn)}.pgs b.good{color:var(--good)}
+.pgp{border-radius:12px;padding:2px 9px;font-size:11px;font-weight:700;background:var(--chipbg);color:var(--mut)}.pgp.red{background:var(--bad-bg);color:var(--bad)}.pgp.amber{background:var(--warn-bg);color:var(--warn)}.pgp.green,.pgp.done{background:var(--good-bg);color:var(--good)}
+.pgt{margin-left:auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:4px 12px;font:600 12px inherit;font-family:inherit;cursor:pointer}
+.uc .phx{position:static}
+.boxes.pgm.col>.pbox{display:none}.boxes.pgm.col{padding-bottom:12px}
+.boxes.ovp2+.boxes.ovp2{break-before:auto;page-break-before:auto;margin-top:12px!important}
+@media (max-width:900px){.boxes.pgm{padding:10px 10px 6px 42px}.pgm .pgtab{width:30px}.pgm .pgtab span{font-size:12px}.pgs{gap:4px 12px;font-size:11.5px}.pgt{margin-left:0}}
+
 .pbox{border:2px solid var(--line);border-radius:6px;padding:12px 14px 14px;min-width:0;grid-column:span 4}
 .pbox.s1{grid-column:span 1}.pbox.s2{grid-column:span 2}.pbox.s3{grid-column:span 4}.pbox.s3>.ucs{max-width:75%}
 .pbox>h3{margin:0 0 10px;font-size:17px;font-weight:700}
@@ -1323,7 +1334,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V371</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V372</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1437,6 +1448,20 @@ var LAYOUT = { 'Al ALIYA':[
   {title:'Cluster D Ph 2', span:2, note:'Permit Issuance Delay for CL-D2', cards:[{t:'Plots 148, 149, 150',c:'AL-D2',p:['Plot 148','Plot 149','Plot 150']},{t:'Plot 093 (Nursery Plot)',c:'AL-D2',p:['Plot 093'],sep:1}]},
   {title:'Cluster D', span:4, cards:[{t:'PH 1 (Plots 133, 134, 136)',c:'AL-D',p:['Plot 133','Plot 134','Plot 136']},{t:'PH 2 (Plot 138)',c:'AL-D',p:['Plot 138']},{t:'PH 3 (Plots 135, 137, 144)',c:'AL-D',p:['Plot 135','Plot 137','Plot 144']}], total:{t:'CL-D Overall summary',codes:['AL-D']}}
 ]};
+/* V372: program container on the Overview (Option B: vertical name tab + one-line roll-up, collapsible, expanded by default; the choice is remembered on this device) */
+var PGMC=(function(){ try{ return JSON.parse(localStorage.getItem('kec.pgmc.v1')||'{}')||{}; }catch(e){ return {}; } })();
+function pgmWrap(pg2,inner){
+  var a=agg(pg2.rows), codes={}; pg2.rows.forEach(function(r){ codes[r.code]=1; });
+  var cl=LAYOUT[pg2.name]?LAYOUT[pg2.name].length:0, np=Object.keys(codes).length, cnt={red:0,amber:0,green:0,pending:0,done:0};
+  Object.keys(codes).forEach(function(c){ var rr=pg2.rows.filter(function(r){ return r.code===c; }), pa=agg(rr,undefined,true); cnt[pkgStatus(pa.act,pa.pv,pa.ev,pa.spi,pa.overrun)]++; });
+  var gap=Math.round(a.act*1000-a.plan*1000)/10, dl=a.maxDelay||0, col=!!PGMC[pg2.name];
+  var pills=['red','amber','green','done','pending'].filter(function(k){ return cnt[k]>0; }).map(function(k){ return '<span class="pgp '+k+'">'+cnt[k]+' '+STLBL[k].toLowerCase()+'</span>'; }).join('');
+  return '<div class="boxes pgm'+(col?' col':'')+'" data-pgm="'+esc(pg2.name)+'"><div class="pgtab"><span>'+esc(pg2.name)+'</span></div>'+
+    '<div class="pgs"><span>'+(cl?cl+' cluster'+(cl>1?'s':'')+' · ':'')+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b class="'+(gap<0?'bad':gap>0?'good':'')+'">'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span><span>Max delay <b class="'+(dl>T.delayAmber?'bad':dl>0?'warn':'good')+'">'+(dl>0?'−'+dl+' days':'none')+'</b></span>'+pills+
+    '<button type="button" class="pgt" data-pgmt="1" aria-expanded="'+(col?'false':'true')+'" title="'+(col?'Show the clusters':'Hide the clusters')+'">'+(col?'▸ Show clusters':'▾ Hide clusters')+'</button></div>'+inner+'</div>';
+}
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-pgmt]'); if(!t) return; var g=t.closest('.pgm'); if(!g) return; var c=!g.classList.contains('col'); g.classList.toggle('col',c); var n=g.getAttribute('data-pgm'); if(c) PGMC[n]=1; else delete PGMC[n]; try{ localStorage.setItem('kec.pgmc.v1',JSON.stringify(PGMC)); }catch(x){}
+  t.setAttribute('aria-expanded',c?'false':'true'); t.title=c?'Show the clusters':'Hide the clusters'; t.textContent=c?'▸ Show clusters':'▾ Hide clusters'; try{ window.dispatchEvent(new Event('resize')); }catch(x){} });
 function layoutHtml(pg2){
   var used={}, out='';
   var pick=function(c){ return pg2.rows.filter(function(r){ if(r.code!==c.c) return false; return !c.p||c.p.some(function(x){ return x.toLowerCase()===String(r.pkg).toLowerCase(); }); }); };
@@ -1461,7 +1486,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V371';
+var APP_VER='V372';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -5228,11 +5253,11 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
     var liveCodes={}; rows.forEach(function(r){ liveCodes[r.code]=1; }); /* a project shows if it has a package in the Packages - Plots sheet, whatever its progress */
     var byProg=groupBy(rows.filter(function(r){return HIDE_PROJ.indexOf(r.code)<0&&liveCodes[r.code];}),function(r){return prog(r.code);}).sort(function(x,y){ return x.name<y.name?-1:x.name>y.name?1:0; });
     var ovHtml=byProg.map(function(pg2){
-      if(LAYOUT[pg2.name]) return layoutHtml(pg2)+'<!--SPLIT-->';
+      if(LAYOUT[pg2.name]) return pgmWrap(pg2,layoutHtml(pg2))+'<!--SPLIT-->';
       var pj=groupBy(pg2.rows,function(r){return r.code;}).sort(function(x,y){ var a2=pname(x.name),b2=pname(y.name); return a2<b2?-1:a2>b2?1:0; });
       var fr={}, fo=[]; pj.forEach(function(g){ var f=FRAMES[g.name]||''; if(!fr[f]){fr[f]=[];fo.push(f);} fr[f].push(g); });
       fo.sort();
-      return fo.map(function(f){ var pjf=fr[f], cards=[];
+      return pgmWrap(pg2,fo.map(function(f){ var pjf=fr[f], cards=[];
         if(f&&FRAME_TOTAL[f]){
           var allr=pg2.rows.filter(function(r){ return FRAME_TOTAL[f].indexOf(r.code)>=0; });
           cards.push(ucard(f+' · overall',agg(allr),'tot').replace('<h4>','<h4><span class="ovl">OVERALL</span>'));
@@ -5243,10 +5268,10 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
         sepList(pjf).forEach(function(c){ cards.push(c); });
         var n=cards.length, span2=n>3?'':(n===3?' s3':(n===2?' s2':' s1'));
         return '<div class="pbox'+span2+'"><h3>'+esc(pg2.name)+(f?' · '+esc(f):'')+'<small>'+pjf.length+' project'+(pjf.length>1?'s':'')+'</small></h3><div class="ucs">'+cards.join('')+'</div></div>';
-      }).join('');
+      }).join(''));
     }).join('');
     var spx=ovHtml.lastIndexOf('<!--SPLIT-->');
-    boxes+=(spx>=0&&spx+12<ovHtml.length?'<div class="boxes">'+ovHtml.slice(0,spx).split('<!--SPLIT-->').join('')+'</div><div class="boxes ovp2">'+ovHtml.slice(spx+12).split('<!--SPLIT-->').join('')+'</div>':'<div class="boxes">'+ovHtml.split('<!--SPLIT-->').join('')+'</div>')+
+    boxes+=(spx>=0&&spx+12<ovHtml.length?ovHtml.slice(0,spx).split('<!--SPLIT-->').join('')+ovHtml.slice(spx+12).split('<!--SPLIT-->').join('').split('class="boxes pgm').join('class="boxes ovp2 pgm'):ovHtml.split('<!--SPLIT-->').join(''))+
     '<p class="lg">One card per project (value-weighted across its packages). Variance = actual − planned progress, in points. The finish slider runs from planned to forecast completion; “−N days” means the forecast is later than plan. Click a card to open that project. Side bar: green = on track or complete, orange = watch, red = at risk (SPI and finish-delay thresholds), grey = not started.</p>';
   }
   var finCard='';
