@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V369</title>
+<title>TEST · KEC Project Controls Dashboard · V371</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1269,6 +1269,35 @@ body.pf-arr .sec-bar{display:none}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
 .svmg{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}.svf{grid-column:span 2}.svf.h{grid-column:span 1}.svmg label{display:block;font-size:11px;letter-spacing:.06em;color:var(--mut);font-weight:700;text-transform:uppercase;margin:6px 0 3px}.svmg textarea,.svmg input,.svmg select{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.lpbox{padding:16px 18px}
+.lpbtns{display:flex;flex-wrap:wrap;gap:8px}.lpbtns.lptp{justify-content:flex-end;margin-bottom:10px}
+.lpbox .btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.lpempty{display:flex;flex-direction:column;gap:10px;align-items:flex-start;color:var(--mut);font-size:13px}.lpempty b{color:var(--ink);font-size:14px}
+.lpks{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:10px}
+.lpk{background:var(--chipbg);border-radius:12px;padding:10px 12px}.lpk span{display:block;font-size:11px;color:var(--mut)}.lpk b{font-size:19px}.lpk b.bad{color:var(--bad)}
+.lpnote{font-size:12.5px;color:var(--ink);margin:4px 0}.lpnote.mut{color:var(--mut)}.lpnote.warn{color:var(--warn)}.lperr{background:var(--bad-bg);color:var(--bad);border-radius:10px;padding:8px 12px;font-size:12.5px;margin:6px 0}
+.lpctl{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin:12px 0 8px}
+.lptabs,.lpsw{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.lptab{border:0;border-radius:16px;padding:5px 12px;font:600 12px inherit;font-family:inherit;background:var(--chipbg);color:var(--mut);cursor:pointer}.lptab.on{background:var(--accent);color:#fff}
+.lpsw select{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:4px 8px;font:inherit;font-size:12px}
+.lpch{border-radius:10px;padding:2px 8px;font-size:11px;font-weight:700;white-space:nowrap;display:inline-block}.lpch.r{background:var(--bad-bg);color:var(--bad)}.lpch.a{background:var(--warn-bg);color:var(--warn)}.lpch.g{background:var(--good-bg);color:var(--good)}.lpch.b{background:var(--chipbg);color:var(--accent)}.lpch.n{background:var(--chipbg);color:var(--mut)}
+.lpln{margin:14px 0 6px}.lpln h4{margin:0 0 6px;font-size:13.5px}.lpln h4 small{color:var(--mut);font-weight:500;font-size:12px}
+.lpch2{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:stretch}
+.lpn{flex:1 1 150px;min-width:140px;max-width:230px;background:var(--chipbg);border-radius:10px;padding:8px 10px;position:relative}.lpn:after{content:"";position:absolute;right:-18px;top:50%;width:18px;border-top:2px solid var(--line)}
+.lpn.act{outline:2px solid var(--accent)}.lpt{font-size:12px;font-weight:600;line-height:1.25;max-height:2.5em;overflow:hidden;text-transform:capitalize}.lpd{font-size:11px;color:var(--mut);margin:4px 0 5px}
+.lpm{flex:1 1 150px;min-width:140px;max-width:230px;display:flex;flex-direction:column;justify-content:center;gap:2px;font-size:11.5px;color:var(--mut);border-radius:10px;padding:8px 12px;background:repeating-linear-gradient(135deg,var(--chipbg),var(--chipbg) 6px,var(--track) 6px,var(--track) 12px)}.lpm b{color:var(--ink);font-size:13px}
+.lptl{margin-top:24px}.lpg{position:relative}.lpov{position:absolute;left:300px;right:0;top:0;bottom:0;pointer-events:none}
+.lprow{display:grid;grid-template-columns:300px 1fr;align-items:center;height:30px;border-bottom:1px solid var(--line)}.lpnm{font-size:12px;padding-right:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:capitalize}.lpnm small{background:var(--chipbg);border-radius:8px;padding:1px 6px;margin-right:4px;color:var(--mut);text-transform:none}
+.lptr{position:relative;height:100%}
+.lpbl{position:absolute;top:6px;height:7px;border:1.5px solid var(--mut);border-radius:4px;background:var(--chipbg);display:inline-block}
+.lpfc{position:absolute;top:15px;height:9px;border-radius:4px;background:#7ea6e8;display:inline-block}.lpfc.act{background:var(--accent)}
+.lpsl{position:absolute;top:10px;font-size:10px;font-weight:700;color:var(--bad);font-style:normal;white-space:nowrap;margin-left:4px;transform:translateY(0)}
+.lptd{position:absolute;top:0;bottom:0;border-left:2px dashed var(--accent)}.lptd span{position:absolute;top:-15px;left:0;transform:translateX(-50%);font-size:10px;color:var(--accent);font-weight:700;white-space:nowrap}
+.lpax{display:grid;grid-template-columns:300px 1fr;margin-top:4px;font-size:10.5px;color:var(--mut)}.lpt2{position:relative;height:16px}.lpt2 span{position:absolute;transform:translateX(-50%)}
+.lplg{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;font-size:11.5px;color:var(--mut)}.lplg i{position:relative!important;top:0!important;width:22px;height:8px;margin-right:5px;vertical-align:middle}.lplg .r{margin-left:auto}
+.lpmore{text-align:center;margin-top:10px}
+@media(max-width:760px){.lpks{grid-template-columns:repeat(2,1fr)}.lprow,.lpax{grid-template-columns:130px 1fr}.lpov{left:130px}.lpnm{white-space:normal;font-size:11px;line-height:1.15}.lprow{height:38px}.lpn{max-width:none;flex:1 1 44%}.lpn:after{display:none}.lpm{max-width:none;flex:1 1 44%}.lpbtns.lptp{justify-content:flex-start}}
+.lpx{font-size:10.5px;color:var(--mut);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:capitalize}.lpt2 span{white-space:nowrap}
 .svma{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}.svma .pri{background:var(--accent);color:#fff;border-color:var(--accent)}
 .svhd,.svft{display:none}
 @page site{size:A3 portrait;margin:8mm}
@@ -1294,7 +1323,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V369</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V371</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1432,7 +1461,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V369';
+var APP_VER='V371';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3842,6 +3871,192 @@ function pSiteGroup(rows,coreRows,cut){
     '<div class="sitepg">'+pageHd(2)+E1+E2+Q+M+ch+phBox(codes)+pageFt+'</div>';
 }
 
+/* ---- Longest path (V371): XER reader, Excel reader, storage, Site view section ---- */
+var LPK='kec.lp.v1', LPSK='kec.lpset.v1', LPS={}, LPSET={view:'B',rows:12,nodes:5}, LPV={grp:'',all:false}, LPERR='';
+try{ LPS=JSON.parse(localStorage.getItem(LPK)||'{}')||{}; }catch(e){ LPS={}; }
+try{ var _s=JSON.parse(localStorage.getItem(LPSK)||'{}')||{}; ['view','rows','nodes'].forEach(function(k){ if(_s[k]!=null) LPSET[k]=_s[k]; }); }catch(e){}
+function lpSave(){ try{ localStorage.setItem(LPK,JSON.stringify(LPS)); return true; }catch(e){ return false; } }
+function lpSetSave(){ try{ localStorage.setItem(LPSK,JSON.stringify(LPSET)); }catch(e){} }
+function lpDay(iso){ if(!iso) return null; var p=String(iso).slice(0,10).split('-'); if(p.length<3) return null; return Math.round(Date.UTC(+p[0],+p[1]-1,+p[2])/864e5); }
+function lpIso(n){ return new Date(n*864e5).toISOString().slice(0,10); }
+function lpDiff(a,b){ var x=lpDay(a), y=lpDay(b); return (x==null||y==null)?null:x-y; }
+function lpFmt(iso,ref){ if(!iso) return '—'; var p=iso.split('-'); var s=(+p[2])+' '+MON[+p[1]-1]; if(!ref||p[0]!==ref.slice(0,4)) s+=' '+p[0].slice(2); return s; }
+var LP_NEED={
+  PROJECT:['proj_id','proj_short_name','last_recalc_date','scd_end_date','plan_end_date'],
+  TASK:['task_id','proj_id','wbs_id','clndr_id','task_code','task_name','status_code','total_float_hr_cnt','early_start_date','early_end_date','act_start_date','act_end_date','driving_path_flag','phys_complete_pct'],
+  TASKPRED:['task_id','pred_task_id','pred_type','lag_hr_cnt'],
+  PROJWBS:['wbs_id','parent_wbs_id','wbs_name','proj_node_flag'],
+  CALENDAR:['clndr_id','day_hr_cnt']
+};
+function lpXerRead(buf){
+  var txt=new TextDecoder('windows-1252').decode(buf), lines=txt.split('\n'), tbl='', idx=null, T={};
+  for(var i=0;i<lines.length;i++){
+    var ln=lines[i]; if(ln.charCodeAt(0)!==37) continue; var k=ln.charAt(1);
+    if(k==='T'){ tbl=ln.replace(/\r$/,'').split('\t')[1]; idx=null; if(LP_NEED[tbl]) T[tbl]=[]; }
+    else if(k==='F'&&LP_NEED[tbl]){ var f=ln.replace(/\r$/,'').split('\t').slice(1); idx={}; LP_NEED[tbl].forEach(function(n){ var j=f.indexOf(n); if(j>=0) idx[n]=j+1; }); }
+    else if(k==='R'&&idx){ var v=ln.replace(/\r$/,'').split('\t'), o={}; for(var n in idx) o[n]=v[idx[n]]||''; T[tbl].push(o); }
+  }
+  if(!T.TASK||!T.TASK.length||!T.PROJECT||!T.PROJECT.length) throw new Error('This is not a readable P6 XER file (no activities found).');
+  /* the project with most activities (an XER can hold several) */
+  var cnt={}; T.TASK.forEach(function(t){ cnt[t.proj_id]=(cnt[t.proj_id]||0)+1; });
+  var pid=Object.keys(cnt).sort(function(a,b){ return cnt[b]-cnt[a]; })[0];
+  var P=T.PROJECT.filter(function(p){ return p.proj_id===pid; })[0]||T.PROJECT[0];
+  var tasks=T.TASK.filter(function(t){ return t.proj_id===pid; });
+  var wb={}; (T.PROJWBS||[]).forEach(function(w){ wb[w.wbs_id]=w; });
+  var gcache={}; function grp(wid){ if(gcache[wid]) return gcache[wid]; var path=[], x=wb[wid], n=0; while(x&&n++<40){ path.unshift(x); x=wb[x.parent_wbs_id]; } var root=path.length&&path[0].proj_node_flag==='Y'?1:0; var g=(path[root]&&path[root].wbs_name)||'(no WBS)', s=(path[root+1]&&path[root+1].wbs_name)||''; return gcache[wid]=[g.trim(),s.trim()]; }
+  var cal={}; (T.CALENDAR||[]).forEach(function(c){ cal[c.clndr_id]=+c.day_hr_cnt||8; });
+  var dt=function(a,b){ return (a||b||'').slice(0,10); };
+  var byId={}, out=[];
+  tasks.forEach(function(t){
+    var st=t.status_code==='TK_Complete'?'Complete':(t.status_code==='TK_Active'?'Active':'Not started');
+    var hpd=cal[t.clndr_id]||8, tf=t.total_float_hr_cnt===''?null:Math.round((+t.total_float_hr_cnt/hpd)*10)/10;
+    var g=grp(t.wbs_id);
+    var o={tid:t.task_id,id:t.task_code,name:(t.task_name||'').trim(),st:st,s:dt(t.act_start_date,t.early_start_date),f:dt(t.act_end_date,t.early_end_date),tf:tf,pct:Math.round(+t.phys_complete_pct||0),g:g[0],sg:g[1],drv:t.driving_path_flag==='Y'};
+    byId[t.task_id]=o; out.push(o);
+  });
+  var drvAll=out.filter(function(o){ return o.drv; }), succ={};
+  (T.TASKPRED||[]).forEach(function(p){ var a=byId[p.pred_task_id], b=byId[p.task_id]; if(a&&b&&a.drv&&b.drv){ (succ[a.id]=succ[a.id]||[]).push({id:b.id,t:(p.pred_type||'').replace('PR_','')||'FS',lag:Math.round((+p.lag_hr_cnt||0)/8*10)/10}); } });
+  return {name:(P.proj_short_name||'').trim(),dd:(P.last_recalc_date||'').slice(0,10),fin:(P.scd_end_date||P.plan_end_date||'').slice(0,10),all:out,drv:drvAll,succ:succ};
+}
+function lpMkBase(R){ var m={}; R.all.forEach(function(o){ var a=lpDay(o.s), b=lpDay(o.f); if(a!=null&&b!=null) m[o.id]=a+','+b; }); return {name:R.name,date:R.dd,fin:R.fin,map:m,drv:R.drv.map(function(o){ return o.id; }),src:'XER',n:R.all.length,at:Date.now()}; }
+function lpMkUp(R){ var rows=R.drv.filter(function(o){ return o.st!=='Complete'; }).map(function(o){ return {id:o.id,name:o.name,st:o.st,s:o.s,f:o.f,tf:o.tf,pct:o.pct,g:o.g,sg:o.sg,sc:(R.succ[o.id]||[]).slice(0,4)}; }); return {date:R.dd,fin:R.fin,name:R.name,src:'XER',rows:rows,drv:R.drv.map(function(o){ return o.id; }),n:R.all.length,at:Date.now()}; }
+/* Excel route: a sheet named "Longest Path" */
+var LP_XC={date:['data date'],id:['activity id','activity code','task id'],name:['activity name','activity description','name'],sid:['successor id','successor activity id','successor'],rel:['relationship','relationship type','rel type','type'],lag:['lag (days)','lag'],grp:['plot / package','plot/package','plot','package'],st:['status','activity status'],pct:['% complete','percent complete','progress %'],fs:['forecast start','start','current start'],ff:['forecast finish','finish','current finish'],bs:['baseline start'],bf:['baseline finish'],tf:['total float (days)','total float','float']};
+function lpXlsxRead(wb){
+  var sn=wb.SheetNames.filter(function(n){ return /longest\s*path/i.test(n); })[0]; if(!sn) return null;
+  var a=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:true,defval:null}), hi=-1, m={};
+  for(var i=0;i<Math.min(a.length,15)&&hi<0;i++){ var lc=(a[i]||[]).map(function(v){ return canon(v); }); if(lc.indexOf('activity id')>=0&&(lc.indexOf('data date')>=0)){ hi=i; for(var k in LP_XC){ for(var j=0;j<LP_XC[k].length;j++){ var x=lc.indexOf(LP_XC[k][j]); if(x>=0){ m[k]=x; break; } } } } }
+  if(hi<0) throw new Error('The "Longest Path" sheet needs the columns Data date and Activity ID (see the template).');
+  var by={}, order=[], dd='', bad=0;
+  for(var r=hi+1;r<a.length;r++){ var row=a[r]||[], g=function(k){ return m[k]==null?null:row[m[k]]; }; var id=String(g('id')==null?'':g('id')).trim(); if(!id) continue;
+    var d=toISO(g('date')); if(d&&d>dd) dd=d;
+    var o=by[id]; if(!o){ var stt=String(g('st')||'').toLowerCase(); o=by[id]={id:id,name:String(g('name')||'').trim(),st:/compl/.test(stt)?'Complete':(/prog|activ/.test(stt)?'Active':'Not started'),s:toISO(g('fs'))||'',f:toISO(g('ff'))||'',tf:g('tf')==null||g('tf')===''?null:Math.round(+g('tf')*10)/10,pct:Math.round(+String(g('pct')||0).replace('%','')*(+String(g('pct')||0)<=1&&+String(g('pct')||0)>0?100:1)),g:String(g('grp')||'(not set)').trim(),sg:'',sc:[],b:(toISO(g('bs'))&&toISO(g('bf')))?[toISO(g('bs')),toISO(g('bf'))]:null}; by[id]=o; order.push(o); if(!o.f) bad++; }
+    var sid=String(g('sid')==null?'':g('sid')).trim(); if(sid&&o.sc.length<4) o.sc.push({id:sid,t:String(g('rel')||'FS').toUpperCase().slice(0,2),lag:+g('lag')||0});
+  }
+  if(!order.length) throw new Error('The "Longest Path" sheet has no activity rows.');
+  if(!dd) throw new Error('Data date is missing in the "Longest Path" sheet.');
+  if(bad) throw new Error(bad+' activities have no forecast finish date.');
+  var rows=order.filter(function(o){ return o.st!=='Complete'; }), fin=rows.reduce(function(m2,o){ return o.f>m2?o.f:m2; },''), bfin=rows.reduce(function(m2,o){ return o.b&&o.b[1]>m2?o.b[1]:m2; },'');
+  return {date:dd,fin:fin,bfin:bfin,name:sn,src:'Excel',rows:rows,drv:order.map(function(o){ return o.id; }),n:order.length,at:Date.now()};
+}
+function lpTplDownload(){
+  var H=['Project code','Data date','Activity ID','Activity name','Successor ID','Relationship','Lag (days)','Plot / Package','Status','% complete','Forecast start','Forecast finish','Baseline start','Baseline finish','Total float (days)'];
+  var ex=[['AL-D2','2026-11-12','A-D-148-C-CVL-226','Rebaring for second floor slab Zone B','A-D-148-C-CVL-235','FS',0,'Plot 148','In progress',60,'2026-11-05','2026-11-14','2026-10-03','2026-10-08',-30.6],['AL-D2','2026-11-12','A-D-148-C-CVL-235','Pouring for second floor slab Zone B','A-D-148-C-CVL-245','FS',0,'Plot 148','Not started',0,'2026-11-15','2026-11-15','2026-10-09','2026-10-10',-30.6]];
+  var wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([H].concat(ex)),'Longest Path');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Longest Path sheet (V371)'],['One row per activity and successor. An activity with several successors takes several rows.'],['Export the driving / longest path activities from P6 with the baseline columns (assign the baseline first).'],['The Excel route is shown in the dashboard as unverified. The XER route is checked against the full schedule.']]),'Notes');
+  XLSX.writeFile(wb,'KEC_Longest_Path_Template_V371.xlsx');
+}
+function lpRows(code){
+  var D=LPS[code]; if(!D||!D.ups||!D.ups.length) return null;
+  var U=D.ups[D.ups.length-1], P=D.ups.length>1?D.ups[D.ups.length-2]:null, bm=D.base&&D.base.map||{};
+  var rows=U.rows.map(function(r){ var bs='',bf=''; if(r.b){ bs=r.b[0]; bf=r.b[1]; } else if(bm[r.id]){ var q=bm[r.id].split(','); bs=lpIso(+q[0]); bf=lpIso(+q[1]); } var sl=bf?lpDiff(r.f,bf):null; return Object.assign({},r,{bs:bs,bf:bf,slip:sl}); });
+  rows.sort(function(a,b){ return a.f<b.f?-1:a.f>b.f?1:(a.s<b.s?-1:a.s>b.s?1:(a.id<b.id?-1:1)); });
+  var gm={}, go=[]; rows.forEach(function(r){ if(!gm[r.g]){ gm[r.g]={name:r.g,rows:[],worst:null,maxslip:null}; go.push(gm[r.g]); } var G=gm[r.g]; G.rows.push(r); if(r.tf!=null&&(G.worst==null||r.tf<G.worst)) G.worst=r.tf; if(r.slip!=null&&(G.maxslip==null||r.slip>G.maxslip)) G.maxslip=r.slip; });
+  go.sort(function(a,b){ return b.rows.length-a.rows.length; });
+  var worst=null; rows.forEach(function(r){ if(r.tf!=null&&(worst==null||r.tf<worst)) worst=r.tf; });
+  var bfin=D.base?D.base.fin:(U.bfin||''), slip=(U.fin&&bfin)?lpDiff(U.fin,bfin):null;
+  var chg=null, since=null;
+  if(D.base&&D.base.drv&&U.src==='XER'){ var cs={}; U.drv.forEach(function(i){ cs[i]=1; }); var still=D.base.drv.filter(function(i){ return cs[i]; }).length; var bset={}; D.base.drv.forEach(function(i){ bset[i]=1; }); chg={base:D.base.drv.length,still:still,left:D.base.drv.length-still,added:U.rows.filter(function(r){ return !bset[r.id]; }).length}; }
+  if(P&&P.drv&&U.drv){ var ps={}; P.drv.forEach(function(i){ ps[i]=1; }); var cs2={}; U.drv.forEach(function(i){ cs2[i]=1; }); since={date:P.date,joined:U.drv.filter(function(i){ return !ps[i]; }).length,left:P.drv.filter(function(i){ return !cs2[i]; }).length,pfin:P.fin,dfin:(U.fin&&P.fin)?lpDiff(U.fin,P.fin):null}; }
+  return {D:D,U:U,rows:rows,groups:go,worst:worst,bfin:bfin,slip:slip,chg:chg,since:since};
+}
+function lpChip(n){ if(n==null) return '<span class="lpch n">—</span>'; if(n<=0) return '<span class="lpch g">on plan</span>'; return '<span class="lpch '+(n>=20?'r':'a')+'">+'+n+' d</span>'; }
+function lpSt(s){ return '<span class="lpch '+(s==='Active'?'b':'n')+'">'+(s==='Active'?'In progress':'Not started')+'</span>'; }
+function lpPath(L,G){
+  var dd=L.U.date, nn=+LPSET.nodes||5, rows=G.rows, nm={}; L.rows.forEach(function(r){ nm[r.id]=r.name; }); sh=rows.slice(0,nn), more=rows.length-sh.length, last=rows[rows.length-1];
+  var nodes=sh.map(function(r){ var nx=(r.sc&&r.sc[0])?r.sc[0].id:''; return '<div class="lpn'+(r.st==='Active'?' act':'')+'" title="'+esc(r.id+(nx?'  → '+nx:'')+'  · float '+(r.tf==null?'—':r.tf+' d'))+'"><div class="lpt">'+esc(r.name)+'</div><div class="lpd">'+lpFmt(r.s,dd)+' → '+lpFmt(r.f,dd)+'</div><div>'+lpChip(r.slip)+'</div>'+(nx&&nm[nx]?'<div class="lpx">drives: '+esc(nm[nx])+'</div>':'')+'</div>'; }).join('');
+  var mo=more>0?'<div class="lpm"><b>+ '+more+' more</b><span>last: '+esc(last.name)+'</span><span>'+lpFmt(last.f,dd)+(last.slip!=null?' · '+(last.slip>0?'+'+last.slip+' d':'on plan'):'')+'</span></div>':'';
+  return '<div class="lpln"><h4>'+esc(G.name)+' <small>'+rows.length+' open'+(G.maxslip!=null?' · worst slip '+(G.maxslip>0?'+'+G.maxslip+' d':'none'):'')+(G.worst!=null?' · float '+G.worst+' d':'')+'</small></h4><div class="lpch2">'+nodes+mo+'</div></div>';
+}
+function lpTime(L,rows,total){
+  var dd=L.U.date, a=null, b=null; rows.forEach(function(r){ [r.s,r.bs].forEach(function(x){ var n=lpDay(x); if(n!=null&&(a==null||n<a)) a=n; }); [r.f,r.bf].forEach(function(x){ var n=lpDay(x); if(n!=null&&(b==null||n>b)) b=n; }); });
+  var dn=lpDay(dd); if(dn!=null){ if(a==null||dn<a) a=dn; if(b==null||dn>b) b=dn; } if(a==null||b==null) return '';
+  var pad=Math.max(3,Math.round((b-a)*.04)); a-=pad; b+=pad; var sp=b-a, ps=function(n){ return ((n-a)/sp*100).toFixed(2); };
+  var rowsH=rows.map(function(r){ var s=lpDay(r.s), f=lpDay(r.f), bs=lpDay(r.bs), bf=lpDay(r.bf); var l=+ps(s), w=Math.max(1.1,ps(f)-ps(s)), h='';
+    if(bs!=null&&bf!=null){ var bl=+ps(bs), bw=Math.max(1.1,ps(bf)-ps(bs)); h+='<i class="lpbl" style="left:'+bl+'%;width:'+bw+'%"></i>'; }
+    h+='<i class="lpfc'+(r.st==='Active'?' act':'')+'" style="left:'+l+'%;width:'+w+'%"></i>';
+    if(r.slip!=null&&r.slip>0){ var rt=+ps(f)+(+ps(f)-l>=0?0:0); h+=(rt>80?'<em class="lpsl" style="right:'+(100-l+.8).toFixed(2)+'%">+'+r.slip+' d</em>':'<em class="lpsl" style="left:'+(rt+.8).toFixed(2)+'%">+'+r.slip+' d</em>'); }
+    return '<div class="lprow" title="'+esc(r.id)+'"><div class="lpnm">'+(LPV.grp===''&&r.g?'<small>'+esc(r.g)+'</small> ':'')+esc(r.name)+'</div><div class="lptr">'+h+'</div></div>'; }).join('');
+  var tk=''; var d=new Date(a*864e5); d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,1)); var guard=0;
+  while(d.getTime()/864e5<b&&guard++<60){ var n=d.getTime()/864e5; tk+='<span style="left:'+ps(n)+'%">'+MON[d.getUTCMonth()]+(d.getUTCMonth()===0?' '+String(d.getUTCFullYear()).slice(2):'')+'</span>'; d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,1)); }
+  var today=dn!=null?'<div class="lptd" style="left:'+ps(dn)+'%"><span>'+lpFmt(dd)+' (data date)</span></div>':'';
+  return '<div class="lptl"><div class="lpg"><div class="lpov">'+today+'</div>'+rowsH+'</div><div class="lpax"><div></div><div class="lpt2">'+tk+'</div></div><div class="lplg"><span><i class="lpbl"></i>Baseline</span><span><i class="lpfc"></i>Forecast</span><span><i class="lpfc act"></i>In progress</span><span class="r">+N d = days later than baseline</span></div></div>';
+}
+function lpBox(code){
+  var L=lpRows(code), btn=function(a,t,c){ return '<button type="button" class="btn'+(c?' '+c:'')+'" data-lpact="'+a+'">'+t+'</button>'; };
+  var hasB=!!(LPS[code]&&LPS[code].base);
+  var up=btn('base',hasB?'Replace baseline XER':'Upload baseline XER')+btn('upd','Upload update (XER / Excel)','pri')+btn('tpl','Excel template');
+  var head='<div class="sec" id="svLP"><span class="t">Longest path</span><span class="q">'+(L?'driving activities from the programme · data date '+lpFmt(L.U.date)+' · '+(L.U.src==='XER'?'verified (XER)':'unverified (Excel)'):'not loaded yet')+'</span></div>';
+  if(lpRelayOn()&&!LPR.loaded[code]){ setTimeout(function(){ lpLoad(code); },0); if(!L) return head+'<div class="card lpbox"><div class="lpempty"><b>Loading the longest path\u2026</b></div></div>'; }
+  if(!L){ return head+'<div class="card lpbox"><div class="lpempty"><b>No longest path loaded for this project.</b><span>Upload the baseline XER once, then the update XER each cycle. Only the driving activities are kept. An Excel sheet can be used instead of the XER (use the template).</span><div class="lpbtns">'+up+'</div>'+(LPERR?'<div class="lperr">'+esc(LPERR)+'</div>':'')+'</div></div>'; }
+  var U=L.U, hasSlip=L.slip!=null, gsel=LPV.grp, G=L.groups.filter(function(g){ return g.name===gsel; })[0]; if(!G) gsel='', LPV.grp='';
+  var k=function(l,v,c){ return '<div class="lpk"><span>'+l+'</span><b'+(c?' class="'+c+'"':'')+'>'+v+'</b></div>'; };
+  var kp='<div class="lpks">'+k('Forecast finish',lpFmt(U.fin),hasSlip&&L.slip>0?'bad':'')+k('Baseline finish',L.bfin?lpFmt(L.bfin):'—')+k('Project slip',hasSlip?(L.slip>0?'+'+L.slip+' days':'none'):'—',hasSlip&&L.slip>0?'bad':'')+k('Worst float',L.worst==null?'—':L.worst+' d',L.worst!=null&&L.worst<0?'bad':'')+k('Driving activities open',L.rows.length)+'</div>';
+  var notes='';
+  if(!hasB&&U.src==='XER') notes+='<div class="lpnote warn">Baseline not loaded: upload the baseline XER to see the slip against baseline.</div>';
+  if(L.chg) notes+='<div class="lpnote">Against the baseline path: <b>'+L.chg.still+' of '+L.chg.base+'</b> baseline driving activities are still driving, <b>'+L.chg.left+'</b> have left the path'+(L.chg.added?', <b>'+L.chg.added+'</b> are new':'')+'.</div>';
+  if(L.since) notes+='<div class="lpnote">Since the update of '+lpFmt(L.since.date)+': <b>'+L.since.joined+'</b> joined the path, <b>'+L.since.left+'</b> left it'+(L.since.dfin!=null?'; forecast finish moved '+(L.since.dfin>0?'+':'')+L.since.dfin+' days':'')+'.</div>';
+  else if(U.src==='XER') notes+='<div class="lpnote mut">“Since last update” appears after the next update is uploaded.</div>';
+  if(U.src==='Excel') notes+='<div class="lpnote warn">Loaded from Excel: the list is as supplied and is not checked against the full schedule.</div>';
+  if(!lpRelayOn()) notes+='<div class="lpnote mut">Saved in this browser only (no relay connection).</div>';
+  if(LPERR) notes+='<div class="lperr">'+esc(LPERR)+'</div>';
+  var tabs='<div class="lptabs"><button type="button" class="lptab'+(gsel===''?' on':'')+'" data-lpact="grp:">All · '+L.rows.length+'</button>'+L.groups.map(function(g,i){ return '<button type="button" class="lptab'+(gsel===g.name?' on':'')+'" data-lpact="grp:'+i+'">'+esc(g.name)+' · '+g.rows.length+'</button>'; }).join('')+'</div>';
+  var sw='<div class="lpsw"><button type="button" class="lptab'+(LPSET.view==='B'?' on':'')+'" data-lpact="view:B">Path strip</button><button type="button" class="lptab'+(LPSET.view==='C'?' on':'')+'" data-lpact="view:C">Timeline</button>'+(LPSET.view==='C'?'<select data-lpsel="rows" aria-label="Rows">'+[8,12,20,40].map(function(n){ return '<option value="'+n+'"'+(+LPSET.rows===n?' selected':'')+'>'+n+' rows</option>'; }).join('')+'</select>':'<select data-lpsel="nodes" aria-label="Boxes per lane">'+[3,4,5,6,8].map(function(n){ return '<option value="'+n+'"'+(+LPSET.nodes===n?' selected':'')+'>'+n+' boxes</option>'; }).join('')+'</select>')+'</div>';
+  var body;
+  if(LPSET.view==='C'){ var rr=(G?G.rows:L.rows), lim=LPV.all?rr.length:+LPSET.rows||12; body=lpTime(L,rr.slice(0,lim),rr.length)+(rr.length>lim?'<div class="lpmore"><button type="button" class="btn" data-lpact="all">Show all '+rr.length+'</button></div>':(LPV.all&&rr.length>(+LPSET.rows||12)?'<div class="lpmore"><button type="button" class="btn" data-lpact="all">Show fewer</button></div>':'')); }
+  else body=(G?[G]:L.groups).map(function(g){ return lpPath(L,g); }).join('');
+  return head+'<div class="card lpbox"><div class="lpbtns lptp">'+up+'</div>'+kp+notes+'<div class="lpctl">'+tabs+sw+'</div>'+body+'</div>';
+}
+function lpRelayOn(){ return !!(ACC.need===true&&ACC.token&&LIVE&&LIVE.relay); }
+var LPR={loaded:{},busy:{}};
+function lpLoad(code){
+  if(!lpRelayOn()||LPR.loaded[code]||LPR.busy[code]) return; LPR.busy[code]=1;
+  accCall('GET','/longest-path?code='+encodeURIComponent(code),null,60000).then(function(j){
+    LPR.busy[code]=0; LPR.loaded[code]=1; var d={ups:(j&&j.ups)||[]}; if(j&&j.base) d.base=j.base; LPS[code]=d; if(state.page==='site') render();
+  }).catch(function(e){ LPR.busy[code]=0; LPR.loaded[code]=1; LPERR='Could not load the longest path from the relay: '+((e&&e.message)||'error')+'. '+(/Not Found|404/.test((e&&e.message)||'')?'Deploy relay V51.':''); if(state.page==='site') render(); });
+}
+function lpPost(body){ return accCall('POST','/longest-path',body,120000); }
+function lpAuthed(){ return isUnlocked()||suIsAdmin()||suMode()!=='off'; }
+function lpPick(kind){
+  var go=function(){ var i=document.createElement('input'); i.type='file'; i.accept='.xer,.xlsx,.xlsm,.xls'; i.style.display='none'; document.body.appendChild(i); i.onchange=function(){ var f=i.files[0]; i.remove(); if(f) lpUpload(kind,f); }; i.click(); };
+  if(lpAuthed()) go(); else pwAsk(go);
+}
+async function lpUpload(kind,f,codeIn){
+  var code=codeIn||state.project; LPERR='';
+  try{
+    if(!code) throw new Error('Choose one project first.');
+    var isX=/\.xer$/i.test(f.name), ab=await f.arrayBuffer(); if(lpRelayOn()&&!LPR.loaded[code]) throw new Error('Still loading this project from the relay. Try again in a moment.'); var D=LPS[code]=LPS[code]||{ups:[]};
+    if(isX){
+      var R=lpXerRead(ab);
+      if(kind==='base'){ var nb=lpMkBase(R); if(lpRelayOn()) await lpPost({action:'base',code:code,base:nb}); D.base=nb; toast('Baseline loaded: '+D.base.n+' activities, data date '+lpFmt(R.dd)); }
+      else{
+        var up=lpMkUp(R); if(!up.date) throw new Error('The XER has no data date.');
+        if(D.base){ var bm=D.base.map, hit=0; up.rows.forEach(function(r){ if(bm[r.id]) hit++; }); if(up.rows.length&&hit/up.rows.length<.8) throw new Error('This update does not match the baseline: only '+hit+' of '+up.rows.length+' driving activities exist in the baseline. Check that the project and the baseline are the right ones.'); }
+        if(D.ups.length&&up.date<D.ups[D.ups.length-1].date) LPERR='Note: this update (data date '+lpFmt(up.date)+') is older than the latest one loaded.';
+        if(lpRelayOn()){ var rs=await lpPost({action:'update',code:code,up:up}); if(rs&&rs.sheet===false) LPERR='Saved, but the Longest Path tab in the Sheet could not be updated: '+(rs.sheetErr||'unknown error'); }
+        D.ups=D.ups.filter(function(u){ return u.date!==up.date; }); D.ups.push(up); D.ups.sort(function(a,b){ return a.date<b.date?-1:1; }); D.ups=D.ups.slice(-12);
+        toast('Update loaded: data date '+lpFmt(up.date)+', '+up.rows.length+' open driving activities');
+      }
+    } else {
+      if(kind==='base') throw new Error('The baseline must be an XER file. For Excel, put the baseline dates in the Longest Path sheet and upload it as an update.');
+      var wb=XLSX.read(ab,{type:'array'}), up2=lpXlsxRead(wb); if(!up2) throw new Error('No sheet named "Longest Path" in this workbook. Use the Excel template.');
+      if(lpRelayOn()){ var rs2=await lpPost({action:'update',code:code,up:up2}); if(rs2&&rs2.sheet===false) LPERR='Saved, but the Longest Path tab in the Sheet could not be updated: '+(rs2.sheetErr||'unknown error'); }
+      D.ups=D.ups.filter(function(u){ return u.date!==up2.date; }); D.ups.push(up2); D.ups.sort(function(a,b){ return a.date<b.date?-1:1; }); D.ups=D.ups.slice(-12);
+      toast('Excel update loaded: data date '+lpFmt(up2.date)+', '+up2.rows.length+' open driving activities');
+    }
+    if(!lpRelayOn()&&!lpSave()){ LPERR=(LPERR?LPERR+' ':'')+'Could not save in this browser (storage full). It stays loaded until the page is reloaded.'; }
+  }catch(e){ LPERR=(e&&e.message)||'Could not read the file.'; }
+  if(state.page==='site') render();
+}
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-lpact]'); if(!t) return; var a=t.getAttribute('data-lpact'), code=state.project;
+  if(a==='base'||a==='upd') lpPick(a==='base'?'base':'upd');
+  else if(a==='tpl') lpTplDownload();
+  else if(a==='all'){ LPV.all=!LPV.all; render(); }
+  else if(a.indexOf('view:')===0){ LPSET.view=a.slice(5); lpSetSave(); render(); }
+  else if(a.indexOf('grp:')===0){ var L=lpRows(code), i=a.slice(4); LPV.grp=i===''?'':(L.groups[+i]||{}).name||''; LPV.all=false; render(); }
+});
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.getAttribute&&t.getAttribute('data-lpsel')){ LPSET[t.getAttribute('data-lpsel')]=+t.value; LPV.all=false; lpSetSave(); render(); } });
+
 function pSiteBuild(rows,coreRows,cut){
   var head=function(t,sub){ return '<h2 class="pgtitle sm">'+t+'</h2><p class="pgsub">'+sub+'</p>'; };
   if(selList('P').length!==1&&(state.program||selList('P').length>1)) return pSiteGroup(rows,coreRows,cut);
@@ -3910,7 +4125,7 @@ function pSiteBuild(rows,coreRows,cut){
   SV.cur={sc:sc,open:open,all:CL.all,cut:cut};
   return head('Site view',esc(pname(code))+' · cut-off '+cutTxt([code],cut))+tools+
     '<div class="sitepg">'+pageHd(1)+banner+profile+kp+sec('svP','Packages','same cards as Progress detail')+pk+sec('svF','Contract & financial','')+fin+(cs.length||ks.length?'':pcBox([code]))+T+pageFt+'</div>'+
-    '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'+E1+E2+Q+M+ch+phBox([code])+pageFt+'</div>';
+    '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'+lpBox(code)+E1+E2+Q+M+ch+phBox([code])+pageFt+'</div>';
 }
 function groupBy0(L,kf){ var m={},o=[]; L.forEach(function(x){ var k=kf(x), n=svN(k); if(!m[n]){ m[n]={k:k,l:[]}; o.push(m[n]); } m[n].l.push(x); }); return o.sort(function(a,b){ return svSum(b.l,'tot')-svSum(a.l,'tot'); }); }
 
