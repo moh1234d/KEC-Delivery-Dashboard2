@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V374</title>
+<title>TEST · KEC Project Controls Dashboard · V377</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -342,6 +342,11 @@ nav a .pnb[hidden]{display:none}
 .cos{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;font-size:12.5px;opacity:.95}.cos b{font-weight:700}
 .cot{margin-left:auto;background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:14px;padding:4px 12px;cursor:pointer;font-size:12px}
 .coblk.col .cob{display:none}.coblk .cob .boxes:first-child{margin-top:0}
+/* V376 */
+.gnt .gco .gl0 b{font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#12315f}.gnt .gco{border-bottom:3px solid #12315f;margin-top:12px}
+.gnt .gco.co1 .gl0 b{color:#6b2f80}.gnt .gco.co1{border-bottom-color:#6b2f80}.gnt .gco.co2 .gl0 b{color:#17705f}.gnt .gco.co2{border-bottom-color:#17705f}
+.gnt .gpg .gl0 b{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#233a63}.gnt .gpg .gl0{border-left:4px solid #12315f;padding-left:8px}
+.gnt .gpg.co1 .gl0{border-left-color:#6b2f80}.gnt .gpg.co2 .gl0{border-left-color:#17705f}.gnt .gpg{background:rgba(35,58,99,.05)}
 /* V374: company = section heading with coloured underline (no filled bar, no frame); program tabs take the company colour */
 .coblk{margin-top:28px}.coblk:first-child{margin-top:10px}
 .coh{background:transparent!important;color:#12315f;padding:6px 2px;border-radius:0;border-bottom:3px solid #12315f;gap:6px 16px}
@@ -1351,7 +1356,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V374</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V377</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1481,7 +1486,7 @@ function coWrap(byProg,arr){
     Object.keys(codes).forEach(function(k){ var rr=o.rows.filter(function(r){ return r.code===k; }), pa=agg(rr,undefined,true); cnt[pkgStatus(pa.act,pa.pv,pa.ev,pa.spi,pa.overrun)]++; });
     var gap=Math.round(a.act*1000-a.plan*1000)/10, dl=a.maxDelay||0, col=!!COC[c], ci=Math.max(0,CO_ORDER.indexOf(c));
     var pills=['red','amber','green','done','pending'].filter(function(k){ return cnt[k]>0; }).map(function(k){ return '<span class="pgp '+k+'">'+cnt[k]+' '+STLBL[k].toLowerCase()+'</span>'; }).join('');
-    return '<div class="coblk co'+ci+(col?' col':'')+'" data-co="'+esc(c)+'"><div class="coh"><span class="con">'+esc(c)+'</span><span class="cos"><span>'+o.html.length+' program'+(o.html.length>1?'s':'')+' · '+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b>'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span><span>Max delay <b>'+(dl>0?'−'+dl+' days':'none')+'</b></span>'+pills+'</span>'+
+    return '<div class="coblk co'+ci+(col?' col':'')+'" data-co="'+esc(c)+'"><div class="coh"><span class="con">'+esc(c)+'</span><span class="cos"><span>'+o.html.length+' program'+(o.html.length>1?'s':'')+' · '+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b>'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span></span>'+
       '<button type="button" class="cot" data-cot="1" aria-expanded="'+(col?'false':'true')+'">'+(col?'▸ Show':'▾ Hide')+'</button></div><div class="cob">'+o.html.join('')+'</div></div>';
   }).join('');
 }
@@ -1494,7 +1499,7 @@ function pgmWrap(pg2,inner){
   var gap=Math.round(a.act*1000-a.plan*1000)/10, dl=a.maxDelay||0, col=!!PGMC[pg2.name];
   var pills=['red','amber','green','done','pending'].filter(function(k){ return cnt[k]>0; }).map(function(k){ return '<span class="pgp '+k+'">'+cnt[k]+' '+STLBL[k].toLowerCase()+'</span>'; }).join('');
   return '<div class="boxes pgm'+(col?' col':'')+'" data-pgm="'+esc(pg2.name)+'"><div class="pgtab"><span>'+esc(pg2.name)+'</span></div>'+
-    '<div class="pgs"><span>'+(cl?cl+' cluster'+(cl>1?'s':'')+' · ':'')+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b class="'+(gap<0?'bad':gap>0?'good':'')+'">'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span><span>Max delay <b class="'+(dl>T.delayAmber?'bad':dl>0?'warn':'good')+'">'+(dl>0?'−'+dl+' days':'none')+'</b></span>'+pills+
+    '<div class="pgs"><span>'+(cl?cl+' cluster'+(cl>1?'s':'')+' · ':'')+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b class="'+(gap<0?'bad':gap>0?'good':'')+'">'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span>'+
     '<button type="button" class="pgt" data-pgmt="1" aria-expanded="'+(col?'false':'true')+'" title="'+(col?'Show the clusters':'Hide the clusters')+'">'+(col?'▸ Show clusters':'▾ Hide clusters')+'</button></div>'+inner+'</div>';
 }
 document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-pgmt]'); if(!t) return; var g=t.closest('.pgm'); if(!g) return; var c=!g.classList.contains('col'); g.classList.toggle('col',c); var n=g.getAttribute('data-pgm'); if(c) PGMC[n]=1; else delete PGMC[n]; try{ localStorage.setItem('kec.pgmc.v1',JSON.stringify(PGMC)); }catch(x){}
@@ -1523,7 +1528,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V374';
+var APP_VER='V377';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -2257,7 +2262,11 @@ function ganttSection(list,sel){
   var projs=groupBy(G,function(r){ return r.code; },true);
   projs.forEach(function(g){ g.a.start=g.rows.reduce(function(m,r){ return !m||r.ps<m?r.ps:m; },null); });
   var gRank=function(c){ var n=pname(c)+' '+prog(c); return /al\s*-?\s*a?liya|alaliya/i.test(n)?0:/multaq|multak/i.test(n)?1:/riyadh\s*school/i.test(n)?2:/infra/i.test(n)?3:4; };
-  projs.sort(function(x,y){ var rx=gRank(x.name),ry=gRank(y.name); return rx!==ry?rx-ry:x.a.start<y.a.start?-1:x.a.start>y.a.start?1:(pname(x.name)<pname(y.name)?-1:1); });
+  var coR=function(c){ var i=CO_ORDER.indexOf(coOf(c)); return i<0?99:i; };
+  projs.sort(function(x,y){ var rx=coR(x.name),ry=coR(y.name); if(rx!==ry) return rx-ry; var cx=coOf(x.name),cy=coOf(y.name); if(cx!==cy) return cx<cy?-1:1; var px=prog(x.name),py=prog(y.name); if(px!==py) return px<py?-1:1; return x.a.start<y.a.start?-1:x.a.start>y.a.start?1:(pname(x.name)<pname(y.name)?-1:1); });
+  var grp=projs.length>1, coAgg={}, pgAgg={}, coN={}, pgN={};
+  if(grp){ G.forEach(function(r){ var c=coOf(r.code), p=c+'|'+prog(r.code); (coAgg[c]=coAgg[c]||[]).push(r); (pgAgg[p]=pgAgg[p]||[]).push(r); }); projs.forEach(function(g){ var c=coOf(g.name), p=c+'|'+prog(g.name); coN[c]=(coN[c]||0)+1; pgN[p]=(pgN[p]||0)+1; }); }
+  var lastCo=null, lastPg=null;
   var tmin=Infinity,tmax=0; G.forEach(function(r){ [r.ps,r.pf,r.ff].forEach(function(d){ var t=dms(d); if(t<tmin)tmin=t; if(t>tmax)tmax=t; }); });
   projs.forEach(function(g){ var t=dms(g.a.pf); if(t>tmax)tmax=t; });
   var lo=Date.UTC(yr(tmin),0,1), hd=new Date(tmax+75*DAY), hi=Date.UTC(hd.getUTCFullYear(),hd.getUTCMonth()+1,1);
@@ -2276,13 +2285,16 @@ function ganttSection(list,sel){
   var h='<div class="gnt"><div class="gtb"><b>Schedule</b><select id="gzSel" aria-label="Schedule zoom"><option value="12"'+(step===12?' selected':'')+'>Years</option><option value="3"'+(step===3?' selected':'')+'>Quarters</option><option value="1"'+(step===1?' selected':'')+'>Months</option></select><button type="button" data-gall="1">Expand all</button><button type="button" data-gall="0">Collapse all</button></div>'+
     '<div class="sc"><div class="gin" style="min-width:'+(step===1?left+months*64:860)+'px"><div class="grow ghd"><div class="gl0">Task details</div><div class="gh">'+ticks+'</div></div>';
   projs.forEach(function(g){ var a=g.a, o=openOf(g.name), pn=pname(g.name);
+    if(grp){ var gc=coOf(g.name), gp=gc+'|'+prog(g.name), ci=Math.max(0,CO_ORDER.indexOf(gc));
+      if(gc!==lastCo){ lastCo=gc; lastPg=null; var ca=agg(coAgg[gc]); h+='<div class="grow gco co'+ci+'"><div class="gl0"><b>'+esc(gc)+'</b><small>'+coN[gc]+' project'+(coN[gc]>1?'s':'')+' · '+pct(ca.act)+'</small></div><div class="gt">'+grid+'<div class="gcut" style="left:'+cutP+'%"></div></div></div>'; }
+      if(gp!==lastPg){ lastPg=gp; var pa2=agg(pgAgg[gp]); h+='<div class="grow gpg co'+ci+'"><div class="gl0"><b>'+esc(prog(g.name))+'</b><small>'+pgN[gp]+' project'+(pgN[gp]>1?'s':'')+' · '+pct(pa2.act)+'</small></div><div class="gt">'+grid+'<div class="gcut" style="left:'+cutP+'%"></div></div></div>'; } }
     h+='<div class="grow gpr"><div class="gl0"><b><button type="button" class="gtog" data-gtog="'+esc(g.name)+'">'+(o?'−':'+')+'</button>'+esc(pn)+'</b><small>'+fd(a.start)+' → '+fd(a.pf)+' · '+g.rows.length+' package'+(g.rows.length>1?'s':'')+' · '+pct(a.act)+'</small></div><div class="gt">'+grid+gb(a.start,a.pf,a.ff,a.act,'','',a.plan)+tail(a.pf,a.ff,'')+'<div class="gcut" style="left:'+cutP+'%"></div></div></div>';
     if(o) g.rows.slice().sort(function(x,y){ return x.ps<y.ps?-1:x.ps>y.ps?1:(x.pkg<y.pkg?-1:1); }).forEach(function(r){
       var done=r.ev&&r.rv&&r.ev/r.rv>=0.9999, lb=pkgL(r.code,r.pkg), i=GT.length, dd=dayDiff(r.pf,r.ff);
       GT.push('<b>'+esc(pn)+' · '+esc(lb)+'</b>Planned '+fd(r.ps)+' → '+fd(r.pf)+'<br>'+(done?'Actual completion ':'Forecast finish ')+fd(r.ff)+(dd>0?' (+'+dd+' d)':dd<0?' ('+dd+' d)':'')+'<br>Planned '+pct(r.plan)+' · Actual '+pct(r.act)+' · Variance '+(r.act-r.plan>=0?'+':'−')+Math.abs((r.act-r.plan)*100).toFixed(1)+' pts<br>Time elapsed '+pct(Math.max(0,Math.min(1,(dms(state.cutoff)-dms(r.ps))/Math.max(1,dms(r.pf)-dms(r.ps)))))+' of planned duration<br>'+esc(r.ctr||'—')+' · '+esc(r.cno||'—'));
       h+='<div class="grow gch"><div class="gl0"><b>'+(done?'✔ ':'')+esc(lb)+'</b><small>'+fd(r.ps)+' → '+fd(r.pf)+'<span class="gmini"><i style="width:'+(clamp(r.act)*100)+'%"></i></span>'+Math.round(r.act*100)+'%</small></div><div class="gt" data-gt="'+i+'">'+grid+gb(r.ps,r.pf,r.ff,r.act,lb+' '+Math.round(r.act*100)+'%','',r.plan)+tail(r.pf,r.ff,'')+'<div class="gcut" style="left:'+cutP+'%"></div></div></div>'; }); });
   h+='</div></div><div class="gleg"><span><i class="s2"></i>Actual progress</span><span><i class="s5"></i>Behind plan (planned − actual)</span><span><i class="s6"></i>Planned progress to date</span><span><i class="s1"></i>Remaining work</span><span><i class="s3"></i>Forecast past planned finish</span><span><i class="s4"></i>Cut-off date '+d2(state.cutoff)+'</span><span class="gnote">Bar width = planned start → finish; fills show % of value, not days</span></div></div>';
-  var nrows=projs.length+G.length, zf=pr?Math.max(.55,Math.min(1.2,1060/(nrows*24+120))):1;
+  var nrows=projs.length+G.length+(grp?Object.keys(coAgg).length+Object.keys(pgAgg).length:0), zf=pr?Math.max(.55,Math.min(1.2,1060/(nrows*24+120))):1;
   return '<div class="gntp"'+(pr?' style="zoom:'+zf.toFixed(3)+'"':'')+'>'+sec('schedule','Schedule','Planned window, progress and forecast finish by project and package')+h+'</div>';
 }
 function fitGantt(){ var sc=document.querySelector('.gnt .sc'); if(!sc) return;
@@ -5711,7 +5723,7 @@ async function handleFiles(files,opts){
   opts=opts||{};
   if(!opts.auto&&!isUnlocked()){ pwAsk(function(){}); return; }
   if(!opts.auto) window.KEC_SHEETS={};
-  var errs=[], gotProg=null, gotInfo=null, gotCon=null, gotCtr=null, gotCst=null, gotMand=null, gotPh=null, gotNotes=null, gotE1=null, gotE2=null, gotQa=null, gotMp=null, gotAl=false, gotL=false, lPk=null, lPl=null, names=[];
+  var errs=[], infoFill=false, gotProg=null, gotInfo=null, gotCon=null, gotCtr=null, gotCst=null, gotMand=null, gotPh=null, gotNotes=null, gotE1=null, gotE2=null, gotQa=null, gotMp=null, gotAl=false, gotL=false, lPk=null, lPl=null, names=[];
   if(typeof XLSX==='undefined'){ showErrors(['The Excel reader library could not be loaded (needs internet access to cdnjs.cloudflare.com).']); return; }
   for(var f of Array.from(files)){
     var wb;
@@ -5722,7 +5734,7 @@ async function handleFiles(files,opts){
     if(csn){ hasProg=wb.SheetNames.some(function(n){ if(n===csn) return false; if(/mandatory|phase|package\s*notes?/i.test(String(n))) return true; try{ var ob=XLSX.utils.sheet_to_json(wb.Sheets[n],{raw:true,defval:null}); var kk=[]; ob.slice(0,25).forEach(function(o){ Object.keys(o).forEach(function(k){ if(kk.indexOf(k)<0) kk.push(k); }); }); var m0=mapCols(kk,PROG_COLS); return !!(m0.date&&m0.pkg); }catch(e){ return false; } });
     var cres=null; try{ cres=parseContractsSheet(wb.Sheets[csn]); }catch(e){} if(cres&&(cres.ctr.length||cres.cst.length)){ gotCtr=cres.ctr; gotCst=cres.cst; names.push(f.name); cOK=true; } if(cres&&(cres.ctr.length||cres.cst.length)){ var isn=wb.SheetNames.filter(function(n){ return /^projects?\s*info$/i.test(String(n).trim()); })[0];
         if(isn){ try{ var iobj=XLSX.utils.sheet_to_json(wb.Sheets[isn],{raw:true,defval:null}); var ik=[]; iobj.slice(0,25).forEach(function(o){ Object.keys(o).forEach(function(k){ if(ik.indexOf(k)<0) ik.push(k); }); }); var im2=mapCols(ik,INFO_COLS);
-          if(im2.code&&(im2.program||im2.project)){ var known={}; (cur.prog||[]).forEach(function(r){ known[String(r.code).trim().toLowerCase()]=1; }); var ex=extract(iobj,im2).filter(function(r){ return r.code&&(!cur.prog||known[String(r.code).trim().toLowerCase()]); }); if(ex.length) gotInfo=ex; } }catch(e){} } } else errs.push('<b>'+esc(f.name)+' › '+esc(csn)+'</b>: the Contracts sheet has no usable rows.'); if(!hasProg) continue; }
+          if(im2.code&&(im2.program||im2.project)){ var known={}; (cur.prog||[]).forEach(function(r){ known[String(r.code).trim().toLowerCase()]=1; }); var ex=extract(iobj,im2).filter(function(r){ return r.code&&(!cur.prog||known[String(r.code).trim().toLowerCase()]); }); if(ex.length){ gotInfo=ex; infoFill=true; } } }catch(e){} } } else errs.push('<b>'+esc(f.name)+' › '+esc(csn)+'</b>: the Contracts sheet has no usable rows.'); if(!hasProg) continue; }
     var recognised=cOK, fileErrs=0;
     wb.SheetNames.forEach(function(sn){
       /* V330: tabs the relay keeps in the database (not progress data) are skipped */
@@ -5773,7 +5785,9 @@ async function handleFiles(files,opts){
       var nd1=new Set(cur.prog.map(function(r){return toISO(r.date);})).size;
       mergeNote=' · '+(nd1-nd0>0?(nd1-nd0)+' new cut-off'+(nd1-nd0>1?'s':'')+' added':'no new cut-off dates')+(replaced?', '+replaced+' rows updated':'')+(droppedPk?', '+droppedPk+' package'+(droppedPk>1?'s':'')+' not in the sheet removed':'');
     }
-    if(gotInfo){ var ikn={}, imerged=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k){ ikn[k]=1; } imerged.push(r); });
+    /* V377: the Projects Info tab inside the Contracts Database only FILLS blanks. The Projects Info tab of the live Sheet is the source for company, program, project and stage, so it is never overridden. */
+    if(gotInfo&&infoFill){ var cex={}; (cur.info||[]).forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k) cex[k]=r; }); var addl=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(!k) return; var e=cex[k]; if(!e){ addl.push(r); return; } Object.keys(r).forEach(function(f){ if((e[f]==null||e[f]==='')&&r[f]!=null&&r[f]!=='') e[f]=r[f]; }); }); cur.info=(cur.info||[]).concat(addl); }
+    else if(gotInfo){ var ikn={}, imerged=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k){ ikn[k]=1; } imerged.push(r); });
       (cur.info||[]).forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k&&!ikn[k]) imerged.push(r); });
       cur.info=imerged; }
     if(gotCon){
