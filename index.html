@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V372</title>
+<title>TEST · KEC Project Controls Dashboard · V373</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -335,6 +335,16 @@ nav a .pnb[hidden]{display:none}
 .g-ov{grid-template-columns:repeat(6,1fr)}
 .g-top.g7{grid-template-columns:repeat(7,1fr)}
 .boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px;grid-auto-flow:dense}
+.coblk{margin-top:18px}.coblk:first-child{margin-top:8px}
+.coh{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:10px 16px;border-radius:10px 10px 0 0;color:#fff;background:#12315f}
+.coblk.co1 .coh{background:#6b2f80}.coblk.co2 .coh{background:#17705f}.coblk.co3 .coh{background:#555}
+.con{font-weight:800;font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.cos{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;font-size:12.5px;opacity:.95}.cos b{font-weight:700}
+.cot{margin-left:auto;background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:14px;padding:4px 12px;cursor:pointer;font-size:12px}
+.coblk.col .cob{display:none}.coblk .cob .boxes:first-child{margin-top:0}
+.coblk .cob{border:2px solid #12315f;border-top:0;border-radius:0 0 10px 10px;padding:0 8px 8px}.coblk.co1 .cob{border-color:#6b2f80}.coblk.co2 .cob{border-color:#17705f}
+@media (max-width:900px){.coh{padding:8px 10px;gap:6px 12px}.con{font-size:15px}.cos{font-size:11.5px;gap:4px 12px}.cot{margin-left:0}}
+
 .boxes.pgm{position:relative;border:2px solid var(--side);border-radius:0 22px 22px 0;padding:12px 16px 8px 60px;margin-top:18px;background:color-mix(in srgb,var(--card) 35%,transparent)}
 .pgm .pgtab{position:absolute;left:0;top:0;bottom:0;width:42px;background:var(--side);color:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .pgm .pgtab span{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;font-size:16px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
@@ -1334,7 +1344,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V372</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V373</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1450,6 +1460,26 @@ var LAYOUT = { 'Al ALIYA':[
 ]};
 /* V372: program container on the Overview (Option B: vertical name tab + one-line roll-up, collapsible, expanded by default; the choice is remembered on this device) */
 var PGMC=(function(){ try{ return JSON.parse(localStorage.getItem('kec.pgmc.v1')||'{}')||{}; }catch(e){ return {}; } })();
+/* V373 (simulation): company band above the program containers (Option A) */
+var CO_ORDER=['KEC','Makarim','Al-Ghraa'];
+var COC=(function(){ try{ return JSON.parse(localStorage.getItem('kec.coc.v1')||'{}')||{}; }catch(e){ return {}; } })();
+function coOf(code){ var p=model.projects.get(code); return (p&&p.company)||'Other'; }
+function coWrap(byProg,arr){
+  var cos={}, order=[];
+  byProg.forEach(function(pg2,i){ var c=coOf(pg2.rows[0].code); if(!cos[c]){ cos[c]={rows:[],html:[]}; order.push(c); } cos[c].rows=cos[c].rows.concat(pg2.rows); cos[c].html.push(arr[i]); });
+  order.sort(function(a,b){ var x=CO_ORDER.indexOf(a), y=CO_ORDER.indexOf(b); x=x<0?99:x; y=y<0?99:y; return x-y||(a<b?-1:1); });
+  return order.map(function(c){
+    var o=cos[c], a=agg(o.rows), codes={}; o.rows.forEach(function(r){ codes[r.code]=1; });
+    var np=Object.keys(codes).length, cnt={red:0,amber:0,green:0,pending:0,done:0};
+    Object.keys(codes).forEach(function(k){ var rr=o.rows.filter(function(r){ return r.code===k; }), pa=agg(rr,undefined,true); cnt[pkgStatus(pa.act,pa.pv,pa.ev,pa.spi,pa.overrun)]++; });
+    var gap=Math.round(a.act*1000-a.plan*1000)/10, dl=a.maxDelay||0, col=!!COC[c], ci=Math.max(0,CO_ORDER.indexOf(c));
+    var pills=['red','amber','green','done','pending'].filter(function(k){ return cnt[k]>0; }).map(function(k){ return '<span class="pgp '+k+'">'+cnt[k]+' '+STLBL[k].toLowerCase()+'</span>'; }).join('');
+    return '<div class="coblk co'+ci+(col?' col':'')+'" data-co="'+esc(c)+'"><div class="coh"><span class="con">'+esc(c)+'</span><span class="cos"><span>'+o.html.length+' program'+(o.html.length>1?'s':'')+' · '+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b>'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span><span>Max delay <b>'+(dl>0?'−'+dl+' days':'none')+'</b></span>'+pills+'</span>'+
+      '<button type="button" class="cot" data-cot="1" aria-expanded="'+(col?'false':'true')+'">'+(col?'▸ Show':'▾ Hide')+'</button></div><div class="cob">'+o.html.join('')+'</div></div>';
+  }).join('');
+}
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-cot]'); if(!t) return; var g=t.closest('.coblk'); var c=!g.classList.contains('col'); g.classList.toggle('col',c); var n=g.getAttribute('data-co'); if(c) COC[n]=1; else delete COC[n]; try{ localStorage.setItem('kec.coc.v1',JSON.stringify(COC)); }catch(x){}
+  t.setAttribute('aria-expanded',c?'false':'true'); t.textContent=c?'▸ Show':'▾ Hide'; try{ window.dispatchEvent(new Event('resize')); }catch(x){} });
 function pgmWrap(pg2,inner){
   var a=agg(pg2.rows), codes={}; pg2.rows.forEach(function(r){ codes[r.code]=1; });
   var cl=LAYOUT[pg2.name]?LAYOUT[pg2.name].length:0, np=Object.keys(codes).length, cnt={red:0,amber:0,green:0,pending:0,done:0};
@@ -1486,7 +1516,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V372';
+var APP_VER='V373';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -1542,7 +1572,7 @@ var PROG_COLS = {
 var PROG_REQ = ['date','code','pkg','ps','pf','ff','rv','pv','ev'];
 var PROG_LABEL = {date:'Data Date',code:'Project Code',pkg:'Package/Plot',ps:'Planned Start',pf:'Planned Finish',ff:'Forecast Finish',rv:'Revised Value',pv:'Planned Value',ev:'Earned Value'};
 var INFO_COLS = {
-  program:['program'], project:['project'], code:['project code'], type:['project type'], stage:['stage'], status:['project status'],
+  program:['program'], project:['project'], code:['project code'], type:['project type'], stage:['stage'], status:['project status'], company:['company'],
   inv:['investment development cost'], soft:['investment soft cost'], intres:['invetment interest reserve','investment interest reserve'],
   plot:['plot number/ block number','plot number/block number'], area:['total plot area (sqm)'],
   bua:['built-up area (bua) (sqm)'], gfa:['total design gfa'], rooms:['hotel rooms'], apts:['apartments'],
@@ -1578,7 +1608,7 @@ function buildModel(progRaw, infoRaw){
   var issues=[], info=new Map(), caseMap=new Map();
   (infoRaw||[]).forEach(function(r){
     var code=str(r.code); if(!code) return;
-    info.set(code,{code:code,program:str(r.program)||'Unmapped',name:str(r.project)||code,photo:str(r.photo),type:str(r.type),stage:str(r.stage),status:str(r.status),
+    info.set(code,{code:code,program:str(r.program)||'Unmapped',name:str(r.project)||code,company:str(r.company),photo:str(r.photo),type:str(r.type),stage:str(r.stage),status:str(r.status),
       inv:num(r.inv),soft:num(r.soft),intres:num(r.intres),plot:str(r.plot),area:num(r.area),bua:num(r.bua),gfa:num(r.gfa),rooms:num(r.rooms),apts:num(r.apts),parking:num(r.parking),shops:num(r.shops),floors:num(r.floors)});
     caseMap.set(code.toLowerCase(),code);
   });
@@ -5252,7 +5282,7 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
   if(!sel){
     var liveCodes={}; rows.forEach(function(r){ liveCodes[r.code]=1; }); /* a project shows if it has a package in the Packages - Plots sheet, whatever its progress */
     var byProg=groupBy(rows.filter(function(r){return HIDE_PROJ.indexOf(r.code)<0&&liveCodes[r.code];}),function(r){return prog(r.code);}).sort(function(x,y){ return x.name<y.name?-1:x.name>y.name?1:0; });
-    var ovHtml=byProg.map(function(pg2){
+    var ovArr=byProg.map(function(pg2){
       if(LAYOUT[pg2.name]) return pgmWrap(pg2,layoutHtml(pg2))+'<!--SPLIT-->';
       var pj=groupBy(pg2.rows,function(r){return r.code;}).sort(function(x,y){ var a2=pname(x.name),b2=pname(y.name); return a2<b2?-1:a2>b2?1:0; });
       var fr={}, fo=[]; pj.forEach(function(g){ var f=FRAMES[g.name]||''; if(!fr[f]){fr[f]=[];fo.push(f);} fr[f].push(g); });
@@ -5269,7 +5299,8 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
         var n=cards.length, span2=n>3?'':(n===3?' s3':(n===2?' s2':' s1'));
         return '<div class="pbox'+span2+'"><h3>'+esc(pg2.name)+(f?' · '+esc(f):'')+'<small>'+pjf.length+' project'+(pjf.length>1?'s':'')+'</small></h3><div class="ucs">'+cards.join('')+'</div></div>';
       }).join(''));
-    }).join('');
+    });
+    var ovHtml=coWrap(byProg,ovArr);
     var spx=ovHtml.lastIndexOf('<!--SPLIT-->');
     boxes+=(spx>=0&&spx+12<ovHtml.length?ovHtml.slice(0,spx).split('<!--SPLIT-->').join('')+ovHtml.slice(spx+12).split('<!--SPLIT-->').join('').split('class="boxes pgm').join('class="boxes ovp2 pgm'):ovHtml.split('<!--SPLIT-->').join(''))+
     '<p class="lg">One card per project (value-weighted across its packages). Variance = actual − planned progress, in points. The finish slider runs from planned to forecast completion; “−N days” means the forecast is later than plan. Click a card to open that project. Side bar: green = on track or complete, orange = watch, red = at risk (SPI and finish-delay thresholds), grey = not started.</p>';
