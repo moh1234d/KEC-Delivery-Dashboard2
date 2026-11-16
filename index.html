@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V378</title>
+<title>TEST · KEC Project Controls Dashboard · V379</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1360,7 +1360,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V378</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V379</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1476,6 +1476,8 @@ var LAYOUT = { 'Al ALIYA':[
 ]};
 /* V372: program container on the Overview (Option B: vertical name tab + one-line roll-up, collapsible, expanded by default; the choice is remembered on this device) */
 var PGMC=(function(){ try{ return JSON.parse(localStorage.getItem('kec.pgmc.v1')||'{}')||{}; }catch(e){ return {}; } })();
+/* V379: project-info conflicts between files are listed in the Data notes, never settled silently */
+var INFO_DIFF=[];
 /* V374: company section heading above the program containers */
 var CO_ORDER=['KEC','Makarim','Al-Ghraa'];
 var COC=(function(){ try{ return JSON.parse(localStorage.getItem('kec.coc.v1')||'{}')||{}; }catch(e){ return {}; } })();
@@ -1532,7 +1534,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V378';
+var APP_VER='V379';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -1679,6 +1681,7 @@ function buildModel(progRaw, infoRaw){
   if(noCtr) issues.push({t:'No contractor',m:noCtr+' row(s) have no contractor and are shown as “Unassigned”.'});
   if(dup) issues.push({t:'Duplicate rows',m:dup+' duplicate date/package row(s) found — the last one in the file was used.'});
   if(Object.keys(dupCase).length) issues.push({t:'Same project written two ways',m:'These rows are the same project spelled with different letter case, so one replaced the other (the later row in the file was kept): '+Object.keys(dupCase).slice(0,8).join('; ')+(Object.keys(dupCase).length>8?' … +'+(Object.keys(dupCase).length-8)+' more':'')+'. Use one spelling in the sheet.'});
+  if(INFO_DIFF.length) issues.push({t:'Projects Info differs between files',m:INFO_DIFF.length+' difference(s): '+INFO_DIFF.slice(0,10).map(function(d){ return d.code+' · '+d.f+' — live Sheet “'+d.a+'”, Contracts Database “'+d.b+'”'; }).join('; ')+(INFO_DIFF.length>10?' … +'+(INFO_DIFF.length-10)+' more':'')+'. The live Sheet is used; correct the other file so both agree.'});
   if(dropped) issues.push({t:'Rows skipped',m:dropped+' row(s) skipped because Data Date, Project Code, Package or planned dates were missing.'});
   return {rows:rows,info:info,projects:projects,snaps:snaps,issues:issues,partial:partial};
 }
@@ -5790,8 +5793,8 @@ async function handleFiles(files,opts){
       mergeNote=' · '+(nd1-nd0>0?(nd1-nd0)+' new cut-off'+(nd1-nd0>1?'s':'')+' added':'no new cut-off dates')+(replaced?', '+replaced+' rows updated':'')+(droppedPk?', '+droppedPk+' package'+(droppedPk>1?'s':'')+' not in the sheet removed':'');
     }
     /* V377: the Projects Info tab inside the Contracts Database only FILLS blanks. The Projects Info tab of the live Sheet is the source for company, program, project and stage, so it is never overridden. */
-    if(gotInfo&&infoFill){ var cex={}; (cur.info||[]).forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k) cex[k]=r; }); var addl=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(!k) return; var e=cex[k]; if(!e){ addl.push(r); return; } Object.keys(r).forEach(function(f){ if((e[f]==null||e[f]==='')&&r[f]!=null&&r[f]!=='') e[f]=r[f]; }); }); cur.info=(cur.info||[]).concat(addl); }
-    else if(gotInfo){ var ikn={}, imerged=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k){ ikn[k]=1; } imerged.push(r); });
+    if(gotInfo&&infoFill){ var cex={}; (cur.info||[]).forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k) cex[k]=r; }); var addl=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(!k) return; var e=cex[k]; if(!e){ addl.push(r); return; } ['company','program','project','stage','type','status'].forEach(function(f){ var x=String(e[f]==null?'':e[f]).replace(/\s+/g,' ').trim(), y=String(r[f]==null?'':r[f]).replace(/\s+/g,' ').trim(); if(x&&y&&x.toLowerCase()!==y.toLowerCase()) INFO_DIFF.push({code:r.code,f:({company:'Company',program:'Program',project:'Project name',stage:'Stage',type:'Project type',status:'Project status'})[f],a:x,b:y}); }); Object.keys(r).forEach(function(f){ if((e[f]==null||e[f]==='')&&r[f]!=null&&r[f]!=='') e[f]=r[f]; }); }); cur.info=(cur.info||[]).concat(addl); }
+    else if(gotInfo){ INFO_DIFF=[]; var ikn={}, imerged=[]; gotInfo.forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k){ ikn[k]=1; } imerged.push(r); });
       (cur.info||[]).forEach(function(r){ var k=String(r.code||'').trim().toLowerCase(); if(k&&!ikn[k]) imerged.push(r); });
       cur.info=imerged; }
     if(gotCon){
