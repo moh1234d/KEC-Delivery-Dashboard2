@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V395</title>
+<title>TEST · KEC Project Controls Dashboard · V396</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1326,6 +1326,7 @@ body.pf-arr .sec-bar{display:none}
 .rp-pgr.del{background:#f6f4f0;color:#8a93a6}.rp-pgg{cursor:grab;font-style:normal;font-size:17px;color:#ba965a;touch-action:none;user-select:none;padding:0 4px}.rp-pgg.off{color:#cfc9bb;cursor:default}
 .rp-pgf{padding:10px 12px;border-top:1px solid #eee}.rp-pgf button{width:100%;border:1px solid #d9d3c3;background:#fff;border-radius:8px;padding:8px;font:600 12px Inter,Arial,sans-serif;cursor:pointer;color:#14304f}.rp-pgf button:disabled{opacity:.45;cursor:default}
 .rp-rsl .rp-vmv{touch-action:none;cursor:grab}body.rp-pgdrag{cursor:grabbing;user-select:none}
+.rp-vxadd{background:#1d6fd6!important;color:#fff!important;box-shadow:0 3px 10px rgba(29,111,214,.5)!important}.rp-emptyx{position:absolute;box-sizing:border-box;border:2px dashed #b9b2a2;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#8a8576;font:14px Carlito,Calibri,Arial,sans-serif;text-align:center;padding:0 60px;pointer-events:none}.rp-emptyx b{font-size:22px;color:#14304f}body.rptp #rptRoot .rp-rs.rp-emp{display:none!important}
 .rp-rs.rp-droptgt::after{content:'';position:absolute;left:0;top:0;right:0;bottom:0;border:6px solid #ba965a;background:rgba(186,150,90,.10);z-index:60;pointer-events:none}#rpGhost{position:fixed;z-index:100002;background:#14304f;color:#fff;border-radius:8px;padding:7px 12px;font:700 12px Carlito,Calibri,Arial,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.4);pointer-events:none;max-width:320px}
 .rp-vc.rp-sel{opacity:1;background:rgba(186,150,90,.16);outline:3px solid #ba965a;outline-offset:-3px}.rp-vc.rp-sel .rp-vb{display:none}.rp-vc.rp-sel:hover .rp-vb{display:inline-block}
 #rpAlBar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:100000;max-width:calc(100vw - 20px);background:#102a3a;color:#fff;border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;box-shadow:0 6px 26px rgba(0,0,0,.45);font:13px Carlito,Calibri,Arial,sans-serif}
@@ -1403,7 +1404,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V395</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V396</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1580,7 +1581,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V395';
+var APP_VER='V396';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6765,6 +6766,9 @@ function scHtml(sc){
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
       if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove all stamps</button>';
       if(p.k==='arr') return (!RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="arr" data-pk="'+esc(p.pk)+'" title="Select the photos on this page, then align them, match their size or arrange them in a neat grid">⊞ Arrange photos</button>':'';
+      if(p.k==='xadd') return tplB()?'<button type="button" class="rp-va rp-vxadd" style="'+pos+'border:0" data-pv="xadd" data-si="'+p.si+'" title="Add another site photos slide for this project, after its last photo slide">＋ Add progress photo slide</button>':'';
+      if(p.k==='xrm') return tplB()?'<button type="button" class="rp-va rp-vdel" style="'+pos+'border:0" data-pv="xrm" data-si="'+p.si+'" data-xid="'+esc(p.xid)+'" title="Remove this added photo slide">Remove slide</button>':'';
+      if(p.k==='emptyx') return tplB()?'<div class="rp-emptyx" style="'+pos+'"><b>Empty photo slide</b><span>Press “＋ Add photos” (the limit is set in Setup), or drag photos here from another photo slide.<br>An empty slide is left out of the PDF and the PowerPoint file.</span></div>':'';
       if(p.k==='pmv') return (RP.ed&&tplB())?'<button type="button" class="rp-va rp-vmv" style="'+pos+'border:0" data-pv="pmv" data-pk="'+esc(p.pk)+'" title="Press, hold and drag up or down to move this page">⠿ Move page</button>':'';
       if(p.k==='pdel') return (RP.ed&&tplB())?'<button type="button" class="rp-va rp-vdel" style="'+pos+'border:0" data-pv="pdel" data-pk="'+esc(p.pk)+'">Delete page</button>':'';
       if(p.k==='sdup') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="sdup" data-sid="'+esc(p.sid)+'">Duplicate slide</button>':'';
@@ -7195,15 +7199,16 @@ function photoRects(n,L,X,Y,W,H,g){
 }
 function photoList(s){ var o=[]; (s.cards||[]).forEach(function(c,ci){ (c.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:c.t||'',ci:ci,pi:pi}); }); }); (s.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:s.frame||'',ci:-1,pi:pi}); }); return o.slice(0,24); }
 function scenePhotos(s,part){
-  var L=photoList(s), n=L.length, sc=[], BAR=26, kick=(s.title?s.title+'  /  ':'')+(s.frame||''), si=(RP.cfg.slides||[]).indexOf(s), K='s:'+s.id+(part===2?'b':'')+':';
+  var L=photoList(s), n=L.length, sc=[], BAR=26, kick=(s.title?s.title+'  /  ':'')+(s.frame||''), si=(RP.cfg.slides||[]).indexOf(s), K='s:'+s.id+(part===2?'b':(typeof part==='string'?part:''))+':', XN=(s.xp||[]).length, ORD=part===1?1:(part===2?2:2+xpIdx(s,part)+1);
   if(part){ phAssign(s); L=L.filter(function(x){ return x.p.pg===part; }); n=L.length; }
   sc.push(bR(0,0,PW,86,{f:NV}));
   sc.push(bT(40,17,780,14,kick,{fs:10.5,c:GD,b:1,ls:1.6,up:1,k:K+'pk'}));
-  sc.push(bT(40,36,820,34,'Construction progress  |  Site photographs'+(part?'  ·  '+part+' of 2':''),{fs:22,c:'#fff',b:1,up:1,ls:.6,k:K+'pt'}));
+  sc.push(bT(40,36,820,34,'Construction progress  |  Site photographs'+(part?'  ·  '+ORD+' of '+(2+XN):''),{fs:22,c:'#fff',b:1,up:1,ls:.6,k:K+'pt'}));
   var nl3=sc.length; sc.push(bI(PW-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl3,'o:ph:'+s.id+':logo',PW-40-150,14,150,150/RB_IMG.logoR,{uni:1,nodel:1});
   if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-176,y:26,w:166,h:34,si:si,ci:-1,pi:-1});
   if(n<pMax()) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1,pg:part||0});
   if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-176-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
+  if(tplX()&&part){ if(XN<XPMAX) sc.push({t:'pc',k:'xadd',x:PW-662,y:PH-44,w:200,h:26,si:si,ci:-1,pi:-1}); if(typeof part==='string') sc.push({t:'pc',k:'xrm',x:PW-662-132,y:PH-44,w:122,h:26,si:si,ci:-1,pi:-1,xid:part.slice(1)}); if(typeof part==='string'&&!n) sc.push({t:'pc',k:'emptyx',x:48,y:110,w:PW-96,h:PH-230,si:-1,ci:-1,pi:-1}); }
   var R=photoRects(n,L,20,104,PW-40,PH-144,16);
   L.forEach(function(x,i){
     var r=R[i], d=RP.ph[x.p.id], PD=5, ah=r[3]-BAR-2*PD, nw=x.p.w||4, nh=x.p.h||3, k=Math.min((r[2]-2*PD)/nw,ah/nh), iw=nw*k, ih=nh*k, cx=r[0]+(r[2]-iw)/2, cy=r[1]+(r[3]-(ih+BAR))/2, bx=x.p.box;
@@ -7215,7 +7220,7 @@ function scenePhotos(s,part){
     sc.push(bT(cx+10,cy+ih,iw-20,BAR,x.cap||'',{fs:10,c:'#fff',b:1,ls:.8,up:1,va:'m',k:'p:'+x.p.id+':cap'}));
     sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cl:!!x.p.oid,cov:cov,free:!!(bx&&isFinite(bx.h)),pid:x.p.id});
   });
-  return {sc:sc,bg:CRM,sid:s.id};
+  return {sc:sc,bg:CRM,sid:s.id,emp:(typeof part==='string'&&!n)?1:0};
 }
 function sceneEnd(){
   var b=bc(), sc=[];
@@ -7248,14 +7253,15 @@ function bScenes(P,cut){
   if(tplX()&&cmpOn()){ add(affine(sceneCompanyX(P,cut)),'cmp','Progress by company'); pg++; }
   if(tplX()&&pcOn()){ add(affine(scenePrjX(P,cut)),'pc','Projects by company'); pg++; }
   if(ovOn()){ add(affine(sceneOverview(P,cut)),'ov','Projects overview'); pg++; }
-  (RP.cfg.slides||[]).forEach(function(s){ var c0=(s.cards||[])[0], nm=(c0&&c0.t)||s.frame||s.title||'Slide'; add(sceneProgress(s,P,cut,pg),'s:'+s.id+':pg',nm+(tplX()?' · Summary':' · Progress')); pg++; if(tplX()){ add(scenePhotos(s,1),'s:'+s.id+':ph1',nm+' · Photos 1 of 2'); add(scenePhotos(s,2),'s:'+s.id+':ph2',nm+' · Photos 2 of 2'); pg+=2; } else if(slidePhotos(s).length){ add(scenePhotos(s),'s:'+s.id+':ph',nm+' · Photos'); pg++; } });
+  (RP.cfg.slides||[]).forEach(function(s){ var c0=(s.cards||[])[0], nm=(c0&&c0.t)||s.frame||s.title||'Slide'; add(sceneProgress(s,P,cut,pg),'s:'+s.id+':pg',nm+(tplX()?' · Summary':' · Progress')); pg++; if(tplX()){ var tN=2+(s.xp||[]).length; add(scenePhotos(s,1),'s:'+s.id+':ph1',nm+' · Photos 1 of '+tN); add(scenePhotos(s,2),'s:'+s.id+':ph2',nm+' · Photos 2 of '+tN); (s.xp||[]).forEach(function(x,i){ add(scenePhotos(s,'x'+x.id),'s:'+s.id+':x'+x.id,nm+' · Photos '+(i+3)+' of '+tN); }); pg+=tN; } else if(slidePhotos(s).length){ add(scenePhotos(s),'s:'+s.id+':ph',nm+' · Photos'); pg++; } });
   if(b.end) add(affine(sceneEnd()),'end','Closing page');
   var NAT=out.map(function(o){ return o.pk; }), PO=(RP.cfg&&RP.cfg.porder)||null;
   if(PO&&PO.length){ var res=[]; PO.forEach(function(k){ if(NAT.indexOf(k)>=0&&res.indexOf(k)<0) res.push(k); }); NAT.forEach(function(k,i){ if(res.indexOf(k)<0){ var q=i>0?res.indexOf(NAT[i-1]):-1; res.splice(q+1,0,k); } }); var byk={}; out.forEach(function(o){ byk[o.pk]=o; }); out=res.map(function(k){ return byk[k]; }); NAT=res; }
   RP.pall=NAT.slice(); RP.plab=PL; var DEL=(RP.cfg&&RP.cfg.pdel)||{}; if(Object.keys(DEL).length){ var keep=out.filter(function(o){ return !DEL[o.pk]; }); if(keep.length) out=keep; }
   out.forEach(function(o){ if(o.sc.some(function(p){ return p.t==='pc'&&p.k==='ph'; })) o.sc.push({t:'pc',k:'arr',x:20,y:PH-34,w:176,h:26,si:-1,ci:-1,pi:-1,pk:o.pk}); });
   out.forEach(function(o){ if(out.length>1){ o.sc.push({t:'pc',k:'pdel',x:PW-292,y:PH-44,w:150,h:26,si:-1,ci:-1,pi:-1,pk:o.pk}); o.sc.push({t:'pc',k:'pmv',x:PW-452,y:PH-44,w:150,h:26,si:-1,ci:-1,pi:-1,pk:o.pk}); } });
-  out.forEach(function(o,i){ var dark=o.bg===NV; o.sc.push(bT(PW-112,PH-(dark?34:35),80,12,p2(i+1),{fs:9,c:dark?'#fff':GR,al:'r',k:'pgn:'+i})); });
+  if(RP.noEmp) out=out.filter(function(o){ return !o.emp; });
+  var pn=0; out.forEach(function(o,i){ var dark=o.bg===NV; if(!o.emp) pn++; o.sc.push(bT(PW-112,PH-(dark?34:35),80,12,p2(pn||1),{fs:9,c:dark?'#fff':GR,al:'r',k:'pgn:'+i})); });
   RP.scn=out; return applyLay(out);
 }
 
@@ -7465,17 +7471,20 @@ function pmUp(e){
 }
 
 /* ===== V394: photos stay on the page they were added to; the user moves them between pages by drag and drop ===== */
+var XPMAX=6;
+function xpIdx(s,tok){ var i=-1; (s.xp||[]).forEach(function(x,j){ if('x'+x.id===tok) i=j; }); return i; }
+function pgValid(s,v){ return v===1||v===2||(typeof v==='string'&&xpIdx(s,v)>=0); }
 function pMax(){ var v=RP.cfg&&RP.cfg.pmax; return (v>=2&&v<=12)?+v:6; }
 function pvCap(ci){ return ci>=0?4:pMax()*(tplX()?2:1); }
 function phAssign(s){
-  var L=photoList(s), un=L.filter(function(x){ return x.p.pg!==1&&x.p.pg!==2; }); if(!un.length) return;
+  var L=photoList(s), un=L.filter(function(x){ return !pgValid(s,x.p.pg); }); if(!un.length) return;
   if(un.length===L.length){ var hf=Math.ceil(L.length/2); L.forEach(function(x,i){ x.p.pg=i<hf?1:2; }); return; }
-  var c1=L.filter(function(x){ return x.p.pg===1; }).length, c2=L.length-un.length-c1;
+  var c1=L.filter(function(x){ return x.p.pg===1; }).length, c2=L.filter(function(x){ return x.p.pg===2; }).length;
   un.forEach(function(x){ if(c2<pMax()){ x.p.pg=2; c2++; } else { x.p.pg=1; c1++; } });
 }
 function pvTarget(e,own){
   var els=document.elementsFromPoint(e.clientX,e.clientY), rs=null, i; for(i=0;i<els.length;i++){ if(els[i].classList&&els[i].classList.contains('rp-rs')){ rs=els[i]; break; } }
-  if(!rs) return null; var pk=rs.getAttribute('data-pk')||''; if(pk===own||!/^s:.+:(ph1|ph2|ph)$/.test(pk)) return null; return rs;
+  if(!rs) return null; var pk=rs.getAttribute('data-pk')||''; if(pk===own||!/^s:.+:(ph1|ph2|ph|x\w+)$/.test(pk)) return null; return rs;
 }
 function pvDragFx(d,e){
   var t=pvTarget(e,d.pk), g=document.getElementById('rpGhost');
@@ -7491,9 +7500,9 @@ function pvEdgeScroll(d){
 }
 function pvDragEnd(){ var g=document.getElementById('rpGhost'); if(g) g.remove(); [].forEach.call(document.querySelectorAll('.rp-droptgt'),function(x){ x.classList.remove('rp-droptgt'); }); }
 function pvMoveTo(d,e){
-  var o=pvOwner(+d.o.getAttribute('data-si'),+d.o.getAttribute('data-ci')), i=+d.o.getAttribute('data-pi'), q=o&&o.ph[i], tk=d.xt.getAttribute('data-pk'), m=tk.match(/^s:(.+):(ph1|ph2|ph)$/);
+  var o=pvOwner(+d.o.getAttribute('data-si'),+d.o.getAttribute('data-ci')), i=+d.o.getAttribute('data-pi'), q=o&&o.ph[i], tk=d.xt.getAttribute('data-pk'), m=tk.match(/^s:(.+):(ph1|ph2|ph|x\w+)$/);
   if(!q||!m) return drawViewB(); var T=(RP.cfg.slides||[]).filter(function(x){ return x.id===m[1]; })[0]; if(!T) return drawViewB();
-  var tpg=m[2]==='ph2'?2:(m[2]==='ph1'?1:0), cnt=tpg?photoList(T).filter(function(x){ return x.p.pg===tpg; }).length:photoList(T).length;
+  var tpg=m[2]==='ph2'?2:(m[2]==='ph1'?1:(m[2]==='ph'?0:m[2])), cnt=tpg?photoList(T).filter(function(x){ return x.p.pg===tpg; }).length:photoList(T).length;
   if(cnt>=pMax()){ toast('That page already holds '+pMax()+' photos. Remove one, or raise "Photos per page" in Setup.',true); return drawViewB(); }
   var b=d.xt.getBoundingClientRect(), k=b.width/PW, iw=parseFloat(d.o.style.width), hh=parseFloat(d.o.style.height), ih=hh-26, r4=function(v){ return Math.round(v*10000)/10000; };
   var x=Math.max(0,Math.min(PW-iw,(e.clientX-b.left)/k-d.gx)), y=Math.max(0,Math.min(PH-hh,(e.clientY-b.top)/k-d.gy));
@@ -7501,6 +7510,22 @@ function pvMoveTo(d,e){
   o.ph.splice(i,1); T.ph=T.ph||[]; if(tplX()) q.pg=tpg||1; q.box=nb; T.ph.push(q); RP.psel={}; RP.pbar=0; dirty(); drawViewB();
   toast('Photo moved to "'+((RP.plab&&RP.plab[tk])||'the other page')+'". Press Save changes to keep it.');
 }
+
+/* ===== V396: add / remove extra site-photo slides (ExCom) ===== */
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('[data-pv="xadd"],[data-pv="xrm"]'); if(!a||!tplX()) return; e.preventDefault();
+  var s=(RP.cfg.slides||[])[+a.getAttribute('data-si')]; if(!s) return; s.xp=s.xp||[];
+  if(a.getAttribute('data-pv')==='xadd'){
+    if(s.xp.length>=XPMAX) return toast('A project can have up to '+XPMAX+' extra photo slides.',true);
+    var x={id:uid()}; s.xp.push(x); RP.psel={}; RP.pbar=0; dirty(); drawViewB();
+    var nr=document.querySelector('#rptBody .rp-rs[data-pk="s:'+s.id+':x'+x.id+'"]'); if(nr) nr.scrollIntoView({block:'center'});
+    toast('Photo slide '+(2+s.xp.length)+' of '+(2+s.xp.length)+' added. Press ＋ Add photos on it, or drag photos onto it. Press Save changes to keep it.'); return; }
+  var id=a.getAttribute('data-xid'), tok='x'+id, ph=photoList(s).filter(function(q){ return q.p.pg===tok; });
+  if(ph.length&&!confirm('This slide has '+ph.length+' photo'+(ph.length>1?'s':'')+'. Remove the slide and delete its photos from the report?')) return;
+  ph.forEach(function(q){ var o=pvOwner(+a.getAttribute('data-si'),q.ci), i=o?o.ph.indexOf(q.p):-1; if(i>=0){ o.ph.splice(i,1); pvDrop(q.p); } });
+  s.xp=s.xp.filter(function(y){ return y.id!==id; }); var pk='s:'+s.id+':'+tok; if(RP.cfg.pdel) delete RP.cfg.pdel[pk]; if(RP.cfg.porder) RP.cfg.porder=RP.cfg.porder.filter(function(k){ return k!==pk; });
+  RP.psel={}; RP.pbar=0; dirty(); drawViewB(); toast('Photo slide removed. Press Save changes to keep this.');
+});
 function tbFind(k){ var r=null; (RP.scn||[]).forEach(function(o){ o.sc.forEach(function(p){ if(p.t==='x'&&p.k===k) r=p; }); }); return r; }
 function tbUpdate(){
   var tb=document.getElementById('rptTb'); if(!tb) return; tb.hidden=!(RP.ed&&tplB()); if(tb.hidden) return;
@@ -7554,7 +7579,7 @@ document.addEventListener('pointerup',tdUp); document.addEventListener('pointerc
 function drawViewB(){ if(!RP._v&&hasDraft()){ RP._v=1; var real=RP.cfg; RP.cfg=visCfg(real); try{ return drawViewB0(); }finally{ RP.cfg=real; RP._v=0; } } return drawViewB0(); }
 function drawViewB0(){
   var body=document.getElementById('rptBody'), cut=RP.cut, P=pool(cut), SC=bScenes(P,cut), w=Math.min(PW,Math.max(320,body.clientWidth-24)), sc=w/PW;
-  body.innerHTML=SC.map(function(s){ return '<div class="rp-rs" data-pk="'+esc(s.pk||'')+'" style="width:'+w+'px;height:'+(PH*sc)+'px"><div class="rp-rsl rp-b" style="width:'+PW+'px;height:'+PH+'px;transform:scale('+sc+');background:'+s.bg+'">'+scHtml(s.sc)+'</div></div>'; }).join('');
+  body.innerHTML=SC.map(function(s){ return '<div class="rp-rs'+(s.emp?' rp-emp':'')+'" data-pk="'+esc(s.pk||'')+'" style="width:'+w+'px;height:'+(PH*sc)+'px"><div class="rp-rsl rp-b" style="width:'+PW+'px;height:'+PH+'px;transform:scale('+sc+');background:'+s.bg+'">'+scHtml(s.sc)+'</div></div>'; }).join('');
   document.getElementById('rptSub').textContent=' · data date '+dd(cut)+' · '+sizeOf().n+(RP.dirty?' · unsaved settings':'');
   saveUi();
   var rr=document.getElementById('rptRoot'), tb=document.getElementById('rptTb');
@@ -7853,7 +7878,7 @@ async function pvChange(e){
   var cia=t.getAttribute('data-ci'), ci0=(cia===null||cia==='')?-1:+cia; if(isNaN(ci0)) ci0=-1; var o=pvOwner(+t.getAttribute('data-si'),ci0); if(!o) return; var files=[].slice.call(t.files); t.value=''; RP.pvLocal=0;
   try{
     if(a==='rep'){ var i=+t.getAttribute('data-pi'), old=o.ph[i]; if(!old) return; toast('Replacing photo…'); var n=await pvStore(files[0]); if(old.pg) n.pg=old.pg; o.ph[i]=n; pvDrop(old); }
-    else{ var pg0=+t.getAttribute('data-pg')||0, room=ci0>=0?(4-o.ph.length):(pMax()-(tplX()&&pg0?photoList(o).filter(function(x){ return x.p.pg===pg0; }).length:photoList(o).length)); var n0=files.length; files=files.slice(0,Math.max(0,room)); RP.pvNote=(files.length&&files.length<n0)?'Only '+files.length+' of '+n0+' photos were added: this photo page holds up to '+pMax()+'. Press Save settings to keep this arrangement.':''; if(!files.length) return toast(ci0>=0?'A card can hold up to 4 photos.':'This photo page already holds '+pMax()+' photos (the limit in Setup). Remove one, or raise "Photos per page" in Setup.',true); toast('Adding '+files.length+' photo'+(files.length>1?'s':'')+'…'); for(var k=0;k<files.length;k++){ var nn=await pvStore(files[k]); if(tplX()&&ci0<0) nn.pg=pg0||1; o.ph.push(nn); } }
+    else{ var pgA=t.getAttribute('data-pg'), pg0=(pgA==='1'||pgA==='2')?+pgA:((pgA&&pgA!=='0')?pgA:0), room=ci0>=0?(4-o.ph.length):(pMax()-(tplX()&&pg0?photoList(o).filter(function(x){ return x.p.pg===pg0; }).length:photoList(o).length)); var n0=files.length; files=files.slice(0,Math.max(0,room)); RP.pvNote=(files.length&&files.length<n0)?'Only '+files.length+' of '+n0+' photos were added: this photo page holds up to '+pMax()+'. Press Save settings to keep this arrangement.':''; if(!files.length) return toast(ci0>=0?'A card can hold up to 4 photos.':'This photo page already holds '+pMax()+' photos (the limit in Setup). Remove one, or raise "Photos per page" in Setup.',true); toast('Adding '+files.length+' photo'+(files.length>1?'s':'')+'…'); for(var k=0;k<files.length;k++){ var nn=await pvStore(files[k]); if(tplX()&&ci0<0) nn.pg=pg0||1; o.ph.push(nn); } }
     dirty(); drawViewB(); toast(RP.pvLocal?'Photo kept only until this page is closed: the dashboard could not store it.':(RP.pvNote||'Done. Press Save settings to keep this arrangement.'),!!RP.pvLocal||!!RP.pvNote); RP.pvNote='';
   }catch(x){ toast((x&&x.message)||'Could not read the picture.',true); }
 }
@@ -7907,7 +7932,7 @@ async function pptx(){
   try{
     if(document.activeElement&&document.activeElement.blur) document.activeElement.blur(); RP.ed=false;
     if(!(await loadPptx())) throw new Error('The PowerPoint library could not be loaded. Check the internet connection and try again.');
-    var cut=RP.cut, real0=RP.cfg; RP.cfg=visCfg(real0); var S; try{ S=bScenes(pool(cut),cut); }finally{ RP.cfg=real0; } var pp=new window.PptxGenJS(), my=monthYear(cut);
+    var cut=RP.cut, real0=RP.cfg; RP.cfg=visCfg(real0); var S; RP.noEmp=1; try{ S=bScenes(pool(cut),cut); }finally{ RP.cfg=real0; RP.noEmp=0; } var pp=new window.PptxGenJS(), my=monthYear(cut);
     pp.defineLayout({name:'KEC_PG',width:PW/96,height:PH/96}); pp.layout='KEC_PG'; pp.title='Monthly Construction Progress Report'; pp.company='KEC Delivery Department'; pp.author='KEC Delivery Department';
     for(var i=0;i<S.length;i++){ var sl=pp.addSlide(); sl.background={color:hx(S[i].bg)}; for(var j=0;j<S[i].sc.length;j++) await pptPrim(pp,sl,S[i].sc[j]); }
     var blob=await pp.write({outputType:'blob'}), a=document.createElement('a'), nm=(tplX()?'KEC_ExCom_Construction_Progress_Report_':'KEC_Monthly_Construction_Progress_Report_')+(my.m.charAt(0)+my.m.slice(1).toLowerCase())+'_'+my.y+'.pptx';
