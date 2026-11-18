@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V386</title>
+<title>TEST · KEC Project Controls Dashboard · V389</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1374,7 +1374,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V386</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V389</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1551,7 +1551,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V386';
+var APP_VER='V389';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6798,6 +6798,7 @@ function xcLeave(){ if(RP.xm){ RP.xm=false; RP.cfg=RP.full; } }
 function xcOut(){ return RP.xm&&RP.full?RP.full:RP.cfg; }
 function xcCfgs(){ var o=[RP.cfg]; if(RP.full){ if(RP.xm) o.push(RP.full); else if(RP.full.excom) o.push(RP.full.excom); } return o; }
 function fmy(iso){ if(!iso) return '—'; var p=String(iso).split('-'); return MON[+p[1]-1].toUpperCase()+' '+p[0]; } /* V385: ExCom dates show month and year only */
+function xcTW(s,px){ try{ var c=xcTW.c||(xcTW.c=document.createElement('canvas').getContext('2d')); c.font='bold '+px+'px Carlito, Calibri, Arial, sans-serif'; return c.measureText(s).width+s.length*0.4; }catch(e){ return s.length*px*0.62; } }
 function xcInfo(c,P,cut){
   var rr=cardRows(P,c); if(!rr.length) return {empty:true};
   var a=agg(rr,cut,true), ir=(model&&model.info&&c.code)?(model.info.get(c.code)||model.info.get(String(c.code).trim())):null, st=(ir&&ir.start)||a.start||null, pf=a.pf||null, ff=a.ff||null, dur=(st&&pf)?dayDiff(st,pf):null, el=(st&&cut)?dayDiff(st,cut):null;
@@ -6815,6 +6816,12 @@ function progCardX(sc,c,P,cut,x,y,w,h){
   var K='c:'+c.id+':', d=xcInfo(c,P,cut), z=Math.max(0.85,Math.min(1.35,h/228,w/640)), g=12*z, T=30*z, ry=y+T, R=Math.max(120,h-T-2);
   var tf=fit(c.t||'',w-20,22*z,16*z,true,1.1);
   sc.push(bT(x+4,y+2*z,w-8,22*z,tf.s,{fs:16*z,b:1,up:1,k:K+'t',full:c.t||''}));
+  var done=!d.empty&&d.act>=0.9995;
+  if(done){ /* V387: completed badge next to the title */
+    var tw=xcTW(String(ov(K+'t',tf.s)).toUpperCase(),16*z), bw0=86*z, bx0=Math.min(x+4+tw+14*z,x+w-bw0-4);
+    sc.push(bR(bx0,y+3*z,bw0,19*z,{f:'#2f8f65',rd:10*z}));
+    sc.push(bP(bx0+9*z,y+8*z,10*z,9*z,[[0,4.6*z],[1.5*z,3.1*z],[3.7*z,5.3*z],[8.5*z,0],[10*z,1.5*z],[3.7*z,8.4*z]],'#fff'));
+    sc.push(bT(bx0+21*z,y+3*z,bw0-24*z,19*z,'COMPLETED',{fs:8.5*z,c:'#fff',b:1,ls:1.2,va:'m',k:K+'done'})); }
   var rc=Math.max(190*z,w*0.29), rx=x, ax=x+rc+g, aw=w-rc-g;
   /* ring card */
   sc.push(bR(rx,ry,rc,R,{f:'#fff',rd:10*z,sh:1}));
@@ -6845,10 +6852,10 @@ function progCardX(sc,c,P,cut,x,y,w,h){
     if(d.empty){ sc.push(bT(X1+lw2,by[j]-4*z,lw-lw2,14*z,'Data not reported',{fs:10.5*z,c:GR,k:K+'dnr'+r[2]})); return; }
     var wv=numOf(ov(K+r[2],null)), fr=wv!=null?wv/100:d[r[2]], bx=X1+lw2, bw=lw-lw2-pw;
     sc.push(bR(bx,by[j],bw,th,{f:TRK,rd:th/2}));
-    if(fr>0) sc.push(bR(bx,by[j],Math.max(5,bw*Math.min(1,fr)),th,{f:r[1],rd:th/2}));
+    if(fr>0) sc.push(bR(bx,by[j],Math.max(5,bw*Math.min(1,fr)),th,{f:(done&&r[2]==='act')?'#2f8f65':r[1],rd:th/2}));
     sc.push(bT(X1+lw-pw,by[j]-6*z,pw,18*z,pct(d[r[2]]),{fs:12.5*z,b:1,al:'r',k:K+r[2]}));
   });
-  if(!d.empty){ var v=(d.act-d.plan)*100, vt=(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan', cwid=92*z; sc.push(bR(X1+lw-cwid,py+ph-24*z,cwid,17*z,{f:v>=0?'#2f8f65':RD,rd:9*z})); sc.push(bT(X1+lw-cwid,py+ph-24*z,cwid,17*z,vt,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:K+'var'})); }
+  if(!d.empty){ var v=(d.act-d.plan)*100, v0=Math.abs(v)<0.05, vt=v0?'On plan':(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan', cwid=92*z; sc.push(bR(X1+lw-cwid,py+ph-24*z,cwid,17*z,{f:v0?GR:(v>=0?'#2f8f65':RD),rd:9*z})); sc.push(bT(X1+lw-cwid,py+ph-24*z,cwid,17*z,vt,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:K+'var'})); }
 }
 function sceneCoverX(cut){
   var b=bc(), my=monthYear(cut), sc=[], lw=190, PHT=470;
@@ -6861,6 +6868,111 @@ function sceneCoverX(cut){
   sc.push(bT(800,PHT+40,266,20,my.m,{fs:16,c:GD,al:'r',ls:3.5,up:1,k:'b:month'}));
   sc.push(bT(800,PHT+64,266,56,my.y,{fs:46,c:'#fff',b:1,al:'r',k:'b:year'}));
   return {sc:sc,bg:NV};
+}
+/* ===== V388: "Progress by company" page: each company's overall progress (weighted by revised value) and its projects ===== */
+function cmpOn(){ return !(RP.cfg&&RP.cfg.cmp&&RP.cfg.cmp.on===false); }
+var CMP_ORDER=['KEC','Makarim','Al-Ghraa'];
+function cmpData(P,cut){
+  var by={}, order=[]; (RP.cfg.slides||[]).forEach(function(s){ (s.cards||[]).forEach(function(c){
+    if(c.nov===true||(c.nov==null&&/overall|summary/i.test(c.t||''))) return;
+    var rr=cardRows(P,c); if(!rr.length) return; var a=agg(rr,cut,true); if(!(a.rvP>0)) return;
+    var ir=(model&&model.info&&c.code)?(model.info.get(c.code)||model.info.get(String(c.code).trim())):null, co=(ir&&ir.company)||'Other';
+    var o=by[co]||(by[co]={n:co,rv:0,pv:0,ev:0,pr:[]}); o.rv+=a.rvP; o.pv+=a.pv; o.ev+=a.ev; o.pr.push({t:c.t||c.code,act:a.act,plan:a.plan,ff:a.ff||a.pf||null}); }); });
+  var names=Object.keys(by).sort(function(x,y){ var i=CMP_ORDER.indexOf(x), j=CMP_ORDER.indexOf(y); if(i<0)i=99; if(j<0)j=99; return i-j||(x<y?-1:1); });
+  var list=names.map(function(n){ var o=by[n]; o.plan=o.rv?o.pv/o.rv:0; o.act=o.rv?o.ev/o.rv:0; return o; });
+  var T={rv:0,pv:0,ev:0,k:0}; list.forEach(function(o){ T.rv+=o.rv; T.pv+=o.pv; T.ev+=o.ev; T.k+=o.pr.length; }); T.plan=T.rv?T.pv/T.rv:0; T.act=T.rv?T.ev/T.rv:0;
+  return {list:list,T:T};
+}
+function cmpChip(sc,x,y,w,hh,plan,act,z,k){ var v=(act-plan)*100, v0=Math.abs(v)<0.05, t=v0?'On plan':(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan';
+  sc.push(bR(x,y,w,hh,{f:v0?GR:(v>=0?'#2f8f65':RD),rd:hh/2})); sc.push(bT(x,y,w,hh,t,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:k})); }
+function sceneCompanyX(P,cut){
+  var sc=[], K='cm:', D=cmpData(P,cut), PW0=1122, PH0=793;
+  sc.push(bR(0,0,286,PH0,{f:NV})); sc.push(bL(24,56,24,PH0-56,GD,1.5));
+  var nl=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl,'o:cmp:logo',48,34,150,150/RB_IMG.logoR,{uni:1,nw:PW0,nh:PH0,nodel:1});
+  sc.push(bT(48,148,222,52,'Progress by company',{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'}));
+  sc.push(bT(48,206,222,60,'All projects',{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'}));
+  var X0=312, W=PW0-312-32;
+  sc.push(bT(X0,28,500,18,'Progress by company',{fs:13,b:1,up:1,ls:1.5,k:K+'sec'}));
+  sc.push(bT(X0,50,W,14,'Weighted by revised contract value · data date '+fd4(cut),{fs:9.5,c:GR,ls:.8,k:K+'note'}));
+  if(!D.list.length){ sc.push(bT(X0,120,W,24,'No project in the report has progress data at this cut-off.',{fs:14,c:GR})); return {sc:sc,bg:CRM}; }
+  /* whole portfolio */
+  var ty=78, th=64;
+  sc.push(bR(X0,ty,W,th,{f:'#fff',rd:12,sh:1}));
+  sc.push(bT(X0+22,ty+14,150,12,'Whole portfolio',{fs:8,c:GR,b:1,ls:1.6,up:1,k:K+'tl'}));
+  sc.push(bT(X0+22,ty+30,150,14,D.T.k+' project'+(D.T.k===1?'':'s'),{fs:9,c:GR,k:K+'tn'}));
+  sc.push(bT(X0+190,ty+14,120,36,pct(D.T.act),{fs:26,b:1,k:K+'ta'}));
+  sc.push(bT(X0+300,ty+30,60,14,'actual',{fs:9,c:GR,k:K+'tal'}));
+  var tbx=X0+372, tbw=W-372-190;
+  sc.push(bR(tbx,ty+20,tbw,7,{f:TRK,rd:3.5})); sc.push(bR(tbx,ty+20,Math.max(4,tbw*Math.min(1,D.T.plan)),7,{f:GD,rd:3.5}));
+  sc.push(bR(tbx,ty+36,tbw,7,{f:TRK,rd:3.5})); sc.push(bR(tbx,ty+36,Math.max(4,tbw*Math.min(1,D.T.act)),7,{f:NV,rd:3.5}));
+  sc.push(bT(X0+W-170,ty+12,150,12,'Planned '+pct(D.T.plan),{fs:8,c:GR,b:1,ls:1.2,up:1,al:'r',k:K+'tp'}));
+  cmpChip(sc,X0+W-20-92,ty+32,92,17,D.T.plan,D.T.act,1,K+'tv');
+  /* company rows */
+  var top=ty+th+14, bot=PH0-59, n=D.list.length, gap=14, mw=W-170-130-40, TF=9.5;
+  var rows=D.list.map(function(o){ var lines=1, cx=0; o.tg=o.pr.map(function(p,i){ var nm=String(ov(K+o.n+':tn'+i,p.t)), w1=xcTW(nm,TF)+xcTW(pct(p.act),TF)+22; if(cx>0&&cx+w1>mw){ lines++; cx=0; } var r={x:cx,l:lines-1,w:w1,nm:nm,i:i,p:p}; cx+=w1+6; return r; }); o.lines=lines; return Math.max(96,64+lines*24+10); });
+  var avail=bot-top-gap*(n-1), need=rows.reduce(function(a,b){ return a+b; },0), sf=need>avail?avail/need:1, extra=Math.max(0,avail-need), y=top;
+  D.list.forEach(function(o,ri){
+    var rh=rows[ri]*sf+(sf===1?Math.min(extra*(rows[ri]/need),rows[ri]*.55):0), z=Math.max(.8,Math.min(1,sf)), key=K+o.n+':';
+    sc.push(bR(X0,y,W,rh,{f:'#fff',rd:12,sh:1}));
+    var by0=y+rh/2-34*z;
+    sc.push(bE(X0+20,y+rh/2-17,34,34,{f:NV})); sc.push(bT(X0+20,y+rh/2-17,34,34,String(o.n).charAt(0).toUpperCase(),{fs:15,c:GD,b:1,al:'c',va:'m'}));
+    sc.push(bT(X0+64,y+rh/2-18,110,18,o.n,{fs:14,b:1,up:1,ls:.8,k:key+'n',full:o.n}));
+    sc.push(bT(X0+64,y+rh/2+2,110,12,o.pr.length+' project'+(o.pr.length===1?'':'s'),{fs:8,c:GR,b:1,ls:1.3,up:1,k:key+'c'}));
+    var mx=X0+190, bw=mw-110;
+    [['Planned',GD,o.plan],['Actual',NV,o.act]].forEach(function(r,j){ var yy=by0+j*17*z+6;
+      sc.push(bT(mx,yy-4,60,12,r[0],{fs:7.5,c:GR,b:1,ls:1.2,up:1,k:key+'l'+j}));
+      sc.push(bR(mx+62,yy,bw,6,{f:TRK,rd:3})); sc.push(bR(mx+62,yy,Math.max(4,bw*Math.min(1,r[2])),6,{f:r[1],rd:3}));
+      sc.push(bT(mx+62+bw+8,yy-6,48,16,pct(r[2]),{fs:11,b:1,al:'r',k:key+'v'+j})); });
+    var tyy=by0+2*17*z+16;
+    o.tg.forEach(function(t){ var tx=mx+t.x, tyl=tyy+t.l*24;
+      sc.push(bR(tx,tyl,t.w,19,{f:CRM,rd:9.5}));
+      var nw=xcTW(t.nm,TF); sc.push(bT(tx+9,tyl,nw+4,19,t.nm,{fs:TF,c:GR,va:'m',k:key+'tn'+t.i})); sc.push(bT(tx+9+nw+5,tyl,t.w-nw-14,19,pct(t.p.act),{fs:TF,b:1,va:'m',k:key+'tp'+t.i})); });
+    sc.push(bT(X0+W-150,y+rh/2-26,130,34,pct(o.act),{fs:26,b:1,al:'r',k:key+'a'}));
+    cmpChip(sc,X0+W-20-92,y+rh/2+14,92,17,o.plan,o.act,1,key+'var');
+    y+=rh+gap; });
+  return {sc:sc,bg:CRM};
+}
+
+/* ===== V389: "Projects by company" page: a block per company (overall % and planned %) with a progress ring for every project ===== */
+function pcOn(){ return !(RP.cfg&&RP.cfg.pc&&RP.cfg.pc.on===false); }
+function scenePrjX(P,cut){
+  var sc=[], K='pc:', D=cmpData(P,cut), PW0=1122, PH0=793, GN='#2f8f65';
+  sc.push(bR(0,0,286,PH0,{f:NV})); sc.push(bL(24,56,24,PH0-56,GD,1.5));
+  var nl=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl,'o:pc:logo',48,34,150,150/RB_IMG.logoR,{uni:1,nw:PW0,nh:PH0,nodel:1});
+  sc.push(bT(48,148,222,52,'Projects by company',{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'}));
+  sc.push(bT(48,206,222,60,'All projects',{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'}));
+  var X0=312, W=PW0-312-32;
+  sc.push(bT(X0,28,500,18,'Projects by company',{fs:13,b:1,up:1,ls:1.5,k:K+'sec'}));
+  sc.push(bT(X0,50,W,14,'Progress of each project, grouped by company · data date '+fd4(cut),{fs:9.5,c:GR,ls:.8,k:K+'note'}));
+  if(!D.list.length){ sc.push(bT(X0,120,W,24,'No project in the report has progress data at this cut-off.',{fs:14,c:GR})); return {sc:sc,bg:CRM}; }
+  var top=80, bot=PH0-62, n=D.list.length, gap=14, COLS=3, PNW=190;
+  var rws=D.list.map(function(o){ return Math.max(1,Math.ceil(o.pr.length/COLS)); }), tot=rws.reduce(function(a,b){ return a+b; },0);
+  var unit=Math.min(124,(bot-top-gap*(n-1))/tot), y=top;
+  D.list.forEach(function(o,ri){
+    var rh=Math.max(unit*rws[ri],0), key=K+o.n+':', rc=rws[ri], rowH=rh/rc, z=Math.max(.7,Math.min(1.12,rowH/76));
+    sc.push(bR(X0,y,W,rh,{f:'#fff',rd:12,sh:1}));
+    sc.push(bR(X0,y,PNW,rh,{f:NV,rd:12})); sc.push(bR(X0+PNW-24,y,24,rh,{f:NV}));
+    var cy0=y+rh/2, zz=Math.max(.75,Math.min(1,rh/150));
+    sc.push(bE(X0+18,cy0-58*zz,30*zz,30*zz,{f:GD})); sc.push(bT(X0+18,cy0-58*zz,30*zz,30*zz,String(o.n).charAt(0).toUpperCase(),{fs:14*zz,c:NV,b:1,al:'c',va:'m'}));
+    sc.push(bT(X0+18,cy0-22*zz,PNW-30,18,o.n,{fs:14*zz,c:'#fff',b:1,up:1,ls:1.4,k:key+'n',full:o.n}));
+    sc.push(bT(X0+18,cy0-3*zz,PNW-30,11,o.pr.length+' project'+(o.pr.length===1?'':'s'),{fs:7.5,c:'#aebac4',ls:1.3,up:1,k:key+'c'}));
+    sc.push(bT(X0+18,cy0+14*zz,PNW-30,34*zz,pct(o.act),{fs:28*zz,c:'#fff',b:1,k:key+'a'}));
+    sc.push(bT(X0+18,cy0+14*zz+34*zz,PNW-30,12,'Planned '+pct(o.plan),{fs:7.5,c:GD,b:1,ls:1.3,up:1,k:key+'p'}));
+    var gx=X0+PNW+22, gw=W-PNW-22-16, cw=gw/COLS, pr=o.pr.slice().sort(function(a,b){ return String(a.ff||'9999')<String(b.ff||'9999')?-1:(String(a.ff||'9999')>String(b.ff||'9999')?1:0); });
+    pr.forEach(function(p,i){
+      var c=i%COLS, r=Math.floor(i/COLS), cx0=gx+c*cw, cyy=y+rowH*(r+.5), ro=30*z, ri2=ro-8*z, ccx=cx0+ro+2, done=p.act>=0.9995, col=done?GN:((p.plan-p.act)>0.10?RD:NV), pk=key+i+':';
+      sc.push(xcArc(ccx,cyy,ro,ri2,0,180,'#e4e9ed')); sc.push(xcArc(ccx,cyy,ro,ri2,180,360,'#e4e9ed'));
+      if(p.act>0.004) sc.push(xcArc(ccx,cyy,ro,ri2,0,Math.min(359.5,p.act*360),col));
+      sc.push(bT(ccx-ro,cyy-9*z,2*ro,18*z,pct(p.act),{fs:12.5*z,b:1,al:'c',va:'m',k:pk+'p'}));
+      var tx=ccx+ro+10, tw=cw-(tx-cx0)-8;
+      sc.push(bT(tx,cyy-27*z,tw,27*z,p.t,{fs:10.5*z,b:1,lh:1.12,va:'b',k:pk+'t',full:p.t}));
+      sc.push(bT(tx,cyy+3*z,tw,12,'Finish '+fmy(p.ff),{fs:7.5,c:GR,ls:.8,up:1,k:pk+'f'}));
+    });
+    y+=rh+gap; });
+  /* legend */
+  var ly=PH0-44, lx=X0, lg=[[GN,'Completed'],[NV,'On track'],[RD,'More than 10 points behind plan']];
+  lg.forEach(function(g,i){ sc.push(bE(lx,ly+2,9,9,{f:g[0]})); var tw=xcTW(g[1],8)+6; sc.push(bT(lx+14,ly,tw+10,13,g[1],{fs:8,c:GR,ls:.6,k:K+'lg'+i})); lx+=14+tw+26; });
+  return {sc:sc,bg:CRM};
 }
 /* ----- scenes ----- */
 function sceneCover(cut){
@@ -7075,6 +7187,8 @@ function applyLay(out){
 function bScenes(P,cut){
   setSize(); RPBUD={}; var out=[], b=bc(), pg=2;
   out.push(affine(tplX()?sceneCoverX(cut):sceneCover(cut)));
+  if(tplX()&&cmpOn()){ out.push(affine(sceneCompanyX(P,cut))); pg++; }
+  if(tplX()&&pcOn()){ out.push(affine(scenePrjX(P,cut))); pg++; }
   if(ovOn()){ out.push(affine(sceneOverview(P,cut))); pg++; }
   (RP.cfg.slides||[]).forEach(function(s){ out.push(sceneProgress(s,P,cut,pg)); pg++; if(tplX()){ out.push(scenePhotos(s,1)); out.push(scenePhotos(s,2)); pg+=2; } else if(slidePhotos(s).length){ out.push(scenePhotos(s)); pg++; } });
   if(b.end) out.push(affine(sceneEnd()));
@@ -7567,6 +7681,8 @@ function drawSetup(){
   var h=(RP.msg?'<div class="rp-msg">'+esc(RP.msg)+'</div>':'')+
    tplBox()+(tplB()?'':'<div class="rp-bx"><h5>Cover page</h5><div class="rp-g2"><div><label>Small heading</label><input type="text" data-f="kicker" value="'+esc(c0.kicker||'')+'"></div><div style="grid-column:span 2"><label>Title</label><input type="text" data-f="title" value="'+esc(c0.title||'')+'"></div></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The data date follows the latest cut-off in the dashboard ('+esc(dd(cutIso()))+').</p></div>')+
    (tplB()?'':'<div class="rp-bx"><h5>Pages for each slide</h5><select data-f="pages"><option value="two"'+(pgMode()==='two'?' selected':'')+'>Two pages: progress information with Area of concern, then a progress photos page</option><option value="one"'+(pgMode()==='one'?' selected':'')+'>One page: cards and photos together (the previous layout)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Area of concern shows the rows of the Google Sheet file “Area of concern for CO monthly report” under the card of the same project or package.'+aocNote()+' The progress photos page appears only when the slide has photos.</p></div>')+
+   (tplX()?'<div class="rp-bx"><h5>Progress by company page (after the cover)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="cmp.on"'+(cmpOn()?' checked':'')+'> Include a page with the overall progress of each company and its projects, weighted by revised value. Companies come from the Projects Info sheet.</label></div>':'')+
+   (tplX()?'<div class="rp-bx"><h5>Projects by company page (after the progress by company page)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="pc.on"'+(pcOn()?' checked':'')+'> Include a page that groups the projects by company, with a progress ring and the forecast finish month for each. Companies come from the Projects Info sheet.</label></div>':'')+
    '<div class="rp-bx"><h5>Overview page (page 1)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="ov.on"'+(ovOn()?' checked':'')+'> Include an overview page: every project by planned completion month, with a photo</label>'+
    '<label>Style</label><select data-f="ov.style"><option value="a"'+(((c0.ov&&c0.ov.style)||"a")==="a"?' selected':'')+'>Style A: milestones evenly spaced, alternating above and below</option><option value="b"'+(((c0.ov&&c0.ov.style)||"a")==="b"?' selected':'')+'>Style B: true time scale with delay bars and the data date</option><option value="c"'+(((c0.ov&&c0.ov.style)||"a")==="c"?' selected':'')+'>Style C: as Style A, with forecast completion dates</option></select>'+
    '<p style="margin:8px 0 0;font-size:12px;color:#5b6784">Each card below appears as one project (the picture is the project\'s default photo, the same one shown on the dashboard cards, not a progress photo). Untick a card to leave it out.</p></div>';
@@ -7613,6 +7729,8 @@ function onInput(e){
 function onChange(e){
   var t=e.target, f=t.getAttribute&&t.getAttribute('data-f');
   if(f==='c.pk'){ var c=cardOf(t); c.pk=[].slice.call(t.closest('.rp-pk').querySelectorAll('input:checked')).map(function(x){ return x.value; }); dirty(); drawSetup(); }
+  else if(f==='cmp.on'){ RP.cfg.cmp=RP.cfg.cmp||{}; RP.cfg.cmp.on=!!t.checked; dirty(); }
+  else if(f==='pc.on'){ RP.cfg.pc=RP.cfg.pc||{}; RP.cfg.pc.on=!!t.checked; dirty(); }
   else if(f==='ov.on'){ RP.cfg.ov=RP.cfg.ov||{style:'a'}; RP.cfg.ov.on=!!t.checked; dirty(); }
   else if(f==='ov.style'){ RP.cfg.ov=RP.cfg.ov||{on:true}; RP.cfg.ov.style=t.value; dirty(); }
   else if(f==='c.nov'){ cardOf(t).nov=!t.checked; dirty(); }
