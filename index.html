@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V402</title>
+<title>TEST · KEC Project Controls Dashboard · V404</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1405,7 +1405,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V402</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V404</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1582,7 +1582,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V402';
+var APP_VER='V404';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6781,7 +6781,7 @@ function scHtml(sc){
       if(p.k==='cnrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnreset">Reset card sizes</button>':'';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'" data-pg="'+(p.pg||0)+'"></label>';
-      return '<div class="rp-vc'+(RP.psel&&RP.psel[p.pid]?' rp-sel':'')+'" data-pid="'+esc(p.pid||'')+'" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="rotl" title="Rotate this photo 90° to the left" '+at+'>↺</button><button type="button" class="rp-vb" data-pv="rotr" title="Rotate this photo 90° to the right" '+at+'>↻ Rotate</button><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
+      return '<div class="rp-vc'+(RP.psel&&RP.psel[p.pid]?' rp-sel':'')+'" data-pid="'+esc(p.pid||'')+'" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove stamp')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="rotl" title="Rotate this photo 90° to the left" '+at+'>↺</button><button type="button" class="rp-vb" data-pv="rotr" title="Rotate this photo 90° to the right" '+at+'>↻ Rotate</button><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
     if(p.t==='i'&&!p.src&&!p.pid) return '';
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer"'+(p.pid?' data-ph="'+esc(p.pid)+'"':'')+(p.src?' src="'+esc(p.src)+'"':'')+' style="'+(p.src?'':'visibility:hidden;')+'position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
@@ -7200,6 +7200,8 @@ function photoRects(n,L,X,Y,W,H,g){
   else{ var cc=n<=6?3:4, rr=Math.ceil(n/cc), w2=(W-(cc-1)*g)/cc, h2=(H-(rr-1)*g)/rr; for(i=0;i<n;i++) R.push([X+(i%cc)*(w2+g),Y+Math.floor(i/cc)*(h2+g),w2,h2]); }
   return R;
 }
+/* V403: a photo keeps one permanent key (p.k) for its renamed caption, so the name survives Remove stamps, Restore original and Rotate. Photos saved before V403 take the key their saved edit was stored under. */
+function phKey(p){ if(!p.k){ var v=(RP.ov&&RP.ov.v)||{}; p.k=(v['p:'+p.id+':cap']===undefined&&p.oid&&v['p:'+p.oid+':cap']!==undefined)?p.oid:p.id; } return p.k; }
 function photoList(s){ var o=[]; (s.cards||[]).forEach(function(c,ci){ (c.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:c.t||'',ci:ci,pi:pi}); }); }); (s.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:s.frame||'',ci:-1,pi:pi}); }); return o.slice(0,24); }
 function scenePhotos(s,part){
   var L=photoList(s), n=L.length, sc=[], BAR=26, kick=(s.title?s.title+'  /  ':'')+(s.frame||''), si=(RP.cfg.slides||[]).indexOf(s), K='s:'+s.id+(part===2?'b':(typeof part==='string'?part:''))+':', XN=(s.xp||[]).length, ORD=part===1?1:(part===2?2:2+xpIdx(s,part)+1);
@@ -7220,7 +7222,7 @@ function scenePhotos(s,part){
     sc.push(bR(cx,cy,iw,ih,{f:'#e7e2d8'}));
     sc.push(bI(cx,cy,iw,ih,d||'',{fit:cov?'cover':'fill',pid:x.p.id}));
     sc.push(bR(cx,cy+ih,iw,BAR,{f:NV}));
-    sc.push(bT(cx+10,cy+ih,iw-20,BAR,x.cap||'',{fs:10,c:'#fff',b:1,ls:.8,up:1,va:'m',k:'p:'+x.p.id+':cap'}));
+    sc.push(bT(cx+10,cy+ih,iw-20,BAR,x.cap||'',{fs:10,c:'#fff',b:1,ls:.8,up:1,va:'m',k:'p:'+phKey(x.p)+':cap'}));
     sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cl:!!x.p.oid,cov:cov,free:!!(bx&&isFinite(bx.h)),pid:x.p.id});
   });
   return {sc:sc,bg:CRM,sid:s.id,emp:(typeof part==='string'&&!n)?1:0};
@@ -7651,6 +7653,7 @@ function stampBoxes(cv,bx){
 }
 function cleanOn(){ return !!(RP.cfg&&RP.cfg.clean===true); } /* V333: no automatic stamp removal; it runs only when this setting is switched on, or from the Remove all stamps button */
 async function pvClean(q){
+  phKey(q);
   if(q.oid){ var t=q.id; q.id=q.oid; q.oid=t; return 1; }
   var src=RP.ph[q.id]; if(!src) return 0; var im=await loadImg(src); if(!im) return 0;
   var cv=document.createElement('canvas'); cv.width=im.width; cv.height=im.height; cv.getContext('2d').drawImage(im,0,0);
@@ -7666,6 +7669,7 @@ async function pvRotImg(id,dir){
   var nid=uid(), data=cv.toDataURL('image/jpeg',.9); RP.ph[nid]=data; try{ await accCall('PUT','/report-photo',{id:nid,data:data},30000); }catch(e){ RP.pvLocal=1; } return {id:nid,w:cv.width,h:cv.height};
 }
 async function pvRotate(q,dir){
+  phKey(q);
   var oldId=q.id, oldO=q.oid, a=await pvRotImg(oldId,dir); if(!a) throw new Error('The photo could not be read.');
   q.id=a.id; q.w=a.w; q.h=a.h; if(q.box&&q.box.fit==='fill') q.box.fit='cover';
   if(oldO){ var b=await pvRotImg(oldO,dir); if(b) q.oid=b.id; else delete q.oid; }
@@ -7678,7 +7682,7 @@ function pvDrop(p){ if(!p) return; if(p.oid){ delete RP.ph[p.oid]; accCall('PUT'
 async function pvCleanRun(btn){
   var si=+btn.getAttribute('data-si'), all=btn.getAttribute('data-pv')==='cleanall', list=[];
   if(all) return pvCleanGlobal(btn);
-  var q0=(function(){ var o=pvOwner(si,+btn.getAttribute('data-ci')); return o&&o.ph[+btn.getAttribute('data-pi')]; })(); if(q0&&!q0.oid) return pvCleanGlobal(btn);
+  var q0=(function(){ var o=pvOwner(si,+btn.getAttribute('data-ci')); return o&&o.ph[+btn.getAttribute('data-pi')]; })(); 
   if(all){ var sl=(RP.cfg.slides||[])[si]; if(!sl) return; (sl.cards||[]).concat([sl]).forEach(function(o){ (o.ph||[]).forEach(function(q){ if(!q.oid) list.push(q); }); }); }
   else{ var o=pvOwner(si,+btn.getAttribute('data-ci')), q=o&&o.ph[+btn.getAttribute('data-pi')]; if(q) list.push(q); }
   if(!list.length) return; toast('Asking Claude where the date, time and location text is…'); RP.pvLocal=0; var n=0, was=!all&&list[0].oid;
@@ -7730,6 +7734,7 @@ async function pvClone(q){
   var id=uid(), n={id:id,w:q.w,h:q.h}, d=RP.ph[q.id];
   if(d){ RP.ph[id]=d; try{ await accCall('PUT','/report-photo',{id:id,data:d},30000); }catch(e){ RP.pvLocal=1; } }
   if(q.oid&&RP.ph[q.oid]){ var o2=uid(); RP.ph[o2]=RP.ph[q.oid]; try{ await accCall('PUT','/report-photo',{id:o2,data:RP.ph[q.oid]},30000); }catch(e){ RP.pvLocal=1; } n.oid=o2; }
+  try{ var ok=phKey(q), vv=RP.ov&&RP.ov.v; if(vv&&vv['p:'+ok+':cap']!==undefined) vv['p:'+id+':cap']=vv['p:'+ok+':cap']; }catch(e){}
   return n; }
 async function clipPaste(sid){
   var c=RP.clip; if(!c) return toast('Nothing copied yet. Use a Copy tab or button first.',true);
