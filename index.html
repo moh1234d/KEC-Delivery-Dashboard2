@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V379</title>
+<title>TEST · KEC Project Controls Dashboard · V381</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -50,6 +50,20 @@ nav a i{font-style:normal;font-size:10px;opacity:.55;width:16px}
 #lkModal h3{margin:0 0 4px;font-size:16px}#lkModal p{font-size:12px;margin:4px 0 10px;opacity:.8}
 #lkModal label{display:block;font-size:12px;font-weight:600;margin:10px 0 3px}
 #lkModal input{width:100%;box-sizing:border-box;padding:7px 8px;font-size:12px;border:1px solid #9aa7b8;border-radius:6px;background:transparent;color:inherit}
+/* V380: contracts sync (OneDrive to Drive, add-only) */
+#csBtn .csn{display:inline-block;min-width:16px;padding:0 5px;margin-left:4px;border-radius:9px;background:#c0392b;color:#fff;font-size:10px;line-height:16px;text-align:center;font-weight:700}
+#csModal{position:fixed;inset:0;z-index:312;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:4vh 10px;overflow:auto}#csModal.on{display:flex}
+#csModal .csbox{background:var(--card,#fff);color:var(--ink,#1c2a3a);border-radius:10px;max-width:980px;width:100%;padding:16px 18px;box-shadow:0 10px 40px rgba(0,0,0,.35);box-sizing:border-box}
+#csModal h3{margin:0 0 2px;font-size:16px}#csModal .cssub{font-size:12px;opacity:.75;margin:0 0 10px}
+#csModal .csbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+#csModal button{padding:7px 13px;border-radius:6px;border:1px solid #9aa7b8;background:transparent;color:inherit;cursor:pointer;font-size:12px}#csModal button.pri{background:#1f5fbf;color:#fff;border-color:#1f5fbf}#csModal button.warn{border-color:#b9770e;color:#b9770e}#csModal button:disabled{opacity:.5;cursor:default}
+#csModal .csst{font-size:12px;padding:8px 10px;border-radius:6px;background:rgba(31,95,191,.08);margin:6px 0}#csModal .csst.er{background:rgba(192,57,43,.1);color:#c0392b}#csModal .csst.ok{background:rgba(30,132,73,.1)}
+#csModal .cswrap{overflow:auto;max-height:46vh;border:1px solid rgba(128,128,128,.3);border-radius:6px}
+#csModal table{border-collapse:collapse;width:100%;font-size:12px;min-width:640px}#csModal th{position:sticky;top:0;background:var(--card,#fff);text-align:left;padding:6px 8px;border-bottom:1px solid rgba(128,128,128,.4);font-size:11px;white-space:nowrap}#csModal td{padding:6px 8px;border-bottom:1px solid rgba(128,128,128,.18);vertical-align:top}#csModal td.n{text-align:right;white-space:nowrap}#csModal td:nth-child(2){white-space:nowrap}
+#csModal .csset{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(128,128,128,.25)}#csModal .csset input[type=number]{width:54px;padding:5px;border:1px solid #9aa7b8;border-radius:6px;background:transparent;color:inherit}
+#csModal .cslog{font-size:11px;opacity:.85;margin-top:8px;max-height:110px;overflow:auto}
+#csModal .csconf{background:rgba(185,119,14,.12);border:1px solid #b9770e;border-radius:6px;padding:8px 10px;font-size:12px;margin:8px 0}
+@media (max-width:640px){#csModal{padding:0}#csModal .csbox{border-radius:0;min-height:100vh}}
 #lkModal .lkerr{color:#c0392b;font-size:12px;margin-top:8px;min-height:14px}
 #lkModal .lkact{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}#lkModal button{padding:7px 14px;border-radius:6px;border:1px solid #9aa7b8;background:transparent;color:inherit;cursor:pointer;font-size:12px}#lkModal button.pri{background:#1f5fbf;color:#fff;border-color:#1f5fbf}
 #intro{--gold:#c8993a;position:fixed;inset:0;z-index:1000;background:radial-gradient(120% 90% at 50% 45%,#16357a 0%,#0b1f4d 58%,#050b20 100%);display:none;overflow:hidden;color:#dbe5fb;text-align:center;perspective:1500px;perspective-origin:50% 40%}
@@ -572,7 +586,7 @@ aside .prepby{margin:auto 12px 12px;padding:10px 12px;border-radius:12px;backgro
 aside{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}aside::-webkit-scrollbar{width:6px}aside::-webkit-scrollbar-thumb{background:rgba(255,255,255,.28);border-radius:3px}
 
 .stkid{display:flex;align-items:center;gap:18px;padding:12px 16px!important}
-#aiLogBtn[hidden],#actLogBtn[hidden],#ntBtn[hidden],#usrBtn[hidden],#rptBtn[hidden],#aiBtn[hidden],#aiTest[hidden]{display:none!important}
+#aiLogBtn[hidden],#actLogBtn[hidden],#ntBtn[hidden],#usrBtn[hidden],#csBtn[hidden],#csN[hidden],#rptBtn[hidden],#aiBtn[hidden],#aiTest[hidden]{display:none!important}
 .stkid .stkph{flex:none;position:relative}.pjbar{position:absolute;right:8px;bottom:8px;display:flex;gap:6px}.pjb{font:600 12px Inter,system-ui,sans-serif;border:0;border-radius:999px;padding:6px 11px;background:rgba(20,48,79,.86);color:#fff;cursor:pointer;opacity:0;transition:opacity .15s}.stkph:hover .pjb,.pjb:focus{opacity:1}@media (hover:none){.pjb{opacity:1}}.pjb:hover{background:#14304f}.stkid .stkph .ph,.stkid .stkph .phx{display:flex;width:300px;height:152px;border-radius:10px;border:1px solid var(--line);object-fit:cover;background:var(--bg);align-items:center;justify-content:center}
 .stkid .stkrt{display:flex;flex-direction:column;gap:12px;min-width:0;flex:1}
 .stkid .idl{display:flex;flex-direction:column;gap:2px}.stkid .idl b{font-size:18px;font-weight:650}
@@ -1360,7 +1374,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V379</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V381</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1415,6 +1429,7 @@ body.printsite>*:not(.app){display:none!important}
         <input type="file" id="fileC" accept=".xlsx,.xls,.xlsm" hidden>
         <div class="ag">
           <button class="btn ghost" id="usrBtn" type="button" hidden title="Add, edit or remove users and reset passcodes (administrators only)">Users</button>
+          <button class="btn ghost" id="csBtn" type="button" hidden title="New contracts found in the OneDrive contracts file: add them to the Drive copy or ignore them (administrators only)">Contracts sync <span class="csn" id="csN" hidden>0</span></button>
           <button class="btn ghost" id="rptBtn" type="button" hidden title="Construction progress report for management: slides with progress cards and site photos, saved as a PDF (administrators only)">Report</button>
           <button class="btn ghost" id="pcutTop" type="button" hidden data-pcutopen="1" title="Choose which report each project shows (administrator)">Reporting dates</button>
           <button class="btn ghost" id="dfixTop" type="button" hidden data-dfixopen="1" title="Change or remove the data date of a project report (administrator)">Edit data dates</button>
@@ -1446,6 +1461,7 @@ body.printsite>*:not(.app){display:none!important}
 <div id="aiPanel" role="complementary" data-i18n-skip="1" aria-label="AI assistant"><header><div class="aiorb"></div><div><b data-ai="title"></b><small id="aiSub"></small></div><span class="aitest" id="aiTest" hidden>TEST</span><span class="sp"></span><button type="button" id="aiAuto" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><g class="son"><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></g><g class="soff"><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></g></svg></button><button type="button" id="aiClear" data-ai="clear"></button><button type="button" id="aiClose" aria-label="Close">✕</button></header><div id="aiToast" hidden></div><div id="aiMsgs" aria-live="polite"></div><div id="aiChips"></div><div id="aiNote"></div><form id="aiForm" onsubmit="return false"><button type="button" id="aiMic" aria-label="Speak your question"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><div id="aiInWrap"><textarea id="aiIn" rows="1" maxlength="1500" aria-label="Question for the assistant"></textarea><div id="aiWave" hidden><span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><em id="aiWaveTx"></em></div></div><button type="button" id="aiSend" data-ai="send"></button></form></div>
 <div id="accLogin" hidden><form class="accbox" onsubmit="return false"><div class="acclogo"><img id="accLogoImg" alt="KEC"></div><h2>Projects Delivery Department</h2><p>Sign in with your passcode to open the dashboard.</p><input id="accPass" type="password" autocomplete="current-password" placeholder="Passcode"><button type="button" id="accGo" class="accgo">Sign in</button><div class="accerr" role="alert"></div></form></div>
 <div id="lkModal" role="dialog" aria-modal="true" aria-label="Live data links"></div>
+<div id="csModal" role="dialog" aria-modal="true" aria-label="Contracts sync"></div>
 <div id="dcModal" role="dialog" aria-modal="true" aria-label="Data warnings"></div>
 <div id="ntModal" role="dialog" aria-modal="true" aria-label="Notifications"></div>
 
@@ -1534,7 +1550,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V379';
+var APP_VER='V381';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4903,7 +4919,7 @@ function normCon(objs){
   });
   return out;
 }
-function pcodeOf(c){ var lc=String(c).toLowerCase(), hit=null; model.projects.forEach(function(p,k){ if(String(k).toLowerCase()===lc) hit=k; }); return hit; }
+function pcodeOf(c){ var lc=String(c).toLowerCase(), hit=null; if(!model||!model.projects) return null; /* V381: on a device with no saved data the model does not exist yet while the first live load reads the Packages and Plots lists */ model.projects.forEach(function(p,k){ if(String(k).toLowerCase()===lc) hit=k; }); return hit; }
 function conAt(cut){
   var all=accRows(cur.con||[],'code'), ds=all.map(function(c){return c.d;}).filter(function(d){return d<=cut;});
   if(!ds.length) return {date:null,list:[],all:all.length};
@@ -7575,7 +7591,7 @@ document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.
 function aiShow(){ var adm=!!(ACC.need&&ACC.user&&ACC.user.admin), ok=!!(ACC.need&&ACC.user&&(ACC.user.admin||ACC.user.ai)); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
   var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm; var xb=document.getElementById('actLogBtn'); if(xb) xb.hidden=!adm; var nb=document.getElementById('ntBtn'); if(nb) nb.hidden=!adm;
-  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
+  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var cb=document.getElementById('csBtn'); if(cb){ cb.hidden=!adm; if(adm&&!CS.st&&!CS.loading){ CS.loading=true; csLoad().then(function(){ CS.loading=false; }); } } var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
   if(!model||!model.rows||!model.rows.length) return '';
@@ -7901,6 +7917,52 @@ var LIVE={ relay:'https://kec-dashboard-test.mohd2018me.workers.dev',
     {name:'KEC_Delivery Dashboard live DataBase.xlsx',url:'https://docs.google.com/spreadsheets/d/1DbNbhmSIuVswZXNYYackz7ui-5rwSLiC9QsduGUtIBQ/edit'},
     {name:'Contracts Database Rv.01.xlsm',url:'https://madinahkec-my.sharepoint.com/:x:/p/melfeki/IQAivjfr3H7YTpOvizFJBFziAQWwRZr0m5qRWh52mwN8brs?e=BkxU5M'} ] };
 var LIVE_BUSY=false;
+/* V380: Contracts sync (administrator). The relay reads the OneDrive contracts file, lists contracts the Drive copy does not have, and adds only the ones chosen here, at the end of the Contracts sheet. */
+var CS={st:null,busy:false,msg:'',err:'',conf:'',sel:{}};
+function csN(n){ return Number(n||0).toLocaleString('en-US',{maximumFractionDigits:0}); }
+function csWhen(t){ if(!t) return ''; try{ return new Date(t).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+function csBadge(){ var n=document.getElementById('csN'); if(!n) return; var c=(CS.st&&CS.st.pending)?CS.st.pending.length:0; n.textContent=c; n.hidden=!c; }
+function csCall(method,body){ return accCall(method,'/csync',body||null,body&&body.action==='scan'?120000:60000); }
+function csLoad(){ if(!(ACC.user&&ACC.user.admin)) return Promise.resolve(); return csCall('GET').then(function(j){ CS.st=j; csBadge(); }).catch(function(e){ CS.err=(e&&e.message)||'could not load'; }); }
+function csRender(){ var m=document.getElementById('csModal'); if(!m) return; var s=CS.st||{pending:[],cfg:{days:3,auto:true},log:[],last:null}, l=s.last, h='';
+  h+='<div class="csbox"><h3>Contracts sync &middot; OneDrive &rarr; Drive</h3><p class="cssub">New contracts found in the OneDrive contracts file are listed here. Nothing is written until you press Add. Existing rows in the Drive file are never changed or deleted.</p>';
+  h+='<div class="csbar"><button class="pri" id="csScan"'+(CS.busy?' disabled':'')+'>'+(CS.busy&&CS.busy==='scan'?'Checking OneDrive…':'Sync contracts')+'</button><button id="csClose">Close</button></div>';
+  if(CS.err) h+='<div class="csst er">'+esc(CS.err)+'</div>'; else if(CS.msg) h+='<div class="csst ok">'+esc(CS.msg)+'</div>';
+  if(l){ h+='<div class="csst'+(l.ok?'':' er')+'">'+(l.ok?'Last check: '+esc(csWhen(l.ts))+' ('+(l.auto?'automatic':'by '+esc(l.by))+') &middot; OneDrive '+csN(l.srcRows)+' contracts, Drive file '+csN(l.dstRows)+' &middot; '+(l.found?'<b>'+l.found+' new</b>':'nothing new'):'The last check failed ('+esc(csWhen(l.ts))+'): '+esc(l.error||''))+'</div>'; }
+  else h+='<div class="csst">No check has been made yet. Press Sync contracts.</div>';
+  if(s.pending.length){
+    var ids=s.pending.map(function(p){ return p.id; }), nsel=ids.filter(function(i){ return CS.sel[i]; }).length;
+    h+='<div class="cswrap"><table><thead><tr><th><input type="checkbox" id="csAll" '+(nsel===ids.length?'checked':'')+' aria-label="Select all"></th><th>CNT #</th><th>Project</th><th>Contract</th><th>Vendor</th><th>Stage</th><th class="n">Value</th><th class="n">VOs</th><th>Contract date</th></tr></thead><tbody>';
+    s.pending.forEach(function(p,ix){ h+='<tr><td><input type="checkbox" data-cs="'+ix+'" '+(CS.sel[p.id]?'checked':'')+' aria-label="Select '+esc(p.cnt)+'"></td><td>'+esc(p.cnt)+'</td><td>'+esc(p.prj)+'</td><td>'+esc(p.nm)+'</td><td>'+esc(p.vendor)+'</td><td>'+esc(p.stage)+'</td><td class="n">'+csN(p.cv)+'</td><td class="n">'+csN(p.vo)+'</td><td>'+esc(p.cd||'')+'</td></tr>'; });
+    h+='</tbody></table></div>';
+    h+='<div class="csbar"><button class="pri" id="csAdd" '+(nsel&&!CS.busy?'':'disabled')+'>Add selected to Drive ('+nsel+')</button><button class="warn" id="csIgn" '+(nsel&&!CS.busy?'':'disabled')+'>Ignore selected</button><span style="font-size:11px;opacity:.7">Ignored contracts are not offered again.</span></div>';
+    if(CS.conf==='add') h+='<div class="csconf">Add '+nsel+' contract(s) at the end of the Contracts sheet in the Drive file? Existing rows are not changed. Drive keeps the previous version.<div class="csbar"><button class="pri" id="csAddOk">Yes, add</button><button id="csNo">Cancel</button></div></div>';
+    if(CS.conf==='ign') h+='<div class="csconf">Ignore '+nsel+' contract(s)? They will not be offered again.<div class="csbar"><button class="warn" id="csIgnOk">Yes, ignore</button><button id="csNo">Cancel</button></div></div>';
+  } else if(l&&l.ok) h+='<div class="csst ok">The Drive file already has every contract of the OneDrive file'+(s.ignored?' (except '+s.ignored+' you chose to ignore)':'')+'.</div>';
+  h+='<div class="csset"><label><input type="checkbox" id="csAuto" '+(s.cfg.auto!==false?'checked':'')+'> Check automatically every</label><input type="number" id="csDays" min="1" max="30" value="'+esc(s.cfg.days||3)+'"> days <button id="csCfg">Save</button>'+(s.ignored?'<button id="csUn">Show the '+s.ignored+' ignored again</button>':'')+'<span style="opacity:.7">The automatic check only looks; it never changes the Drive file.</span></div>';
+  if(s.log&&s.log.length) h+='<div class="cslog"><b>Change log</b><br>'+s.log.slice(0,12).map(function(x){ return esc(csWhen(x.ts))+' &middot; '+esc(x.by)+' &middot; '+esc(x.a)+' '+esc(x.n)+(x.d?' &middot; '+esc(x.d):'')+(x.rows?' &middot; rows '+esc(x.rows):''); }).join('<br>')+'</div>';
+  m.innerHTML=h+'</div>'; }
+function csOpen(){ var m=document.getElementById('csModal'); if(!m) return; CS.err=''; CS.msg=''; CS.conf=''; m.classList.add('on'); csRender(); csLoad().then(csRender); }
+function csDo(body,busy){ CS.busy=busy; CS.err=''; CS.msg=''; CS.conf=''; csRender();
+  return csCall('POST',body).then(function(j){ CS.st=j; CS.busy=false; if(j.msg) CS.msg=j.msg; var keep={}; (j.pending||[]).forEach(function(p){ if(CS.sel[p.id]) keep[p.id]=1; }); CS.sel=keep; csBadge(); csRender(); return j; })
+    .catch(function(e){ CS.busy=false; CS.err=(e&&e.message)||'The request failed'; csRender(); }); }
+function csPicked(){ return ((CS.st&&CS.st.pending)||[]).filter(function(p){ return CS.sel[p.id]; }).map(function(p){ return p.id; }); }
+document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return;
+  if(t.closest('#csBtn')){ e.preventDefault(); csOpen(); return; }
+  if(t.id==='csClose'||t.id==='csModal'){ document.getElementById('csModal').classList.remove('on'); return; }
+  if(!t.closest('#csModal')) return;
+  if(t.id==='csScan'){ csDo({action:'scan'},'scan'); return; }
+  if(t.id==='csAdd'&&csPicked().length){ CS.conf='add'; csRender(); return; }
+  if(t.id==='csIgn'&&csPicked().length){ CS.conf='ign'; csRender(); return; }
+  if(t.id==='csNo'){ CS.conf=''; csRender(); return; }
+  if(t.id==='csAddOk'){ csDo({action:'add',ids:csPicked()},'add').then(function(j){ if(j&&j.added&&typeof liveLoad==='function') liveLoad(false); }); return; }
+  if(t.id==='csIgnOk'){ csDo({action:'ignore',ids:csPicked()},'ign'); return; }
+  if(t.id==='csCfg'){ csDo({action:'config',days:+document.getElementById('csDays').value||3,auto:document.getElementById('csAuto').checked},'cfg').then(function(){ CS.msg='Saved.'; csRender(); }); return; }
+  if(t.id==='csUn'){ csDo({action:'unignore'},'un'); return; } });
+document.addEventListener('change',function(e){ var t=e.target; if(!t||!t.closest||!t.closest('#csModal')) return;
+  if(t.id==='csAll'){ CS.sel={}; if(t.checked) ((CS.st&&CS.st.pending)||[]).forEach(function(p){ CS.sel[p.id]=1; }); CS.conf=''; csRender(); return; }
+  if(t.getAttribute&&t.getAttribute('data-cs')!=null){ var p=CS.st.pending[+t.getAttribute('data-cs')]; if(p){ if(t.checked) CS.sel[p.id]=1; else delete CS.sel[p.id]; } CS.conf=''; csRender(); } });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var m=document.getElementById('csModal'); if(m&&m.classList.contains('on')) m.classList.remove('on'); } });
 var LIVE_KEY='kecdash.v1.live', LIVE_EXP_DEF='2026-11-28';
 var LIVE_DEF={p:LIVE.sources[0].url,c:LIVE.sources[1].url,exp:LIVE_EXP_DEF};
 function liveSaved(){ try{ var o=JSON.parse(localStorage.getItem(LIVE_KEY)||'null'); return o&&typeof o==='object'?o:{}; }catch(e){ return {}; } }
