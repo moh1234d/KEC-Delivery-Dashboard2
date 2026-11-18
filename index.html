@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V400</title>
+<title>TEST · KEC Project Controls Dashboard · V401</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -948,6 +948,7 @@ html[dir=rtl] .aim.a ol,html[dir=rtl] .aim.a ul{padding-left:0;padding-right:18p
 #rptRoot.on{display:flex}
 #rptRoot .rp-rbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:#0b1f4d;color:#fff}
 #rptRoot .rp-rbar b{font-size:15px;margin-right:auto}
+#rptRoot .rp-phn{position:sticky;bottom:10px;margin:0 0 0 14px;width:max-content;padding:5px 12px;border-radius:14px;background:#15283c;color:#fff;font:600 12px Carlito,Calibri,sans-serif;opacity:.92;z-index:5}
 #rptRoot .rp-rbar small{opacity:.7;font-weight:400;margin-left:8px}
 #rptRoot .rp-rb{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:8px;padding:7px 12px;font:600 13px Inter,Arial,sans-serif;cursor:pointer}
 #rptRoot .rp-rb:hover{background:rgba(255,255,255,.2)}#rptRoot .rp-rb.rp-p{background:#c8963e;border-color:#c8963e;color:#1b1b1b}#rptRoot .rp-rb[disabled]{opacity:.5;cursor:default}
@@ -1404,7 +1405,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V400</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V401</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1581,7 +1582,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V400';
+var APP_VER='V401';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6269,7 +6270,7 @@ async function accStart(){
   accShowLogin();
 }
 document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return;
-  if(t.closest('#accOut')){ e.preventDefault(); actLog('logout','Signed out'); actFlush(true); try{ sessionStorage.removeItem('kec_dash_tok'); }catch(x){} kcClear(); try{ localStorage.removeItem('kec_acc_admin'); }catch(x3){} setTimeout(function(){ location.reload(); },250); }
+  if(t.closest('#accOut')){ e.preventDefault(); actLog('logout','Signed out'); actFlush(true); try{ sessionStorage.removeItem('kec_dash_tok'); }catch(x){} kcClear(); phcClear(); try{ localStorage.removeItem('kec_acc_admin'); }catch(x3){} setTimeout(function(){ location.reload(); },250); }
   if(t.closest('#accGo')){ e.preventDefault(); accSubmit(); } });
 document.addEventListener('keydown',function(e){ if(e.key==='Enter'&&e.target&&e.target.id==='accPass'){ e.preventDefault(); accSubmit(); } });
 
@@ -6744,7 +6745,7 @@ function rgba(hex,a){ if(a==null||a>=1) return hex; var n=parseInt(hex.slice(1),
 function bR(x,y,w,h,o){ o=o||{}; return {t:'r',x:x,y:y,w:w,h:h,f:o.f||null,a:o.a==null?1:o.a,bd:o.bd||null,rd:o.rd||0,sh:o.sh===2?2:!!o.sh}; }
 function bE(x,y,w,h,o){ o=o||{}; return {t:'e',x:x,y:y,w:w,h:h,f:o.f||null,bd:o.bd||null,bw:o.bw||1}; }
 function bL(x1,y1,x2,y2,c,w){ return {t:'l',x:Math.min(x1,x2),y:Math.min(y1,y2),w:Math.abs(x2-x1),h:Math.abs(y2-y1),c:c,lw:w||1}; }
-function bI(x,y,w,h,src,o){ o=o||{}; return {t:'i',x:x,y:y,w:w,h:h,src:src,fit:o.fit||'fill',keep:!!o.keep}; }
+function bI(x,y,w,h,src,o){ o=o||{}; return {t:'i',x:x,y:y,w:w,h:h,src:src,fit:o.fit||'fill',keep:!!o.keep,pid:o.pid||''}; }
 function bP(x,y,w,h,pts,f){ return {t:'pg',x:x,y:y,w:w,h:h,pts:pts,f:f}; }
 function bT(x,y,w,h,s,o){ o=o||{}; var d=String(s==null?'':s); var v=o.k?String(ov(o.k,d)):d;
   return {t:'x',x:x,y:y,w:w,h:h,s:v,d:d,fs:o.fs||12,c:o.c||NV,b:!!o.b,al:o.al||'l',va:o.va||'t',ls:o.ls||0,lh:o.lh||1.15,k:o.k||'',up:!!o.up,serif:!!o.serif,it:!!o.it,full:o.full==null?null:String(o.full),rot:o.rot||0}; }
@@ -6781,7 +6782,8 @@ function scHtml(sc){
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
       if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'" data-pg="'+(p.pg||0)+'"></label>';
       return '<div class="rp-vc'+(RP.psel&&RP.psel[p.pid]?' rp-sel':'')+'" data-pid="'+esc(p.pid||'')+'" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="rotl" title="Rotate this photo 90° to the left" '+at+'>↺</button><button type="button" class="rp-vb" data-pv="rotr" title="Rotate this photo 90° to the right" '+at+'>↻ Rotate</button><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
-    if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
+    if(p.t==='i'&&!p.src&&!p.pid) return '';
+    if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer"'+(p.pid?' data-ph="'+esc(p.pid)+'"':'')+(p.src?' src="'+esc(p.src)+'"':'')+' style="'+(p.src?'':'visibility:hidden;')+'position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
     return '<div style="position:absolute;'+pos+(p.rot?'transform:rotate('+p.rot+'deg);':'')+'display:flex;align-items:'+al+';overflow:'+(RP.ed||p.ovr?'visible':'hidden')+'"'+(p.k&&RP.ed?' data-tk="'+esc(p.k)+'"':'')+'>'+(p.k&&RP.ed?'<i class="rp-gr" data-gk="'+esc(p.k)+'" title="Drag to move this text">✥</i><i class="rp-th" data-th="e" title="Drag to change the width"></i><i class="rp-th" data-th="s" title="Drag to change the height"></i><i class="rp-th" data-th="se" title="Drag to resize"></i>':'')+'<div style="'+st+'">'+(p.k?ed(p.k,p.d):esc(p.s))+'</div></div>';
@@ -7216,7 +7218,7 @@ function scenePhotos(s,part){
     var cov=false; if(bx&&isFinite(bx.w)){ iw=Math.max(90,Math.min(PW,bx.w*PW)); if(isFinite(bx.h)){ ih=Math.max(60,Math.min(PH-BAR,bx.h*PH)); cov=bx.fit!=='fill'; } else{ ih=iw*nh/nw; if(ih+BAR>PH){ ih=PH-BAR; iw=ih*nw/nh; } } cx=Math.max(0,Math.min(PW-iw,bx.x*PW)); cy=Math.max(0,Math.min(PH-ih-BAR,bx.y*PH)); }
     sc.push(bR(cx-PD,cy-PD,iw+2*PD,ih+BAR+2*PD,{f:'#fff',bd:'#c9cdd0',rd:7,sh:2}));
     sc.push(bR(cx,cy,iw,ih,{f:'#e7e2d8'}));
-    if(d) sc.push(bI(cx,cy,iw,ih,d,{fit:cov?'cover':'fill'}));
+    sc.push(bI(cx,cy,iw,ih,d||'',{fit:cov?'cover':'fill',pid:x.p.id}));
     sc.push(bR(cx,cy+ih,iw,BAR,{f:NV}));
     sc.push(bT(cx+10,cy+ih,iw-20,BAR,x.cap||'',{fs:10,c:'#fff',b:1,ls:.8,up:1,va:'m',k:'p:'+x.p.id+':cap'}));
     sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cl:!!x.p.oid,cov:cov,free:!!(bx&&isFinite(bx.h)),pid:x.p.id});
@@ -7889,6 +7891,7 @@ function tplBox(){
   var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><p style="'+tx+'">Photos are never changed when added or replaced. Press Remove stamps on a photo (or Remove all stamps) and Claude will find any burned-in date, time or location text and remove only that. Restore original undoes it.</p></div>';
   h+='<div class="rp-bx"><h5>Separate concerns by building</h5><select data-f="cnsep"><option value="on"'+(RP.cfg.cnsep!=='off'?' selected':'')+'>On: one column per building, with a separator</option><option value="off"'+(RP.cfg.cnsep==='off'?' selected':'')+'>Off: one mixed list</option></select><p style="'+tx+'">On slides that show two projects, each project gets its own labelled column of concerns, with a gold separator between them.</p></div>';
   h+='<div class="rp-bx"><h5>Concerns shown per project</h5><select data-f="cnmax">'+['2','3','4','5','all'].map(function(v){ var cur=(RP.cfg.cnmax>=1&&RP.cfg.cnmax<=20)?String(RP.cfg.cnmax):'all'; return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+(v==='all'?'All concerns':v+' concerns')+'</option>'; }).join('')+'</select><p style="'+tx+'">How many areas of concern each project shows on the slide. Any concern can still be deleted on the slide (Edit text), and a note tells you when some do not fit.</p></div>';
+  if(tplB()) h+='<div class="rp-bx"><h5>Photo cache</h5><p style="margin:0 0 8px;font-size:12px;color:#5b6784">Photos are kept on this device after the first load, so the report opens faster next time. They are removed when you sign out.</p><button class="rp-rb" style="background:#0b1f4d" data-r="phcclr">Clear photo cache</button></div>';
   if(tplX()) h+='<div class="rp-bx"><h5>Variance chip on projects (e.g. “−0.3% vs plan”)</h5><select data-f="vchip"><option value="off"'+(!vcOn()?' selected':'')+'>Hidden</option><option value="on"'+(vcOn()?' selected':'')+'>Shown on each project</option></select><p style="'+tx+'">The coloured chip that compares a project’s actual progress with its plan. It is hidden by default. The company totals keep their own chip.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Photos per photo page</h5><select data-f="pmax">'+[2,3,4,5,6,8,10,12].map(function(v){ return '<option value="'+v+'"'+(pMax()===v?' selected':'')+'>'+v+' photos</option>'; }).join('')+'</select><p style="'+tx+'">The most photos one photo page can hold. Photos stay on the page where you add them; only you move them, by dragging a photo onto another photo page in the preview. Cards keep their own limit of 4.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
@@ -7923,7 +7926,7 @@ async function pptPrim(pp,sl,p){
   }else if(p.t==='l'){
     sl.addShape(pp.ShapeType.line,{x:q(p.x),y:q(p.y),w:q(p.w),h:q(p.h),line:{color:hx(p.c),width:p.lw*.75}});
   }else if(p.t==='i'){
-    var d=await pptImage(p); if(d) sl.addImage({data:d,x:q(p.x),y:q(p.y),w:q(p.w),h:q(p.h)}); else if(p.fit==='cover') RP.skipImg=(RP.skipImg||0)+1;
+    var d=p.src?await pptImage(p):null; if(d) sl.addImage({data:d,x:q(p.x),y:q(p.y),w:q(p.w),h:q(p.h)}); else if(p.src&&p.fit==='cover') RP.skipImg=(RP.skipImg||0)+1;
   }else if(p.t==='x'){
     var s=String(p.up?String(p.s).toUpperCase():p.s).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f￾￿]/g,''); if(!s.trim()) return; /* characters that are not allowed in a PowerPoint file are removed */
     sl.addText(s,{x:q(p.x),y:q(p.y),w:q(p.w),h:q(p.h),fontFace:p.serif?'Georgia':'Calibri',fontSize:Math.round(p.fs*75)/100,color:hx(p.c),bold:p.b,italic:p.it,align:p.al==='c'?'center':p.al==='r'?'right':'left',valign:p.va==='m'?'middle':p.va==='b'?'bottom':'top',margin:0,charSpacing:p.ls?Math.round(p.ls*75)/100:undefined,lineSpacingMultiple:Math.max(.8,Math.round(p.lh/1.2*20)/20),fit:'none',wrap:true,rotate:p.rot||undefined});
@@ -7931,6 +7934,7 @@ async function pptPrim(pp,sl,p){
 }
 async function pptx(){
   var btn=document.getElementById('rptPptx'); if(!RP.cut||RP.busy) return;
+  if(RP.phJob){ toast('Photos are still loading. The PowerPoint will start when they are ready.'); RP.phJob.then(function(){ pptx(); }); return; }
   RP.busy=true; var old=btn.textContent; btn.textContent='Preparing…'; btn.disabled=true; RP.skipImg=0;
   try{
     if(document.activeElement&&document.activeElement.blur) document.activeElement.blur(); RP.ed=false;
@@ -7978,13 +7982,57 @@ function setMode(m){
   document.getElementById('rptMode').textContent=m==='view'?'Setup':'Preview'; document.getElementById('rptSave').hidden=false; document.getElementById('rptSave').textContent=m==='view'?(RP.dirty?'Save changes ●':'Save changes'):'Save settings'; document.getElementById('rptPdf').hidden=m!=='view'; document.getElementById('rptPptx').hidden=m!=='view'; document.getElementById('rptClean').hidden=m!=='view'; document.getElementById('rptEdit').hidden=m!=='view'; if(m!=='view'){ document.getElementById('rptRst').hidden=true; document.getElementById('rptHint').hidden=true; }
   if(m==='view') drawView(); else drawSetup();
 }
+/* ----- V401: photo cache on this device + prioritised parallel loading ----- */
+var PHC={db:null,off:0,known:{}};
+function phcOpen(){ return new Promise(function(res){ if(PHC.db) return res(PHC.db); if(PHC.off||!window.indexedDB) return res(null); var done=0, to=setTimeout(function(){ if(!done){ done=1; PHC.off=1; res(null); } },2500);
+  var fail=function(){ if(!done){ done=1; clearTimeout(to); PHC.off=1; res(null); } };
+  try{ var q=indexedDB.open('kec-photo-cache',1); q.onupgradeneeded=function(){ try{ q.result.createObjectStore('p'); }catch(e){} };
+    q.onsuccess=function(){ if(done){ try{ q.result.close(); }catch(e){} return; } done=1; clearTimeout(to); PHC.db=q.result; PHC.db.onclose=function(){ PHC.db=null; }; res(PHC.db); };
+    q.onerror=fail; q.onblocked=fail; }catch(e){ fail(); } }); }
+async function phcGet(ids){ var out={}, db=await phcOpen(); if(!db||!ids.length) return out;
+  return new Promise(function(res){ try{ var tx=db.transaction('p','readonly'), st=tx.objectStore('p'); ids.forEach(function(id){ var r=st.get(id); r.onsuccess=function(){ if(typeof r.result==='string'&&r.result.indexOf('data:image')===0){ out[id]=r.result; PHC.known[id]=1; } }; });
+    tx.oncomplete=function(){ res(out); }; tx.onerror=tx.onabort=function(){ res(out); }; }catch(e){ res(out); } }); }
+async function phcPut(map){ var ks=Object.keys(map||{}).filter(function(k){ return !PHC.known[k]&&typeof map[k]==='string'&&map[k].indexOf('data:image')===0; }); if(!ks.length) return; var db=await phcOpen(); if(!db) return;
+  return new Promise(function(res){ try{ var tx=db.transaction('p','readwrite'), st=tx.objectStore('p'); ks.forEach(function(k){ try{ st.put(map[k],k); }catch(e){} });
+    tx.oncomplete=function(){ ks.forEach(function(k){ PHC.known[k]=1; }); res(); }; tx.onerror=tx.onabort=function(){ res(); }; }catch(e){ res(); } }); }
+async function phcPrune(){ var f=RP.full; if(!f) return; var keep={}, add=function(l){ (l||[]).forEach(function(p){ if(p&&p.id) keep[p.id]=1; }); };
+  var sl=function(a){ (a||[]).forEach(function(s){ add(s.ph); (s.cards||[]).forEach(function(c){ add(c.ph); }); }); }; sl(f.slides); sl(f.excom&&f.excom.slides); if(!Object.keys(keep).length) return;
+  var db=await phcOpen(); if(!db) return;
+  return new Promise(function(res){ try{ var tx=db.transaction('p','readwrite'), st=tx.objectStore('p'), c=st.openKeyCursor(); c.onsuccess=function(){ var cur=c.result; if(!cur) return; if(!keep[cur.key]){ st.delete(cur.key); delete PHC.known[cur.key]; } cur.continue(); };
+    tx.oncomplete=tx.onerror=tx.onabort=function(){ res(); }; }catch(e){ res(); } }); }
+async function phcClear(){ PHC.known={}; var db=await phcOpen(); if(!db) return; return new Promise(function(res){ try{ var tx=db.transaction('p','readwrite'); tx.objectStore('p').clear(); tx.oncomplete=tx.onerror=tx.onabort=function(){ res(); }; }catch(e){ res(); } }); }
+function phcSync(){ var m={}; Object.keys(RP.ph||{}).forEach(function(k){ if(!PHC.known[k]) m[k]=RP.ph[k]; }); return phcPut(m); }
+function phMissing(){ var ids=[], seen={}, add=function(l){ (l||[]).forEach(function(p){ if(p&&p.id&&!RP.ph[p.id]&&!seen[p.id]){ seen[p.id]=1; ids.push(p.id); } }); };
+  (RP.cfg.slides||[]).forEach(function(s){ add(s.ph); (s.cards||[]).forEach(function(c){ add(c.ph); }); }); return ids; }
+/* the photos nearest to what is on screen come first */
+function phPick(q,n){ var dist={}, vh=window.innerHeight||800; try{ [].forEach.call(document.querySelectorAll('#rptBody [data-ph]'),function(im){ var pg=im.closest('.rp-rs'); if(!pg) return; var r=pg.getBoundingClientRect(), d=Math.max(0,-r.bottom,r.top-vh); var id=im.getAttribute('data-ph'); if(dist[id]===undefined||d<dist[id]) dist[id]=d; }); }catch(e){}
+  var ix={}; q.forEach(function(id,i){ ix[id]=i; }); q.sort(function(a,b){ var da=dist[a]===undefined?1e9:dist[a], db=dist[b]===undefined?1e9:dist[b]; return da-db||ix[a]-ix[b]; }); return q.splice(0,n); }
+/* a loaded photo is dropped into its page without redrawing it, so nothing the person is doing is disturbed */
+function phPaint(ids){ if(RP.mode!=='view') return; if(!tplB()){ phRedraw(); return; }
+  ids.forEach(function(id){ var d=RP.ph[id]; if(!d) return; [].forEach.call(document.querySelectorAll('#rptBody img[data-ph]'),function(im){ if(im.getAttribute('data-ph')===id&&!im.getAttribute('src')){ im.setAttribute('src',d); im.style.visibility=''; } }); }); }
+function phRedraw(){ if(RP._phT) return; RP._phT=setTimeout(function(){ RP._phT=0; if(RP.mode==='view') drawView(); },900); }
+function phProg(done){ var rr=document.getElementById('rptRoot'); if(!rr) return; var el=document.getElementById('rptPhN');
+  if(done||!RP.phTot){ if(el) el.remove(); return; }
+  if(!el){ el=document.createElement('div'); el.id='rptPhN'; el.className='rp-phn'; rr.appendChild(el); }
+  el.textContent='Loading photos '+Math.min(RP.phDone||0,RP.phTot)+' / '+RP.phTot; }
 async function fetchPhotos(){
-  var ids=[]; var add=function(l){ (l||[]).forEach(function(p){ if(p&&p.id&&!RP.ph[p.id]&&ids.indexOf(p.id)<0) ids.push(p.id); }); };
-  (RP.cfg.slides||[]).forEach(function(s){ add(s.ph); (s.cards||[]).forEach(function(c){ add(c.ph); }); });
-  for(var i=0;i<ids.length;i+=4){
-    try{ var j=await accCall('GET','/report-photos?ids='+ids.slice(i,i+4).join(','),null,30000); Object.keys(j.photos||{}).forEach(function(k){ RP.ph[k]=j.photos[k]; }); }catch(e){ RP.msg='Some photos could not be loaded.'; }
-    if(RP.mode==='view') drawView();
-  }
+  if(RP.phJob) return RP.phJob;
+  var fin=0, job=(async function(){ try{
+    var failed={}; RP.phTot=0; RP.phDone=0;
+    for(var pass=0;pass<3;pass++){
+      var ids=phMissing().filter(function(id){ return !failed[id]; }); if(!ids.length) break;
+      var hit=await phcGet(ids), hk=Object.keys(hit); hk.forEach(function(k){ RP.ph[k]=hit[k]; }); if(hk.length) phPaint(hk);
+      ids=ids.filter(function(id){ return !RP.ph[id]; }); if(!ids.length) continue;
+      RP.phTot+=ids.length; phProg();
+      var q=ids.slice(), worker=async function(){ while(q.length){ var take=phPick(q,3), got=null;
+        for(var t=0;t<2&&!got;t++){ try{ var j=await accCall('GET','/report-photos?ids='+take.join(','),null,30000); got=j.photos||{}; }catch(e){ if(t===1){ RP.msg='Some photos could not be loaded.'; } else await new Promise(function(r){ setTimeout(r,600); }); } }
+        if(got){ var ks=Object.keys(got); ks.forEach(function(k){ RP.ph[k]=got[k]; }); phcPut(got); phPaint(ks); }
+        take.forEach(function(id){ if(!RP.ph[id]) failed[id]=1; RP.phDone++; }); phProg(); } };
+      await Promise.all([worker(),worker(),worker(),worker()]);
+    }
+  }finally{ fin=1; RP.phJob=null; RP.phTot=0; phProg(true); phcPrune(); } })();
+  if(!fin) RP.phJob=job;
+  return job;
 }
 async function load(){
   RP.msg='';
@@ -8002,6 +8050,7 @@ async function open(xm){
 }
 function close(){ var r=document.getElementById('rptRoot'); if(r) r.classList.remove('on'); }
 function pdf(){
+  if(RP.phJob){ toast('Photos are still loading. The PDF will start when they are ready.'); RP.phJob.then(function(){ pdf(); }); return; }
   actLog('report','Downloaded the progress report as PDF (cut-off '+dd(RP.cut)+')'); RP.ed=false; if(document.activeElement&&document.activeElement.blur) document.activeElement.blur();
   if(RP.mode!=='view') setMode('view'); drawView();
   var st=document.createElement('style'); st.id='rptPageStyle'; st.textContent=pageCss(); document.head.appendChild(st);
@@ -8012,7 +8061,7 @@ function pdf(){
 }
 async function save(){
   var b=document.getElementById('rptSave'), ok=false; b.disabled=true; b.textContent='Saving…';
-  try{ edKeep(); await accCall('PUT','/report',{cfg:xcOut()},30000); RP.dirty=false; ok=true; RP.msg='Saved. The report layout, text edits and photos stay in the dashboard for the next time.'; }
+  try{ edKeep(); await accCall('PUT','/report',{cfg:xcOut()},30000); phcSync(); RP.dirty=false; ok=true; RP.msg='Saved. The report layout, text edits and photos stay in the dashboard for the next time.'; }
   catch(e){ RP.msg=(e&&e.message)||'Could not save.'; }
   b.disabled=false; b.textContent=RP.mode==='view'?'Save changes':'Save settings';
   if(RP.mode==='setup') drawSetup(); else{ try{ toast(RP.msg,!ok); }catch(x){} if(tplB()) drawViewB(); else drawView(); saveUi(); }
@@ -8118,6 +8167,7 @@ function onClick(e){
   if(a==='close'){ if(RP.dirty&&!RP.closeArm){ RP.closeArm=1; try{ toast('You have unsaved changes. Press Save changes, or press Close again to leave without saving.',true); }catch(x){} setTimeout(function(){ RP.closeArm=0; },6000); return; } RP.closeArm=0; if(RP.dirty){ RP.dirty=false; RP.loaded=false; } return close(); }
   if(a==='mode') return setMode(RP.mode==='view'?'setup':'view');
   if(a==='pdf') return pdf();
+  if(a==='phcclr'){ phcClear().then(function(){ toast('Photo cache cleared. Photos will be downloaded again next time.'); }); return; }
   if(a==='pptx') return pptx();
   if(a==='edit'){ RP.ed=!RP.ed; return drawView(); }
   if(a==='rst'){ RP.ov={cut:RP.cut,v:{}}; dirty(); return drawView(); }
