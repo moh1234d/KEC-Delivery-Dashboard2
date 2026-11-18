@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V392</title>
+<title>TEST · KEC Project Controls Dashboard · V394</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1326,6 +1326,24 @@ body.pf-arr .sec-bar{display:none}
 .rp-pgr.del{background:#f6f4f0;color:#8a93a6}.rp-pgg{cursor:grab;font-style:normal;font-size:17px;color:#ba965a;touch-action:none;user-select:none;padding:0 4px}.rp-pgg.off{color:#cfc9bb;cursor:default}
 .rp-pgf{padding:10px 12px;border-top:1px solid #eee}.rp-pgf button{width:100%;border:1px solid #d9d3c3;background:#fff;border-radius:8px;padding:8px;font:600 12px Inter,Arial,sans-serif;cursor:pointer;color:#14304f}.rp-pgf button:disabled{opacity:.45;cursor:default}
 .rp-rsl .rp-vmv{touch-action:none;cursor:grab}body.rp-pgdrag{cursor:grabbing;user-select:none}
+.rp-rs.rp-droptgt::after{content:'';position:absolute;left:0;top:0;right:0;bottom:0;border:6px solid #ba965a;background:rgba(186,150,90,.10);z-index:60;pointer-events:none}#rpGhost{position:fixed;z-index:100002;background:#14304f;color:#fff;border-radius:8px;padding:7px 12px;font:700 12px Carlito,Calibri,Arial,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.4);pointer-events:none;max-width:320px}
+.rp-vc.rp-sel{opacity:1;background:rgba(186,150,90,.16);outline:3px solid #ba965a;outline-offset:-3px}.rp-vc.rp-sel .rp-vb{display:none}.rp-vc.rp-sel:hover .rp-vb{display:inline-block}
+#rpAlBar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:100000;max-width:calc(100vw - 20px);background:#102a3a;color:#fff;border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;box-shadow:0 6px 26px rgba(0,0,0,.45);font:13px Carlito,Calibri,Arial,sans-serif}
+#rpAlBar .pa-g{display:flex;align-items:center;gap:6px}#rpAlBar .pa-l{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#9fb3c0}
+#rpAlBar .pa-ib{width:32px;height:30px;border:0;border-radius:6px;background:#2d4a5c;display:flex;align-items:center;justify-content:center;cursor:pointer}#rpAlBar .pa-ib:hover:not(:disabled){background:#ba965a}#rpAlBar .pa-ib:disabled{opacity:.35;cursor:default}
+#rpAlBar .pa-dv{width:1px;height:20px;background:#4b6678}#rpAlBar .pa-pill{background:#ba965a;border-radius:999px;padding:3px 10px;font-size:12px}
+#rpAlBar .pa-tx{border:0;border-radius:6px;background:#2d4a5c;color:#fff;font:600 12px Carlito,Calibri,Arial,sans-serif;padding:7px 11px;cursor:pointer}#rpAlBar .pa-tx:disabled{opacity:.4;cursor:default}#rpAlBar .pa-hi{background:#ba965a}
+#rpAlBar select{border:0;border-radius:6px;background:#fff;color:#14304f;font:600 12px Carlito,Calibri,Arial,sans-serif;padding:6px 8px}#rpAlBar .pa-gap{font-size:12px;background:#2d4a5c;padding:4px 8px;border-radius:6px;display:flex;align-items:center;gap:4px}#rpAlBar .pa-gap input{width:48px;border:0;border-radius:4px;padding:3px 4px;font:700 12px Carlito,Calibri,Arial,sans-serif}
+#rpAlBar .pa-h{width:100%;font-size:11px;color:#9fb3c0}
+#rpArr{position:fixed;inset:0;z-index:100003;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:12px}
+.pa-pop{width:min(580px,100%);max-height:100%;overflow:auto;background:#fff;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.4);padding:16px 18px;color:#14304f;font:13px Carlito,Calibri,Arial,sans-serif}
+.pa-pop h4{font-size:14px;letter-spacing:1.6px;text-transform:uppercase;margin:0 0 6px;display:flex;justify-content:space-between;align-items:center}.pa-pop h4 i{font-style:normal;font-size:20px;color:#8a93a3;cursor:pointer}
+.pa-lab{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#637785;margin:12px 0 6px;font-weight:700}
+.pa-num input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:#d9d3c3;outline:0}.pa-num input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#ba965a;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer}.pa-num input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#ba965a;border:2px solid #fff}
+.pa-lay{display:flex;flex-wrap:wrap;gap:8px}.pa-lay div{width:76px;border:1.5px solid #d9d3c3;border-radius:8px;padding:6px 4px 4px;text-align:center;font-size:10.5px;color:#4b5b66;cursor:pointer}.pa-lay div.on{border-color:#ba965a;background:#fbf5ea;color:#14304f;font-weight:700}.pa-lay svg{display:block;margin:0 auto 3px}
+.pa-num{display:flex;align-items:center;gap:8px}.pa-num button{width:28px;height:28px;border:0;border-radius:6px;background:#eef0f3;font-weight:700;cursor:pointer}.pa-num input[type=number]{width:64px;border:1.5px solid #d9d3c3;border-radius:8px;padding:6px;font:700 14px Carlito,Calibri,Arial,sans-serif;text-align:center}.pa-num input[type=range]{flex:1;accent-color:#ba965a}
+.pa-seg{display:flex}.pa-seg span{border:1.5px solid #d9d3c3;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer}.pa-seg span:first-child{border-radius:8px 0 0 8px}.pa-seg span:last-child{border-radius:0 8px 8px 0}.pa-seg span.on{background:#14304f;color:#fff;border-color:#14304f}
+.pa-all{display:flex;gap:7px;align-items:center;margin-top:14px;font-weight:600}.pa-go{display:flex;gap:10px;margin-top:14px}.pa-go button{border:0;border-radius:8px;padding:9px 16px;font:700 13px Carlito,Calibri,Arial,sans-serif;cursor:pointer}.pa-p{background:#ba965a;color:#fff;flex:1}.pa-q{background:#eef0f3;color:#14304f}.pa-note{font-size:11px;color:#637785;margin-top:10px}
 .rp-rsl .rp-vdel{background:#b9544b!important;color:#fff!important}.rp-rsl .rp-vdel.rp-dga{background:#8f2d24!important;outline:2px solid #fff}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
@@ -1385,7 +1403,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V392</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V394</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1562,7 +1580,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V392';
+var APP_VER='V394';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6673,7 +6691,7 @@ function pageProgress(s,i,N,P,cut){
   var nk='s:'+s.id+':note', note=ov(nk,'');
   return (s.title?'<div class="rp-st">'+ed('s:'+s.id+':title',s.title)+'</div>':'')+'<div class="rp-fr"><div class="rp-fl">'+ed('s:'+s.id+':frame',s.frame||'')+'</div><div class="rp-pgb">'+body+'</div></div>'+((RP.ed||note)?'<div class="rp-note">'+ed(nk,'')+'</div>':'')+'<div class="rp-pn">'+(i+1)+' / '+N+'</div>';
 }
-function slidePhotos(s){ var o=[]; (s.cards||[]).forEach(function(c){ (c.ph||[]).forEach(function(p){ o.push({p:p,cap:c.t||''}); }); }); (s.ph||[]).forEach(function(p){ o.push({p:p,cap:s.frame||''}); }); return o.slice(0,12); }
+function slidePhotos(s){ var o=[]; (s.cards||[]).forEach(function(c){ (c.ph||[]).forEach(function(p){ o.push({p:p,cap:c.t||''}); }); }); (s.ph||[]).forEach(function(p){ o.push({p:p,cap:s.frame||''}); }); return o.slice(0,24); }
 function pagePhotos(s,i,N){
   var L=slidePhotos(s), n=L.length, por=n&&(L.filter(function(x){ return x.p.h>x.p.w; }).length*2>n), cols=por?Math.min(n,4):(n<=2?n:(n===3?3:(n===4?2:4)));
   var cell=function(x){ var d=RP.ph[x.p.id]; return '<div class="rp-pc">'+(d?'<img alt="" src="'+d+'">':'<div class="rp-ld"></div>')+(x.cap?'<div class="rp-cap">'+esc(x.cap)+'</div>':'')+'</div>'; };
@@ -6746,6 +6764,7 @@ function scHtml(sc){
     if(p.t==='l') return '<div style="position:absolute;left:'+p.x+'px;top:'+p.y+'px;width:'+(p.w||p.lw)+'px;height:'+(p.h||p.lw)+'px;background:'+p.c+'"></div>';
     if(p.t==='pc'){ var at='data-si="'+p.si+'" data-ci="'+p.ci+'" data-pi="'+p.pi+'"';
       if(p.k==='clean') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cleanall" data-si="'+p.si+'">Remove all stamps</button>';
+      if(p.k==='arr') return (!RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="arr" data-pk="'+esc(p.pk)+'" title="Select the photos on this page, then align them, match their size or arrange them in a neat grid">⊞ Arrange photos</button>':'';
       if(p.k==='pmv') return (RP.ed&&tplB())?'<button type="button" class="rp-va rp-vmv" style="'+pos+'border:0" data-pv="pmv" data-pk="'+esc(p.pk)+'" title="Press, hold and drag up or down to move this page">⠿ Move page</button>':'';
       if(p.k==='pdel') return (RP.ed&&tplB())?'<button type="button" class="rp-va rp-vdel" style="'+pos+'border:0" data-pv="pdel" data-pk="'+esc(p.pk)+'">Delete page</button>':'';
       if(p.k==='sdup') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="sdup" data-sid="'+esc(p.sid)+'">Duplicate slide</button>':'';
@@ -6756,8 +6775,8 @@ function scHtml(sc){
       if(p.k==='cmrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cmreset">Reset card positions</button>':'';
       if(p.k==='cnrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnreset">Reset card sizes</button>':'';
       if(p.k==='reset') return '<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="reset" data-si="'+p.si+'">Reset layout</button>';
-      if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'"></label>';
-      return '<div class="rp-vc" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="rotl" title="Rotate this photo 90° to the left" '+at+'>↺</button><button type="button" class="rp-vb" data-pv="rotr" title="Rotate this photo 90° to the right" '+at+'>↻ Rotate</button><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
+      if(p.k==='add') return '<label class="rp-va" style="'+pos+'">＋ Add photos<input type="file" accept="image/*" multiple hidden data-pv="add" data-si="'+p.si+'" data-pg="'+(p.pg||0)+'"></label>';
+      return '<div class="rp-vc'+(RP.psel&&RP.psel[p.pid]?' rp-sel':'')+'" data-pid="'+esc(p.pid||'')+'" style="'+pos+'" data-nw="'+p.nw+'" data-nh="'+p.nh+'" '+at+'><i class="rp-hh" data-hd="nw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="ne" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="sw" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="se" title="Resize, keeping the shape"></i><i class="rp-hh" data-hd="n" title="Change the height"></i><i class="rp-hh" data-hd="s" title="Change the height"></i><i class="rp-hh" data-hd="w" title="Change the width"></i><i class="rp-hh" data-hd="e" title="Change the width"></i><button type="button" class="rp-vb" data-pv="fit" '+at+'>'+(p.free?(p.cov?'Crop':'Stretch'):'Crop')+'</button><button type="button" class="rp-vb" data-pv="clean" '+at+'>'+(p.cl?'Restore original':'Remove all stamps')+'</button><label class="rp-vb">Change photo<input type="file" accept="image/*" hidden data-pv="rep" '+at+'></label><button type="button" class="rp-vb" data-pv="rotl" title="Rotate this photo 90° to the left" '+at+'>↺</button><button type="button" class="rp-vb" data-pv="rotr" title="Rotate this photo 90° to the right" '+at+'>↻ Rotate</button><button type="button" class="rp-vb" data-pv="cpy" '+at+'>Copy</button><button type="button" class="rp-vb rp-vr" data-pv="rm" '+at+'>Remove</button></div>'; }
     if(p.t==='i') return '<img alt="" referrerpolicy="no-referrer" src="'+esc(p.src)+'" style="position:absolute;'+pos+'display:block;object-fit:'+(p.fit==='cover'?'cover':'fill')+'">';
     var al=p.va==='m'?'center':p.va==='b'?'flex-end':'flex-start';
     var st='width:100%;text-align:'+(p.al==='r'?'right':p.al==='c'?'center':'left')+';color:'+p.c+';font:'+(p.it?'italic ':'')+(p.b?'700 ':'400 ')+p.fs+'px/'+p.lh+' '+(p.serif?"'Playfair Display',Georgia,serif":"Carlito,Calibri,'Segoe UI',Arial,sans-serif")+';'+(p.ls?'letter-spacing:'+p.ls+'px;':'')+(p.up?'text-transform:uppercase;':'')+'white-space:pre-line;';
@@ -7158,7 +7177,7 @@ function sceneProgress(s,P,cut,pg){
   sc.push({t:'pc',k:'undel',x:X0+W-((anyM||oM)?390:190),y:24,w:190,h:24,si:si,ci:-1,pi:-1});
   var nHid=Object.keys((RP.cfg&&RP.cfg.cnhide)||{}).length+Object.keys((RP.cfg&&RP.cfg.ohide)||{}).length; if(hasC&&nHid) sc.push({t:'pc',k:'cnrestore',n:nHid,x:X0+W-(anyCB?390:190),y:(56+rows*ch+(rows-1)*gap+26)-4,w:190,h:24,si:si,ci:-1,pi:-1});
   sc.push(bT(X0,PH-35,400,12,'KEC | Delivery Department',{fs:8,c:GR,up:1,ls:1,k:K+'ft'}));
-  if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1});
+  if(!slidePhotos(s).length) sc.push({t:'pc',k:'add',x:48,y:PH-110,w:190,h:36,si:si,ci:-1,pi:-1,pg:tplX()?1:0});
   (s.tx||[]).forEach(function(t){ var tw=Math.max(80,Math.min(PW-40,t.w||260)), tfs=Math.max(8,Math.min(44,t.fs||13)), tx0=Math.max(0,Math.min(PW-tw,Math.round((t.x==null?.3:t.x)*PW))), ty0=Math.round((t.y==null?.4:t.y)*PH), nl=fit(ov('tx:'+t.id,t.s),tw,1e4,tfs,!!t.b,1.25).n; sc.push(bT(tx0,ty0,tw,Math.ceil(nl*tfs*1.25)+6,t.s,{fs:tfs,c:'#14304f',b:t.b?1:0,lh:1.25,k:'tx:'+t.id})); });
   sc.push({t:'pc',k:'paste',x:X0+210,y:24,w:150,h:24,si:si,ci:-1,pi:-1,sid:s.id});
   sc.push({t:'pc',k:'sdup',x:48,y:PH-212,w:190,h:30,si:si,ci:-1,pi:-1,sid:s.id}); sc.push({t:'pc',k:'sdelv',x:48,y:PH-174,w:190,h:30,si:si,ci:-1,pi:-1,sid:s.id});
@@ -7174,16 +7193,16 @@ function photoRects(n,L,X,Y,W,H,g){
   else{ var cc=n<=6?3:4, rr=Math.ceil(n/cc), w2=(W-(cc-1)*g)/cc, h2=(H-(rr-1)*g)/rr; for(i=0;i<n;i++) R.push([X+(i%cc)*(w2+g),Y+Math.floor(i/cc)*(h2+g),w2,h2]); }
   return R;
 }
-function photoList(s){ var o=[]; (s.cards||[]).forEach(function(c,ci){ (c.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:c.t||'',ci:ci,pi:pi}); }); }); (s.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:s.frame||'',ci:-1,pi:pi}); }); return o.slice(0,12); }
+function photoList(s){ var o=[]; (s.cards||[]).forEach(function(c,ci){ (c.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:c.t||'',ci:ci,pi:pi}); }); }); (s.ph||[]).forEach(function(p,pi){ o.push({p:p,cap:s.frame||'',ci:-1,pi:pi}); }); return o.slice(0,24); }
 function scenePhotos(s,part){
   var L=photoList(s), n=L.length, sc=[], BAR=26, kick=(s.title?s.title+'  /  ':'')+(s.frame||''), si=(RP.cfg.slides||[]).indexOf(s), K='s:'+s.id+(part===2?'b':'')+':';
-  if(part){ var hf=Math.ceil(L.length/2); L=part===1?L.slice(0,hf):L.slice(hf); n=L.length; }
+  if(part){ phAssign(s); L=L.filter(function(x){ return x.p.pg===part; }); n=L.length; }
   sc.push(bR(0,0,PW,86,{f:NV}));
   sc.push(bT(40,17,780,14,kick,{fs:10.5,c:GD,b:1,ls:1.6,up:1,k:K+'pk'}));
   sc.push(bT(40,36,820,34,'Construction progress  |  Site photographs'+(part?'  ·  '+part+' of 2':''),{fs:22,c:'#fff',b:1,up:1,ls:.6,k:K+'pt'}));
   var nl3=sc.length; sc.push(bI(PW-40-150,14,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl3,'o:ph:'+s.id+':logo',PW-40-150,14,150,150/RB_IMG.logoR,{uni:1,nodel:1});
   if(n) sc.push({t:'pc',k:'clean',x:PW-40-150-160-176,y:26,w:166,h:34,si:si,ci:-1,pi:-1});
-  if((s.ph||[]).length<4) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1});
+  if(n<pMax()) sc.push({t:'pc',k:'add',x:PW-40-150-160,y:26,w:146,h:34,si:si,ci:-1,pi:-1,pg:part||0});
   if(L.some(function(x){ return x.p.box; })) sc.push({t:'pc',k:'reset',x:PW-40-150-160-176-146,y:26,w:136,h:34,si:si,ci:-1,pi:-1});
   var R=photoRects(n,L,20,104,PW-40,PH-144,16);
   L.forEach(function(x,i){
@@ -7194,7 +7213,7 @@ function scenePhotos(s,part){
     if(d) sc.push(bI(cx,cy,iw,ih,d,{fit:cov?'cover':'fill'}));
     sc.push(bR(cx,cy+ih,iw,BAR,{f:NV}));
     sc.push(bT(cx+10,cy+ih,iw-20,BAR,x.cap||'',{fs:10,c:'#fff',b:1,ls:.8,up:1,va:'m',k:'p:'+x.p.id+':cap'}));
-    sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cl:!!x.p.oid,cov:cov,free:!!(bx&&isFinite(bx.h))});
+    sc.push({t:'pc',k:'ph',x:cx,y:cy,w:iw,h:ih+BAR,si:si,ci:x.ci,pi:x.pi,nw:nw,nh:nh,cl:!!x.p.oid,cov:cov,free:!!(bx&&isFinite(bx.h)),pid:x.p.id});
   });
   return {sc:sc,bg:CRM,sid:s.id};
 }
@@ -7234,6 +7253,7 @@ function bScenes(P,cut){
   var NAT=out.map(function(o){ return o.pk; }), PO=(RP.cfg&&RP.cfg.porder)||null;
   if(PO&&PO.length){ var res=[]; PO.forEach(function(k){ if(NAT.indexOf(k)>=0&&res.indexOf(k)<0) res.push(k); }); NAT.forEach(function(k,i){ if(res.indexOf(k)<0){ var q=i>0?res.indexOf(NAT[i-1]):-1; res.splice(q+1,0,k); } }); var byk={}; out.forEach(function(o){ byk[o.pk]=o; }); out=res.map(function(k){ return byk[k]; }); NAT=res; }
   RP.pall=NAT.slice(); RP.plab=PL; var DEL=(RP.cfg&&RP.cfg.pdel)||{}; if(Object.keys(DEL).length){ var keep=out.filter(function(o){ return !DEL[o.pk]; }); if(keep.length) out=keep; }
+  out.forEach(function(o){ if(o.sc.some(function(p){ return p.t==='pc'&&p.k==='ph'; })) o.sc.push({t:'pc',k:'arr',x:20,y:PH-34,w:176,h:26,si:-1,ci:-1,pi:-1,pk:o.pk}); });
   out.forEach(function(o){ if(out.length>1){ o.sc.push({t:'pc',k:'pdel',x:PW-292,y:PH-44,w:150,h:26,si:-1,ci:-1,pi:-1,pk:o.pk}); o.sc.push({t:'pc',k:'pmv',x:PW-452,y:PH-44,w:150,h:26,si:-1,ci:-1,pi:-1,pk:o.pk}); } });
   out.forEach(function(o,i){ var dark=o.bg===NV; o.sc.push(bT(PW-112,PH-(dark?34:35),80,12,p2(i+1),{fs:9,c:dark?'#fff':GR,al:'r',k:'pgn:'+i})); });
   RP.scn=out; return applyLay(out);
@@ -7304,6 +7324,183 @@ document.addEventListener('click',function(e){
   if(a==='show'){ if(RP.cfg.pdel) delete RP.cfg.pdel[k]; dirty(); drawViewB(); pgDraw(); return; }
   if(a==='rst'){ delete RP.cfg.porder; dirty(); drawViewB(); pgDraw(); toast('The page order is back to the original. Press Save changes to keep it.'); }
 });
+
+/* ===== V393: photo alignment bar and Auto arrange (photo pages, Template B and ExCom) ===== */
+var PA_BAR=26, PA_PD=5, PA_N=0, PM=null;
+function pal(){ var c=RP.cfg; c.pal=c.pal||{}; var a=c.pal; if(a.to!=='page') a.to='sel'; if(!(a.gap>=0)) a.gap=12; if(['big','small','first'].indexOf(a.mt)<0) a.mt='big'; return a; }
+function parr(){ var c=RP.cfg; c.parr=c.parr||{}; var a=c.parr; if(['auto','2','3','4','row','col'].indexOf(a.lay)<0) a.lay='auto'; if(!(a.gap>=0)) a.gap=14; if(!(a.mar>=0)) a.mar=48; if(a.shape!=='keep') a.shape='crop'; if(a.last!=='l') a.last='c'; a.all=!!a.all; return a; }
+function paPage(){ var pk=RP.ppk, o=(RP.scn||[]).filter(function(s){ return s.pk===pk; })[0]; if(!o) return null; return {pk:pk,o:o,items:o.sc.filter(function(p){ return p.t==='pc'&&p.k==='ph'; })}; }
+function paSelItems(pg){ var S=RP.psel||{}; return pg.items.filter(function(p){ return S[p.pid]; }).sort(function(a,b){ return S[a.pid]-S[b.pid]; }); }
+function paQ(p){ var o=pvOwner(p.si,p.ci); return o&&o.ph[p.pi]; }
+function paWrite(R,msg){
+  var snap=[], r4=function(v){ return Math.round(v*10000)/10000; };
+  R.forEach(function(r){ var q=paQ(r.p); if(!q) return; snap.push({q:q,b:q.box?JSON.parse(JSON.stringify(q.box)):null});
+    var iw=Math.max(90,Math.min(PW,r.w)), ih=Math.max(60,Math.min(PH-PA_BAR,r.h-PA_BAR)), ix=Math.max(0,Math.min(PW-iw,r.x)), iy=Math.max(0,Math.min(PH-ih-PA_BAR,r.y));
+    q.box={x:r4(ix/PW),y:r4(iy/PH),w:r4(iw/PW),h:r4(ih/PH),fit:r.fit||'cover'}; });
+  if(!snap.length) return; RP.paU=RP.paU||[]; RP.paU.push(snap); if(RP.paU.length>30) RP.paU.shift();
+  dirty(); drawViewB(); if(msg) toast(msg);
+}
+function paFit(p){ return (p.free&&!p.cov)?'fill':'cover'; }
+function paOp(op){
+  var pg=paPage(); if(!pg) return; var sel=paSelItems(pg);
+  if(sel.length<2) return toast('Select two or more photos first: click one, then Shift+click the others, or drag a box around them.',true);
+  var a=pal(), D=PA_PD, R=sel.map(function(p){ return {p:p,x:p.x-D,y:p.y-D,w:p.w+2*D,h:p.h+2*D,fit:paFit(p)}; }), n=R.length, g=a.gap, i;
+  var mn=function(f){ return Math.min.apply(0,R.map(f)); }, mx=function(f){ return Math.max.apply(0,R.map(f)); };
+  var B=a.to==='page'?{l:20,r:PW-20,t:104,b:PH-40}:{l:mn(function(r){ return r.x; }),r:mx(function(r){ return r.x+r.w; }),t:mn(function(r){ return r.y; }),b:mx(function(r){ return r.y+r.h; })};
+  if(op==='al') R.forEach(function(r){ r.x=B.l; }); else if(op==='ar') R.forEach(function(r){ r.x=B.r-r.w; }); else if(op==='ac') R.forEach(function(r){ r.x=(B.l+B.r)/2-r.w/2; });
+  else if(op==='at') R.forEach(function(r){ r.y=B.t; }); else if(op==='ab') R.forEach(function(r){ r.y=B.b-r.h; }); else if(op==='am') R.forEach(function(r){ r.y=(B.t+B.b)/2-r.h/2; });
+  else if(op==='dh'||op==='dv'){ var X=op==='dh', ps=X?'x':'y', sz=X?'w':'h'; R.sort(function(p,q){ return p[ps]-q[ps]; }); var tot=R.reduce(function(s,r){ return s+r[sz]; },0), span=X?(B.r-B.l):(B.b-B.t);
+    var gg=(typeof g==='number'&&g>=0)?g:(span-tot)/Math.max(1,n-1), rowW=tot+(n-1)*gg, lo=X?20:104, hi=X?PW-20:PH-40;
+    if(rowW>hi-lo+.5) return toast('These photos are too big to sit '+(X?'side by side':'one above the other')+' with a '+gg+' px gap. Use Match size to make them smaller, reduce the gap, or use Auto arrange.',true);
+    var cur=a.to==='page'?lo+((hi-lo)-rowW)/2:Math.max(lo,Math.min(hi-rowW,X?B.l:B.t)); R.forEach(function(r){ r[ps]=cur; cur+=r[sz]+gg; }); }
+  else if(op==='mw'||op==='mh'||op==='mb'){ var ref=a.mt==='first'?R[0]:null, tw=ref?ref.w:(a.mt==='small'?mn(function(r){ return r.w; }):mx(function(r){ return r.w; })), th=ref?ref.h:(a.mt==='small'?mn(function(r){ return r.h; }):mx(function(r){ return r.h; }));
+    R.forEach(function(r){ if(op!=='mh') r.w=tw; if(op!=='mw') r.h=th; r.fit='cover'; }); }
+  R.forEach(function(r){ r.x+=D; r.y+=D; r.w-=2*D; r.h-=2*D; });
+  paWrite(R,'Done. Undo is in the bar. Press Save changes to keep the arrangement.');
+}
+function paLayout(items,A){
+  var n=items.length; if(!n) return []; var X0=A.mar, W=PW-2*A.mar, Y0=86+Math.max(12,Math.round(A.mar/2)), H=PH-Math.max(40,Math.round(A.mar*.9))-Y0, g=A.gap, cols;
+  var cell=function(c){ var rows=Math.ceil(n/c), cw=(W-(c-1)*g)/c, ch=(H-(rows-1)*g)/rows; return {rows:rows,cw:cw,ch:ch,iw:cw-2*PA_PD,ih:ch-2*PA_PD-PA_BAR}; };
+  if(A.lay==='row') cols=n; else if(A.lay==='col') cols=1; else if(A.lay==='2'||A.lay==='3'||A.lay==='4') cols=Math.min(n,+A.lay);
+  else { var best=1e9; cols=1; for(var c=1;c<=n;c++){ var k=cell(c); if(k.iw<=0||k.ih<=0) continue; var sc=Math.abs(Math.log((k.iw/k.ih)/1.5)); if(sc<best){ best=sc; cols=c; } } }
+  var k=cell(cols), rows=k.rows, iw=k.iw, ih=k.ih;
+  if(A.shape==='crop'){ var rt=iw/ih; if(rt>2.2) iw=ih*2.2; else if(rt<1) ih=iw; }
+  var cw=iw+2*PA_PD, ch=ih+2*PA_PD+PA_BAR, bw=cols*cw+(cols-1)*g, bh=rows*ch+(rows-1)*g, ox=X0+(W-bw)/2, oy=Y0+(H-bh)/2;
+  if(A.shape==='keep'){ cw=k.cw; ch=k.ch; bw=cols*cw+(cols-1)*g; bh=rows*ch+(rows-1)*g; ox=X0+(W-bw)/2; oy=Y0+(H-bh)/2; }
+  return items.map(function(p,i){ var r=Math.floor(i/cols), c=i%cols, inrow=r<rows-1?cols:n-(rows-1)*cols, off=(A.last!=='l'&&r===rows-1)?(cols-inrow)*(cw+g)/2:0;
+    var x=ox+off+c*(cw+g)+PA_PD, y=oy+r*(ch+g)+PA_PD, w=iw, h=ih;
+    if(A.shape==='keep'){ var nw=p.nw||4, nh=p.nh||3, s=Math.min(iw/nw,ih/nh), w2=nw*s, h2=nh*s; x+=(iw-w2)/2; y+=(ih-h2)/2; w=w2; h=h2; }
+    return {p:p,x:x,y:y,w:w,h:h+PA_BAR,fit:'cover'}; });
+}
+function paArrange(){
+  var A=parr(), pages=A.all?(RP.scn||[]).map(function(o){ return {items:o.sc.filter(function(p){ return p.t==='pc'&&p.k==='ph'; })}; }).filter(function(p){ return p.items.length; }):[paPage()].filter(Boolean), R=[];
+  pages.forEach(function(pg){ R=R.concat(paLayout(pg.items,A)); }); if(!R.length) return;
+  var a=document.getElementById('rpArr'); if(a) a.remove();
+  paWrite(R,'Photos arranged on '+pages.length+' page'+(pages.length===1?'':'s')+'. Press Undo in the bar to go back, and Save changes to keep it.');
+}
+function paIc(k){ var c='#fff', P={
+ al:'<rect x=2 y=2 width=1.6 height=16 fill="'+c+'"/><rect x=5 y=5 width=12 height=4 rx=1 fill="'+c+'"/><rect x=5 y=11 width=8 height=4 rx=1 fill="'+c+'"/>',
+ ac:'<rect x=9.2 y=2 width=1.6 height=16 fill="'+c+'"/><rect x=3 y=5 width=14 height=4 rx=1 fill="'+c+'"/><rect x=5 y=11 width=10 height=4 rx=1 fill="'+c+'"/>',
+ ar:'<rect x=16.4 y=2 width=1.6 height=16 fill="'+c+'"/><rect x=3 y=5 width=12 height=4 rx=1 fill="'+c+'"/><rect x=7 y=11 width=8 height=4 rx=1 fill="'+c+'"/>',
+ at:'<rect x=2 y=2 width=16 height=1.6 fill="'+c+'"/><rect x=5 y=5 width=4 height=12 rx=1 fill="'+c+'"/><rect x=11 y=5 width=4 height=8 rx=1 fill="'+c+'"/>',
+ am:'<rect x=2 y=9.2 width=16 height=1.6 fill="'+c+'"/><rect x=5 y=3 width=4 height=14 rx=1 fill="'+c+'"/><rect x=11 y=5 width=4 height=10 rx=1 fill="'+c+'"/>',
+ ab:'<rect x=2 y=16.4 width=16 height=1.6 fill="'+c+'"/><rect x=5 y=3 width=4 height=12 rx=1 fill="'+c+'"/><rect x=11 y=7 width=4 height=8 rx=1 fill="'+c+'"/>',
+ dh:'<rect x=2 y=2 width=1.6 height=16 fill="'+c+'"/><rect x=16.4 y=2 width=1.6 height=16 fill="'+c+'"/><rect x=8 y=5 width=4 height=10 rx=1 fill="'+c+'"/>',
+ dv:'<rect x=2 y=2 width=16 height=1.6 fill="'+c+'"/><rect x=2 y=16.4 width=16 height=1.6 fill="'+c+'"/><rect x=5 y=8 width=10 height=4 rx=1 fill="'+c+'"/>',
+ mw:'<rect x=3 y=4 width=14 height=5 rx=1 fill="'+c+'"/><rect x=3 y=11 width=14 height=5 rx=1 fill="'+c+'"/><path d="M1 10h2M17 10h2" stroke="'+c+'" stroke-width="1.4"/>',
+ mh:'<rect x=4 y=3 width=5 height=14 rx=1 fill="'+c+'"/><rect x=11 y=3 width=5 height=14 rx=1 fill="'+c+'"/><path d="M10 1v2M10 17v2" stroke="'+c+'" stroke-width="1.4"/>',
+ mb:'<rect x=3 y=3 width=6 height=6 rx=1 fill="'+c+'"/><rect x=11 y=3 width=6 height=6 rx=1 fill="'+c+'"/><rect x=3 y=11 width=6 height=6 rx=1 fill="'+c+'"/><rect x=11 y=11 width=6 height=6 rx=1 fill="'+c+'"/>'};
+ return '<svg width=20 height=20 viewBox="0 0 20 20">'+P[k]+'</svg>'; }
+function paBar(){
+  var root=document.getElementById('rptRoot'), bar=document.getElementById('rpAlBar'), pg=paPage(), n=pg?paSelItems(pg).length:0;
+  var show=!!(root&&root.classList.contains('on')&&RP.mode==='view'&&!RP.ed&&tplB()&&pg&&(n>=2||RP.pbar));
+  if(!show){ if(bar) bar.remove(); return; }
+  var a=pal(), b=function(k,t){ return '<button class="pa-ib" data-pa="'+k+'" title="'+t+'"'+(n<2?' disabled':'')+'>'+paIc(k)+'</button>'; };
+  var html='<div class="pa-g"><span class="pa-l">Selected</span><b class="pa-pill">'+n+' photo'+(n===1?'':'s')+'</b><button class="pa-tx" data-pa="all">Select all photos</button></div>'
+   +'<div class="pa-g"><span class="pa-l">Align to</span><select data-pa="to"><option value="sel"'+(a.to==='sel'?' selected':'')+'>The selection</option><option value="page"'+(a.to==='page'?' selected':'')+'>The page margins</option></select></div>'
+   +'<div class="pa-g"><span class="pa-l">Align</span>'+b('al','Left edges')+b('ac','Centres (vertical line)')+b('ar','Right edges')+'<i class="pa-dv"></i>'+b('at','Top edges')+b('am','Middles (horizontal line)')+b('ab','Bottom edges')+'</div>'
+   +'<div class="pa-g"><span class="pa-l">Distribute</span>'+b('dh','Equal gaps across')+b('dv','Equal gaps down')+'<label class="pa-gap">gap <input type="number" min="0" max="300" step="2" data-pa="gap" value="'+a.gap+'"> px</label></div>'
+   +'<div class="pa-g"><span class="pa-l">Match size</span>'+b('mw','Same width')+b('mh','Same height')+b('mb','Same width and height')+'<select data-pa="mt"><option value="big"'+(a.mt==='big'?' selected':'')+'>to the largest</option><option value="small"'+(a.mt==='small'?' selected':'')+'>to the smallest</option><option value="first"'+(a.mt==='first'?' selected':'')+'>to the first clicked</option></select></div>'
+   +'<div class="pa-g"><span class="pa-l">Arrange</span><button class="pa-tx pa-hi" data-pa="arr">⊞ Auto arrange…</button><button class="pa-tx" data-pa="undo"'+((RP.paU||[]).length?'':' disabled')+'>Undo</button><button class="pa-tx" data-pa="clr">Close</button></div>'
+   +'<div class="pa-h">Click a photo, then Shift+click more (or just click more photos while this bar is open), or drag a box around them.</div>';
+  if(!bar){ bar=document.createElement('div'); bar.id='rpAlBar'; root.appendChild(bar); }
+  var keep=document.activeElement&&document.activeElement.getAttribute&&document.activeElement.getAttribute('data-pa')==='gap'; if(keep) return; bar.innerHTML=html;
+}
+function paLayIc(cols,rows,n){ var w=40,h=26,g=2,cw=(w-(cols-1)*g)/cols,ch=(h-(rows-1)*g)/rows,s='',k=0; for(var r=0;r<rows;r++){ var inrow=Math.min(cols,n-k), off=(cols-inrow)*(cw+g)/2; for(var c=0;c<inrow;c++){ s+='<rect x="'+(off+c*(cw+g)).toFixed(1)+'" y="'+(r*(ch+g)).toFixed(1)+'" width="'+cw.toFixed(1)+'" height="'+ch.toFixed(1)+'" rx="1.5" fill="#14304f"/>'; k++; } } return '<svg width=40 height=26 viewBox="0 0 40 26">'+s+'</svg>'; }
+function paArrDraw(){
+  var root=document.getElementById('rptRoot'), pg=paPage(); if(!root||!pg) return; var A=parr(), n=pg.items.length, el=document.getElementById('rpArr');
+  if(!el){ el=document.createElement('div'); el.id='rpArr'; root.appendChild(el); }
+  var lay=function(v,cols,rows,lab){ return '<div class="'+(A.lay===v?'on':'')+'" data-pa="lay" data-v="'+v+'">'+paLayIc(cols,rows,Math.max(n,5))+lab+'</div>'; };
+  el.innerHTML='<div class="pa-pop"><h4><span>Auto arrange photos</span><i data-pa="arrx">×</i></h4>'
+   +'<div class="pa-lab">Layout</div><div class="pa-lay">'+lay('auto',3,2,'Automatic')+lay('2',2,3,'2 per row')+lay('3',3,2,'3 per row')+lay('4',4,2,'4 per row')+lay('row',5,1,'One row')+lay('col',1,5,'One column')+'</div>'
+   +'<div class="pa-lab">Space between the photos</div><div class="pa-num"><button data-pa="gm">−</button><input type="number" min="0" max="120" data-pa="pgap" value="'+A.gap+'"><span>px</span><button data-pa="gp">+</button><input type="range" min="0" max="80" data-pa="pgap" value="'+Math.min(80,A.gap)+'"></div>'
+   +'<div class="pa-lab">Space around the edge of the page</div><div class="pa-num"><button data-pa="mm">−</button><input type="number" min="0" max="200" data-pa="pmar" value="'+A.mar+'"><span>px</span><button data-pa="mp">+</button><input type="range" min="0" max="120" data-pa="pmar" value="'+Math.min(120,A.mar)+'"></div>'
+   +'<div class="pa-lab">Photo shape</div><div class="pa-seg"><span class="'+(A.shape==='crop'?'on':'')+'" data-pa="shape" data-v="crop">Same size, crop to fit</span><span class="'+(A.shape==='keep'?'on':'')+'" data-pa="shape" data-v="keep">Keep each shape</span></div>'
+   +'<div class="pa-lab">Last row</div><div class="pa-seg"><span class="'+(A.last==='c'?'on':'')+'" data-pa="last" data-v="c">Centred</span><span class="'+(A.last==='l'?'on':'')+'" data-pa="last" data-v="l">Left</span></div>'
+   +'<label class="pa-all"><input type="checkbox" data-pa="pall"'+(A.all?' checked':'')+'> Apply to every photo page of this report</label>'
+   +'<div class="pa-go"><button class="pa-p" data-pa="arrgo">Arrange '+(A.all?'all photo pages':n+' photo'+(n===1?'':'s'))+'</button><button class="pa-q" data-pa="arrx">Cancel</button></div>'
+   +'<div class="pa-note">Every photo gets the same size and the same space around it, lined up in rows and columns. You can still drag any photo afterwards, and Undo in the bar brings the old layout back. These settings are saved with the report.</div></div>';
+}
+function paClick(o,e){
+  var rs=o.closest&&o.closest('.rp-rs'), pk=rs&&rs.getAttribute('data-pk'), pid=o.getAttribute('data-pid'); if(!pk||!pid||!tplB()) return;
+  var S=RP.psel||{}, tg=(e&&(e.shiftKey||e.ctrlKey||e.metaKey))||RP.pbar; if(RP.ppk!==pk){ S={}; RP.ppk=pk; }
+  if(tg){ if(S[pid]) delete S[pid]; else S[pid]=++PA_N; } else { S={}; S[pid]=++PA_N; }
+  RP.psel=S; if(Object.keys(S).length>=2) RP.pbar=1; drawViewB();
+}
+function paSelAll(){ var pg=paPage(); if(!pg) return; RP.psel={}; pg.items.forEach(function(p){ RP.psel[p.pid]=++PA_N; }); drawViewB(); }
+document.addEventListener('click',function(e){
+  var a0=e.target.closest&&e.target.closest('[data-pv="arr"]'); if(a0){ e.preventDefault(); RP.ppk=a0.getAttribute('data-pk'); RP.pbar=1; paSelAll(); return; }
+  var t=e.target.closest&&e.target.closest('#rpAlBar [data-pa],#rpArr [data-pa]'); if(!t) return; var a=t.getAttribute('data-pa'), A=parr();
+  if(t.tagName==='SELECT'||t.tagName==='INPUT') return;
+  if(a==='all'){ paSelAll(); return; } if(a==='clr'){ RP.psel={}; RP.pbar=0; drawViewB(); return; }
+  if(a==='undo'){ var z=(RP.paU||[]).pop(); if(!z) return; z.forEach(function(s){ if(s.b) s.q.box=s.b; else delete s.q.box; }); dirty(); drawViewB(); toast('Photo arrangement undone.'); return; }
+  if(a==='arr'){ paArrDraw(); return; } if(a==='arrx'){ var el=document.getElementById('rpArr'); if(el) el.remove(); return; }
+  if(a==='arrgo'){ paArrange(); return; }
+  if(a==='lay'){ A.lay=t.getAttribute('data-v'); dirty(); paArrDraw(); return; }
+  if(a==='shape'){ A.shape=t.getAttribute('data-v'); dirty(); paArrDraw(); return; } if(a==='last'){ A.last=t.getAttribute('data-v'); dirty(); paArrDraw(); return; }
+  if(a==='gm'||a==='gp'){ A.gap=Math.max(0,Math.min(120,A.gap+(a==='gp'?2:-2))); dirty(); paArrDraw(); return; } if(a==='mm'||a==='mp'){ A.mar=Math.max(0,Math.min(200,A.mar+(a==='mp'?4:-4))); dirty(); paArrDraw(); return; }
+  if(['al','ac','ar','at','am','ab','dh','dv','mw','mh','mb'].indexOf(a)>=0){ paOp(a); }
+});
+document.addEventListener('change',function(e){
+  var t=e.target, a=t.getAttribute&&t.getAttribute('data-pa'); if(!a) return; var A=parr(), P=pal();
+  if(a==='to'){ P.to=t.value; dirty(); } else if(a==='mt'){ P.mt=t.value; dirty(); } else if(a==='gap'){ P.gap=Math.max(0,Math.min(300,+t.value||0)); dirty(); }
+  else if(a==='pgap'){ A.gap=Math.max(0,Math.min(120,+t.value||0)); dirty(); paArrDraw(); } else if(a==='pmar'){ A.mar=Math.max(0,Math.min(200,+t.value||0)); dirty(); paArrDraw(); }
+  else if(a==='pall'){ A.all=!!t.checked; dirty(); paArrDraw(); }
+});
+document.addEventListener('input',function(e){ var t=e.target, a=t.getAttribute&&t.getAttribute('data-pa'); if(t.type==='range'&&(a==='pgap'||a==='pmar')){ var A=parr(); if(a==='pgap') A.gap=+t.value; else A.mar=+t.value; dirty(); var n=t.parentNode.querySelector('input[type=number]'); if(n) n.value=t.value; } });
+/* drag a box around photos to select them (mouse and pen) */
+document.addEventListener('pointerdown',function(e){
+  if(e.button>0||e.pointerType==='touch'||!tplB()||RP.ed||RP.mode!=='view') return; var rs=e.target.closest&&e.target.closest('#rptBody .rp-rs'); if(!rs||!rs.querySelector('.rp-vc')) return;
+  if(e.target.closest('.rp-vc,.rp-va,.rp-vb,.rp-hh,button,input,label,select')) return;
+  PM={rs:rs,x:e.clientX,y:e.clientY,mv:0,sh:e.shiftKey||e.ctrlKey||e.metaKey}; document.addEventListener('pointermove',pmMv); document.addEventListener('pointerup',pmUp); document.addEventListener('pointercancel',pmUp); e.preventDefault();
+});
+function pmMv(e){ if(!PM) return; var dx=e.clientX-PM.x, dy=e.clientY-PM.y; if(Math.abs(dx)+Math.abs(dy)>6) PM.mv=1; if(!PM.mv) return; var q=document.getElementById('rpMq'); if(!q){ q=document.createElement('div'); q.id='rpMq'; document.body.appendChild(q); }
+  q.style.cssText='position:fixed;z-index:100001;border:2px dashed #ba965a;background:rgba(186,150,90,.15);pointer-events:none;left:'+Math.min(PM.x,e.clientX)+'px;top:'+Math.min(PM.y,e.clientY)+'px;width:'+Math.abs(dx)+'px;height:'+Math.abs(dy)+'px'; }
+function pmUp(e){
+  document.removeEventListener('pointermove',pmMv); document.removeEventListener('pointerup',pmUp); document.removeEventListener('pointercancel',pmUp); var q=document.getElementById('rpMq'); if(q) q.remove(); if(!PM) return; var d=PM; PM=null; var pk=d.rs.getAttribute('data-pk');
+  if(!d.mv){ if(!d.sh){ RP.psel={}; drawViewB(); } return; }
+  var L=Math.min(d.x,e.clientX), R=Math.max(d.x,e.clientX), T=Math.min(d.y,e.clientY), Bm=Math.max(d.y,e.clientY), S=(d.sh&&RP.ppk===pk)?(RP.psel||{}):{};
+  [].forEach.call(d.rs.querySelectorAll('.rp-vc[data-pid]'),function(o){ var r=o.getBoundingClientRect(); if(r.right>=L&&r.left<=R&&r.bottom>=T&&r.top<=Bm){ var id=o.getAttribute('data-pid'); if(!S[id]) S[id]=++PA_N; } });
+  RP.ppk=pk; RP.psel=S; if(Object.keys(S).length>=2) RP.pbar=1; drawViewB();
+}
+
+/* ===== V394: photos stay on the page they were added to; the user moves them between pages by drag and drop ===== */
+function pMax(){ var v=RP.cfg&&RP.cfg.pmax; return (v>=2&&v<=12)?+v:6; }
+function pvCap(ci){ return ci>=0?4:pMax()*(tplX()?2:1); }
+function phAssign(s){
+  var L=photoList(s), un=L.filter(function(x){ return x.p.pg!==1&&x.p.pg!==2; }); if(!un.length) return;
+  if(un.length===L.length){ var hf=Math.ceil(L.length/2); L.forEach(function(x,i){ x.p.pg=i<hf?1:2; }); return; }
+  var c1=L.filter(function(x){ return x.p.pg===1; }).length, c2=L.length-un.length-c1;
+  un.forEach(function(x){ if(c2<pMax()){ x.p.pg=2; c2++; } else { x.p.pg=1; c1++; } });
+}
+function pvTarget(e,own){
+  var els=document.elementsFromPoint(e.clientX,e.clientY), rs=null, i; for(i=0;i<els.length;i++){ if(els[i].classList&&els[i].classList.contains('rp-rs')){ rs=els[i]; break; } }
+  if(!rs) return null; var pk=rs.getAttribute('data-pk')||''; if(pk===own||!/^s:.+:(ph1|ph2|ph)$/.test(pk)) return null; return rs;
+}
+function pvDragFx(d,e){
+  var t=pvTarget(e,d.pk), g=document.getElementById('rpGhost');
+  [].forEach.call(document.querySelectorAll('.rp-droptgt'),function(x){ if(x!==t) x.classList.remove('rp-droptgt'); });
+  d.xt=t; if(!t){ if(g) g.remove(); return; } t.classList.add('rp-droptgt');
+  if(!g){ g=document.createElement('div'); g.id='rpGhost'; document.body.appendChild(g); }
+  g.textContent='Move to: '+((RP.plab&&RP.plab[t.getAttribute('data-pk')])||'this page'); g.style.left=(e.clientX+14)+'px'; g.style.top=(e.clientY+14)+'px';
+}
+function pvEdgeScroll(d){
+  var sb=document.getElementById('rptBody'); if(!sb||d.cy==null) return; var r=sb.getBoundingClientRect(), z=70, v=0;
+  if(d.cy<r.top+z) v=-Math.ceil((r.top+z-d.cy)/4); else if(d.cy>r.bottom-z) v=Math.ceil((d.cy-(r.bottom-z))/4);
+  if(v){ sb.scrollTop+=Math.max(-40,Math.min(40,v)); if(d.xe) pvDragFx(d,d.xe); }
+}
+function pvDragEnd(){ var g=document.getElementById('rpGhost'); if(g) g.remove(); [].forEach.call(document.querySelectorAll('.rp-droptgt'),function(x){ x.classList.remove('rp-droptgt'); }); }
+function pvMoveTo(d,e){
+  var o=pvOwner(+d.o.getAttribute('data-si'),+d.o.getAttribute('data-ci')), i=+d.o.getAttribute('data-pi'), q=o&&o.ph[i], tk=d.xt.getAttribute('data-pk'), m=tk.match(/^s:(.+):(ph1|ph2|ph)$/);
+  if(!q||!m) return drawViewB(); var T=(RP.cfg.slides||[]).filter(function(x){ return x.id===m[1]; })[0]; if(!T) return drawViewB();
+  var tpg=m[2]==='ph2'?2:(m[2]==='ph1'?1:0), cnt=tpg?photoList(T).filter(function(x){ return x.p.pg===tpg; }).length:photoList(T).length;
+  if(cnt>=pMax()){ toast('That page already holds '+pMax()+' photos. Remove one, or raise "Photos per page" in Setup.',true); return drawViewB(); }
+  var b=d.xt.getBoundingClientRect(), k=b.width/PW, iw=parseFloat(d.o.style.width), hh=parseFloat(d.o.style.height), ih=hh-26, r4=function(v){ return Math.round(v*10000)/10000; };
+  var x=Math.max(0,Math.min(PW-iw,(e.clientX-b.left)/k-d.gx)), y=Math.max(0,Math.min(PH-hh,(e.clientY-b.top)/k-d.gy));
+  var free=q.box&&isFinite(q.box.h), nb={x:r4(x/PW),y:r4(y/PH),w:r4(iw/PW)}; if(free){ nb.h=r4(ih/PH); nb.fit=q.box.fit||'cover'; }
+  o.ph.splice(i,1); T.ph=T.ph||[]; if(tplX()) q.pg=tpg||1; q.box=nb; T.ph.push(q); RP.psel={}; RP.pbar=0; dirty(); drawViewB();
+  toast('Photo moved to "'+((RP.plab&&RP.plab[tk])||'the other page')+'". Press Save changes to keep it.');
+}
 function tbFind(k){ var r=null; (RP.scn||[]).forEach(function(o){ o.sc.forEach(function(p){ if(p.t==='x'&&p.k===k) r=p; }); }); return r; }
 function tbUpdate(){
   var tb=document.getElementById('rptTb'); if(!tb) return; tb.hidden=!(RP.ed&&tplB()); if(tb.hidden) return;
@@ -7363,6 +7560,7 @@ function drawViewB0(){
   var rr=document.getElementById('rptRoot'), tb=document.getElementById('rptTb');
   if(rr&&!tb){ tb=document.createElement('div'); tb.id='rptTb'; tb.className='rp-tb'; tb.hidden=true; tb.innerHTML='<span>Selected text: <b data-tbv="name"></b></span><span>Size <button data-tb="fs-" title="Smaller">A−</button><b data-tbv="fs">–</b><button data-tb="fs+" title="Larger">A+</button></span><span>Box width <button data-tb="w-">−</button><button data-tb="w+">+</button></span><span>Box height <button data-tb="h-">−</button><button data-tb="h+">+</button></span><button data-tb="rs">Reset this text</button><button data-tc="cp">Copy text</button><button data-tc="dt" title="Delete the selected text from the report (Undo delete brings it back)">Delete text</button><button data-tc="rt" hidden>Show deleted texts</button><button data-tc="rg" hidden>Show deleted pages</button><button data-tc="pm" title="Choose what moves when you drag a page: only that page, or all pages of its project">Moving: pages separately</button><span class="rp-tbh">Click a text to select and edit it. Drag its gold grip ✥ to move it, and the gold handles on its edges to resize it.</span>'; var bd=document.getElementById('rptBody'); bd.parentNode.insertBefore(tb,bd); }
   var apb=document.getElementById('rptPg'); if(apb) apb.hidden=!tplB();
+  paBar();
   tbUpdate();
   var rt=document.getElementById('rptRoot'); if(rt&&!rt._pv){ rt._pv=1; rt.addEventListener('click',pvClick); rt.addEventListener('change',pvChange); rt.addEventListener('pointerdown',pvDown); rt.addEventListener('pointermove',pvMove); rt.addEventListener('pointerup',pvUp); rt.addEventListener('pointercancel',pvUp); }
   body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!(Object.keys(RP.ov.v).length||Object.keys(RP.ov.l||{}).length); var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
@@ -7510,7 +7708,7 @@ async function clipPaste(sid){
   try{
     if(c.kind==='card'){ var n=JSON.parse(JSON.stringify(c.card)); n.id=uid(); n.t=String(n.t||'').replace(/ \(copy\)$/,'')+' (copy)'; var ph=[]; for(var i=0;i<(n.ph||[]).length;i++) ph.push(await pvClone(n.ph[i])); n.ph=ph; s.cards=s.cards||[]; s.cards.push(n); }
     else if(c.kind==='concern'){ s.xcn=s.xcn||[]; if(s.xcn.indexOf(c.key)>=0) return toast('This concern card is already on this slide.',true); s.xcn.push(c.key); }
-    else if(c.kind==='photo'){ s.ph=s.ph||[]; if(s.ph.length>=4) return toast('A slide can hold up to 4 added photos.',true); s.ph.push(await pvClone(c.q)); }
+    else if(c.kind==='photo'){ s.ph=s.ph||[]; if(s.ph.length>=pvCap(-1)) return toast('This slide already holds the most photos it can ('+pvCap(-1)+'). Raise "Photos per page" in Setup.',true); s.ph.push(await pvClone(c.q)); }
     else if(c.kind==='text'){ s.tx=s.tx||[]; var k=s.tx.length; s.tx.push({id:uid(),s:c.s,fs:Math.max(9,Math.min(40,c.fs||13)),b:c.b?1:0,w:Math.max(120,Math.min(520,c.w||260)),x:Math.min(.7,.3+.03*k),y:Math.min(.8,.4+.03*k)}); }
   }catch(x){ return toast((x&&x.message)||'Could not paste.',true); }
   dirty(); drawViewB(); toast('Pasted. Press Save changes to keep it.'+(RP.pvLocal?' (A photo is kept only until this page is closed: the dashboard could not store it.)':''));
@@ -7602,8 +7800,8 @@ var DR=null;
 function pvDown(e){
   var o=e.target.closest&&e.target.closest('.rp-vc'); if(!o||e.button||e.target.closest('.rp-vb')) return;
   var rs=o.closest('.rp-rs'); if(!rs) return;
-  DR={o:o,h:(e.target.closest('.rp-hh')||{getAttribute:function(){ return ''; }}).getAttribute('data-hd'),k:rs.getBoundingClientRect().width/PW,sx:e.clientX,sy:e.clientY,l:parseFloat(o.style.left),t:parseFloat(o.style.top),w:parseFloat(o.style.width),hh:parseFloat(o.style.height),nw:+o.getAttribute('data-nw')||4,nh:+o.getAttribute('data-nh')||3,mv:0};
-  o.classList.add('rp-drag'); try{ o.setPointerCapture(e.pointerId); }catch(x){} e.preventDefault();
+  DR={o:o,h:(e.target.closest('.rp-hh')||{getAttribute:function(){ return ''; }}).getAttribute('data-hd'),k:rs.getBoundingClientRect().width/PW,pk:rs.getAttribute('data-pk')||'',gx:(e.clientX-o.getBoundingClientRect().left)/(rs.getBoundingClientRect().width/PW),gy:(e.clientY-o.getBoundingClientRect().top)/(rs.getBoundingClientRect().width/PW),sx:e.clientX,sy:e.clientY,l:parseFloat(o.style.left),t:parseFloat(o.style.top),w:parseFloat(o.style.width),hh:parseFloat(o.style.height),nw:+o.getAttribute('data-nw')||4,nh:+o.getAttribute('data-nh')||3,mv:0};
+  o.classList.add('rp-drag'); try{ o.setPointerCapture(e.pointerId); }catch(x){} e.preventDefault(); DR.iv=setInterval(function(){ if(DR) pvEdgeScroll(DR); },40);
 }
 function pvMove(e){
   if(!DR) return; var d=DR, dx=(e.clientX-d.sx)/d.k, dy=(e.clientY-d.sy)/d.k, st=d.o.style; if(Math.abs(dx)+Math.abs(dy)>3) d.mv=1;
@@ -7619,10 +7817,11 @@ function pvMove(e){
       if(hd==='n'){ Hn=Math.max(86,Math.min(d.t+d.hh,d.hh-dy)); T=d.t+d.hh-Hn; }
     }
     st.left=L+'px'; st.top=T+'px'; st.width=Wn+'px'; st.height=Hn+'px'; }
-  else{ st.left=Math.max(0,Math.min(PW-d.w,d.l+dx))+'px'; st.top=Math.max(0,Math.min(PH-d.hh,d.t+dy))+'px'; }
+  else{ st.left=Math.max(0,Math.min(PW-d.w,d.l+dx))+'px'; st.top=Math.max(0,Math.min(PH-d.hh,d.t+dy))+'px'; if(d.mv){ d.cy=e.clientY; d.xe={clientX:e.clientX,clientY:e.clientY}; pvDragFx(d,e); } }
 }
 function pvUp(e){
-  if(!DR) return; var d=DR; DR=null; d.o.classList.remove('rp-drag'); if(!d.mv) return;
+  if(!DR) return; var d=DR; DR=null; clearInterval(d.iv); pvDragEnd(); d.o.classList.remove('rp-drag'); if(!d.mv){ paClick(d.o,e); return; }
+  if(d.xt&&!d.h){ pvMoveTo(d,e); return; }
   var o=pvOwner(+d.o.getAttribute('data-si'),+d.o.getAttribute('data-ci')), q=o&&o.ph[+d.o.getAttribute('data-pi')]; if(!q) return drawViewB();
   var r4=function(v){ return Math.round(v*10000)/10000; }, nb={x:r4(parseFloat(d.o.style.left)/PW),y:r4(parseFloat(d.o.style.top)/PH),w:r4(parseFloat(d.o.style.width)/PW)};
   if(d.h||(q.box&&isFinite(q.box.h))){ nb.h=r4((parseFloat(d.o.style.height)-26)/PH); nb.fit=(q.box&&q.box.fit)||'cover'; }
@@ -7651,11 +7850,11 @@ function pvClick(e){
 }
 async function pvChange(e){
   var t=e.target, a=t.getAttribute&&t.getAttribute('data-pv'); if(!a||!t.files||!t.files.length) return;
-  var o=pvOwner(+t.getAttribute('data-si'),+t.getAttribute('data-ci')); if(!o) return; var files=[].slice.call(t.files); t.value=''; RP.pvLocal=0;
+  var cia=t.getAttribute('data-ci'), ci0=(cia===null||cia==='')?-1:+cia; if(isNaN(ci0)) ci0=-1; var o=pvOwner(+t.getAttribute('data-si'),ci0); if(!o) return; var files=[].slice.call(t.files); t.value=''; RP.pvLocal=0;
   try{
-    if(a==='rep'){ var i=+t.getAttribute('data-pi'), old=o.ph[i]; if(!old) return; toast('Replacing photo…'); var n=await pvStore(files[0]); o.ph[i]=n; pvDrop(old); }
-    else{ files=files.slice(0,Math.max(0,4-o.ph.length)); if(!files.length) return toast('A slide can hold up to 4 added photos.',true); toast('Adding '+files.length+' photo'+(files.length>1?'s':'')+'…'); for(var k=0;k<files.length;k++) o.ph.push(await pvStore(files[k])); }
-    dirty(); drawViewB(); toast(RP.pvLocal?'Photo kept only until this page is closed: the dashboard could not store it.':'Done. Press Save settings to keep this arrangement.',!!RP.pvLocal);
+    if(a==='rep'){ var i=+t.getAttribute('data-pi'), old=o.ph[i]; if(!old) return; toast('Replacing photo…'); var n=await pvStore(files[0]); if(old.pg) n.pg=old.pg; o.ph[i]=n; pvDrop(old); }
+    else{ var pg0=+t.getAttribute('data-pg')||0, room=ci0>=0?(4-o.ph.length):(pMax()-(tplX()&&pg0?photoList(o).filter(function(x){ return x.p.pg===pg0; }).length:photoList(o).length)); var n0=files.length; files=files.slice(0,Math.max(0,room)); RP.pvNote=(files.length&&files.length<n0)?'Only '+files.length+' of '+n0+' photos were added: this photo page holds up to '+pMax()+'. Press Save settings to keep this arrangement.':''; if(!files.length) return toast(ci0>=0?'A card can hold up to 4 photos.':'This photo page already holds '+pMax()+' photos (the limit in Setup). Remove one, or raise "Photos per page" in Setup.',true); toast('Adding '+files.length+' photo'+(files.length>1?'s':'')+'…'); for(var k=0;k<files.length;k++){ var nn=await pvStore(files[k]); if(tplX()&&ci0<0) nn.pg=pg0||1; o.ph.push(nn); } }
+    dirty(); drawViewB(); toast(RP.pvLocal?'Photo kept only until this page is closed: the dashboard could not store it.':(RP.pvNote||'Done. Press Save settings to keep this arrangement.'),!!RP.pvLocal||!!RP.pvNote); RP.pvNote='';
   }catch(x){ toast((x&&x.message)||'Could not read the picture.',true); }
 }
 function tplBox(){
@@ -7663,6 +7862,7 @@ function tplBox(){
   var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><p style="'+tx+'">Photos are never changed when added or replaced. Press Remove stamps on a photo (or Remove all stamps) and Claude will find any burned-in date, time or location text and remove only that. Restore original undoes it.</p></div>';
   h+='<div class="rp-bx"><h5>Separate concerns by building</h5><select data-f="cnsep"><option value="on"'+(RP.cfg.cnsep!=='off'?' selected':'')+'>On: one column per building, with a separator</option><option value="off"'+(RP.cfg.cnsep==='off'?' selected':'')+'>Off: one mixed list</option></select><p style="'+tx+'">On slides that show two projects, each project gets its own labelled column of concerns, with a gold separator between them.</p></div>';
   h+='<div class="rp-bx"><h5>Concerns shown per project</h5><select data-f="cnmax">'+['2','3','4','5','all'].map(function(v){ var cur=(RP.cfg.cnmax>=1&&RP.cfg.cnmax<=20)?String(RP.cfg.cnmax):'all'; return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+(v==='all'?'All concerns':v+' concerns')+'</option>'; }).join('')+'</select><p style="'+tx+'">How many areas of concern each project shows on the slide. Any concern can still be deleted on the slide (Edit text), and a note tells you when some do not fit.</p></div>';
+  if(tplB()) h+='<div class="rp-bx"><h5>Photos per photo page</h5><select data-f="pmax">'+[2,3,4,5,6,8,10,12].map(function(v){ return '<option value="'+v+'"'+(pMax()===v?' selected':'')+'>'+v+' photos</option>'; }).join('')+'</select><p style="'+tx+'">The most photos one photo page can hold. Photos stay on the page where you add them; only you move them, by dragging a photo onto another photo page in the preview. Cards keep their own limit of 4.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Cover page (Template B)</h5><div class="rp-g2"><div><label>Department</label><input type="text" data-f="b.dept" value="'+esc(b.dept)+'"></div><div><label>First line</label><input type="text" data-f="b.l1" value="'+esc(b.l1)+'"></div><div><label>Subtitle</label><input type="text" data-f="b.sub" value="'+esc(b.sub)+'"></div></div><label style="margin-top:8px">Title (Enter starts a second line)</label><textarea data-f="b.title" rows="2" style="width:100%;font:inherit;padding:6px 8px;border:1px solid #c9d1e0;border-radius:6px">'+esc(b.title)+'</textarea><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="b.end"'+(b.end?' checked':'')+'> Add a closing "Thank you" slide</label><p style="'+tx+'">The month and year follow the data date ('+esc(dd(cutIso()))+'). Template B uses one progress page and one photos page for each slide, and the overview shows the planned or forecast style only.</p></div>';
   if(tplX()) h=h.replace(/<div class="rp-bx"><h5>Report template<\/h5>[\s\S]*?<\/div>/,'<div class="rp-bx"><h5>ExCom report</h5><p style="'+tx+'">One summary page and two photo pages for each project. It has its own projects, photos and text edits, separate from the monthly report. Commencement date, planned finish, forecast finish and the duration come from the dashboard data and can be edited in the preview.</p></div>');
@@ -7743,6 +7943,7 @@ function drawView(){
   body.classList.toggle('rp-editing',!!RP.ed); document.getElementById('rptHint').hidden=!RP.ed; var rst=document.getElementById('rptRst'); if(rst) rst.hidden=!Object.keys(RP.ov.v).length; var eb=document.getElementById('rptEdit'); if(eb) eb.textContent=RP.ed?'Done editing':'Edit text';
 }
 function setMode(m){
+  var ab0=document.getElementById('rpAlBar'); if(ab0) ab0.remove(); var ar0=document.getElementById('rpArr'); if(ar0) ar0.remove();
   var tt0=document.querySelector('#rptRoot .rp-rbar b'); if(tt0&&tt0.firstChild) tt0.firstChild.nodeValue=tplX()?'ExCom report':'Progress report';
   RP.mode=m; var b=document.getElementById('rptBody'), s=document.getElementById('rptSetup');
   b.hidden=m!=='view'; s.hidden=m!=='setup';
@@ -7792,7 +7993,7 @@ async function save(){
 function pkgsOf(code){ var m={}, o=[]; (model.rows||[]).forEach(function(r){ if(r.code===code&&!m[r.pkg]){ m[r.pkg]=1; o.push(r.pkg); } }); return o; }
 function thumbs(list,s,c){
   return (list||[]).map(function(p,i){ return '<div class="rp-th">'+(RP.ph[p.id]?'<img alt="" src="'+RP.ph[p.id]+'">':'')+'<button data-r="prem" data-s="'+s+'" data-c="'+c+'" data-i="'+i+'" title="Remove">✕</button></div>'; }).join('')+
-    ((list||[]).length<4?'<label class="rp-sb" style="margin:0">+ Add photos<input type="file" accept="image/*" multiple hidden data-r="file" data-s="'+s+'" data-c="'+c+'"></label>':'<small style="color:#5b6784">4 photos (maximum)</small>');
+    ((list||[]).length<pvCap(+c)?'<label class="rp-sb" style="margin:0">+ Add photos<input type="file" accept="image/*" multiple hidden data-r="file" data-s="'+s+'" data-c="'+c+'"></label>':'<small style="color:#5b6784">'+pvCap(+c)+' photos (maximum)</small>');
 }
 function drawSetup(){
   var el=document.getElementById('rptSetup'), c0=RP.cfg, projs=Array.from(model.projects.keys()).sort();
@@ -7860,7 +8061,7 @@ function onChange(e){
   else if(f==='c.nc'){ cardOf(t).nc=!t.checked; dirty(); }
   else if(f==='pages'){ RP.cfg.pages=t.value; dirty(); }
   else if(f==='tpl'){ RP.cfg.tpl=t.value; dirty(); drawSetup(); }
-  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnsep'){ RP.cfg.cnsep=t.value==='off'?'off':'on'; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
+  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnsep'){ RP.cfg.cnsep=t.value==='off'?'off':'on'; dirty(); }   else if(f==='pmax'){ RP.cfg.pmax=+t.value; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
   else if(f==='clean'){ RP.cfg.clean=!!t.checked; dirty(); }
   else if(f==='b.end'){ RP.cfg.b=RP.cfg.b||{}; RP.cfg.b.end=!!t.checked; dirty(); }
   else if(t.getAttribute&&t.getAttribute('data-r')==='file') addPhotos(t);
@@ -7873,7 +8074,7 @@ function shrink(file){
 }
 async function addPhotos(inp){
   var s=slideOf(inp), ci=+inp.getAttribute('data-c'), tgt=ci>=0?s.cards[ci]:s; tgt.ph=tgt.ph||[];
-  var files=[].slice.call(inp.files||[]).slice(0,4-tgt.ph.length); if(!files.length) return;
+  var files=[].slice.call(inp.files||[]).slice(0,pvCap(ci)-tgt.ph.length); if(!files.length) return;
   RP.msg='Adding '+files.length+' photo'+(files.length>1?'s':'')+'…'; drawSetup(); var bad=0, local=0;
   for(var i=0;i<files.length;i++){
     try{ var o=await shrink(files[i]), id=uid(); RP.ph[id]=o.data; tgt.ph.push({id:id,w:o.w,h:o.h}); dirty();
