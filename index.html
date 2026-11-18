@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V384</title>
+<title>TEST · KEC Project Controls Dashboard · V386</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1374,7 +1374,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V384</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V386</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1551,7 +1551,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V384';
+var APP_VER='V386';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6797,6 +6797,7 @@ function xcEnter(){ if(!RP.xm) RP.full=RP.cfg; RP.xm=true; if(!RP.full.excom||!A
 function xcLeave(){ if(RP.xm){ RP.xm=false; RP.cfg=RP.full; } }
 function xcOut(){ return RP.xm&&RP.full?RP.full:RP.cfg; }
 function xcCfgs(){ var o=[RP.cfg]; if(RP.full){ if(RP.xm) o.push(RP.full); else if(RP.full.excom) o.push(RP.full.excom); } return o; }
+function fmy(iso){ if(!iso) return '—'; var p=String(iso).split('-'); return MON[+p[1]-1].toUpperCase()+' '+p[0]; } /* V385: ExCom dates show month and year only */
 function xcInfo(c,P,cut){
   var rr=cardRows(P,c); if(!rr.length) return {empty:true};
   var a=agg(rr,cut,true), ir=(model&&model.info&&c.code)?(model.info.get(c.code)||model.info.get(String(c.code).trim())):null, st=(ir&&ir.start)||a.start||null, pf=a.pf||null, ff=a.ff||null, dur=(st&&pf)?dayDiff(st,pf):null, el=(st&&cut)?dayDiff(st,cut):null;
@@ -6810,37 +6811,44 @@ function xcArc(cx,cy,ro,ri,a0,a1,f){
   return bP(x0,y0,2*ro,2*ro,pts,f);
 }
 function progCardX(sc,c,P,cut,x,y,w,h){
-  var K='c:'+c.id+':', d=xcInfo(c,P,cut), z=Math.max(1,Math.min(1.35,h/228,w/640)), zy=Math.max(z,Math.min(1.7,h/232)), ring=w>=560, rw=ring?200*z:0, lw=w-34-rw, X1=x+18;
-  sc.push(bR(x,y,w,h,{f:'#fff',rd:12,sh:1}));
-  var tf=fit(c.t||'',lw,22*z,16*z,true,1.1);
-  sc.push(bT(X1,y+12*zy,lw,22*z,tf.s,{fs:16*z,b:1,up:1,k:K+'t',full:c.t||''}));
-  var labs=['Commencement date','Planned finish','Forecast finish'], vals=d.empty?['','','']:[d.st,d.pf,d.ff], cw=lw/3;
-  labs.forEach(function(lb,i){ var vx=X1+i*cw, v=vals[i]?fd4(vals[i]):'—';
-    sc.push(bR(vx,y+46*zy,2.5,32*z,{f:GD}));
-    sc.push(bT(vx+9,y+46*zy,cw-14,12*z,lb,{fs:7.5*z,c:GR,b:1,ls:1.3,up:1,k:K+'dl'+i}));
-    sc.push(bT(vx+9,y+60*zy,cw-14,17*z,v,{fs:12.5*z,b:1,c:v==='—'?GD:NV,k:K+'dv'+i})); });
-  var rows=[['Planned',GD,'plan'],['Actual',NV,'act']], by=[y+112*zy,y+140*zy], th=6*z, lw2=78*z, pw=60*z;
+  /* V386 layout B: title, then a tall ring card on the left; on the right three date cards and the progress card */
+  var K='c:'+c.id+':', d=xcInfo(c,P,cut), z=Math.max(0.85,Math.min(1.35,h/228,w/640)), g=12*z, T=30*z, ry=y+T, R=Math.max(120,h-T-2);
+  var tf=fit(c.t||'',w-20,22*z,16*z,true,1.1);
+  sc.push(bT(x+4,y+2*z,w-8,22*z,tf.s,{fs:16*z,b:1,up:1,k:K+'t',full:c.t||''}));
+  var rc=Math.max(190*z,w*0.29), rx=x, ax=x+rc+g, aw=w-rc-g;
+  /* ring card */
+  sc.push(bR(rx,ry,rc,R,{f:'#fff',rd:10*z,sh:1}));
+  sc.push(bT(rx+14*z,ry+11*z,rc-28*z,12*z,'Time elapsed',{fs:7.5*z,c:GR,b:1,ls:1.4,up:1,k:K+'rtl'}));
+  var ro=Math.max(30*z,Math.min((R-62*z)/2,(rc-44*z)/2)), ri=ro-12*z, cx=rx+rc/2, cy=ry+26*z+ro, fr2=(d.dur&&d.el!=null)?Math.min(1,d.el/d.dur):0;
+  sc.push(xcArc(cx,cy,ro,ri,0,180,'#e4e9ed')); sc.push(xcArc(cx,cy,ro,ri,180,360,'#e4e9ed'));
+  if(fr2>0.004) sc.push(xcArc(cx,cy,ro,ri,0,Math.min(359.5,fr2*360),NV));
+  sc.push(bT(cx-40*z,cy-13*z,80*z,24*z,d.empty||d.dur==null?'—':Math.round(fr2*100)+'%',{fs:19*z,b:1,al:'c',k:K+'elp'}));
+  sc.push(bT(cx-40*z,cy+9*z,80*z,12*z,'Elapsed',{fs:7.5*z,c:GR,ls:1.3,up:1,al:'c',k:K+'ell'}));
+  var ty=cy+ro+9*z, hw=rc/2;
+  sc.push(bT(rx,ty,hw,15*z,d.dur!=null?d.dur+' d':'—',{fs:11*z,b:1,c:GD,al:'c',k:K+'durv'}));
+  sc.push(bT(rx,ty+15*z,hw,11*z,'Duration',{fs:7,c:GR,ls:1,up:1,al:'c',k:K+'durl'}));
+  sc.push(bT(rx+hw,ty,hw,15*z,d.el!=null?d.el+' d':'—',{fs:11*z,b:1,c:GD,al:'c',k:K+'elv'}));
+  sc.push(bT(rx+hw,ty+15*z,hw,11*z,'Elapsed',{fs:7,c:GR,ls:1,up:1,al:'c',k:K+'ell2'}));
+  /* date cards */
+  var dh=Math.max(48*z,R*0.33), cw=(aw-2*g)/3, labs=['Commencement date','Planned finish','Forecast finish'], vals=d.empty?['','','']:[d.st,d.pf,d.ff];
+  labs.forEach(function(lb,i){ var vx=ax+i*(cw+g), v=vals[i]?fmy(vals[i]):'—';
+    sc.push(bR(vx,ry,cw,dh,{f:'#fff',rd:10*z,sh:1})); sc.push(bR(vx+8*z,ry,cw-16*z,3,{f:GD}));
+    sc.push(bT(vx+14*z,ry+10*z,cw-28*z,12*z,lb,{fs:7.5*z,c:GR,b:1,ls:1.3,up:1,k:K+'dl'+i}));
+    sc.push(bT(vx+14*z,ry+dh*0.5,cw-28*z,20*z,v,{fs:14*z,b:1,c:v==='—'?GD:NV,k:K+'dv'+i})); });
+  /* progress card */
+  var py=ry+dh+g, ph=R-dh-g, X1=ax+16*z, lw=aw-32*z, th=7*z, lw2=70*z, pw=56*z;
+  sc.push(bR(ax,py,aw,ph,{f:'#fff',rd:10*z,sh:1}));
+  sc.push(bT(X1,py+10*z,200*z,12*z,'Progress',{fs:7.5*z,c:GR,b:1,ls:1.4,up:1,k:K+'ptl'}));
+  var rows=[['Planned',GD,'plan'],['Actual',NV,'act']], by=[py+ph*0.40,py+ph*0.62];
   rows.forEach(function(r,j){
-    sc.push(bT(X1,by[j]-3*z,62*z,12*z,r[0],{fs:7.5*z,c:GR,b:1,ls:1.3,up:1,k:K+'l'+r[2]}));
+    sc.push(bT(X1,by[j]-3*z,lw2,12*z,r[0],{fs:7.5*z,c:GR,b:1,ls:1.3,up:1,k:K+'l'+r[2]}));
     if(d.empty){ sc.push(bT(X1+lw2,by[j]-4*z,lw-lw2,14*z,'Data not reported',{fs:10.5*z,c:GR,k:K+'dnr'+r[2]})); return; }
     var wv=numOf(ov(K+r[2],null)), fr=wv!=null?wv/100:d[r[2]], bx=X1+lw2, bw=lw-lw2-pw;
     sc.push(bR(bx,by[j],bw,th,{f:TRK,rd:th/2}));
     if(fr>0) sc.push(bR(bx,by[j],Math.max(5,bw*Math.min(1,fr)),th,{f:r[1],rd:th/2}));
     sc.push(bT(X1+lw-pw,by[j]-6*z,pw,18*z,pct(d[r[2]]),{fs:12.5*z,b:1,al:'r',k:K+r[2]}));
   });
-  if(!d.empty){ var v=(d.act-d.plan)*100, vt=(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan', cwid=92*z; sc.push(bR(X1+lw-cwid,y+160*zy,cwid,17*z,{f:v>=0?'#2f8f65':RD,rd:9*z})); sc.push(bT(X1+lw-cwid,y+160*zy,cwid,17*z,vt,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:K+'var'})); }
-  if(ring){
-    var D=112*z, cx=X1+lw+rw/2, cy=y+h/2-16*z, ro=D/2, ri=ro-12*z, fr2=(d.dur&&d.el!=null)?Math.min(1,d.el/d.dur):0;
-    sc.push(xcArc(cx,cy,ro,ri,0,180,'#e4e9ed')); sc.push(xcArc(cx,cy,ro,ri,180,360,'#e4e9ed'));
-    if(fr2>0.004) sc.push(xcArc(cx,cy,ro,ri,0,Math.min(359.5,fr2*360),NV));
-    sc.push(bT(cx-40*z,cy-13*z,80*z,24*z,d.empty||d.dur==null?'—':Math.round(fr2*100)+'%',{fs:19*z,b:1,al:'c',k:K+'elp'}));
-    sc.push(bT(cx-40*z,cy+9*zy,80*z,12*z,'Elapsed',{fs:7.5*z,c:GR,ls:1.3,up:1,al:'c',k:K+'ell'}));
-    var ty=cy+ro+10*z;
-    sc.push(bT(cx-rw/2,ty,rw/2-4,15*z,d.dur!=null?d.dur+' d':'—',{fs:11*z,b:1,c:GD,al:'c',k:K+'durv'}));
-    sc.push(bT(cx-rw/2,ty+15*zy,rw/2-4,11*z,'Duration',{fs:7,c:GR,ls:1,up:1,al:'c',k:K+'durl'}));
-    sc.push(bT(cx+4,ty,rw/2-4,15*z,d.el!=null?d.el+' d':'—',{fs:11*z,b:1,c:GD,al:'c',k:K+'elv'}));
-    sc.push(bT(cx+4,ty+15*zy,rw/2-4,11*z,'Elapsed',{fs:7,c:GR,ls:1,up:1,al:'c',k:K+'ell2'}));
-  }
+  if(!d.empty){ var v=(d.act-d.plan)*100, vt=(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan', cwid=92*z; sc.push(bR(X1+lw-cwid,py+ph-24*z,cwid,17*z,{f:v>=0?'#2f8f65':RD,rd:9*z})); sc.push(bT(X1+lw-cwid,py+ph-24*z,cwid,17*z,vt,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:K+'var'})); }
 }
 function sceneCoverX(cut){
   var b=bc(), my=monthYear(cut), sc=[], lw=190, PHT=470;
