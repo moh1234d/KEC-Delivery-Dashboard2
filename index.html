@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V396</title>
+<title>TEST · KEC Project Controls Dashboard · V398</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1404,7 +1404,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V396</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V398</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1581,7 +1581,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V396';
+var APP_VER='V398';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6891,7 +6891,7 @@ function progCardX(sc,c,P,cut,x,y,w,h){
     if(fr>0) sc.push(bR(bx,by[j],Math.max(5,bw*Math.min(1,fr)),th,{f:(done&&r[2]==='act')?'#2f8f65':r[1],rd:th/2}));
     sc.push(bT(X1+lw-pw,by[j]-6*z,pw,18*z,pct(d[r[2]]),{fs:12.5*z,b:1,al:'r',k:K+r[2]}));
   });
-  if(!d.empty){ var v=(d.act-d.plan)*100, v0=Math.abs(v)<0.05, vt=v0?'On plan':(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan', cwid=92*z; sc.push(bR(X1+lw-cwid,py+ph-24*z,cwid,17*z,{f:v0?GR:(v>=0?'#2f8f65':RD),rd:9*z})); sc.push(bT(X1+lw-cwid,py+ph-24*z,cwid,17*z,vt,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:K+'var'})); }
+  if(!d.empty&&vcOn()){ var v=(d.act-d.plan)*100, v0=Math.abs(v)<0.05, vt=v0?'On plan':(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan', cwid=92*z; sc.push(bR(X1+lw-cwid,py+ph-24*z,cwid,17*z,{f:v0?GR:(v>=0?'#2f8f65':RD),rd:9*z})); sc.push(bT(X1+lw-cwid,py+ph-24*z,cwid,17*z,vt,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:K+'var'})); }
 }
 function sceneCoverX(cut){
   var b=bc(), my=monthYear(cut), sc=[], lw=190, PHT=470;
@@ -6945,7 +6945,8 @@ function sceneCompanyX(P,cut){
   cmpChip(sc,X0+W-20-92,ty+32,92,17,D.T.plan,D.T.act,1,K+'tv');
   /* company rows */
   var top=ty+th+14, bot=PH0-59, n=D.list.length, gap=14, mw=W-170-130-40, TF=9.5;
-  var rows=D.list.map(function(o){ var lines=1, cx=0; o.tg=o.pr.map(function(p,i){ var nm=String(ov(K+o.n+':tn'+i,p.t)), w1=xcTW(nm,TF)+xcTW(pct(p.act),TF)+22; if(cx>0&&cx+w1>mw){ lines++; cx=0; } var r={x:cx,l:lines-1,w:w1,nm:nm,i:i,p:p}; cx+=w1+6; return r; }); o.lines=lines; return Math.max(96,64+lines*24+10); });
+  var CGAP=26, CW=(mw-CGAP)/2;
+  var rows=D.list.map(function(o){ o.tg=o.pr.map(function(p,i){ return {i:i,nm:String(ov(K+o.n+':tn'+i,p.t)),p:p,c:i%2,l:Math.floor(i/2)}; }); o.lines=Math.max(1,Math.ceil(o.pr.length/2)); return Math.max(96,64+o.lines*24+10); });
   var avail=bot-top-gap*(n-1), need=rows.reduce(function(a,b){ return a+b; },0), sf=need>avail?avail/need:1, extra=Math.max(0,avail-need), y=top;
   D.list.forEach(function(o,ri){
     var rh=rows[ri]*sf+(sf===1?Math.min(extra*(rows[ri]/need),rows[ri]*.55):0), z=Math.max(.8,Math.min(1,sf)), key=K+o.n+':';
@@ -6960,11 +6961,10 @@ function sceneCompanyX(P,cut){
       sc.push(bR(mx+62,yy,bw,6,{f:TRK,rd:3})); sc.push(bR(mx+62,yy,Math.max(4,bw*Math.min(1,r[2])),6,{f:r[1],rd:3}));
       sc.push(bT(mx+62+bw+8,yy-6,48,16,pct(r[2]),{fs:11,b:1,al:'r',k:key+'v'+j})); });
     var tyy=by0+2*17*z+16;
-    o.tg.forEach(function(t){ var tx=mx+t.x, tyl=tyy+t.l*24;
-      sc.push(bR(tx,tyl,t.w,19,{f:CRM,rd:9.5}));
-      var nw=xcTW(t.nm,TF); sc.push(bT(tx+9,tyl,nw+4,19,t.nm,{fs:TF,c:GR,va:'m',k:key+'tn'+t.i})); sc.push(bT(tx+9+nw+5,tyl,t.w-nw-14,19,pct(t.p.act),{fs:TF,b:1,va:'m',k:key+'tp'+t.i})); });
+    o.tg.forEach(function(t){ var tx=mx+t.c*(CW+CGAP), tyl=tyy+t.l*24, nw0=xcTW(t.nm,10.5)*1.08, fs=nw0>CW-12?Math.max(7.5,10.5*(CW-12)/nw0):10.5;
+      sc.push(bR(tx,tyl+3,2,13,{f:GD})); sc.push(bT(tx+9,tyl,CW-9,19,t.nm,{fs:fs,c:NV,b:1,va:'m',k:key+'tn'+t.i})); sc.push(bR(tx,tyl+21,CW,1,{f:'#ece8de'})); });
     sc.push(bT(X0+W-150,y+rh/2-26,130,34,pct(o.act),{fs:26,b:1,al:'r',k:key+'a'}));
-    cmpChip(sc,X0+W-20-92,y+rh/2+14,92,17,o.plan,o.act,1,key+'var');
+    if(vcOn()) cmpChip(sc,X0+W-20-92,y+rh/2+14,92,17,o.plan,o.act,1,key+'var');
     y+=rh+gap; });
   return {sc:sc,bg:CRM};
 }
@@ -7474,6 +7474,7 @@ function pmUp(e){
 var XPMAX=6;
 function xpIdx(s,tok){ var i=-1; (s.xp||[]).forEach(function(x,j){ if('x'+x.id===tok) i=j; }); return i; }
 function pgValid(s,v){ return v===1||v===2||(typeof v==='string'&&xpIdx(s,v)>=0); }
+function vcOn(){ return !!(RP.cfg&&RP.cfg.vchip==='on'); }
 function pMax(){ var v=RP.cfg&&RP.cfg.pmax; return (v>=2&&v<=12)?+v:6; }
 function pvCap(ci){ return ci>=0?4:pMax()*(tplX()?2:1); }
 function phAssign(s){
@@ -7887,6 +7888,7 @@ function tplBox(){
   var h='<div class="rp-bx"><h5>Report template</h5><select data-f="tpl"><option value="a"'+(!tplB()?' selected':'')+'>Template A: the current layout</option><option value="b"'+(tplB()?' selected':'')+'>Template B: Delivery Department monthly report (A4 landscape)</option></select><p style="'+tx+'">Both templates take the Area of concern from the Google Sheet below. Export PPTX always builds the Template B layout as editable PowerPoint slides.</p><p style="'+tx+'">'+aocNote()+'</p><p style="'+tx+'">Photos are never changed when added or replaced. Press Remove stamps on a photo (or Remove all stamps) and Claude will find any burned-in date, time or location text and remove only that. Restore original undoes it.</p></div>';
   h+='<div class="rp-bx"><h5>Separate concerns by building</h5><select data-f="cnsep"><option value="on"'+(RP.cfg.cnsep!=='off'?' selected':'')+'>On: one column per building, with a separator</option><option value="off"'+(RP.cfg.cnsep==='off'?' selected':'')+'>Off: one mixed list</option></select><p style="'+tx+'">On slides that show two projects, each project gets its own labelled column of concerns, with a gold separator between them.</p></div>';
   h+='<div class="rp-bx"><h5>Concerns shown per project</h5><select data-f="cnmax">'+['2','3','4','5','all'].map(function(v){ var cur=(RP.cfg.cnmax>=1&&RP.cfg.cnmax<=20)?String(RP.cfg.cnmax):'all'; return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+(v==='all'?'All concerns':v+' concerns')+'</option>'; }).join('')+'</select><p style="'+tx+'">How many areas of concern each project shows on the slide. Any concern can still be deleted on the slide (Edit text), and a note tells you when some do not fit.</p></div>';
+  if(tplX()) h+='<div class="rp-bx"><h5>Variance chip on projects (e.g. “−0.3% vs plan”)</h5><select data-f="vchip"><option value="off"'+(!vcOn()?' selected':'')+'>Hidden</option><option value="on"'+(vcOn()?' selected':'')+'>Shown on each project</option></select><p style="'+tx+'">The coloured chip that compares a project’s actual progress with its plan. It is hidden by default. The company totals keep their own chip.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Photos per photo page</h5><select data-f="pmax">'+[2,3,4,5,6,8,10,12].map(function(v){ return '<option value="'+v+'"'+(pMax()===v?' selected':'')+'>'+v+' photos</option>'; }).join('')+'</select><p style="'+tx+'">The most photos one photo page can hold. Photos stay on the page where you add them; only you move them, by dragging a photo onto another photo page in the preview. Cards keep their own limit of 4.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Cover page (Template B)</h5><div class="rp-g2"><div><label>Department</label><input type="text" data-f="b.dept" value="'+esc(b.dept)+'"></div><div><label>First line</label><input type="text" data-f="b.l1" value="'+esc(b.l1)+'"></div><div><label>Subtitle</label><input type="text" data-f="b.sub" value="'+esc(b.sub)+'"></div></div><label style="margin-top:8px">Title (Enter starts a second line)</label><textarea data-f="b.title" rows="2" style="width:100%;font:inherit;padding:6px 8px;border:1px solid #c9d1e0;border-radius:6px">'+esc(b.title)+'</textarea><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="b.end"'+(b.end?' checked':'')+'> Add a closing "Thank you" slide</label><p style="'+tx+'">The month and year follow the data date ('+esc(dd(cutIso()))+'). Template B uses one progress page and one photos page for each slide, and the overview shows the planned or forecast style only.</p></div>';
@@ -8086,7 +8088,7 @@ function onChange(e){
   else if(f==='c.nc'){ cardOf(t).nc=!t.checked; dirty(); }
   else if(f==='pages'){ RP.cfg.pages=t.value; dirty(); }
   else if(f==='tpl'){ RP.cfg.tpl=t.value; dirty(); drawSetup(); }
-  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnsep'){ RP.cfg.cnsep=t.value==='off'?'off':'on'; dirty(); }   else if(f==='pmax'){ RP.cfg.pmax=+t.value; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
+  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnsep'){ RP.cfg.cnsep=t.value==='off'?'off':'on'; dirty(); }   else if(f==='vchip'){ RP.cfg.vchip=t.value==='on'?'on':'off'; dirty(); }   else if(f==='pmax'){ RP.cfg.pmax=+t.value; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
   else if(f==='clean'){ RP.cfg.clean=!!t.checked; dirty(); }
   else if(f==='b.end'){ RP.cfg.b=RP.cfg.b||{}; RP.cfg.b.end=!!t.checked; dirty(); }
   else if(t.getAttribute&&t.getAttribute('data-r')==='file') addPhotos(t);
