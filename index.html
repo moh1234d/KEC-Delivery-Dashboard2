@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V391</title>
+<title>TEST · KEC Project Controls Dashboard · V392</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1385,7 +1385,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V391</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V392</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1562,7 +1562,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V391';
+var APP_VER='V392';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6900,7 +6900,7 @@ function cmpChip(sc,x,y,w,hh,plan,act,z,k){ var v=(act-plan)*100, v0=Math.abs(v)
   sc.push(bR(x,y,w,hh,{f:v0?GR:(v>=0?'#2f8f65':RD),rd:hh/2})); sc.push(bT(x,y,w,hh,t,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:k})); }
 function sceneCompanyX(P,cut){
   var sc=[], K='cm:', D=cmpData(P,cut), PW0=1122, PH0=793;
-  sc.push(bR(0,0,286,PH0,{f:NV})); sc.push(bL(24,56,24,PH0-56,GD,1.5));
+  sc.push(bR(0,0,286,PH0,{f:NV})); var skL=sbOn('co'); if(skL) sbArt(sc,PH0,1); sc.push(bL(24,56,24,skL?463:PH0-56,GD,1.5));
   var nl=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl,'o:cmp:logo',48,34,150,150/RB_IMG.logoR,{uni:1,nw:PW0,nh:PH0,nodel:1});
   sc.push(bT(48,148,222,52,'Progress by company',{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'}));
   sc.push(bT(48,206,222,60,'All projects',{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'}));
@@ -6950,7 +6950,7 @@ function sceneCompanyX(P,cut){
 function pcOn(){ return !(RP.cfg&&RP.cfg.pc&&RP.cfg.pc.on===false); }
 function scenePrjX(P,cut){
   var sc=[], K='pc:', D=cmpData(P,cut), PW0=1122, PH0=793, GN='#2f8f65';
-  sc.push(bR(0,0,286,PH0,{f:NV})); sc.push(bL(24,56,24,PH0-56,GD,1.5));
+  sc.push(bR(0,0,286,PH0,{f:NV})); var skL=sbOn('co'); if(skL) sbArt(sc,PH0,1); sc.push(bL(24,56,24,skL?463:PH0-56,GD,1.5));
   var nl=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl,'o:pc:logo',48,34,150,150/RB_IMG.logoR,{uni:1,nw:PW0,nh:PH0,nodel:1});
   sc.push(bT(48,148,222,52,'Projects by company',{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'}));
   sc.push(bT(48,206,222,60,'All projects',{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'}));
@@ -7078,11 +7078,36 @@ function concernCard(sc,o,x,y,w,h,sid,i){
     var ah=y+h-(ya+15*z)-8; if(ah>=11){ var al=cnActLines(x1.action), afs=9.5*z, af=fitL(al,iw,afs,1.28); while(af.n*afs*1.28>ah&&afs>7){ afs-=.5; af=fitL(al,iw,afs,1.28); } sc.push(bT(x+20,ya+15*z,iw,ah,af.s,{fs:afs,c:GR,lh:1.28,k:K+'a'})); }
   }
 }
+/* ===== V392: sidebar design "Gold skyline": gold angled block with a schematic skyline rising into the navy, warm glow behind the tallest tower ===== */
+function sbMode(){ var v=RP.cfg&&RP.cfg.sb; if(v==='n'||v==='c'||v==='a') return v; return tplX()?'c':'n'; }
+function sbOn(kind){ var m=sbMode(); return m==='a'||(m==='c'&&kind==='co'); }
+function sbMix(a,b,t){ var A=parseInt(a.slice(1),16), B=parseInt(b.slice(1),16); return '#'+[16,8,0].map(function(s){ var x=(A>>s)&255, y=(B>>s)&255, v=Math.round(x+(y-x)*t); return ('0'+v.toString(16)).slice(-2); }).join(''); }
+var SB_T=[[4,16,14,'f'],[22,12,30,'f'],[36,18,10,'f'],[58,14,52,'spire'],[76,20,34,'step'],[100,16,78,'spire'],[120,20,56,'f'],[144,16,96,'dome'],[164,22,62,'step'],[190,14,40,'f'],[208,46,215,'super'],[258,14,70,'spire'],[274,12,40,'f']];
+function sbPoly(sc,pts,f){ var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9; pts.forEach(function(p){ x0=Math.min(x0,p[0]); y0=Math.min(y0,p[1]); x1=Math.max(x1,p[0]); y1=Math.max(y1,p[1]); }); sc.push(bP(x0,y0,Math.max(1,x1-x0),Math.max(1,y1-y0),pts.map(function(p){ return [p[0]-x0,p[1]-y0]; }),f)); }
+function sbArt(sc,PHx,kh){
+  var ks=PHx/793, GL='#D9BC86', LG='#E3CB9C', Y=function(y){ return PHx-(793-y)*ks; }, yw=function(cx){ return Y(610-80*cx/286); }, i;
+  /* warm glow behind the tallest tower: stacked soft discs, clipped to the sidebar */
+  for(i=0;i<30;i++){ var rr=190*(1-i/30), al=.34*(i/30+.02), pts=[]; for(var a=0;a<360;a+=12){ var px=231+rr*Math.cos(a*Math.PI/180), py=Y(470)+rr*ks*Math.sin(a*Math.PI/180); pts.push([Math.max(0,Math.min(286,px)),Math.min(PHx,py)]); } sbPoly(sc,pts,sbMix(NV,GL,Math.min(.34,al))); }
+  var tw=function(x,w,rise,st,col){ if(x<0){ w+=x; x=0; } if(x+w>286) w=286-x; if(w<=1) return; var cx=x+w/2, yt=yw(cx)-rise*kh*ks, h0=PHx-yt, s16=16*ks;
+    if(st==='f') sc.push(bR(x,yt,w,h0,{f:col}));
+    else if(st==='spire'){ sc.push(bR(x,yt+s16,w,h0-s16,{f:col})); sc.push(bP(x,yt,w,s16,[[1,s16],[w/2,0],[w-1,s16]],col)); }
+    else if(st==='step'){ sc.push(bR(x,yt+12*ks,w,h0-12*ks,{f:col})); sc.push(bR(x+w*.18,yt,w*.64,14*ks,{f:col})); }
+    else if(st==='dome'){ sc.push(bR(x,yt+w/2,w,h0-w/2,{f:col})); sc.push(bE(x,yt,w,w,{f:col})); }
+    else if(st==='super'){ sc.push(bR(x,yt,w,h0,{f:col})); sc.push(bR(x,yt,w,36*ks,{f:LG})); sc.push(bL(cx,yt,cx,yt-26*ks,GD,1.6)); } };
+  var lay=[[1.35,11,sbMix(NV,GD,.16)],[1.15,-6,sbMix(NV,GD,.34)]];
+  lay.forEach(function(L){ SB_T.forEach(function(t){ if(t[3]!=='super') tw(t[0]+L[1],t[1],t[2]*L[0],t[3],L[2]); }); });
+  sbPoly(sc,[[0,Y(610)],[286,Y(530)],[286,PHx],[0,PHx]],GD);
+  sbPoly(sc,[[0,Y(610)],[286,Y(530)],[286,Y(545)],[0,Y(626)]],sbMix(GD,GL,.55));
+  SB_T.forEach(function(t){ tw(t[0],t[1],t[2],t[3],GD); });
+  var wc=sbMix(GD,NV,.32);
+  SB_T.forEach(function(t){ if(t[2]<50) return; var cx=t[0]+t[1]/2, y0=yw(cx)-t[2]*kh*ks+(t[3]==='super'?36*ks:14*ks)+3*ks, lim=Y(628-80*cx/286), yy;
+    for(yy=y0;yy<lim;yy+=6*ks) sc.push(bR(t[0],yy,t[1],Math.max(.7,ks),{f:wc})); });
+}
 function sceneProgress(s,P,cut,pg){
   var si=(RP.cfg.slides||[]).indexOf(s), sc=[], cards=s.cards||[], n=cards.length, K='s:'+s.id+':';
   var oM=0, oZ=0, oo=function(r){ if(r.mv) oM=1; if(r.rz) oZ=1; return r; }, OK='o:'+s.id+':', n00;
-  sc.push(bR(0,0,286,PH,{f:NV}));
-  n00=sc.length; sc.push(bL(24,56,24,PH-56,GD,1.5)); oo(objBox(sc,n00,OK+'vl',16,56,16,PH-56,{rs:false}));
+  sc.push(bR(0,0,286,PH,{f:NV})); var skP=sbOn('pg'), lnE=skP?Math.round(PH-330*(PH/793)):PH-56; if(skP) sbArt(sc,PH,.72);
+  n00=sc.length; sc.push(bL(24,56,24,lnE,GD,1.5)); oo(objBox(sc,n00,OK+'vl',16,56,16,lnE-56,{rs:false}));
   n00=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); oo(objBox(sc,n00,OK+'logo',48,34,150,150/RB_IMG.logoR,{uni:1}));
   if(s.title){ sc.push(bT(48,148,222,52,s.title,{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'})); sc.push(bT(48,206,222,60,s.frame||'',{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'})); }
   else sc.push(bT(48,148,222,100,s.frame||'',{fs:22,c:GD,up:1,ls:1.4,lh:1.15,k:K+'frame'}));
@@ -7777,6 +7802,7 @@ function drawSetup(){
    tplBox()+(tplB()?'':'<div class="rp-bx"><h5>Cover page</h5><div class="rp-g2"><div><label>Small heading</label><input type="text" data-f="kicker" value="'+esc(c0.kicker||'')+'"></div><div style="grid-column:span 2"><label>Title</label><input type="text" data-f="title" value="'+esc(c0.title||'')+'"></div></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The data date follows the latest cut-off in the dashboard ('+esc(dd(cutIso()))+').</p></div>')+
    (tplB()?'':'<div class="rp-bx"><h5>Pages for each slide</h5><select data-f="pages"><option value="two"'+(pgMode()==='two'?' selected':'')+'>Two pages: progress information with Area of concern, then a progress photos page</option><option value="one"'+(pgMode()==='one'?' selected':'')+'>One page: cards and photos together (the previous layout)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Area of concern shows the rows of the Google Sheet file “Area of concern for CO monthly report” under the card of the same project or package.'+aocNote()+' The progress photos page appears only when the slide has photos.</p></div>')+
    (tplX()?'<div class="rp-bx"><h5>Progress by company page (after the cover)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="cmp.on"'+(cmpOn()?' checked':'')+'> Include a page with the overall progress of each company and its projects, weighted by revised value. Companies come from the Projects Info sheet.</label></div>':'')+
+   '<div class="rp-bx"><h5>Sidebar design</h5><select data-f="sb.mode" style="width:100%;padding:6px;border:1px solid #cdd3e0;border-radius:6px"><option value="n"'+(sbMode()==='n'?' selected':'')+'>Plain navy</option>'+(tplX()?'<option value="c"'+(sbMode()==='c'?' selected':'')+'>Gold skyline on the two company pages</option>':'')+'<option value="a"'+(sbMode()==='a'?' selected':'')+'>Gold skyline on every page with a navy sidebar</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The navy sidebar can carry a gold angled block with a skyline rising from it. Plain navy is the original look.</p></div>'+
    (Object.keys(RP.cfg.pdel||{}).length?'<div class="rp-bx"><h5>Deleted pages ('+Object.keys(RP.cfg.pdel).length+')</h5><p style="margin:8px 0 0;font-size:12px;color:#5b6784">'+Object.keys(RP.cfg.pdel).map(function(k){ return esc((RP.plab&&RP.plab[k])||'Page'); }).join(' · ')+'. These pages are left out of the preview, PDF and PowerPoint. To bring them back, go to the report, click Edit text, then Show deleted pages.</p></div>':'')+
    (tplX()?'<div class="rp-bx"><h5>Projects by company page (after the progress by company page)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="pc.on"'+(pcOn()?' checked':'')+'> Include a page that groups the projects by company, with a progress ring and the forecast finish month for each. Companies come from the Projects Info sheet.</label></div>':'')+
    '<div class="rp-bx"><h5>Overview page (page 1)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="ov.on"'+(ovOn()?' checked':'')+'> Include an overview page: every project by planned completion month, with a photo</label>'+
@@ -7825,6 +7851,7 @@ function onInput(e){
 function onChange(e){
   var t=e.target, f=t.getAttribute&&t.getAttribute('data-f');
   if(f==='c.pk'){ var c=cardOf(t); c.pk=[].slice.call(t.closest('.rp-pk').querySelectorAll('input:checked')).map(function(x){ return x.value; }); dirty(); drawSetup(); }
+  else if(f==='sb.mode'){ RP.cfg.sb=t.value; dirty(); }
   else if(f==='cmp.on'){ RP.cfg.cmp=RP.cfg.cmp||{}; RP.cfg.cmp.on=!!t.checked; dirty(); }
   else if(f==='pc.on'){ RP.cfg.pc=RP.cfg.pc||{}; RP.cfg.pc.on=!!t.checked; dirty(); }
   else if(f==='ov.on'){ RP.cfg.ov=RP.cfg.ov||{style:'a'}; RP.cfg.ov.on=!!t.checked; dirty(); }
