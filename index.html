@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V404</title>
+<title>TEST · KEC Project Controls Dashboard · V405</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1405,7 +1405,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V404</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V405</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1582,7 +1582,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V404';
+var APP_VER='V405';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6972,6 +6972,50 @@ function sceneCompanyX(P,cut){
   return {sc:sc,bg:CRM};
 }
 
+/* ===== V405: "Companies & projects" page: a tree of which projects sit under which company (no progress figures) ===== */
+function cmpStyle(){ return (RP.cfg&&RP.cfg.cmp&&RP.cfg.cmp.style==='progress')?'progress':'tree'; }
+function sceneCompanyTree(P,cut){
+  var sc=[], K='cm:', D=cmpData(P,cut), PW0=1122, PH0=793, nC=D.list.length;
+  sc.push(bR(0,0,286,PH0,{f:NV})); var skL=sbOn('co'); if(skL) sbArt(sc,PH0,1); sc.push(bL(24,56,24,skL?463:PH0-56,GD,1.5));
+  var nl=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl,'o:cmp:logo',48,34,150,150/RB_IMG.logoR,{uni:1,nw:PW0,nh:PH0,nodel:1});
+  sc.push(bT(48,148,222,52,'Companies & projects',{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'}));
+  sc.push(bT(48,206,222,60,D.T.k+' project'+(D.T.k===1?'':'s'),{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'}));
+  var X0=312, W=PW0-312-32;
+  sc.push(bT(X0,28,500,18,'Companies & projects',{fs:13,b:1,up:1,ls:1.5,k:K+'sec'}));
+  sc.push(bT(X0,50,W,14,D.T.k+' project'+(D.T.k===1?'':'s')+' under '+nC+' compan'+(nC===1?'y':'ies')+' · data date '+fd4(cut),{fs:9.5,c:GR,ls:.8,k:K+'note'}));
+  if(!nC){ sc.push(bT(X0,120,W,24,'No project in the report has data at this cut-off.',{fs:14,c:GR})); return {sc:sc,bg:CRM}; }
+  var CL=[NV,GD,'#5b6b7c','#7d8f6a','#a65d4a','#4a7a8c'], two=function(n){ return (n<10?'0':'')+n; };
+  var fit=function(t,fs,w){ var tw=xcTW(t,fs)*1.06; return tw>w?Math.max(7,fs*w/tw):fs; };
+  var cw, gap, x00;
+  if(nC<=3){ cw=240; gap=nC>1?Math.min(40,(W-nC*cw)/(nC-1)):0; } else { gap=14; cw=(W-gap*(nC-1))/nC; }
+  x00=X0+(W-(nC*cw+(nC-1)*gap))/2;
+  var xs=[], cxm=[]; for(var i=0;i<nC;i++){ xs.push(x00+i*(cw+gap)); cxm.push(xs[i]+cw/2); }
+  var rcx=X0+W/2, rw=260; sc.push(bR(rcx-rw/2,92,rw,54,{f:NV,rd:27}));
+  sc.push(bT(rcx-rw/2+30,92,100,54,'Portfolio',{fs:12,c:'#fff',b:1,up:1,ls:2,va:'m',k:K+'rt'}));
+  sc.push(bT(rcx-24,92,48,54,String(D.T.k),{fs:24,c:GD,b:1,al:'c',va:'m'}));
+  sc.push(bT(rcx+30,92,90,54,'projects',{fs:8,c:'#c9d0d8',b:1,up:1,ls:1.6,va:'m',k:K+'rp'}));
+  sc.push(bL(rcx,146,rcx,172,GD,2)); if(nC>1) sc.push(bL(cxm[0],172,cxm[nC-1],172,GD,2));
+  var maxK=1; D.list.forEach(function(o){ maxK=Math.max(maxK,o.pr.length); });
+  var y0=330, bot=PH0-62, step=maxK>1?Math.max(26,Math.min(50,(bot-y0-30)/(maxK-1))):50, lh=Math.min(38,step-10);
+  D.list.forEach(function(o,i){
+    var x=xs[i], col=CL[i%CL.length], key=K+o.n+':', big=cw>=200, sx=x+22;
+    sc.push(bL(cxm[i],172,cxm[i],198,GD,2));
+    sc.push(bR(x,198,cw,92,{f:col,rd:14})); sc.push(bR(x,202,cw,88,{f:'#fff',rd:14,sh:1}));
+    sc.push(bE(x+16,202+(88-36)/2,36,36,{f:NV})); sc.push(bT(x+16,202+(88-36)/2,36,36,String(o.n).charAt(0).toUpperCase(),{fs:15,c:GD,b:1,al:'c',va:'m'}));
+    var nw=cw-62-(big?64:10), nm=String(ov(key+'n',o.n));
+    sc.push(bT(x+60,202+24,nw,20,o.n,{fs:fit(nm.toUpperCase(),14,nw-8),b:1,up:1,ls:1.2,k:key+'n',full:o.n}));
+    sc.push(bT(x+60,202+46,nw,12,o.pr.length+' project'+(o.pr.length===1?'':'s'),{fs:8,c:GR,b:1,up:1,ls:1.4,k:key+'c'}));
+    if(big) sc.push(bT(x+cw-72,202+22,56,44,two(o.pr.length),{fs:34,c:GD,b:1,al:'r',va:'m'}));
+    var last=y0+(o.pr.length-1)*step+lh/2;
+    sc.push(bL(sx,290,sx,last,col,2));
+    o.pr.forEach(function(p,k){ var yy=y0+k*step, mid=yy+lh/2, lw=cw-44, tn=String(ov(key+'tn'+k,p.t));
+      sc.push(bL(sx,mid,sx+22,mid,col,2));
+      sc.push(bR(sx+22,yy,lw,lh,{f:'#fff',rd:lh/2,sh:1})); sc.push(bE(sx+22+14,mid-4.5,9,9,{f:col}));
+      sc.push(bT(sx+22+32,yy,lw-32-12,lh,p.t,{fs:fit(tn,12.5,lw-32-14),c:NV,b:1,va:'m',k:key+'tn'+k})); });
+  });
+  return {sc:sc,bg:CRM};
+}
+
 /* ===== V389: "Projects by company" page: a block per company (overall % and planned %) with a progress ring for every project ===== */
 function pcOn(){ return !(RP.cfg&&RP.cfg.pc&&RP.cfg.pc.on===false); }
 function scenePrjX(P,cut){
@@ -7255,7 +7299,7 @@ function bScenes(P,cut){
   setSize(); RPBUD={}; var out=[], b=bc(), pg=2, PL={};
   function add(o,key,lab){ o.pk=key; PL[key]=lab; out.push(o); }
   add(affine(tplX()?sceneCoverX(cut):sceneCover(cut)),'cover','Cover page');
-  if(tplX()&&cmpOn()){ add(affine(sceneCompanyX(P,cut)),'cmp','Progress by company'); pg++; }
+  if(tplX()&&cmpOn()){ var cmT=cmpStyle()==='tree'; add(affine(cmT?sceneCompanyTree(P,cut):sceneCompanyX(P,cut)),'cmp',cmT?'Companies & projects':'Progress by company'); pg++; }
   if(tplX()&&pcOn()){ add(affine(scenePrjX(P,cut)),'pc','Projects by company'); pg++; }
   if(ovOn()){ add(affine(sceneOverview(P,cut)),'ov','Projects overview'); pg++; }
   (RP.cfg.slides||[]).forEach(function(s){ var c0=(s.cards||[])[0], nm=(c0&&c0.t)||s.frame||s.title||'Slide'; add(sceneProgress(s,P,cut,pg),'s:'+s.id+':pg',nm+(tplX()?' · Summary':' · Progress')); pg++; if(tplX()){ var tN=2+(s.xp||[]).length; add(scenePhotos(s,1),'s:'+s.id+':ph1',nm+' · Photos 1 of '+tN); add(scenePhotos(s,2),'s:'+s.id+':ph2',nm+' · Photos 2 of '+tN); (s.xp||[]).forEach(function(x,i){ add(scenePhotos(s,'x'+x.id),'s:'+s.id+':x'+x.id,nm+' · Photos '+(i+3)+' of '+tN); }); pg+=tN; } else if(slidePhotos(s).length){ add(scenePhotos(s),'s:'+s.id+':ph',nm+' · Photos'); pg++; } });
@@ -8084,7 +8128,7 @@ function drawSetup(){
   var h=(RP.msg?'<div class="rp-msg">'+esc(RP.msg)+'</div>':'')+
    tplBox()+(tplB()?'':'<div class="rp-bx"><h5>Cover page</h5><div class="rp-g2"><div><label>Small heading</label><input type="text" data-f="kicker" value="'+esc(c0.kicker||'')+'"></div><div style="grid-column:span 2"><label>Title</label><input type="text" data-f="title" value="'+esc(c0.title||'')+'"></div></div><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The data date follows the latest cut-off in the dashboard ('+esc(dd(cutIso()))+').</p></div>')+
    (tplB()?'':'<div class="rp-bx"><h5>Pages for each slide</h5><select data-f="pages"><option value="two"'+(pgMode()==='two'?' selected':'')+'>Two pages: progress information with Area of concern, then a progress photos page</option><option value="one"'+(pgMode()==='one'?' selected':'')+'>One page: cards and photos together (the previous layout)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">Area of concern shows the rows of the Google Sheet file “Area of concern for CO monthly report” under the card of the same project or package.'+aocNote()+' The progress photos page appears only when the slide has photos.</p></div>')+
-   (tplX()?'<div class="rp-bx"><h5>Progress by company page (after the cover)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="cmp.on"'+(cmpOn()?' checked':'')+'> Include a page with the overall progress of each company and its projects, weighted by revised value. Companies come from the Projects Info sheet.</label></div>':'')+
+   (tplX()?'<div class="rp-bx"><h5>Company page (after the cover)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="cmp.on"'+(cmpOn()?' checked':'')+'> Include a page about the companies. Companies come from the Projects Info sheet.</label><label style="display:block;margin:8px 0 2px;font-size:12px">Page style</label><select data-f="cmp.style"><option value="tree"'+(cmpStyle()==='tree'?' selected':'')+'>Company tree: which projects sit under each company (no progress)</option><option value="progress"'+(cmpStyle()==='progress'?' selected':'')+'>Progress: overall and planned progress of each company</option></select></div>':'')+
    '<div class="rp-bx"><h5>Sidebar design</h5><select data-f="sb.mode" style="width:100%;padding:6px;border:1px solid #cdd3e0;border-radius:6px"><option value="n"'+(sbMode()==='n'?' selected':'')+'>Plain navy</option>'+(tplX()?'<option value="c"'+(sbMode()==='c'?' selected':'')+'>Gold skyline on the two company pages</option>':'')+'<option value="a"'+(sbMode()==='a'?' selected':'')+'>Gold skyline on every page with a navy sidebar (default for ExCom)</option></select><p style="margin:8px 0 0;font-size:12px;color:#5b6784">The navy sidebar can carry a gold angled block with a skyline rising from it. Plain navy is the original look.</p></div>'+
    (Object.keys(RP.cfg.pdel||{}).length?'<div class="rp-bx"><h5>Deleted pages ('+Object.keys(RP.cfg.pdel).length+')</h5><p style="margin:8px 0 0;font-size:12px;color:#5b6784">'+Object.keys(RP.cfg.pdel).map(function(k){ return esc((RP.plab&&RP.plab[k])||'Page'); }).join(' · ')+'. These pages are left out of the preview, PDF and PowerPoint. To bring them back, go to the report, click Edit text, then Show deleted pages.</p></div>':'')+
    (tplX()?'<div class="rp-bx"><h5>Projects by company page (after the progress by company page)</h5><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-f="pc.on"'+(pcOn()?' checked':'')+'> Include a page that groups the projects by company, with a progress ring and the forecast finish month for each. Companies come from the Projects Info sheet.</label></div>':'')+
@@ -8136,6 +8180,7 @@ function onChange(e){
   if(f==='c.pk'){ var c=cardOf(t); c.pk=[].slice.call(t.closest('.rp-pk').querySelectorAll('input:checked')).map(function(x){ return x.value; }); dirty(); drawSetup(); }
   else if(f==='sb.mode'){ RP.cfg.sb=t.value; dirty(); }
   else if(f==='cmp.on'){ RP.cfg.cmp=RP.cfg.cmp||{}; RP.cfg.cmp.on=!!t.checked; dirty(); }
+  else if(f==='cmp.style'){ RP.cfg.cmp=RP.cfg.cmp||{}; RP.cfg.cmp.style=t.value==='progress'?'progress':'tree'; dirty(); }
   else if(f==='pc.on'){ RP.cfg.pc=RP.cfg.pc||{}; RP.cfg.pc.on=!!t.checked; dirty(); }
   else if(f==='ov.on'){ RP.cfg.ov=RP.cfg.ov||{style:'a'}; RP.cfg.ov.on=!!t.checked; dirty(); }
   else if(f==='ov.style'){ RP.cfg.ov=RP.cfg.ov||{on:true}; RP.cfg.ov.style=t.value; dirty(); }
