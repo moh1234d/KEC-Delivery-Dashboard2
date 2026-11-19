@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V410</title>
+<title>TEST · KEC Project Controls Dashboard · V412</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1205,6 +1205,27 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 
 .ucdd{margin-top:6px;font-size:10.5px;color:var(--mut);text-align:center;letter-spacing:.02em}
 @media print{.ucdd{font-size:9px}}
+/* V412: portrait print */
+@media print{
+ body.pprt .ovwrap{zoom:.93}
+ body.pprt .g-ov{grid-template-columns:repeat(4,1fr)}
+ .fab,#navBtn,#navFab,#navBack{display:none!important}
+}
+#printOri{padding:6px 8px;cursor:pointer}
+/* V411: Overview print layout. A company header stays with its first program, a program (tab, summary line and cards) is never split across two pages, the TEST ribbon prints once, and the Gantt keeps its own page */
+@media print{
+ .coblk .coh{break-after:avoid;page-break-after:avoid}
+ .coblk .cob{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;align-items:start}
+ .coblk .cob>.pgm{grid-column:span 2;break-inside:avoid;page-break-inside:avoid;margin:0!important;width:auto!important;min-width:0}
+ .coblk .cob>.pgm.pgsm{grid-column:span 1}
+ .pgm .pgs{break-after:avoid;page-break-after:avoid}
+ .coblk.cosm{break-inside:avoid;page-break-inside:avoid}
+ .coblk,.ovwrap{orphans:3;widows:3}
+ .coblk{margin-top:14px!important}.coblk:first-child{margin-top:6px!important}
+ .ovwrap{zoom:.93}.ovwrap .boxes:not(.ovp2){zoom:1}
+ .boxes.ovp2,.ovwrap .boxes.ovp2{break-before:auto!important;page-break-before:auto!important;margin-top:0!important}
+ #testRibbon{position:absolute!important}
+}
 #pcutTop[hidden],#dfixTop[hidden]{display:none!important}
 /* V296: edit the texts on the Overview (display only) */
 .ly-th{display:none!important}
@@ -1406,7 +1427,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V410</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V412</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1438,6 +1459,7 @@ body.printsite>*:not(.app){display:none!important}
     </div>
     <div class="sfg"><div class="sfh">Print &amp; export</div>
       <button id="printAllBtn" type="button">Print all pages (A3)</button>
+      <label class="sfl" style="display:flex;gap:8px;align-items:center;padding:6px 12px;font-size:12.5px">Print page direction <select id="printOri2" aria-label="Print page direction"><option value="l">Landscape</option><option value="p">Portrait</option></select></label>
       <button id="xpBtn1" type="button" data-xp="1" title="Excel file, dark scorecard, with the cut-off date">Excel dashboard &middot; dark scorecard</button>
       <button id="xpBtn2" type="button" data-xp="2" title="Excel file, light project cards, with the cut-off date">Excel dashboard &middot; light cards</button>
     </div>
@@ -1470,7 +1492,7 @@ body.printsite>*:not(.app){display:none!important}
         </div>
         <span class="vsep"></span>
         <div class="ag">
-          <button class="btn ghost" id="printBtn" type="button">Print (A3)</button>
+          <button class="btn ghost" id="printBtn" type="button">Print (A3)</button><select class="btn ghost" id="printOri" title="Page direction for printing" aria-label="Print page direction"><option value="l">Landscape</option><option value="p">Portrait</option></select>
         </div>
         <span class="vsep"></span>
         <button class="btn ghost" id="alertBtn" type="button">Alerts <span class="n" id="alertN">0</span></button>
@@ -1541,7 +1563,7 @@ function coWrap(byProg,arr){
     Object.keys(codes).forEach(function(k){ var rr=o.rows.filter(function(r){ return r.code===k; }), pa=agg(rr,undefined,true); cnt[pkgStatus(pa.act,pa.pv,pa.ev,pa.spi,pa.overrun)]++; });
     var gap=Math.round(a.act*1000-a.plan*1000)/10, dl=a.maxDelay||0, col=!!COC[c], ci=Math.max(0,CO_ORDER.indexOf(c));
     var pills=['red','amber','green','done','pending'].filter(function(k){ return cnt[k]>0; }).map(function(k){ return '<span class="pgp '+k+'">'+cnt[k]+' '+STLBL[k].toLowerCase()+'</span>'; }).join('');
-    return '<div class="coblk co'+ci+(col?' col':'')+'" data-co="'+esc(c)+'"><div class="coh"><span class="mono">'+esc(c.charAt(0).toUpperCase())+'</span><span class="con">'+esc(c)+'</span><span class="cos"><span>'+o.html.length+' program'+(o.html.length>1?'s':'')+' · '+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b>'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span></span>'+
+    return '<div class="coblk co'+ci+(col?' col':'')+(o.html.length<=2?' cosm':'')+'" data-co="'+esc(c)+'"><div class="coh"><span class="mono">'+esc(c.charAt(0).toUpperCase())+'</span><span class="con">'+esc(c)+'</span><span class="cos"><span>'+o.html.length+' program'+(o.html.length>1?'s':'')+' · '+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b>'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span></span>'+
       '<button type="button" class="cot" data-cot="1" aria-expanded="'+(col?'false':'true')+'">'+(col?'▸ Show':'▾ Hide')+'</button></div><div class="cob">'+o.html.join('')+'</div></div>';
   }).join('');
 }
@@ -1553,7 +1575,8 @@ function pgmWrap(pg2,inner){
   Object.keys(codes).forEach(function(c){ var rr=pg2.rows.filter(function(r){ return r.code===c; }), pa=agg(rr,undefined,true); cnt[pkgStatus(pa.act,pa.pv,pa.ev,pa.spi,pa.overrun)]++; });
   var gap=Math.round(a.act*1000-a.plan*1000)/10, dl=a.maxDelay||0, col=!!PGMC[pg2.name];
   var pills=['red','amber','green','done','pending'].filter(function(k){ return cnt[k]>0; }).map(function(k){ return '<span class="pgp '+k+'">'+cnt[k]+' '+STLBL[k].toLowerCase()+'</span>'; }).join('');
-  return '<div class="boxes pgm'+(col?' col':'')+'" data-pgm="'+esc(pg2.name)+'"><div class="pgtab"><span>'+esc(pg2.name)+'</span></div>'+
+  var nF=(inner.match(/class="pbox/g)||[]).length, nC=(inner.match(/class="uc[ "]/g)||[]).length;
+  return '<div class="boxes pgm'+(col?' col':'')+((nF<=1&&nC<=2)?' pgsm':'')+'" data-pgm="'+esc(pg2.name)+'"><div class="pgtab"><span>'+esc(pg2.name)+'</span></div>'+
     '<div class="pgs"><span>'+(cl?cl+' cluster'+(cl>1?'s':'')+' · ':'')+np+' project'+(np>1?'s':'')+'</span><span>Planned <b>'+pct(a.plan)+'</b></span><span>Actual <b>'+pct(a.act)+'</b></span><span>Variance <b class="'+(gap<0?'bad':gap>0?'good':'')+'">'+(gap===0?'0.0':sgn(gap,1,' %'))+'</b></span>'+
     '<button type="button" class="pgt" data-pgmt="1" aria-expanded="'+(col?'false':'true')+'" title="'+(col?'Show the clusters':'Hide the clusters')+'">'+(col?'▸ Show clusters':'▾ Hide clusters')+'</button></div>'+inner+'</div>';
 }
@@ -1583,7 +1606,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V410';
+var APP_VER='V412';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -2350,7 +2373,7 @@ function ganttSection(list,sel){
       GT.push('<b>'+esc(pn)+' · '+esc(lb)+'</b>Planned '+fd(r.ps)+' → '+fd(r.pf)+'<br>'+(done?'Actual completion ':'Forecast finish ')+fd(r.ff)+(dd>0?' (+'+dd+' d)':dd<0?' ('+dd+' d)':'')+'<br>Planned '+pct(r.plan)+' · Actual '+pct(r.act)+' · Variance '+(r.act-r.plan>=0?'+':'−')+Math.abs((r.act-r.plan)*100).toFixed(1)+' pts<br>Time elapsed '+pct(Math.max(0,Math.min(1,(dms(state.cutoff)-dms(r.ps))/Math.max(1,dms(r.pf)-dms(r.ps)))))+' of planned duration<br>'+esc(r.ctr||'—')+' · '+esc(r.cno||'—'));
       h+='<div class="grow gch"><div class="gl0"><b>'+(done?'✔ ':'')+esc(lb)+'</b><small>'+fd(r.ps)+' → '+fd(r.pf)+'<span class="gmini"><i style="width:'+(clamp(r.act)*100)+'%"></i></span>'+Math.round(r.act*100)+'%</small></div><div class="gt" data-gt="'+i+'">'+grid+gb(r.ps,r.pf,r.ff,r.act,lb+' '+Math.round(r.act*100)+'%','',r.plan)+tail(r.pf,r.ff,'')+'<div class="gcut" style="left:'+cutP+'%"></div></div></div>'; }); });
   h+='</div></div><div class="gleg"><span><i class="s2"></i>Actual progress</span><span><i class="s5"></i>Behind plan (planned − actual)</span><span><i class="s6"></i>Planned progress to date</span><span><i class="s1"></i>Remaining work</span><span><i class="s3"></i>Forecast past planned finish</span><span><i class="s4"></i>Cut-off date '+d2(state.cutoff)+'</span><span class="gnote">Bar width = planned start → finish; fills show % of value, not days</span></div></div>';
-  var nrows=projs.length+G.length+(grp?Object.keys(coAgg).length+Object.keys(pgAgg).length:0), zf=pr?Math.max(.55,Math.min(1.2,1060/(nrows*24+120))):1;
+  var nrows=projs.length+G.length+(grp?Object.keys(coAgg).length+Object.keys(pgAgg).length:0), zf=pr?Math.max(.55,Math.min(1,((typeof PORI!=='undefined'&&PORI==='p')?1380:930)/(nrows*24+140))):1;
   return '<div class="gntp"'+(pr?' style="zoom:'+zf.toFixed(3)+'"':'')+'>'+sec('schedule','Schedule','Planned window, progress and forecast finish by project and package')+h+'</div>';
 }
 function fitGantt(){ var sc=document.querySelector('.gnt .sc'); if(!sc) return;
@@ -6104,7 +6127,18 @@ document.getElementById('dcModal').addEventListener('click',function(e){
 });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') dcClose(); });
 $('#alertBtn').addEventListener('click',function(){ dcOpen(); try{ jsLoad(); }catch(e){} });
-$('#printBtn').addEventListener('click',function(){ window.print(); });
+
+/* V412: print page direction (Landscape / Portrait, A3); the choice is remembered on this device */
+var PORI=(function(){ try{ return localStorage.getItem('kec.pori.v1')==='p'?'p':'l'; }catch(e){ return 'l'; } })();
+function applyPori(){
+  var st=document.getElementById('pOriCss'); if(!st){ st=document.createElement('style'); st.id='pOriCss'; document.head.appendChild(st); }
+  st.textContent='@page{size:A3 '+(PORI==='p'?'portrait':'landscape')+';margin:8mm}';
+  document.body.classList.toggle('pprt',PORI==='p');
+  ['printOri','printOri2'].forEach(function(i){ var e=document.getElementById(i); if(e) e.value=PORI; });
+}
+['printOri','printOri2'].forEach(function(i){ var e=document.getElementById(i); if(e) e.addEventListener('change',function(){ PORI=e.value==='p'?'p':'l'; try{ localStorage.setItem('kec.pori.v1',PORI); }catch(x){} applyPori(); }); });
+applyPori();
+$('#printBtn').addEventListener('click',function(){ applyPori(); window.print(); });
 $('#printAllBtn').addEventListener('click',function(){ if(state.all){ state.all=false; render(); window.scrollTo({top:0}); return; } state.all=true; render(); setTimeout(function(){ window.print(); },80); });
 var prevTheme, themeSwapped=false;
 window.addEventListener('beforeprint',function(){ if(!model) return; if(curTheme()==='dark'){ prevTheme=document.documentElement.getAttribute('data-theme'); themeSwapped=true; document.documentElement.setAttribute('data-theme','light'); } state.gprint=true; render(); });
