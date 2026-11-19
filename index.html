@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V405</title>
+<title>TEST · KEC Project Controls Dashboard · V406</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1405,7 +1405,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V405</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V406</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1582,7 +1582,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V405';
+var APP_VER='V406';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6776,6 +6776,8 @@ function scHtml(sc){
       if(p.k==='sdelv') return (RP.ed&&tplB())?'<button type="button" class="rp-va rp-vdel" style="'+pos+'border:0" data-pv="sdelv" data-sid="'+esc(p.sid)+'">Delete slide</button>':'';
       if(p.k==='paste') return (RP.ed&&tplB()&&RP.clip)?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="paste" data-sid="'+esc(p.sid)+'">Paste '+({card:'card',concern:'concern card',photo:'photo',text:'text'}[RP.clip.kind]||'')+'</button>':'';
       if(p.k==='undel') return (RP.ed&&tplB()&&(RP.undo||[]).length)?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="undel">Undo delete ('+RP.undo.length+')</button>':'';
+      if(p.k==='cmx') return (RP.ed&&tplB())?'<button type="button" class="rp-va rp-vdel" style="'+pos+'border:0;padding:0;font-size:12px;border-radius:50%" data-pv="cmx" data-cid="'+esc(p.id)+'" title="Remove this project from the page">✕</button>':'';
+      if(p.k==='cmshow') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cmshow">Show removed projects ('+p.n+')</button>':'';
       if(p.k==='cnrestore') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnrestore">Show hidden concerns ('+p.n+')</button>':'';
       if(p.k==='cmrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cmreset">Reset card positions</button>':'';
       if(p.k==='cnrst') return (RP.ed&&tplB())?'<button type="button" class="rp-va" style="'+pos+'border:0" data-pv="cnreset">Reset card sizes</button>':'';
@@ -6975,9 +6977,12 @@ function sceneCompanyX(P,cut){
 /* ===== V405: "Companies & projects" page: a tree of which projects sit under which company (no progress figures) ===== */
 function cmpStyle(){ return (RP.cfg&&RP.cfg.cmp&&RP.cfg.cmp.style==='progress')?'progress':'tree'; }
 function sceneCompanyTree(P,cut){
-  var sc=[], K='cm:', D=cmpData(P,cut), PW0=1122, PH0=793, nC=D.list.length;
+  var sc=[], K='cm:', D=cmpData(P,cut), PW0=1122, PH0=793, nC=0, HD=(RP.cfg&&RP.cfg.cmp&&RP.cfg.cmp.hide)||{}, nHide=0;
+  D.list.forEach(function(o){ var kk=K+o.n+':'; o.vp=[]; o.pr.forEach(function(p,k){ var id=o.n+'|'+p.t; if(HD[id]){ nHide++; return; } if(!String(ov(kk+'tn'+k,p.t)).trim()) return; o.vp.push({p:p,k:k,id:id}); }); });
+  D.list=D.list.filter(function(o){ return o.vp.length; }); D.T.k=0; D.list.forEach(function(o){ D.T.k+=o.vp.length; }); nC=D.list.length;
   sc.push(bR(0,0,286,PH0,{f:NV})); var skL=sbOn('co'); if(skL) sbArt(sc,PH0,1); sc.push(bL(24,56,24,skL?463:PH0-56,GD,1.5));
   var nl=sc.length; sc.push(bI(48,34,150,150/RB_IMG.logoR,RB_IMG.logoW)); objBox(sc,nl,'o:cmp:logo',48,34,150,150/RB_IMG.logoR,{uni:1,nw:PW0,nh:PH0,nodel:1});
+  if(nHide) sc.push({t:'pc',k:'cmshow',n:nHide,x:1122-32-210,y:24,w:210,h:24,si:-1,ci:-1,pi:-1});
   sc.push(bT(48,148,222,52,'Companies & projects',{fs:20,c:'#fff',b:1,up:1,lh:1.15,k:K+'title'}));
   sc.push(bT(48,206,222,60,D.T.k+' project'+(D.T.k===1?'':'s'),{fs:22,c:GD,up:1,ls:1.4,lh:1.1,k:K+'frame'}));
   var X0=312, W=PW0-312-32;
@@ -6995,7 +7000,7 @@ function sceneCompanyTree(P,cut){
   sc.push(bT(rcx-24,92,48,54,String(D.T.k),{fs:24,c:GD,b:1,al:'c',va:'m'}));
   sc.push(bT(rcx+30,92,90,54,'projects',{fs:8,c:'#c9d0d8',b:1,up:1,ls:1.6,va:'m',k:K+'rp'}));
   sc.push(bL(rcx,146,rcx,172,GD,2)); if(nC>1) sc.push(bL(cxm[0],172,cxm[nC-1],172,GD,2));
-  var maxK=1; D.list.forEach(function(o){ maxK=Math.max(maxK,o.pr.length); });
+  var maxK=1; D.list.forEach(function(o){ maxK=Math.max(maxK,o.vp.length); });
   var y0=330, bot=PH0-62, step=maxK>1?Math.max(26,Math.min(50,(bot-y0-30)/(maxK-1))):50, lh=Math.min(38,step-10);
   D.list.forEach(function(o,i){
     var x=xs[i], col=CL[i%CL.length], key=K+o.n+':', big=cw>=200, sx=x+22;
@@ -7004,14 +7009,15 @@ function sceneCompanyTree(P,cut){
     sc.push(bE(x+16,202+(88-36)/2,36,36,{f:NV})); sc.push(bT(x+16,202+(88-36)/2,36,36,String(o.n).charAt(0).toUpperCase(),{fs:15,c:GD,b:1,al:'c',va:'m'}));
     var nw=cw-62-(big?64:10), nm=String(ov(key+'n',o.n));
     sc.push(bT(x+60,202+24,nw,20,o.n,{fs:fit(nm.toUpperCase(),14,nw-8),b:1,up:1,ls:1.2,k:key+'n',full:o.n}));
-    sc.push(bT(x+60,202+46,nw,12,o.pr.length+' project'+(o.pr.length===1?'':'s'),{fs:8,c:GR,b:1,up:1,ls:1.4,k:key+'c'}));
-    if(big) sc.push(bT(x+cw-72,202+22,56,44,two(o.pr.length),{fs:34,c:GD,b:1,al:'r',va:'m'}));
-    var last=y0+(o.pr.length-1)*step+lh/2;
+    sc.push(bT(x+60,202+46,nw,12,o.vp.length+' project'+(o.vp.length===1?'':'s'),{fs:8,c:GR,b:1,up:1,ls:1.4,k:key+'c'}));
+    if(big) sc.push(bT(x+cw-72,202+22,56,44,two(o.vp.length),{fs:34,c:GD,b:1,al:'r',va:'m'}));
+    var last=y0+(o.vp.length-1)*step+lh/2;
     sc.push(bL(sx,290,sx,last,col,2));
-    o.pr.forEach(function(p,k){ var yy=y0+k*step, mid=yy+lh/2, lw=cw-44, tn=String(ov(key+'tn'+k,p.t));
+    o.vp.forEach(function(v,j){ var p=v.p, k=v.k, yy=y0+j*step, mid=yy+lh/2, lw=cw-44, tn=String(ov(key+'tn'+k,p.t));
       sc.push(bL(sx,mid,sx+22,mid,col,2));
       sc.push(bR(sx+22,yy,lw,lh,{f:'#fff',rd:lh/2,sh:1})); sc.push(bE(sx+22+14,mid-4.5,9,9,{f:col}));
-      sc.push(bT(sx+22+32,yy,lw-32-12,lh,p.t,{fs:fit(tn,12.5,lw-32-14),c:NV,b:1,va:'m',k:key+'tn'+k})); });
+      sc.push(bT(sx+22+32,yy,lw-32-12,lh,p.t,{fs:fit(tn,12.5,lw-32-14),c:NV,b:1,va:'m',k:key+'tn'+k}));
+      sc.push({t:'pc',k:'cmx',id:v.id,x:sx+22+lw-lh/2-11,y:mid-11,w:22,h:22,si:-1,ci:-1,pi:-1}); });
   });
   return {sc:sc,bg:CRM};
 }
@@ -7575,6 +7581,13 @@ document.addEventListener('click',function(e){
   ph.forEach(function(q){ var o=pvOwner(+a.getAttribute('data-si'),q.ci), i=o?o.ph.indexOf(q.p):-1; if(i>=0){ o.ph.splice(i,1); pvDrop(q.p); } });
   s.xp=s.xp.filter(function(y){ return y.id!==id; }); var pk='s:'+s.id+':'+tok; if(RP.cfg.pdel) delete RP.cfg.pdel[pk]; if(RP.cfg.porder) RP.cfg.porder=RP.cfg.porder.filter(function(k){ return k!==pk; });
   RP.psel={}; RP.pbar=0; dirty(); drawViewB(); toast('Photo slide removed. Press Save changes to keep this.');
+});
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-pv="cmx"],[data-pv="cmshow"]'); if(!b||!tplX()) return; e.preventDefault();
+  RP.cfg.cmp=RP.cfg.cmp||{};
+  if(b.getAttribute('data-pv')==='cmshow'){ RP.cfg.cmp.hide={}; dirty(); drawViewB(); toast('All removed projects are shown again. Press Save changes to keep this.'); return; }
+  RP.cfg.cmp.hide=RP.cfg.cmp.hide||{}; RP.cfg.cmp.hide[b.getAttribute('data-cid')]=1; dirty(); drawViewB();
+  toast('Project removed from the company page. Press Save changes to keep this.');
 });
 function tbFind(k){ var r=null; (RP.scn||[]).forEach(function(o){ o.sc.forEach(function(p){ if(p.t==='x'&&p.k===k) r=p; }); }); return r; }
 function tbUpdate(){
