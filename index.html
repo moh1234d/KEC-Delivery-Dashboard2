@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V409</title>
+<title>TEST · KEC Project Controls Dashboard · V410</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1406,7 +1406,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V409</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V410</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1583,7 +1583,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V409';
+var APP_VER='V410';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6843,11 +6843,13 @@ function xcOut(){ return RP.xm&&RP.full?RP.full:RP.cfg; }
 function xcCfgs(){ var o=[RP.cfg]; if(RP.full){ if(RP.xm) o.push(RP.full); else if(RP.full.excom) o.push(RP.full.excom); } return o; }
 function fmy(iso){ if(!iso) return '—'; var p=String(iso).split('-'); return MON[+p[1]-1].toUpperCase()+' '+p[0]; } /* V385: ExCom dates show month and year only */
 function xcTW(s,px){ try{ var c=xcTW.c||(xcTW.c=document.createElement('canvas').getContext('2d')); c.font='bold '+px+'px Carlito, Calibri, Arial, sans-serif'; return c.measureText(s).width+s.length*0.4; }catch(e){ return s.length*px*0.62; } }
+/* V410: SPI (earned ÷ planned) badge on each project's Progress card (Setup switch spi, on by default) */
+function spiOn(){ return !(RP.cfg&&RP.cfg.spi==='off'); }
 function xcInfo(c,P,cut){
   var rr=cardRows(P,c); if(!rr.length) return {empty:true};
   var a=agg(rr,cut,true), ir=(model&&model.info&&c.code)?(model.info.get(c.code)||model.info.get(String(c.code).trim())):null, st=(ir&&ir.start)||a.start||null, pf=a.pf||null, ff=a.ff||null, dur=(st&&pf)?dayDiff(st,pf):null, el=(st&&cut)?dayDiff(st,cut):null;
   if(dur!=null&&dur<=0) dur=null; if(el!=null) el=Math.max(0,dur!=null?Math.min(el,dur):el);
-  return {plan:a.plan,act:a.act,st:st,pf:pf,ff:ff,dur:dur,el:el};
+  return {plan:a.plan,act:a.act,spi:a.spi,st:st,pf:pf,ff:ff,dur:dur,el:el};
 }
 function xcArc(cx,cy,ro,ri,a0,a1,f){
   var pts=[], st=3, n=Math.max(2,Math.ceil(Math.abs(a1-a0)/st)), i, a, R=ro, x0=cx-ro, y0=cy-ro;
@@ -6890,7 +6892,7 @@ function progCardX(sc,c,P,cut,x,y,w,h){
   var py=ry+dh+g, ph=R-dh-g, X1=ax+16*z, lw=aw-32*z, th=7*z, lw2=70*z, pw=56*z;
   sc.push(bR(ax,py,aw,ph,{f:'#fff',rd:10*z,sh:1}));
   sc.push(bT(X1,py+10*z,200*z,12*z,'Progress',{fs:7.5*z,c:GR,b:1,ls:1.4,up:1,k:K+'ptl'}));
-  var rows=[['Planned',GD,'plan'],['Actual',NV,'act']], by=[py+ph*0.40,py+ph*0.62];
+  var sp=!d.empty&&spiOn(), rows=[['Planned',GD,'plan'],['Actual',NV,'act']], by=sp?[py+ph*0.43,py+ph*0.64]:[py+ph*0.40,py+ph*0.62];
   rows.forEach(function(r,j){
     sc.push(bT(X1,by[j]-3*z,lw2,12*z,r[0],{fs:7.5*z,c:GR,b:1,ls:1.3,up:1,k:K+'l'+r[2]}));
     if(d.empty){ sc.push(bT(X1+lw2,by[j]-4*z,lw-lw2,14*z,'Data not reported',{fs:10.5*z,c:GR,k:K+'dnr'+r[2]})); return; }
@@ -6900,6 +6902,10 @@ function progCardX(sc,c,P,cut,x,y,w,h){
     sc.push(bT(X1+lw-pw,by[j]-6*z,pw,18*z,pct(d[r[2]]),{fs:12.5*z,b:1,al:'r',k:K+r[2]}));
   });
   if(!d.empty&&vcOn()){ var v=(d.act-d.plan)*100, v0=Math.abs(v)<0.05, vt=v0?'On plan':(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'% vs plan', cwid=92*z; sc.push(bR(X1+lw-cwid,py+ph-24*z,cwid,17*z,{f:v0?GR:(v>=0?'#2f8f65':RD),rd:9*z})); sc.push(bT(X1+lw-cwid,py+ph-24*z,cwid,17*z,vt,{fs:8.5*z,c:'#fff',b:1,al:'c',va:'m',k:K+'var'})); }
+  if(sp){ var bw1=Math.min(100*z,aw*0.25), bh1=36*z, bx1=ax+aw-16*z-bw1, by1=py+8*z, sv=d.spi==null?'—':d.spi.toFixed(2);
+    sc.push(bR(bx1,by1,bw1,bh1,{f:'#f4f2ee',rd:8*z})); sc.push(bR(bx1,by1+7*z,3.5*z,bh1-14*z,{f:GD,rd:2*z}));
+    sc.push(bT(bx1+14*z,by1+6*z,40*z,10*z,'SPI',{fs:6.5*z,c:GR,b:1,ls:1.5,up:1,va:'m',k:K+'spil'}));
+    sc.push(bT(bx1+14*z,by1+15*z,bw1-22*z,20*z,sv,{fs:18*z,c:NV,b:1,va:'m'})); }
 }
 function sceneCoverX(cut){
   var b=bc(), my=monthYear(cut), sc=[], lw=190, PHT=470;
@@ -7961,6 +7967,7 @@ function tplBox(){
   h+='<div class="rp-bx"><h5>Concerns shown per project</h5><select data-f="cnmax">'+['2','3','4','5','all'].map(function(v){ var cur=(RP.cfg.cnmax>=1&&RP.cfg.cnmax<=20)?String(RP.cfg.cnmax):'all'; return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+(v==='all'?'All concerns':v+' concerns')+'</option>'; }).join('')+'</select><p style="'+tx+'">How many areas of concern each project shows on the slide. Any concern can still be deleted on the slide (Edit text), and a note tells you when some do not fit.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Photo cache</h5><p style="margin:0 0 8px;font-size:12px;color:#5b6784">Photos are kept on this device after the first load, so the report opens faster next time. They are removed when you sign out.</p><button class="rp-rb" style="background:#0b1f4d" data-r="phcclr">Clear photo cache</button></div>';
   if(tplX()) h+='<div class="rp-bx"><h5>Variance chip on projects (e.g. “−0.3% vs plan”)</h5><select data-f="vchip"><option value="off"'+(!vcOn()?' selected':'')+'>Hidden</option><option value="on"'+(vcOn()?' selected':'')+'>Shown on each project</option></select><p style="'+tx+'">The coloured chip that compares a project’s actual progress with its plan. It is hidden by default. The company totals keep their own chip.</p></div>';
+  if(tplX()) h+='<div class="rp-bx"><h5>SPI badge on projects</h5><select data-f="spi"><option value="on"'+(spiOn()?' selected':'')+'>Shown on each project</option><option value="off"'+(!spiOn()?' selected':'')+'>Hidden</option></select><p style="'+tx+'">The Schedule Performance Index (earned ÷ planned) as a small box on each project’s Progress summary page. It shows “—” when a project has no progress data yet.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Photos per photo page</h5><select data-f="pmax">'+[2,3,4,5,6,8,10,12].map(function(v){ return '<option value="'+v+'"'+(pMax()===v?' selected':'')+'>'+v+' photos</option>'; }).join('')+'</select><p style="'+tx+'">The most photos one photo page can hold. Photos stay on the page where you add them; only you move them, by dragging a photo onto another photo page in the preview. Cards keep their own limit of 4.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Page size (Template B)</h5><select data-f="size"><option value="a4"'+(sizeOf().w===1122?' selected':'')+'>A4 landscape (297 × 210 mm)</option><option value="169"'+(sizeOf().w===1280?' selected':'')+'>16:9 widescreen (13.33 × 7.5 in)</option></select><p style="'+tx+'">The layout, the PDF page and the PowerPoint file all follow this size. Template A is A4 only.</p></div>';
   if(tplB()) h+='<div class="rp-bx"><h5>Cover page (Template B)</h5><div class="rp-g2"><div><label>Department</label><input type="text" data-f="b.dept" value="'+esc(b.dept)+'"></div><div><label>First line</label><input type="text" data-f="b.l1" value="'+esc(b.l1)+'"></div><div><label>Subtitle</label><input type="text" data-f="b.sub" value="'+esc(b.sub)+'"></div></div><label style="margin-top:8px">Title (Enter starts a second line)</label><textarea data-f="b.title" rows="2" style="width:100%;font:inherit;padding:6px 8px;border:1px solid #c9d1e0;border-radius:6px">'+esc(b.title)+'</textarea><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" data-f="b.end"'+(b.end?' checked':'')+'> Add a closing "Thank you" slide</label><p style="'+tx+'">The month and year follow the data date ('+esc(dd(cutIso()))+'). Template B uses one progress page and one photos page for each slide, and the overview shows the planned or forecast style only.</p></div>';
@@ -8231,7 +8238,7 @@ function onChange(e){
   else if(f==='c.nc'){ cardOf(t).nc=!t.checked; dirty(); }
   else if(f==='pages'){ RP.cfg.pages=t.value; dirty(); }
   else if(f==='tpl'){ RP.cfg.tpl=t.value; dirty(); drawSetup(); }
-  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnsep'){ RP.cfg.cnsep=t.value==='off'?'off':'on'; dirty(); }   else if(f==='vchip'){ RP.cfg.vchip=t.value==='on'?'on':'off'; dirty(); }   else if(f==='pmax'){ RP.cfg.pmax=+t.value; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
+  else if(f==='size'){ RP.cfg.size=t.value; dirty(); }   else if(f==='cnsep'){ RP.cfg.cnsep=t.value==='off'?'off':'on'; dirty(); }   else if(f==='spi'){ RP.cfg.spi=t.value==='off'?'off':'on'; dirty(); }   else if(f==='vchip'){ RP.cfg.vchip=t.value==='on'?'on':'off'; dirty(); }   else if(f==='pmax'){ RP.cfg.pmax=+t.value; dirty(); }   else if(f==='cnmax'){ RP.cfg.cnmax=t.value==='all'?'all':+t.value; dirty(); }
   else if(f==='clean'){ RP.cfg.clean=!!t.checked; dirty(); }
   else if(f==='b.end'){ RP.cfg.b=RP.cfg.b||{}; RP.cfg.b.end=!!t.checked; dirty(); }
   else if(t.getAttribute&&t.getAttribute('data-r')==='file') addPhotos(t);
