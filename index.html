@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V414</title>
+<title>TEST · KEC Project Controls Dashboard · V415</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1430,7 +1430,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V414</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V415</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1609,7 +1609,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V414';
+var APP_VER='V415';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -2285,10 +2285,10 @@ function muPaint(){
   var rows=[];
   MU.items.forEach(function(s){
     var pr=esc((s.projects||[]).slice(0,3).join(', ')+((s.projects||[]).length>3?' …':'')), by=s.reviewed&&s.reviewed.by&&s.reviewed.by!=='auto'?s.reviewed.by:'';
-    if(s.status==='pending') rows.push('<div class="mub warn"><b>Waiting for approval</b>'+(s.entry==='mod'?' · modification':s.entry==='new'?' · new entry':'')+' · your update ('+pr+') was sent '+svStamp(s.ts)+'. An administrator has been notified. This message goes away when it is decided.</div>');
+    if(s.status==='pending') rows.push('<div class="mub warn"><b>Waiting for approval</b>'+(s.entry==='mod'?' · modification':s.entry==='new'?' · new entry':'')+' · your update ('+pr+') was sent '+svStamp(s.ts)+(s.held?' · '+esc(s.held):'')+'. An administrator has been notified. This message goes away when it is decided.</div>');
     else if(by&&(MU.dismiss===false||!MU.seen[s.id])&&Date.now()-s.ts<(MU.days||14)*864e5){
       var when=s.reviewed&&s.reviewed.ts?svStamp(s.reviewed.ts):'';
-      if(s.status==='accepted') rows.push('<div class="mub good"><b>Approved</b> · your update ('+pr+') was approved by '+esc(by)+' '+when+(s.nNf?' <b>'+s.nNf+' row'+(s.nNf>1?'s were':' was')+' NOT applied</b> because '+(s.nNf>1?'they do':'it does')+' not exist yet. Upload '+(s.nNf>1?'them':'it')+' again as <b>New entry</b>.':' and is now live.')+(s.partial&&s.partial.rejected&&s.partial.rejected.length?' Not included: '+esc(s.partial.rejected.join(', '))+'.':'')+'<button type="button" data-mud="'+esc(s.id)+'">Dismiss</button></div>');
+      if(s.status==='accepted') rows.push('<div class="mub good"><b>Approved</b> · your update ('+pr+') was approved by '+esc(by)+' '+when+(s.nNf?' <b>'+s.nNf+' row'+(s.nNf>1?'s were':' was')+' NOT applied</b> because '+(s.nNf>1?'they do':'it does')+' not exist yet. Upload '+(s.nNf>1?'them':'it')+' again as <b>New entry</b>.':' · '+esc(suStatusText(s).t)+'.')+(s.partial&&s.partial.rejected&&s.partial.rejected.length?' Not included: '+esc(s.partial.rejected.join(', '))+'.':'')+'<button type="button" data-mud="'+esc(s.id)+'">Dismiss</button></div>');
       else if(s.status==='rejected') rows.push('<div class="mub bad"><b>Rejected</b> · your update ('+pr+') was rejected by '+esc(by)+' '+when+'.'+(s.reviewed.reason?' Reason: '+esc(s.reviewed.reason):'')+muDis(s)+'</div>');
       else if(s.status==='revoked') rows.push('<div class="mub bad"><b>Taken back</b> · your update ('+pr+') was taken back by '+esc(by)+' '+when+'.'+muDis(s)+'</div>');
     }
@@ -3112,13 +3112,46 @@ function ulChanges(ch,limit){
 }
 function ulEntries(){
   var L=UL.entries.map(function(e){ return Object.assign({},e,{status:e.base?'baseline':'recorded'}); });
-  UL.subs.forEach(function(s){ L.push({id:s.id,ts:s.ts,route:'site',by:String(s.by||'').replace(/^Link:\s*/,''),label:'Site update',projects:s.projects,n:s.diff?s.diff.n:null,flags:s.diff?s.diff.flags:0,changes:s.diff?s.diff.changes:null,status:s.status,partial:s.partial,reviewed:s.reviewed,cnt:s.cnt}); });
+  UL.subs.forEach(function(s){ L.push({id:s.id,ts:s.ts,route:'site',by:String(s.by||'').replace(/^Link:\s*/,''),label:'Site update',projects:s.projects,n:s.diff?s.diff.n:null,flags:s.diff?s.diff.flags:0,changes:s.diff?s.diff.changes:null,status:s.status,partial:s.partial,reviewed:s.reviewed,cnt:s.cnt,sheet:s.sheet===undefined?null:s.sheet,held:s.held}); });
   return L.sort(function(a,b){ return b.ts-a.ts; });
 }
+/* V415: one wording for the state of a site update, used on every page (relay V55 sends the write result) */
+function suStatusText(s){ var st=s&&s.status, sh=s?s.sheet:undefined;
+  if(st==='pending') return {k:'a',t:'Waiting for approval'+(s.held?' ('+s.held+')':'')};
+  if(st==='rejected') return {k:'r',t:'Rejected'};
+  if(st==='revoked') return {k:'r',t:'Taken back (rows already written stay in the database)'};
+  if(st!=='accepted') return {k:'n',t:String(st||'')};
+  if(sh===undefined) return {k:'g',t:'Approved'};
+  if(!sh) return {k:'a',t:'Approved · not written to the database (automatic writing is off or not set up)'};
+  if(sh.pending) return {k:'a',t:'Approved · writing to the database…'};
+  if(sh.ok===false) return {k:'r',t:'Approved · DATABASE WRITE FAILED'+(sh.err?': '+sh.err:'')};
+  var v=sh.verified, miss=typeof sh.missing==='number'?sh.missing:(v&&v.missing?v.missing.length:0), ver=typeof v==='boolean'?v:!!(v&&!v.err&&v.missing&&!v.missing.length);
+  if(miss) return {k:'r',t:'Written, but '+miss+' row'+(miss>1?'s were':' was')+' not found in the database'};
+  return {k:'g',t:(ver?'Verified in the database':'Written to the database')+' ('+(sh.add||0)+' added, '+(sh.rep||0)+' changed'+(sh.same?', '+sh.same+' unchanged':'')+(sh.dupLeft?', '+sh.dupLeft+' duplicate row'+(sh.dupLeft>1?'s':'')+' in the Sheet':'')+')'}; }
+function suNeedsWrite(s){ if(!s||s.status!=='accepted') return false; var k=suStatusText(s).k; return k==='r'||k==='a'; }
+/* V415: approval time limit (writing to the database can take a while); a setting on the Updates page and in Site submissions */
+var SU_TO=(function(){ var o={review:120000}; try{ var s0=JSON.parse(localStorage.getItem('kec.suTo.v1')||'null'); if(s0&&s0.review>=30000) o.review=s0.review; }catch(e){} return o; })();
+function suToSel(id){ return '<label class="pnbset">Approval time limit <select id="'+id+'" data-suto="1">'+[[60000,'1 min'],[120000,'2 min'],[240000,'4 min']].map(function(o){ return '<option value="'+o[0]+'"'+(SU_TO.review===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></label>'; }
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='suLinkMoney'){ try{ localStorage.setItem('kec.linkMoney.v1',t.checked?'1':'0'); }catch(_){} PH_MH=''; try{ phMetaPost(); }catch(_){} toast('Saved · the lists for private links are sent again'); } });
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.getAttribute&&t.getAttribute('data-suto')){ SU_TO.review=+t.value||120000; try{ localStorage.setItem('kec.suTo.v1',JSON.stringify(SU_TO)); }catch(_){} document.querySelectorAll('[data-suto]').forEach(function(x){ x.value=String(SU_TO.review); }); } });
+function suWriteToast(j,verb){ var sh=j&&j.sheet; if(j&&j.already){ toast('This update was already approved · '+suStatusText({status:'accepted',sheet:sh===undefined?undefined:sh}).t,false,9000); return; }
+  if(sh===undefined){ toast(verb||'Approved'); return; }
+  var x=suStatusText({status:'accepted',sheet:sh}); toast((/^Approved/.test(x.t)&&/^Approved/.test(verb||'Approved')?x.t:(verb||'Approved')+' · '+x.t)+(x.k==='r'?' · press Retry write':''),x.k==='r',x.k==='r'?15000:8000); }
+function suReviewErr(er,after){ if(er&&er.status===400&&/does not apply/i.test(er.message||'')){ toast('This update was already decided · refreshing'); after(); return true; } return false; }
+/* V415: rows of an update that Edit data dates or Reporting dates would hide on the dashboard */
+function suHiddenBy(sub){ var out=[], d=(sub&&sub.data)||{}, rows=[].concat(d.prog||[],d.con||[],d.e1||[],d.e2||[],d.qa||[],d.mp||[]);
+  rows.forEach(function(r){ var c=String(r.code==null?'':r.code).trim(), iso=toISO(r.date!=null?r.date:r.d); if(!c||!iso) return;
+    var k=dfixKey(c,iso), fx=DFIX.filter(function(o){ return dfixKey(o.code,o.d)===k; })[0];
+    if(fx) out.push(fx.to===''?'Edit data dates REMOVES '+pname(c)+' · '+d2(iso)+': these rows will not be shown':'Edit data dates MOVES '+pname(c)+' · '+d2(iso)+' to '+d2(fx.to));
+    var pc=Object.keys(PCUT).filter(function(x){ return x.toLowerCase()===c.toLowerCase(); })[0], pin=pc?PCUT[pc]:null; if(pin&&iso>pin) out.push('Reporting dates PINS '+pname(c)+' to '+d2(pin)+': rows dated '+d2(iso)+' will not be shown'); });
+  return Array.from(new Set(out)); }
+function suHiddenHtml(sub){ var hd=suHiddenBy(sub); if(!hd.length) return ''; return '<div class="sepnote" style="border-color:var(--bad)"><span class="ni">!</span><div><b>Approving stores these rows, but a date rule will HIDE them on the dashboard:</b>'+hd.map(function(x){ return '<div class="suci">'+esc(x)+'</div>'; }).join('')+'<div class="jm">Change the rule in Site view › Edit data dates / Reporting dates if the rows should show.</div></div></div>'; }
+function suHiddenOk(sub){ var hd=suHiddenBy(sub); return !hd.length||confirm('Approving will store this update, but these rules will HIDE its rows on the dashboard:\n\n- '+hd.join('\n- ')+'\n\nApprove anyway?'); }
+function suSubById(id){ return (((SU.admin&&SU.admin.subs)||[]).concat(UL.subs||[])).filter(function(x){ return x&&x.id===id; })[0]; }
 var UL_ST={recorded:['b','Master update'],baseline:['n','Baseline'],pending:['a','Waiting for review'],accepted:['g','Accepted · live'],rejected:['r','Rejected'],revoked:['r','Taken back']};
 function ulHead(e){
-  var st=UL_ST[e.status]||['n',e.status], cnt=e.n==null?'details being prepared':(e.n+(e.n===1?' change':' changes')+(e.flags?' · '+e.flags+' flagged':'')), pr=(e.projects||[]).map(pname).join(', ');
-  return '<span class="ulp '+(e.route==='site'?'a':'b')+'">'+(e.route==='site'?'Site team':'Master')+'</span> <span class="ulp '+st[0]+'">'+st[1]+'</span> <b>'+esc(e.by||'')+'</b> · '+svStamp(e.ts)+(e.cut?' · cut-off '+d2(e.cut):'')+'<div class="ulsub">'+esc(cnt)+(pr?' · '+esc(pr):'')+(e.partial&&e.partial.rejected&&e.partial.rejected.length?' · not approved: '+esc(e.partial.rejected.map(pname).join(', ')):'')+(e.reviewed&&e.reviewed.reason?' · reason: '+esc(e.reviewed.reason):'')+'</div>';
+  var st=e.route==='site'?(function(x){ return [x.k,x.t]; })(suStatusText(e)):(UL_ST[e.status]||['n',e.status]), cnt=e.n==null?'details being prepared':(e.n+(e.n===1?' change':' changes')+(e.flags?' · '+e.flags+' flagged':'')), pr=(e.projects||[]).map(pname).join(', ');
+  return '<span class="ulp '+(e.route==='site'?'a':'b')+'">'+(e.route==='site'?'Site team':'Master')+'</span> <span class="ulp '+st[0]+'">'+st[1]+'</span> <b>'+esc(e.by||'')+'</b> · '+svStamp(e.ts)+(e.cut?' · cut-off '+d2(e.cut):'')+'<div class="ulsub">'+esc(cnt)+(pr?' · '+esc(pr):'')+(e.partial&&e.partial.rejected&&e.partial.rejected.length?' · not approved: '+esc(e.partial.rejected.map(pname).join(', ')):'')+(e.reviewed&&e.reviewed.reason?' · reason: '+esc(e.reviewed.reason):'')+(e.route==='site'&&ulAdmin()&&suNeedsWrite(e)?' <button type="button" class="btn" data-ulrw="'+esc(e.id)+'">Retry write</button>':'')+'</div>';
 }
 /* ---- Data notes section ---- */
 function ulNotesHtml(){
@@ -3162,7 +3195,7 @@ function ulReview(){
     var pj=(s.projects||[]).map(function(c){ var L=byP[c]||[], f=L.filter(function(x){ return x.flag; }).length;
       return '<div class="ulpj"><h4><label><input type="checkbox" class="ulpk" data-sid="'+s.id+'" value="'+esc(c)+'" checked> '+esc(pname(c))+'</label> <span class="ulp n">'+L.length+' changes</span>'+(f?' <span class="ulp r">'+f+' flagged</span>':'')+'</h4>'+L.slice(0,6).map(function(x){ var t=UL_TAG[x.sec]||['n',x.sec]; return '<div class="ulr"><b>'+esc(x.item||'')+' · '+esc(x.f)+'</b><span>'+(x.from!==''&&x.k!=='new'?'<span class="ulold">'+esc(x.from)+'</span> → ':'')+'<span class="'+({up:'up',dn:'dn'}[x.k]||'')+'">'+esc(x.to||x.item||'')+'</span>'+(x.flag?' <em class="ulfl">'+esc(x.flag)+'</em>':'')+'</span><span class="ulp '+t[0]+'">'+t[1]+'</span></div>'; }).join('')+(L.length>6?'<details><summary>Show all '+L.length+'</summary>'+L.slice(6).map(function(x){ return '<div class="ulr"><b>'+esc(x.item||'')+' · '+esc(x.f)+'</b><span>'+(x.from!==''&&x.k!=='new'?'<span class="ulold">'+esc(x.from)+'</span> → ':'')+esc(x.to||'')+(x.flag?' <em class="ulfl">'+esc(x.flag)+'</em>':'')+'</span><span></span></div>'; }).join('')+'</details>':'')+'</div>'; }).join('');
     return '<div class="card plain ulcard"><div class="ulh">'+ulHead(Object.assign({},s,{route:'site',by:String(s.by||'').replace(/^Link:\s*/,''),n:ch?ch.length:null,flags:fl,status:'pending'}))+'</div>'+
-      suAutoLine(s)+(ch?'':'<div class="ulnone">Preparing the list of changes…</div>')+pj+
+      suHiddenHtml(s)+suAutoLine(s)+(ch?'':'<div class="ulnone">Preparing the list of changes…</div>')+pj+
       (D.length?'<div class="ulsub bad"><b>'+D.length+' value'+(D.length===1?'':'s')+' differ from the contracts file</b> — see Site submissions for the detail.</div>':'')+
       '<div class="ulact"><button type="button" class="btn pri" data-ulapp="'+s.id+'">Approve selected projects</button><input type="text" id="ulr-'+s.id+'" class="ulrs" placeholder="Reason sent back to the site team (required to reject)"><button type="button" class="btn" data-ulrej="'+s.id+'">Reject</button></div></div>'; }).join('');
 }
@@ -3173,7 +3206,7 @@ function ulPage(){
   var pend=adm&&SU.admin?(SU.admin.subs||[]).filter(function(s){ return s.status==='pending'; }).length:0;
   var body=!UL.loaded?'<div class="ulsub">Loading…</div>':UL.tab==='review'?ulReview():UL.tab==='log'?ulLog():ulCoverage();
   return '<h2 class="pgtitle sm">Updates</h2><p class="pgsub">What changed, who changed it, and what is waiting for review · cut-off '+d2(state.cutoff)+'</p>'+
-    '<div class="ultabs">'+tabs.map(function(t){ return '<button type="button" class="ultab'+(UL.tab===t[0]?' on':'')+'" data-ultab="'+t[0]+'">'+t[1]+(t[0]==='review'&&pend?' <span class="dcn">'+pend+'</span>':'')+'</button>'; }).join('')+'<span class="sp"></span>'+(adm&&ACC.need?'<label class="pnbset">Check for approvals <select id="pnbSel">'+[['1','every minute'],['2','every 2 min'],['5','every 5 min'],['10','every 10 min'],['0','off']].map(function(o){ return '<option value="'+o[0]+'"'+(String(pnbMin())===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></label>':'')+'<button type="button" class="btn" data-ulrefresh="1">Refresh</button></div>'+
+    '<div class="ultabs">'+tabs.map(function(t){ return '<button type="button" class="ultab'+(UL.tab===t[0]?' on':'')+'" data-ultab="'+t[0]+'">'+t[1]+(t[0]==='review'&&pend?' <span class="dcn">'+pend+'</span>':'')+'</button>'; }).join('')+'<span class="sp"></span>'+(adm&&ACC.need?suToSel('suToUl')+' ':'')+(adm&&ACC.need?'<label class="pnbset">Check for approvals <select id="pnbSel">'+[['1','every minute'],['2','every 2 min'],['5','every 5 min'],['10','every 10 min'],['0','off']].map(function(o){ return '<option value="'+o[0]+'"'+(String(pnbMin())===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></label>':'')+'<button type="button" class="btn" data-ulrefresh="1">Refresh</button></div>'+
     (UL.err?'<div class="sepnote"><span class="ni">i</span><div>'+esc(UL.err)+'</div></div>':'')+dbCard()+body;
 }
 function ulLog(){
@@ -3200,21 +3233,22 @@ async function ulAfterReview(){
   try{ SU.admin=await accCall('GET','/site-admin',null,30000); PNB.subs=(SU.admin&&SU.admin.subs)||PNB.subs; PNB.t=Date.now(); pnbPaint(); }catch(e){}
   suUndo(); await suSync(); UL.loaded=false; await ulLoad(true); render();
 }
+document.addEventListener('click',function(e){ var w=e.target.closest&&e.target.closest('[data-ulrw]'); if(w){ w.disabled=true; w.textContent='Writing…'; accCall('POST','/site-review',{id:w.getAttribute('data-ulrw'),action:'rewrite'},SU_TO.review).then(function(j){ suWriteToast(j,'Retry write'); return ulAfterReview(); }).catch(function(er){ w.disabled=false; w.textContent='Retry write'; toast((er&&er.status===400?'The relay is older than V55: Retry write needs relay V55':(er&&er.message))||'Could not write',true); }); return; } });
 document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-ultab],[data-ulapp],[data-ulrej],[data-ulrefresh]'); if(!t) return;
   if(t.hasAttribute('data-ultab')){ UL.tab=t.getAttribute('data-ultab'); render(); }
   else if(t.hasAttribute('data-ulrefresh')){ UL.loaded=false; ulLoad(true); }
   else if(t.hasAttribute('data-ulapp')){ var id=t.getAttribute('data-ulapp'), all=Array.prototype.slice.call(document.querySelectorAll('.ulpk[data-sid="'+id+'"]')), on=all.filter(function(x){ return x.checked; }).map(function(x){ return x.value; });
     if(!on.length){ toast('Tick at least one project to approve',true); return; }
-    t.disabled=true; accCall('POST','/site-review',{id:id,action:'approve',only:on.length===all.length?undefined:on},30000).then(function(){ toast('Approved'+(on.length<all.length?' · '+on.length+' of '+all.length+' projects':'')); return ulAfterReview(); }).catch(function(er){ t.disabled=false; toast((er&&er.message)||'Could not approve',true); }); }
+    if(!suHiddenOk(suSubById(id))) return;
+    t.disabled=true; var t0=t.textContent; t.textContent='Approving… (writing to the database can take up to '+Math.round(SU_TO.review/60000)+' min)'; accCall('POST','/site-review',{id:id,action:'approve',only:on.length===all.length?undefined:on},SU_TO.review).then(function(j){ suWriteToast(j,'Approved'+(on.length<all.length?' · '+on.length+' of '+all.length+' projects':'')); return ulAfterReview(); }).catch(function(er){ t.disabled=false; t.textContent=t0; if(suReviewErr(er,ulAfterReview)) return; toast((er&&er.message)||'Could not approve',true); }); }
   else if(t.hasAttribute('data-ulrej')){ var id2=t.getAttribute('data-ulrej'), rs=(document.getElementById('ulr-'+id2)||{}).value||''; if(!rs.trim()){ toast('Write the reason that goes back to the site team',true); return; }
-    t.disabled=true; accCall('POST','/site-review',{id:id2,action:'reject',reason:rs.trim()},30000).then(function(){ toast('Rejected · the reason is shown to the site team'); return ulAfterReview(); }).catch(function(er){ t.disabled=false; toast((er&&er.message)||'Could not reject',true); }); }
+    t.disabled=true; accCall('POST','/site-review',{id:id2,action:'reject',reason:rs.trim()},SU_TO.review).then(function(){ toast('Rejected · the reason is shown to the site team'); return ulAfterReview(); }).catch(function(er){ t.disabled=false; toast((er&&er.message)||'Could not reject',true); }); }
 });
 document.addEventListener('change',function(e){ if(e.target&&e.target.id==='ulSel'){ UL.sel=e.target.value; render(); } });
 /* the private link page: what happened to this team's earlier uploads */
 function ulRecent(j){
   if(!j||!j.recent||!j.recent.length) return '';
-  var st={pending:'Waiting for approval',accepted:'Accepted · live',rejected:'Rejected',revoked:'Taken back'};
-  return '<div class="sepnote" style="display:block"><b>Your recent uploads</b>'+j.recent.map(function(x){ return '<div style="margin-top:6px">'+esc(svStamp(x.ts))+' · <b>'+(st[x.status]||esc(x.status))+'</b>'+(x.partial&&x.partial.rejected&&x.partial.rejected.length?' (not approved: '+esc(x.partial.rejected.join(', '))+')':'')+(x.reason?'<div class="bad">Reason: '+esc(x.reason)+'</div>':'')+'</div>'; }).join('')+'</div>';
+  return '<div class="sepnote" style="display:block"><b>Your recent uploads</b>'+j.recent.map(function(x){ return '<div style="margin-top:6px">'+esc(svStamp(x.ts))+(x.id?' · <span class="jm">'+esc(x.id)+'</span>':'')+' · <b>'+esc(suStatusText(x).t)+'</b>'+(x.partial&&x.partial.rejected&&x.partial.rejected.length?' (not approved: '+esc(x.partial.rejected.join(', '))+')':'')+(x.reason?'<div class="bad">Reason: '+esc(x.reason)+'</div>':'')+'</div>'; }).join('')+'</div>';
 }
 
 /* ===== Edit layout (administrators): move and resize the Overview blocks (V263, reworked V264) ===== */
@@ -3407,8 +3441,16 @@ function phMetaLocal(){
   (cur.prog||[]).forEach(function(r){ var c=r.code; if(!c||HIDE_PROJ.indexOf(c)>=0||(lim&&lim.indexOf(String(c).toLowerCase())<0)) return;
     var o=m[c]||(m[c]={n:pname(c),p:[],c:[],pc:{}}), pk=String(pkgL(c,r.pkg)||r.pkg||'').trim(), ct=String(r.ctr||'').trim();
     if(pk&&o.p.indexOf(pk)<0) o.p.push(pk); if(ct){ if(o.c.indexOf(ct)<0) o.c.push(ct); if(pk) o.pc[pk]=ct; } });
-  Object.keys(m).forEach(function(c){ m[c].p.sort(); m[c].c.sort(); }); return m;
+  Object.keys(m).forEach(function(c){ m[c].p.sort(); m[c].c.sort(); });
+  /* V415: the template rows of each project (for the private-link template): planned dates, Extension of Time, contract values and the last report */
+  try{ var money=suLinkMoney(), last={}; (model&&model.rows||[]).forEach(function(r){ if(!m[r.code]) return; var k=r.code+'|'+r.pkg; if(!last[k]||r.date>=last[k].date) last[k]=r; });
+    var ser=function(d){ return d?Math.round(Date.parse(d+'T00:00:00Z')/864e5)+25569:null; };
+    Object.keys(last).forEach(function(k){ var r=last[k], o={pkg:r.pkg,name:pname(r.code),ctr:r.ctr==='Unassigned'?'':r.ctr,cno:r.cno===r.pkg?'':r.cno,ps:ser(r.ps),pf:ser(r.cf||r.pf),eot:r.eot>0?Math.round(r.eot):0,d:ser(r.date),ff:ser(r.ff)};
+      if(money){ ['cv','vo','gc','ev'].forEach(function(f){ if(typeof r[f]==='number'&&isFinite(r[f])) o[f]=r[f]; }); if(r.rv>0&&typeof r.ev==='number') o.act=Math.round(r.ev/r.rv*10000)/10000; }
+      (m[r.code].t=m[r.code].t||[]).push(o); }); }catch(e){}
+  return m;
 }
+function suLinkMoney(){ try{ return localStorage.getItem('kec.linkMoney.v1')!=='0'; }catch(e){ return true; } }
 var PH_MH='';
 function phMetaPost(){
   if(!phOn()||!ulAdmin()||!cur.prog) return; var m=phMetaLocal(), h=JSON.stringify(m); if(h===PH_MH) return; PH_MH=h;
@@ -4659,6 +4701,7 @@ function suParse(wb,okCode){
     else{ data.prog=extract(P.rows,pm).filter(function(r){ return r.code!=null&&String(r.code).trim()!==''; });
       data.prog.forEach(function(r){ if(typeof model==='undefined'||!model||!model.rows||r.pkg==null) return; var lcN=String(r.code).trim().toLowerCase(), pN=String(r.pkg).trim(), best=null; model.rows.forEach(function(m){ if(String(m.code).toLowerCase()===lcN&&svPkgMatch(m.pkg,pN)&&(!best||m.date>=best.date)) best=m; }); if(!best) return; r.ps2=best.ps; r.ctr2=best.ctr==='Unassigned'?'':best.ctr; r.cno2=best.cno===best.pkg?'':best.cno; if(r.ps==null||r.ps==='') r.ps=best.ps; if(r.ctr==null||r.ctr==='') r.ctr=r.ctr2; if(r.cno==null||r.cno==='') r.cno=r.cno2; });
       data.prog.forEach(function(r,i){ r.code=String(r.code).trim(); if(r.pkg==null||String(r.pkg).trim()==='') errs.push('Packages - Plots, row '+(i+1)+': Package/Plot is missing for '+r.code+'.'); else r.pkg=String(r.pkg).trim(); if(r.pname!=null) r.pname=String(r.pname);
+        if(r.date!=null&&typeof r.date==='string'){ var am=/^\s*(\d{1,2})\s*[\/.-]\s*(\d{1,2})\s*[\/.-]\s*(\d{4})\s*$/.exec(r.date); if(am&&+am[1]<=12&&+am[2]<=12&&am[1]!==am[2]&&warns.length<30){ var swp=am[3]+'-'+String(am[1]).padStart(2,'0')+'-'+String(am[2]).padStart(2,'0'), rd=toISO(r.date); if(rd) warns.push('Packages - Plots, '+r.code+' · '+r.pkg+': the Data Date "'+r.date+'" was read as '+d2(rd)+' (day/month/year). If you meant '+d2(swp)+', write it as '+am[2]+'/'+am[1]+'/'+am[3]+' or use the Data Date cell of template v2.6.'); } }
         ['date','ps','pf','rf','ff'].forEach(function(f){ if(r[f]!=null&&typeof r[f]!=='number'){ var t=toISO(r[f]); r[f]=t?Math.round(Date.parse(t+'T00:00:00Z')/864e5)+25569:r[f]; } });
         PROG_REQ.forEach(function(k){ if(['date','code','pkg'].indexOf(k)<0&&(r[k]==null||r[k]==='')&&errs.length<20) errs.push('Packages - Plots, '+r.code+' · '+r.pkg+': '+PROG_LABEL[k]+' is empty.'); });
         /* money and day columns must hold numbers: a number typed as text is converted, anything else is refused */
@@ -4728,7 +4771,14 @@ function suDiscrepancies(data){
 }
 function suModal(id,title,body,foot){ var o=document.getElementById(id); if(o) o.remove(); var m=document.createElement('div'); m.className='svm'; m.id=id; m.innerHTML='<div class="svmb" role="dialog" aria-modal="true" style="width:min(880px,96vw)"><h3>'+title+'</h3><div id="'+id+'B">'+body+'</div><div class="svma">'+(foot||'')+'<button type="button" class="btn" data-suclose="'+id+'">Close</button></div></div>'; document.body.appendChild(m); return m; }
 function suCno(v){ var t=String(v==null?'':v).replace(/\u00a0/g,' ').trim(), m=/CNT\s*-?\s*(\d+)\s*(?:-\s*([A-Za-z]+))?/i.exec(t); return m?'CNT-'+m[1]+(m[2]?'-'+m[2].toUpperCase():''):t; } /* one spelling for a contract number: P0030-CNT939, CNT939 and CNT-939 all show as CNT-939 */
-function suLookupRows(){ var by={}, nm={};
+/* V415: on the private-link page the template is built from the lists the administrator's dashboard sent to the relay */
+function suMetaOn(){ return !!(SU.tok&&SU.link&&SU.link.meta&&Object.keys(SU.link.meta).some(function(c){ return (SU.link.meta[c].t||[]).length; })); }
+function suMetaCodes(){ var M=SU.link.meta, L=SU.link.projects; return (L==='*'?Object.keys(M):L).filter(function(c){ return M[c]; }); }
+function suMetaRows(){ var M=SU.link.meta, out=[]; suMetaCodes().forEach(function(c){ var p=M[c], nm=p.n||c; out.push({code:c,pkg:nm,name:nm,ctr:'',cno:'',ps:''}); (p.t||[]).forEach(function(r){ if(r.pkg===nm) return; out.push({code:c,pkg:r.pkg,name:nm,ctr:r.ctr||'',cno:r.cno||'',ps:r.ps||'',pf:r.pf||'',cv:r.cv!=null?r.cv:'',vo:''}); }); }); return out; }
+function suMetaPrefill(codes){ var M=SU.link.meta, D={prog:[],con:[],e1:[],e2:[],qa:[],mp:[],pc:[]}, stp=SU.tplSt&&SU.tplSt.PF;
+  codes.forEach(function(c){ var p=M[c]; if(!p) return; (p.t||[]).filter(function(r){ return r.pkg!==(p.n||c); }).sort(function(a,b){ return String(a.pkg)<String(b.pkg)?-1:1; }).forEach(function(r){ var o={B:{s:c},D:{s:r.pkg},I:{n:r.eot||0,st:stp}}; if(r.vo!=null) o.M={n:r.vo,st:stp}; if(r.gc!=null) o.O={n:r.gc,st:stp}; if(r.d) o.V={n:r.d}; if(r.act!=null) o.W={n:r.act}; if(r.ff) o.X={n:r.ff}; if(r.ev!=null) o.Y={n:r.ev}; D.prog.push(o); }); });
+  return D; }
+function suLookupRows(){ if((!model||!model.rows||!model.rows.length)&&suMetaOn()) return suMetaRows(); var by={}, nm={};
   (model&&model.rows||[]).forEach(function(r){ var k=r.code+'|'+r.pkg; if(!by[k]||r.date>=by[k].date) by[k]=r; });
   (model&&model.projects||new Map()).forEach(function(p,c){ nm[c]=p&&p.name||c; });
   var cc={}; Object.keys(by).forEach(function(k){ var q=by[k]; if(q.pkg===nm[q.code]||!q.cno||q.cno===q.pkg) return; var kk=q.code+'|'+ckey(q.cno); cc[kk]=(cc[kk]||0)+1; }); /* a contract shared by several packages is not looked up: each package carries its own share, typed in the sheet */
@@ -4833,12 +4883,12 @@ async function suTpl26(z,withModel){
     ix=ix.replace('</sheetData>',rows+'</sheetData>').replace(/<dimension ref="A1:D\d+"\/>/,'<dimension ref="A1:D'+(16+extra.length)+'"/>');
     z.file('xl/worksheets/sheet1.xml',ix); }
 }
-function suTplName(){ var c=suSelCodes(), d=new Date(), t=String(d.getDate()).padStart(2,'0')+'-'+MON[d.getMonth()]+'-'+d.getFullYear();
+function suTplName(){ var c=(suMetaOn()&&!(model&&model.rows&&model.rows.length))?suMetaCodes():suSelCodes(), d=new Date(), t=String(d.getDate()).padStart(2,'0')+'-'+MON[d.getMonth()]+'-'+d.getFullYear();
   var p=c.length===1?String(c[0]):c.length?c.length+'-projects':'all'; return 'KEC_Site_Update_v'+SU_TPLV+'_'+p.replace(/[\\\/:*?"<>|\s]+/g,'-')+'_'+t+'.xlsx'; }
 async function suTplBuild(){
   var b=atob(SU_TPL), u=new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i]=b.charCodeAt(i);
   try{ if(!(await loadJSZip())) return u.buffer;
-    if(!model||!model.rows||!model.rows.length){ var z0=await JSZip.loadAsync(u); await suTpl26(z0,false); await suPrefill(z0,[]); return await z0.generateAsync({type:'arraybuffer',compression:'DEFLATE'}); }
+    if((!model||!model.rows||!model.rows.length)&&!suMetaOn()){ var z0=await JSZip.loadAsync(u); await suTpl26(z0,false); await suPrefill(z0,[]); return await z0.generateAsync({type:'arraybuffer',compression:'DEFLATE'}); }
     var z=await JSZip.loadAsync(u), f=z.file('xl/worksheets/sheet3.xml'); if(!f) return u.buffer; var x=await f.async('string');
     var hs=/<c r="A1" s="(\d+)"/.exec(x), ds=/<c r="G2" s="(\d+)"/.exec(x); if(!hs||!ds) return u.buffer;
     var E=function(v){ return String(v==null?'':v).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f￾￿]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }, T=function(ref,v){ return v===''||v==null?'':'<c r="'+ref+'" t="inlineStr"><is><t xml:space="preserve">'+E(v)+'</t></is></c>'; };
@@ -4864,13 +4914,14 @@ async function suTplBuild(){
           cells.H='<c r="H'+r+'" s="28"><f>'+gcol('H',r)+'</f><v></v></c>'; cells.L='<c r="L'+r+'" s="'+gn+'"><f>'+gcol('I',r)+'</f><v></v></c>'; cells.M='<c r="M'+r+'" s="21"/>'; cells.N='<c r="N'+r+'" s="'+gn+'"><f>IF(ISNUMBER(L'+r+'),L'+r+'+N(M'+r+'),"")</f><v></v></c>';
           return '<row r="'+rn+'"'+at+'>'+Object.keys(cells).sort(function(a,b){ return cix(a)-cix(b); }).map(function(k){ return cells[k]; }).join('')+'</row>'; });
         z.file('xl/worksheets/sheet4.xml',px); } }
-    await suTpl26(z,true); await suPrefill(z,suSelCodes());
+    await suTpl26(z,true); await suPrefill(z,suMetaOn()&&!(model&&model.rows&&model.rows.length)?suMetaCodes():suSelCodes());
     return await z.generateAsync({type:'arraybuffer',compression:'DEFLATE'});
   }catch(e){ console.warn('template build',e&&e.message); (SU.trunc=SU.trunc||[]).push('the project data could not be filled in, so this is the blank template'); return u.buffer; } }
 /* V345: the template is pre-filled for the project selected when "Site update" was pressed, from the last saved data. The example rows are removed. */
 function suSelCodes(){ var c=state.project?[state.project]:((state.mP||[]).slice()); return c.filter(function(x){ return !!x; }); }
 function suSer(iso){ return iso?Math.round(Date.parse(iso+'T00:00:00Z')/864e5)+25569:''; }
 function suPrefillData(codes){
+  if((!model||!model.rows||!model.rows.length)&&suMetaOn()) return suMetaPrefill(codes);
   var lc=function(v){ return String(v==null?'':v).toLowerCase(); }, set={}; codes.forEach(function(c){ set[lc(c)]=1; });
   var inSel=function(r){ return !!set[lc(r.code)]; }, cmp=function(a,b){ return lc(a.code)<lc(b.code)?-1:lc(a.code)>lc(b.code)?1:(lc(a.pkg)<lc(b.pkg)?-1:lc(a.pkg)>lc(b.pkg)?1:0); };
   var pk={}; (model.rows||[]).filter(inSel).forEach(function(r){ var k=lc(r.code)+'|'+lc(r.pkg); if(!pk[k]||r.date>=pk[k].date) pk[k]=r; });
@@ -4918,9 +4969,15 @@ async function suPrefill(z,codes){
     z.file('xl/worksheets/sheet'+n+'.xml',x); }
 }
 async function suTplDownload(){ try{ SU.trunc=[]; var buf=await suTplBuild(); xpSave(buf,suTplName()); if(SU.trunc.length) toast('The template is full and some rows were left out ('+SU.trunc.join('; ')+'). Select fewer projects and download it again.',true,15000); }catch(e){ toast('The template could not be prepared',true); } }
+function suDatesRead(P){ var d={}, D=P&&P.data||{}; (D.prog||[]).forEach(function(r){ var t=typeof r.date==='number'?toISO(r.date):toISO(r.date); if(t) d[t]=1; }); ['con','e1','e2','qa','mp'].forEach(function(k){ (D[k]||[]).forEach(function(r){ var t=toISO(r.d); if(t) d[t]=1; }); });
+  var L=Object.keys(d).sort(), WD=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var out=L.map(function(t){ return d2(t)+' ('+WD[new Date(t+'T00:00:00Z').getUTCDay()]+')'; });
+  var old=''; try{ if(model&&model.rows&&(D.prog||[]).length){ var c=String(D.prog[0].code).toLowerCase(), mx=''; model.rows.forEach(function(r){ if(String(r.code).toLowerCase()===c&&r.date>mx) mx=r.date; }); if(mx&&L.length&&L[L.length-1]<mx) old='All the Data Dates are older than the last report of '+pname(D.prog[0].code)+' ('+d2(mx)+'). If this is a correction it waits for the administrator; if not, check the date.'; } }catch(e){}
+  return {list:out,old:old}; }
 function suSummary(P){
+  var dr=suDatesRead(P);
   var nm={prog:'Packages - Plots',con:'Areas of Concern',e1:'Technical Submittals',e2:'Material Procurement',qa:'Quality Statistics',mp:'Manpower',pc:'Contracts to be Awarded'};
-  return '<p><b>Projects:</b> '+esc(P.codes.join(', ')||'—')+'</p><div class="svtw"><table class="svtb"><tbody>'+P.sum.map(function(x){ return '<tr><td>'+nm[x[0]]+'</td><td class="n">'+x[1]+' rows</td></tr>'; }).join('')+'</tbody></table></div>'+
+  return '<p><b>Projects:</b> '+esc(P.codes.join(', ')||'—')+'</p>'+(dr.list.length?'<p><b>Data Date read as:</b> '+esc(dr.list.join(', '))+'</p>':'')+(dr.old?'<div class="sepnote" style="border-color:var(--warn)"><span class="ni">!</span><div>'+esc(dr.old)+'</div></div>':'')+'<div class="svtw"><table class="svtb"><tbody>'+P.sum.map(function(x){ return '<tr><td>'+nm[x[0]]+'</td><td class="n">'+x[1]+' rows</td></tr>'; }).join('')+'</tbody></table></div>'+
     (P.errs.length?'<div class="sepnote" style="border-color:var(--bad)"><span class="ni">!</span><div><b>Fix these first:</b><br>'+P.errs.slice(0,25).map(esc).join('<br>')+(P.errs.length>25?'<br>… and '+(P.errs.length-25)+' more':'')+'</div></div>':'')+
     (P.warns.length?'<div class="sepnote"><span class="ni">i</span><div><b>Check:</b><br>'+P.warns.slice(0,10).map(esc).join('<br>')+'</div></div>':'');
 }
@@ -5010,19 +5067,21 @@ function suModsHtml(s){
   return h;
 }
 function suDrawAdmin(){
-  var j=SU.admin, st={pending:'Waiting for approval',accepted:'Live',rejected:'Rejected',revoked:'Revoked'}, ago=function(t){ return svStamp(t); };
+  var j=SU.admin, ago=function(t){ return svStamp(t); };
   var subs=j.subs.map(function(s){ var D=(s.status==='accepted'||s.status==='pending')?suDiscrepancies(s.data):[], acts='';
     if(s.status==='pending') acts='<button class="btn pri" data-sureview="approve" data-id="'+s.id+'"'+(s.nNf?' title="'+s.nNf+' rows will not be applied"':'')+'>'+(s.nNf?'Approve anyway ('+s.nNf+' rows not applied)':'Approve')+'</button> <button class="btn" data-sureview="reject" data-id="'+s.id+'">Reject</button>';
-    else if(s.status==='accepted') acts='<button class="btn" data-sureview="revoke" data-id="'+s.id+'">Take back</button>';
-    return '<div class="svch"><span class="svimp '+(s.status==='pending'?'warn':s.status==='accepted'?'good':'bad')+'">'+st[s.status]+'</span><div class="svcb"><b>'+esc(s.by)+' · '+esc(s.projects.join(', '))+'</b><small>'+ago(s.ts)+(s.entry&&s.entry!=='auto'?' · <b>'+(s.entry==='mod'?'Modification':'New entry')+'</b>':'')+' · '+Object.keys(s.cnt).filter(function(k){ return s.cnt[k]; }).map(function(k){ return k+' '+s.cnt[k]; }).join(' · ')+(s.sheet?' · '+(s.sheet.ok?'In the Sheet ('+s.sheet.add+' added, '+s.sheet.rep+' replaced'+(s.sheet.same?', '+s.sheet.same+' unchanged':'')+')':'<b style="color:#b3261e">Not written to the Sheet: '+esc(s.sheet.err||'error')+'</b>'):'')+'</small>'+
-      suModsHtml(s)+(D.length?'<p class="'+(s.confirmed?'':'bad')+'"><b>Differs from the contracts file'+(s.confirmed?' (confirmed)':'')+':</b></p><div class="svtw"><table class="svtb"><thead><tr><th>Contract</th><th>Item</th><th class="n">Site team</th><th class="n">Contracts file</th></tr></thead><tbody>'+D.slice(0,12).map(function(d){ return '<tr><td>'+esc(d.code+' · '+d.cno)+'</td><td>'+d.f+'</td><td class="n">'+fm(d.site)+'</td><td class="n">'+fm(d.file)+'</td></tr>'; }).join('')+'</tbody></table></div>'+(s.confirmed?'':'<button class="btn" data-sureview="confirm" data-id="'+s.id+'">Confirm the site team figures</button>'):'')+'</div><div>'+acts+'</div></div>'; }).join('')||'<div class="empty">No submissions yet.</div>';
+    else if(s.status==='accepted') acts=(suNeedsWrite(Object.assign({},s,{sheet:s.sheet===undefined?null:s.sheet}))?'<button class="btn pri" data-sureview="rewrite" data-id="'+s.id+'">Retry write</button> ':'')+'<button class="btn" data-sureview="revoke" data-id="'+s.id+'">Take back</button>';
+    var sx=suStatusText(Object.assign({},s,{sheet:s.sheet===undefined?null:s.sheet}));
+    return '<div class="svch"><span class="svimp '+({a:'warn',g:'good',r:'bad',n:'warn'}[sx.k])+'">'+esc(sx.t)+'</span><div class="svcb"><b>'+esc(s.by)+' · '+esc(s.projects.join(', '))+'</b><small>'+ago(s.ts)+(s.entry&&s.entry!=='auto'?' · <b>'+(s.entry==='mod'?'Modification':'New entry')+'</b>':'')+' · '+Object.keys(s.cnt).filter(function(k){ return s.cnt[k]; }).map(function(k){ return k+' '+s.cnt[k]; }).join(' · ')+(s.sheet&&s.sheet.verified&&s.sheet.verified.missing&&s.sheet.verified.missing.length?' · not found: '+esc(s.sheet.verified.missing.slice(0,5).join('; ')):'')+(s.rewrites?' · '+s.rewrites+' retr'+(s.rewrites>1?'ies':'y'):'')+'</small>'+
+      (s.status==='pending'?suHiddenHtml(s):'')+suModsHtml(s)+(D.length?'<p class="'+(s.confirmed?'':'bad')+'"><b>Differs from the contracts file'+(s.confirmed?' (confirmed)':'')+':</b></p><div class="svtw"><table class="svtb"><thead><tr><th>Contract</th><th>Item</th><th class="n">Site team</th><th class="n">Contracts file</th></tr></thead><tbody>'+D.slice(0,12).map(function(d){ return '<tr><td>'+esc(d.code+' · '+d.cno)+'</td><td>'+d.f+'</td><td class="n">'+fm(d.site)+'</td><td class="n">'+fm(d.file)+'</td></tr>'; }).join('')+'</tbody></table></div>'+(s.confirmed?'':'<button class="btn" data-sureview="confirm" data-id="'+s.id+'">Confirm the site team figures</button>'):'')+'</div><div>'+acts+'</div></div>'; }).join('')||'<div class="empty">No submissions yet.</div>';
+  var lm='<p><label><input type="checkbox" id="suLinkMoney"'+(suLinkMoney()?' checked':'')+'> Private-link templates include contract values, VOs, certified amounts and the last Earned Value</label> <span class="jm">(the lists are sent to the relay when the dashboard loads)</span></p>';
   var links=j.links.map(function(l){ var u=location.href.split('#')[0].split('?')[0]+'?site='+l.tok; return '<tr><td>'+esc(l.name)+'</td><td>'+esc(l.projects==='*'?'All projects':l.projects.join(', '))+'</td><td>'+(l.mode==='live'?'Live directly':'Needs approval')+'</td><td>'+(l.exp?(l.exp<Date.now()?'<b style="color:#b3261e">Expired</b>':'Until '+new Date(l.exp).toISOString().slice(0,10)):'No end date')+' · '+(l.n||0)+(l.max?' of '+l.max:'')+' upload'+((l.n||0)===1?'':'s')+'</td><td>'+(l.revoked?'Revoked':'<input readonly value="'+esc(u)+'" style="width:100%;font-size:11px" onclick="this.select()">')+'</td><td>'+(l.revoked?'':'<button class="btn" data-sulrev="'+l.tok+'">Revoke</button>')+'</td></tr>'; }).join('');
   var plist=[]; model.projects.forEach(function(p,k){ if(HIDE_PROJ.indexOf(k)<0) plist.push(k); });
-  document.getElementById('suAdmB').innerHTML='<h4>Submissions</h4><div class="svchl">'+subs+'</div><h4 style="margin-top:18px">Private upload links</h4><p style="font-size:12.5px;color:var(--mut)">One link per site team. Anyone with the link can upload for the projects you tick, and nothing else.</p>'+
+  document.getElementById('suAdmB').innerHTML='<p>'+suToSel('suToAdm')+'</p>'+lm+'<h4>Submissions</h4><div class="svchl">'+subs+'</div><h4 style="margin-top:18px">Private upload links</h4><p style="font-size:12.5px;color:var(--mut)">One link per site team. Anyone with the link can upload for the projects you tick, and nothing else.</p>'+
     (links?'<div class="svtw"><table class="svtb"><thead><tr><th>Name</th><th>Projects</th><th>Mode</th><th>Valid · uploads</th><th>Link</th><th></th></tr></thead><tbody>'+links+'</tbody></table></div>':'')+
     '<div class="svmg" style="margin-top:8px"><div class="svf h"><label>Link name</label><input id="suLn" type="text" placeholder="e.g. Hilton Hotel site team"></div><div class="svf h"><label>Mode</label><select id="suLm"><option value="review">Needs approval</option><option value="live">Live directly</option></select></div><div class="svf h"><label>Valid for (days, 0 = no end date)</label><input id="suLd" type="number" min="0" max="730" value="0"></div><div class="svf h"><label>Max uploads (0 = no limit)</label><input id="suLx" type="number" min="0" max="100000" value="0"></div><div class="svf"><label>Projects</label><div style="display:flex;flex-wrap:wrap;gap:4px 14px">'+plist.map(function(k){ return '<label style="text-transform:none;letter-spacing:0;font-weight:500;font-size:12.5px"><input type="checkbox" class="suLp" value="'+esc(k)+'" style="width:auto"> '+esc(pname(k))+'</label>'; }).join('')+'</div></div></div><button class="btn pri" data-sulnew="1">Create link</button>';
 }
-async function suAdminAct(path,body){ try{ var j=await accCall('POST',path,body,30000); if(path==='/site-review'){ var x=await accCall('GET','/site-admin',null,30000); SU.admin=x; PNB.subs=(x&&x.subs)||PNB.subs; PNB.t=Date.now(); pnbPaint(); suDrawAdmin(); suUndo(); suSync(); UL.loaded=false; ulLoad(true); } else if(j.links){ SU.admin.links=j.links; suDrawAdmin(); } }catch(e){ toast((e&&e.message)||'Could not save',true); } }
+async function suAdminAct(path,body){ try{ var rv=path==='/site-review', j=await accCall('POST',path,body,rv?SU_TO.review:30000); if(rv&&(body.action==='approve'||body.action==='rewrite')) suWriteToast(j,body.action==='rewrite'?'Retry write':'Approved'); if(path==='/site-review'){ var x=await accCall('GET','/site-admin',null,30000); SU.admin=x; PNB.subs=(x&&x.subs)||PNB.subs; PNB.t=Date.now(); pnbPaint(); suDrawAdmin(); suUndo(); suSync(); UL.loaded=false; ulLoad(true); } else if(j.links){ SU.admin.links=j.links; suDrawAdmin(); } }catch(e){ if(path==='/site-review'&&suReviewErr(e,function(){ suOpenAdmin(); })) return; toast((e&&e.message)||'Could not save',true); } }
 /* the private link page (no sign-in): ?site=TOKEN */
 async function suBoot(){
   var tok=(location.search.match(/[?&]site=([A-Za-z0-9]+)/)||[])[1]; if(!tok) return; SU.tok=tok;
@@ -5036,7 +5095,7 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
   if(t.hasAttribute('data-suopen')) suOpenUpload(); else if(t.hasAttribute('data-suadm')) suOpenAdmin(); else if(t.hasAttribute('data-sutpl')) suTplDownload();
   else if(t.hasAttribute('data-suclose')){ var m=document.getElementById(t.getAttribute('data-suclose')); if(m) m.remove(); }
   else if(t.id==='suSend') suSubmit();
-  else if(t.hasAttribute('data-sureview')) suAdminAct('/site-review',{id:t.getAttribute('data-id'),action:t.getAttribute('data-sureview')});
+  else if(t.hasAttribute('data-sureview')){ var a0=t.getAttribute('data-sureview'), id0=t.getAttribute('data-id'); if(a0==='approve'&&!suHiddenOk(suSubById(id0))) return; if(a0==='approve'||a0==='rewrite'){ t.disabled=true; t.textContent=a0==='approve'?'Approving…':'Writing…'; } suAdminAct('/site-review',{id:id0,action:a0}); }
   else if(t.hasAttribute('data-sulrev')) suAdminAct('/site-links',{action:'revoke',tok:t.getAttribute('data-sulrev')});
   else if(t.hasAttribute('data-sulnew')){ var p=Array.prototype.map.call(document.querySelectorAll('.suLp:checked'),function(x){ return x.value; }); suAdminAct('/site-links',{action:'create',name:document.getElementById('suLn').value,mode:document.getElementById('suLm').value,days:+(document.getElementById('suLd')||{}).value||0,max:+(document.getElementById('suLx')||{}).value||0,projects:p}); }
 });
