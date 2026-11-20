@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V416</title>
+<title>TEST · KEC Project Controls Dashboard · V418</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -64,6 +64,40 @@ nav a i{font-style:normal;font-size:10px;opacity:.55;width:16px}
 #csModal .cslog{font-size:11px;opacity:.85;margin-top:8px;max-height:110px;overflow:auto}
 #csModal .csconf{background:rgba(185,119,14,.12);border:1px solid #b9770e;border-radius:6px;padding:8px 10px;font-size:12px;margin:8px 0}
 @media (max-width:640px){#csModal{padding:0}#csModal .csbox{border-radius:0;min-height:100vh}}
+/* V418: Data sources */
+.livest.warn{color:#ffd27a}
+.dsdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#8a97ab;margin-left:6px;vertical-align:middle}.dsdot.ok{background:#35c27a}.dsdot.warn{background:#f0b429}.dsdot.bad{background:#ff6b5b}
+body.acc-lim #dsBtn{display:none!important}
+#dsModal{position:fixed;inset:0;z-index:311;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:4vh 10px;overflow:auto}#dsModal.on{display:flex}
+#dsModal .dsbox{background:var(--bg,#f3f5f9);color:var(--ink,#0f1b33);border-radius:12px;max-width:1060px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.35);box-sizing:border-box;overflow:hidden}
+#dsModal .dshead{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:16px 20px;background:var(--card,#fff);border-bottom:1px solid var(--line,#e1e7f0)}
+#dsModal h3{margin:0;font-size:17px}#dsModal .dssub{margin:3px 0 0;font-size:12px;color:var(--mut,#5b6b86)}
+#dsModal .dsacts{display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}
+#dsModal button{padding:7px 13px;border-radius:7px;border:1px solid var(--line,#d5dbe6);background:var(--card,#fff);color:inherit;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
+#dsModal button.pri{background:var(--accent,#1f4fb4);color:#fff;border-color:var(--accent,#1f4fb4)}#dsModal button:disabled{opacity:.55;cursor:default}
+#dsModal .dsconn{margin:14px 20px 0;padding:9px 12px;border-radius:8px;font-size:12.5px;display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap;background:var(--card,#fff);border:1px solid var(--line,#e1e7f0)}
+#dsModal .dsconn .dsdot{margin:0}#dsModal .dsconn small{color:var(--mut,#5b6b86)}
+#dsModal .dsnote{margin:10px 20px 0;padding:8px 12px;border-radius:8px;font-size:12px;background:rgba(31,79,180,.09)}#dsModal .dsnote.er{background:rgba(180,35,24,.1);color:var(--bad,#b42318)}
+#dsModal .dsgrp{padding:16px 20px 2px}
+#dsModal .dsgh{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut,#5b6b86);margin:0 0 8px;display:flex;align-items:center;gap:8px}#dsModal .dsgh:after{content:'';flex:1;height:1px;background:var(--line,#e1e7f0)}
+#dsModal .dsgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}
+#dsModal .dscard{background:var(--card,#fff);border:1px solid var(--line,#e1e7f0);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+#dsModal .dscard>header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+#dsModal .dsti{min-width:0}#dsModal .dsti b{font-size:14px;display:block}#dsModal .dsfn{font-size:11.5px;color:var(--mut,#5b6b86);word-break:break-word}
+#dsModal .dstag{display:inline-block;margin-top:5px;font-size:10.5px;padding:1px 8px;border-radius:9px;background:var(--chipbg,#eef2f8);color:var(--accent,#1f4fb4);font-weight:600}
+#dsModal .dschip{white-space:nowrap;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px}
+#dsModal .dschip.ok{background:rgba(26,127,75,.14);color:var(--good,#1a7f4b)}#dsModal .dschip.warn{background:rgba(183,121,31,.16);color:var(--warn,#b7791f)}#dsModal .dschip.bad{background:rgba(180,35,24,.13);color:var(--bad,#b42318)}#dsModal .dschip.mut,#dsModal .dschip.load{background:var(--chipbg,#eef2f8);color:var(--mut,#5b6b86)}
+#dsModal .dskv{display:grid;grid-template-columns:max-content 1fr;gap:7px 14px;margin:0;font-size:12.5px}
+#dsModal .dskv dt{color:var(--mut,#5b6b86)}#dsModal .dskv dd{margin:0;min-width:0;word-break:break-word}
+#dsModal .dsago{color:var(--mut,#5b6b86)}#dsModal .dsok{color:var(--good,#1a7f4b);font-weight:600}#dsModal .dsbad{color:var(--bad,#b42318);font-weight:600}#dsModal .dswarn{color:var(--warn,#b7791f);font-weight:600}
+#dsModal .dsfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:10px;border-top:1px solid var(--line,#e1e7f0)}
+#dsModal .dsopen{font-size:12px;margin-left:auto;color:var(--accent,#1f4fb4);font-weight:600}
+#dsModal .dslink{background:none!important;border:0!important;padding:0!important;color:var(--accent,#1f4fb4)!important;text-decoration:underline;cursor:pointer;font-size:12px}
+#dsModal .dserr{border:1px solid var(--line,#e1e7f0);border-radius:8px;max-height:260px;overflow:auto}
+#dsModal .dserr table{border-collapse:collapse;width:100%;font-size:11.5px}#dsModal .dserr th{position:sticky;top:0;background:var(--card,#fff);text-align:left;padding:5px 8px;border-bottom:1px solid var(--line,#e1e7f0);font-size:10.5px;color:var(--mut,#5b6b86)}#dsModal .dserr td{padding:5px 8px;border-bottom:1px solid var(--line,#e1e7f0);vertical-align:top}#dsModal .dserr td:first-child{white-space:nowrap;font-weight:600}
+#dsModal .dserr p{margin:6px 8px;font-size:11.5px}
+#dsModal .dsfn2{padding:12px 20px 16px;font-size:11px;color:var(--mut,#5b6b86);line-height:1.5}
+@media (max-width:640px){#dsModal{padding:0}#dsModal .dsbox{border-radius:0;min-height:100vh}#dsModal .dshead{flex-direction:column;padding:14px 16px}#dsModal .dsgrid{grid-template-columns:1fr}#dsModal .dskv{grid-template-columns:1fr;gap:2px}#dsModal .dskv dd{margin-bottom:6px}#dsModal .dsgrp{padding:14px 12px 2px}#dsModal .dsconn,#dsModal .dsnote{margin-left:12px;margin-right:12px}#dsModal .dsopen{margin-left:0}#dsModal .dsfn2{padding:12px}}
 #lkModal .lkerr{color:#c0392b;font-size:12px;margin-top:8px;min-height:14px}
 #lkModal .lkact{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}#lkModal button{padding:7px 14px;border-radius:6px;border:1px solid #9aa7b8;background:transparent;color:inherit;cursor:pointer;font-size:12px}#lkModal button.pri{background:#1f5fbf;color:#fff;border-color:#1f5fbf}
 #intro{--gold:#c8993a;position:fixed;inset:0;z-index:1000;background:radial-gradient(120% 90% at 50% 45%,#16357a 0%,#0b1f4d 58%,#050b20 100%);display:none;overflow:hidden;color:#dbe5fb;text-align:center;perspective:1500px;perspective-origin:50% 40%}
@@ -1430,7 +1464,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V416</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V418</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1457,6 +1491,7 @@ body.printsite>*:not(.app){display:none!important}
       <button id="loadBtn" type="button">Load workbook(s)</button>
       <button id="tplBtn" type="button">Download template</button>
       <a href="#" id="lkOpen" class="lklink">&#9881; Live data links</a>
+      <button id="dsBtn" type="button" hidden title="Status of the database files: Google Drive connection, last change, errors, refresh and sync">Data sources <span class="dsdot" id="dsDot"></span></button>
       <button id="dcBtn" type="button">Data warnings <span class="dcn" id="dcN">0</span></button>
       <button id="notesBtn" type="button">Show data notes</button>
     </div>
@@ -1520,6 +1555,7 @@ body.printsite>*:not(.app){display:none!important}
 <div id="accLogin" hidden><form class="accbox" onsubmit="return false"><div class="acclogo"><img id="accLogoImg" alt="KEC"></div><h2>Projects Delivery Department</h2><p>Sign in with your passcode to open the dashboard.</p><input id="accPass" type="password" autocomplete="current-password" placeholder="Passcode"><button type="button" id="accGo" class="accgo">Sign in</button><div class="accerr" role="alert"></div></form></div>
 <div id="lkModal" role="dialog" aria-modal="true" aria-label="Live data links"></div>
 <div id="csModal" role="dialog" aria-modal="true" aria-label="Contracts sync"></div>
+<div id="dsModal" role="dialog" aria-modal="true" aria-label="Data sources"></div>
 <div id="dcModal" role="dialog" aria-modal="true" aria-label="Data warnings"></div>
 <div id="ntModal" role="dialog" aria-modal="true" aria-label="Notifications"></div>
 
@@ -1609,7 +1645,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V416';
+var APP_VER='V418';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -6004,6 +6040,27 @@ function normNotes(objs){
   objs.forEach(function(o){ var c=str(o[kc]), pk=str(o[kp]), a=ka?toISO(o[ka]):'', n=kn?str(o[kn]):'', fc=kf?toISO(o[kf]):'', sn=ks?toISO(o[ks]):''; if(c&&pk&&(a||n||fc)) out.push({code:c,pkg:pk,actual:a||'',note:n,fc:fc||'',since:sn||''}); });
   return out;
 }
+/* V418: error cells (#N/A, #REF!, #ERROR!...) in a workbook. For the contracts database only the Contracts sheet is read by the dashboard; other sheets are counted apart. */
+var DS_ERR=/^#(N\/A|REF!|ERROR!|VALUE!|NAME\?|DIV\/0!|NUM!|NULL!|SPILL!|CALC!)/;
+function dsIsErr(c){ return !!c&&(c.t==='e'||(typeof c.v==='string'&&DS_ERR.test(c.v.trim()))); }
+function dsScan(wb){ var o={n:0,used:0,rows:[],tot:[],cells:[],other:{},contracts:false,props:null}, U=XLSX.utils;
+  try{ var p=wb.Props||{}; o.props={mod:p.ModifiedDate?(+new Date(p.ModifiedDate)||0):0,by:String(p.LastAuthor||p.Author||'')}; }catch(e){}
+  var csn=wb.SheetNames.filter(function(n){ return /^contracts$/i.test(String(n).trim()); })[0]; o.contracts=!!csn;
+  wb.SheetNames.forEach(function(sn){ var ws=wb.Sheets[sn]; if(!ws) return;
+    var used=csn?sn===csn:!/^(instructions?|lists?|lookup|change log|notifications?|justifications?|drop ?down lists?)$/i.test(String(sn).trim());
+    var bad=Object.keys(ws).filter(function(a){ return a[0]!=='!'&&dsIsErr(ws[a]); }); if(!bad.length) return; o.n+=bad.length;
+    if(!used){ o.other[sn]=bad.length; return; }
+    o.used+=bad.length;
+    if(sn!==csn){ bad.slice(0,Math.max(0,80-o.cells.length)).forEach(function(a){ o.cells.push({s:sn,a:a,v:String(ws[a].w||ws[a].v||'#')}); }); return; }
+    var rg=U.decode_range(ws['!ref']||'A1'), hr=-1, hdr={}, r, c;
+    for(r=rg.s.r;r<=Math.min(rg.e.r,rg.s.r+12)&&hr<0;r++) for(c=rg.s.c;c<=rg.e.c;c++){ var x=ws[U.encode_cell({r:r,c:c})]; if(x&&/^cnt\s*#$/i.test(String(x.v).trim())){ hr=r; break; } }
+    if(hr>=0) for(c=rg.s.c;c<=rg.e.c;c++){ var hx=ws[U.encode_cell({r:hr,c:c})]; if(hx&&hx.v!=null&&!dsIsErr(hx)) hdr[c]=String(hx.v).replace(/\s+/g,' ').trim(); }
+    var col=function(re){ for(var k in hdr) if(re.test(hdr[k])) return +k; return -1; }, cC=col(/^cnt\s*#$/i), cP=col(/^project\s*name$/i), by={};
+    bad.forEach(function(a){ var d=U.decode_cell(a); if(d.r<=hr){ var hh=hdr[d.c]||U.encode_col(d.c); if(o.tot.indexOf(hh)<0) o.tot.push(hh); o.used--; return; } (by[d.r]=by[d.r]||[]).push(d.c); });
+    Object.keys(by).map(Number).sort(function(a,b){ return a-b; }).forEach(function(rr){ var g=function(cc){ var x=cc>=0?ws[U.encode_cell({r:rr,c:cc})]:null; return x&&x.v!=null?String(x.v):''; }, cs=by[rr].sort(function(a,b){ return a-b; });
+      o.rows.push({r:rr+1,cnt:g(cC),prj:g(cP),cols:cs.map(function(cc){ return hdr[cc]||U.encode_col(cc); }),cells:cs.map(function(cc){ return U.encode_cell({r:rr,c:cc}); })}); });
+  });
+  return o; }
 async function handleFiles(files,opts){
   opts=opts||{};
   if(!opts.auto&&!isUnlocked()){ pwAsk(function(){}); return; }
@@ -6014,6 +6071,7 @@ async function handleFiles(files,opts){
     var wb;
     try{ var ab0=await f.arrayBuffer(); if(!ACC.need||(ACC.user&&ACC.user.admin===true)){ window.KEC_RAW=window.KEC_RAW||{}; window.KEC_RAW[f.name]=ab0.slice(0); } /* the raw file is only kept for the administrator (publish to Drive) */ wb=XLSX.read(ab0,{type:'array'}); }catch(e){ errs.push(esc(f.name)+': not a readable Excel file.'); continue; }
     window.KEC_SHEETS=window.KEC_SHEETS||{}; window.KEC_SHEETS[f.name]=wb.SheetNames.slice();
+    try{ window.KEC_ERRS=window.KEC_ERRS||{}; window.KEC_ERRS[f.name]=dsScan(wb); }catch(e){}
     var csn=wb.SheetNames.filter(function(n){ return /^contracts$/i.test(String(n).trim()); })[0];
     var cOK=false, hasProg=false;
     if(csn){ hasProg=wb.SheetNames.some(function(n){ if(n===csn) return false; if(/mandatory|phase|package\s*notes?/i.test(String(n))) return true; try{ var ob=XLSX.utils.sheet_to_json(wb.Sheets[n],{raw:true,defval:null}); var kk=[]; ob.slice(0,25).forEach(function(o){ Object.keys(o).forEach(function(k){ if(kk.indexOf(k)<0) kk.push(k); }); }); var m0=mapCols(kk,PROG_COLS); return !!(m0.date&&m0.pkg); }catch(e){ return false; } });
@@ -8532,7 +8590,7 @@ document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.
 function aiShow(){ var adm=!!(ACC.need&&ACC.user&&ACC.user.admin), ok=!!(ACC.need&&ACC.user&&(ACC.user.admin||ACC.user.ai)); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
   var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm; var xb=document.getElementById('actLogBtn'); if(xb) xb.hidden=!adm; var nb=document.getElementById('ntBtn'); if(nb) nb.hidden=!adm;
-  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var cb=document.getElementById('csBtn'); if(cb){ cb.hidden=!adm; if(adm&&!CS.st&&!CS.loading){ CS.loading=true; csLoad().then(function(){ CS.loading=false; }); } } var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; var xb2=document.getElementById('xcBtn'); if(xb2) xb2.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
+  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var dsb=document.getElementById('dsBtn'); if(dsb) dsb.hidden=!(adm||ACC.need===false); var cb=document.getElementById('csBtn'); if(cb){ cb.hidden=!adm; if(adm&&!CS.st&&!CS.loading){ CS.loading=true; csLoad().then(function(){ CS.loading=false; }); } } var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; var xb2=document.getElementById('xcBtn'); if(xb2) xb2.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
   if(!model||!model.rows||!model.rows.length) return '';
@@ -8942,22 +9000,136 @@ function liveExpiry(now){ var e=document.getElementById('liveExp'); if(!e) retur
   else{ t=d===0?'today ('+exd+')':d===1?'tomorrow ('+exd+')':'in '+d+' days ('+exd+')';
     t='The live data links expire '+t+'. Ask for new SharePoint "Anyone" links and send them over before then, or live loading will stop working.'; c=d<=1?'l1':d<=3?'l3':'l7'; }
   e.className='liveexp '+c; e.textContent='⏰ '+t; e.style.display='block'; }
+/* ===== V418: Data sources (administrators) =====
+   The two database files on Google Drive (progress and contracts) and, when the contracts figures come from OneDrive, that file too:
+   connection, last change and who made it, when the dashboard loaded it, error cells, contracts sync, refresh and sync buttons. */
+var LIVE_FILES={}, LIVE_ST={}, DS={st:null,busy:'',err:'',at:0,show:{},note:null};
+function dsCan(){ return !!(ACC.user&&ACC.user.admin)||ACC.need===false; }
+function dsIsDrive(u){ return /(^|\/\/)(drive|docs)\.google\.com\//i.test(String(u||'')); }
+function dsKind(u,m){ if(m&&m.mime){ if(/google-apps\.spreadsheet/.test(m.mime)) return 'Google Sheet'; if(/macroenabled/i.test(m.mime)) return 'Excel macro file (.xlsm) on Google Drive'; if(/spreadsheetml|ms-excel/i.test(m.mime)) return 'Excel file on Google Drive'; }
+  u=String(u||''); return /docs\.google\.com\/spreadsheets/i.test(u)?'Google Sheet':dsIsDrive(u)?'File on Google Drive':/sharepoint|onedrive|1drv/i.test(u)?'Excel file on OneDrive / SharePoint':'Web link'; }
+function dsWhen(t){ if(!t) return ''; var d=new Date(t); if(isNaN(d)) return ''; var n=new Date(), same=d.toDateString()===n.toDateString(), hm=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+  return same?'Today '+hm:d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+', '+hm; }
+function dsAgo(t){ var s=(Date.now()-new Date(t).getTime())/1000; if(!isFinite(s)) return ''; if(s<90) return 'just now'; if(s<3600) return Math.round(s/60)+' min ago'; if(s<172800) return Math.round(s/3600)+' h ago'; return Math.round(s/86400)+' days ago'; }
+function dsErrsOf(c){ if(c.src){ var e=(window.KEC_ERRS||{})[c.src.name]; if(e&&LIVE_ST[c.src.name]) return e; return null; }
+  var m=c.meta&&c.meta.errors; return m?{used:m.n,rows:m.rows||[],tot:m.tot||[],other:m.other||{},cells:[],contracts:true,n:m.n}:null; }
+function dsWarnText(){ var parts=[]; LIVE.sources.forEach(function(s){ var e=(window.KEC_ERRS||{})[s.name]; if(!e||!e.used) return;
+  parts.push(e.contracts?(e.rows.length+' contract'+(e.rows.length===1?'':'s')+' with errors in the contracts file (counted as 0)'):(e.used+' error cell'+(e.used===1?'':'s')+' in the progress file')); }); return parts.join(' · '); }
+function dsCards(){ var fl=(DS.st&&DS.st.files)||[], f=function(r){ return fl.filter(function(x){ return x.role===r; })[0]||null; }, s0=LIVE.sources[0], s1=LIVE.sources[1], cs=[];
+  cs.push({key:'p',grp:dsIsDrive(s0.url)?'g':'o',title:'Progress database',src:s0,idx:0,meta:dsIsDrive(s0.url)?f('progress'):null,role:'Progress, schedule, site updates, challenges'});
+  if(s1&&!accNoMoney()){ if(dsIsDrive(s1.url)) cs.push({key:'c',grp:'g',title:'Contracts database',src:s1,idx:1,meta:f('contracts-used')||f('contracts'),role:'Contracts & financial figures',sync:true});
+    else { cs.push({key:'cd',grp:'g',title:'Contracts database',src:null,meta:f('contracts'),role:'Copy kept in sync from OneDrive; contract updates from site are written here',sync:true});
+      cs.push({key:'c',grp:'o',title:'Contracts database · master',src:s1,idx:1,meta:null,role:'Contracts & financial figures',exp:true}); } }
+  return cs; }
+function dsChip(c){ var ld=c.src?LIVE_ST[c.src.name]:null, er=dsErrsOf(c), sy=DS.st&&DS.st.sync;
+  if(c.src&&LIVE_BUSY&&(DS.busy==='all'||DS.busy==='r'+c.idx)) return ['load','Refreshing…'];
+  if(c.src&&!ld) return ['mut','Not loaded yet'];
+  if(ld&&!ld.ok) return ['bad','Not loaded'];
+  if(c.meta&&!c.meta.ok) return ['bad','Drive not reachable'];
+  if(!c.src&&!c.meta) return ['mut',DS.busy==='st'?'Checking…':'No details'];
+  if(er&&er.used) return ['bad','Errors · '+(er.contracts?er.rows.length+' contract'+(er.rows.length===1?'':'s'):er.used+' cell'+(er.used===1?'':'s'))];
+  if(c.sync&&sy){ if(sy.pending) return ['warn','Out of sync · '+sy.pending+' new']; if(sy.last&&!sy.last.ok) return ['warn','Sync check failed']; if(!sy.last) return ['mut','Sync not checked']; }
+  if(c.exp){ var dl=Math.round((new Date(LIVE_EXPIRY+'T23:59:59')-Date.now())/86400000); if(dl<0) return ['bad','Link expired']; if(dl<=7) return ['warn','Link expires in '+dl+' day'+(dl===1?'':'s')]; }
+  return ['ok',c.src?'Live':'In sync']; }
+function dsDot(){ var d=document.getElementById('dsDot'), b=document.getElementById('dsBtn'); if(b) b.hidden=!dsCan(); if(!d) return;
+  var w=dsCards().map(function(c){ return dsChip(c)[0]; }), k=w.indexOf('bad')>=0?'bad':w.indexOf('warn')>=0?'warn':w.indexOf('ok')>=0?'ok':''; d.className='dsdot '+k; d.title=k==='bad'?'A data source needs attention':k==='warn'?'A data source has a warning':k==='ok'?'All data sources are fine':''; }
+function dsErrTable(c,er){ var h='<div class="dserr">';
+  if(er.contracts){ if(er.rows.length){ h+='<table><thead><tr><th>CNT #</th><th>Project</th><th>Columns with errors</th><th>Cells</th></tr></thead><tbody>'; er.rows.forEach(function(r){ h+='<tr><td>'+esc(r.cnt||('Row '+r.r))+'</td><td>'+esc(r.prj)+'</td><td>'+esc(r.cols.join(', '))+'</td><td>'+esc(r.cells.join(' '))+'</td></tr>'; }); h+='</tbody></table>'; }
+    if(er.tot&&er.tot.length) h+='<p><b>Totals row:</b> '+esc(er.tot.join(', '))+'</p>'; }
+  else if(er.cells&&er.cells.length){ h+='<table><thead><tr><th>Sheet</th><th>Cell</th><th>Shows</th></tr></thead><tbody>'; er.cells.forEach(function(x){ h+='<tr><td>'+esc(x.s)+'</td><td>'+esc(x.a)+'</td><td>'+esc(x.v)+'</td></tr>'; }); h+='</tbody></table>'+(er.used>er.cells.length?'<p>… and '+(er.used-er.cells.length)+' more</p>':''); }
+  var ot=Object.keys(er.other||{}); if(ot.length) h+='<p><b>Other sheets</b> (not read by the dashboard): '+ot.map(function(k){ return esc(k)+' '+er.other[k]; }).join(' · ')+'</p>';
+  return h+'</div>'; }
+function dsCard(c){ var ld=c.src?LIVE_ST[c.src.name]:null, er=dsErrsOf(c), m=c.meta, ch=dsChip(c), sy=DS.st&&DS.st.sync, h='', busy=!!DS.busy||LIVE_BUSY;
+  var name=(m&&m.ok&&m.name)||(c.src&&c.src.name)||'Contracts database copy';
+  h+='<section class="dscard" data-card="'+c.key+'"><header><div class="dsti"><b>'+esc(c.title)+'</b><span class="dsfn">'+esc(name)+' · '+esc(dsKind(c.src&&c.src.url,m))+'</span>'+(c.src?'<br><span class="dstag">Dashboard reads this file</span>':'')+'</div><span class="dschip '+ch[0]+'">'+esc(ch[1])+'</span></header><dl class="dskv">';
+  /* last change */
+  var lc='';
+  if(m&&m.ok) lc=esc(dsWhen(m.modified))+(m.by?' · by '+esc(m.by):'')+' <span class="dsago">('+esc(dsAgo(m.modified))+')</span>';
+  else if(m&&!m.ok) lc='<span class="dsbad">'+esc(m.error||'Not available')+'</span>';
+  else { var ep=c.src&&(window.KEC_ERRS||{})[c.src.name]; lc=(ep&&ep.props&&ep.props.mod)?esc(dsWhen(ep.props.mod))+(ep.props.by?' · by '+esc(ep.props.by):'')+' <span class="dsago">(saved in the file)</span>':(c.grp==='g'&&!(DS.st)?'<span class="dsago">'+(DS.busy==='st'?'Checking…':'Needs an administrator sign-in')+'</span>':'<span class="dsago">Not available for this link</span>'); }
+  h+='<dt>Last changed</dt><dd>'+lc+'</dd>';
+  h+='<dt>Loaded in dashboard</dt><dd>'+(c.src?(ld?(ld.ok?'<span class="dsok">✓</span> '+esc(dsWhen(ld.at)):'<span class="dsbad">✗ '+esc(ld.err||'failed')+'</span>'+(LIVE_FILES[c.src.name]?' <span class="dsago">· showing the copy loaded '+esc(dsWhen(LIVE_FILES[c.src.name].at))+'</span>':'')):'<span class="dsago">Not loaded yet</span>'):'<span class="dsago">Not read by the dashboard</span>')+'</dd>';
+  h+='<dt>Used for</dt><dd>'+esc(c.role)+'</dd>';
+  /* errors */
+  var eh='';
+  if(er){ if(er.used){ eh='<span class="dsbad">'+er.used+' error cell'+(er.used===1?'':'s')+(er.contracts?' in '+er.rows.length+' contract'+(er.rows.length===1?'':'s'):'')+'</span> <button class="dslink" data-ds="err" data-k="'+c.key+'">'+(DS.show[c.key]?'Hide':'Show')+'</button>'; }
+    else eh='<span class="dsok">✓ None</span>'+(Object.keys(er.other||{}).length?' <span class="dsago">(other sheets: '+Object.keys(er.other).reduce(function(a,k){ return a+er.other[k]; },0)+' · <button class="dslink" data-ds="err" data-k="'+c.key+'">'+(DS.show[c.key]?'hide':'show')+'</button>)</span>':''); }
+  else eh='<span class="dsago">'+(c.src?'Checked when the file is loaded':(m&&m.native?'Checked when the file is loaded':'Not checked yet'))+'</span>';
+  h+='<dt>Errors in data</dt><dd>'+eh+'</dd>';
+  if(c.sync){ var l=sy&&sy.last;
+    h+='<dt>Sync with OneDrive</dt><dd>'+(!sy?'<span class="dsago">'+(DS.st?'Not set up':'—')+'</span>':!l?'<span class="dsago">No check made yet</span>':l.ok?esc(dsWhen(l.ts))+' ('+(l.auto?'automatic':'by '+esc(l.by))+')<br>OneDrive '+csN(l.srcRows)+' · Drive '+csN(l.dstRows)+' · '+(sy.pending?'<span class="dswarn">'+sy.pending+' new contract'+(sy.pending===1?'':'s')+' to add</span>':'<span class="dsok">nothing new</span>'):'<span class="dsbad">Failed '+esc(dsWhen(l.ts))+': '+esc(l.error||'')+'</span>')+(sy&&sy.cfg?'<br><span class="dsago">'+(sy.cfg.auto?'Automatic check every '+sy.cfg.days+' day'+(sy.cfg.days===1?'':'s'):'Automatic check is off')+'</span>':'')+'</dd>'; }
+  if(c.exp){ var dl=Math.round((new Date(LIVE_EXPIRY+'T23:59:59')-Date.now())/86400000); h+='<dt>Link expires</dt><dd>'+esc(new Date(LIVE_EXPIRY+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}))+' <span class="'+(dl<0?'dsbad':dl<=7?'dswarn':'dsago')+'">('+(dl<0?'expired':dl===0?'today':'in '+dl+' day'+(dl===1?'':'s'))+')</span> · <a href="#" id="lkOpen2">change</a></dd>'; }
+  h+='</dl>';
+  if(er&&DS.show[c.key]) h+=dsErrTable(c,er);
+  h+='<div class="dsfoot">';
+  if(c.src) h+='<button data-ds="ref" data-i="'+c.idx+'"'+(busy?' disabled':'')+'>'+(DS.busy==='r'+c.idx?'Refreshing…':'⟳ Refresh')+'</button>';
+  else h+='<button data-ds="st"'+(busy?' disabled':'')+'>'+(DS.busy==='st'?'Checking…':'⟳ Refresh status')+'</button>';
+  if(c.sync) h+='<button class="pri" data-ds="sync"'+(busy||!(ACC.user&&ACC.user.admin)?' disabled':'')+'>'+(DS.busy==='sync'?'Checking OneDrive…':'⇄ Sync now')+'</button>'+(sy&&sy.pending?'<button data-ds="rev">Review '+sy.pending+' new</button>':'');
+  var lnk=(m&&m.ok&&m.link)||(c.src&&c.src.url)||''; if(lnk) h+='<a class="dsopen" href="'+esc(lnk)+'" target="_blank" rel="noopener">Open file ↗</a>';
+  return h+'</div></section>'; }
+function dsRender(){ var md=document.getElementById('dsModal'); if(!md||!md.classList.contains('on')) { dsDot(); return; }
+  var st=DS.st, dr=st&&st.drive, cards=dsCards(), h='<div class="dsbox"><div class="dshead"><div><h3>Data sources</h3><p class="dssub">Where the dashboard data comes from, when each file last changed, and whether the files are in sync.</p></div>';
+  h+='<div class="dsacts"><button class="pri" data-ds="all"'+(DS.busy||LIVE_BUSY?' disabled':'')+'>'+(DS.busy==='all'?'Refreshing…':'⟳ Refresh all')+'</button><button id="dsClose">Close</button></div></div>';
+  var ck='', cls='';
+  if(DS.err){ cls='bad'; ck='<b>Google Drive connection:</b> '+esc(DS.err); }
+  else if(!st){ ck='<b>Google Drive connection:</b> '+(DS.busy?'checking…':(ACC.user&&ACC.user.admin)?'not checked yet':'sign in as an administrator to see it'); }
+  else if(!dr.on){ cls='bad'; ck='<b>Google Drive connection:</b> not set up · '+esc(dr.error||''); }
+  else if(!dr.ok){ cls='bad'; ck='<b>Google Drive connection:</b> not reachable · '+esc(dr.error||''); }
+  else { cls='ok'; ck='<b>Google Drive connection:</b> connected <small>· '+(dr.mode==='owner'?'owner Google login':'service account '+esc(dr.account||''))+' · checked '+esc(dsWhen(st.at))+'</small>'; }
+  h+='<div class="dsconn"><span class="dsdot '+cls+'"></span>'+ck+'</div>';
+  if(DS.note) h+='<div class="dsnote'+(DS.note.er?' er':'')+'">'+esc(DS.note.t)+'</div>';
+  [['g','Google Drive'],['o','OneDrive']].forEach(function(g){ var cc=cards.filter(function(c){ return c.grp===g[0]; }); if(!cc.length) return;
+    h+='<div class="dsgrp"><div class="dsgh">'+g[1]+'</div><div class="dsgrid">'+cc.map(dsCard).join('')+'</div></div>'; });
+  h+='<div class="dsfn2">Refresh loads that file again into the dashboard. Sync now checks the OneDrive contracts file for contracts the Google Drive copy does not have; nothing is written until you review and add them. Error cells (#N/A, #REF!, #ERROR!) are values a formula could not work out: the dashboard counts them as 0, so fix them in the file.</div></div>';
+  md.innerHTML=h; dsDot(); }
+function dsFetch(){ if(!(ACC.user&&ACC.user.admin)){ DS.st=null; dsRender(); return Promise.resolve(); }
+  if(!DS.busy) DS.busy='st'; dsRender();
+  return accCall('GET','/dsources?p='+encodeURIComponent(LIVE.sources[0].url)+'&c='+encodeURIComponent((LIVE.sources[1]||{}).url||''),null,90000)
+    .then(function(j){ DS.st=j; DS.err=''; DS.at=Date.now(); })
+    .catch(function(e){ var m=(e&&e.message)||'could not be checked'; DS.err=/missing \?url|get only|not on the relay allow-list/i.test(m)?'the relay does not have the Data sources check yet (deploy relay V59)':m; })
+    .then(function(){ if(DS.busy==='st') DS.busy=''; dsRender(); }); }
+function dsOpen(){ var md=document.getElementById('dsModal'); if(!md) return; DS.note=null; md.classList.add('on'); dsRender(); if(!DS.st||Date.now()-DS.at>60000) dsFetch(); }
+function dsClose(){ var md=document.getElementById('dsModal'); if(md) md.classList.remove('on'); }
+async function dsRefresh(i){ DS.busy=i==null?'all':'r'+i; DS.note=null; dsRender(); try{ await liveLoad(false,i==null?undefined:i); }catch(e){} DS.busy=''; dsRender(); await dsFetch(); }
+function dsAfterLoad(){ dsDot(); var md=document.getElementById('dsModal'); if(md&&md.classList.contains('on')) dsRender(); if(ACC.user&&ACC.user.admin&&!DS.busy&&Date.now()-DS.at>60000) dsFetch(); }
+document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return;
+  if(t.closest('#dsBtn')||t.closest('#dsLink')){ e.preventDefault(); dsOpen(); return; }
+  if(t.closest('#lkOpen2')){ e.preventDefault(); dsClose(); lkOpen(); return; }
+  if(t.id==='dsModal'||t.closest('#dsClose')){ dsClose(); return; }
+  var b=t.closest('#dsModal [data-ds]'); if(!b||b.disabled) return; var a=b.getAttribute('data-ds');
+  if(a==='all') dsRefresh(null);
+  else if(a==='ref') dsRefresh(+b.getAttribute('data-i'));
+  else if(a==='st') dsFetch();
+  else if(a==='err'){ var k=b.getAttribute('data-k'); DS.show[k]=!DS.show[k]; dsRender(); }
+  else if(a==='rev'){ dsClose(); csOpen(); }
+  else if(a==='sync'){ DS.busy='sync'; DS.note=null; dsRender(); csDo({action:'scan'},'scan').then(function(){ DS.busy='';
+    var l=CS.st&&CS.st.last; DS.note=CS.err?{er:true,t:'Sync check failed: '+CS.err}:(l&&!l.ok)?{er:true,t:'Sync check failed: '+(l.error||'')}:{t:(CS.st&&CS.st.pending&&CS.st.pending.length)?CS.st.pending.length+' contract'+(CS.st.pending.length===1?'':'s')+' in OneDrive '+(CS.st.pending.length===1?'is':'are')+' not in the Google Drive copy yet. Press Review to add them.':'The Google Drive copy has every contract of the OneDrive file.'};
+    return dsFetch(); }); } });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var m=document.getElementById('dsModal'); if(m&&m.classList.contains('on')) dsClose(); } });
 function liveStatus(kind,msg){ var e=document.getElementById('liveSt'); if(!e) return;
-  e.className='livest '+kind; e.innerHTML=(kind==='ok'?'● ':kind==='err'?'⚠ ':'⟳ ')+esc(msg)+(kind==='load'?'':' <a href="#" id="liveRef">'+(kind==='ok'?'Refresh':'Retry')+'</a>'); }
+  e.className='livest '+kind; e.innerHTML=(kind==='ok'?'● ':kind==='err'||kind==='warn'?'⚠ ':'⟳ ')+esc(msg)+(kind==='load'?'':' <a href="#" id="liveRef">'+(kind==='err'?'Retry':'Refresh')+'</a>'+(dsCan()?' · <a href="#" id="dsLink">Sources</a>':'')); }
 async function liveFetch(src){
   var ctl=new AbortController(), tm=setTimeout(function(){ ctl.abort(); },60000), r;
   try{ r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/?url='+encodeURIComponent(src.url),{signal:ctl.signal,headers:ACC.token?{'X-KEC-Token':ACC.token}:{}}); }
   catch(e){ clearTimeout(tm); throw new Error(src.name+': could not reach the relay'+(e&&e.name==='AbortError'?' (timed out)':'')); }
   clearTimeout(tm);
   if(!r.ok){ var m=''; try{ m=(await r.json()).error; }catch(e){} throw new Error(src.name+': '+(m||('the relay answered '+r.status))); }
+  /* V417 (relay V58): a user limited to some projects receives only the rows of those projects as JSON; the workbook is rebuilt here so every page reads it as before */
+  if(/application\/json/i.test(r.headers.get('Content-Type')||'')){ var j=await r.json(); if(!j||!j.filtered||!Array.isArray(j.tabs)) throw new Error(src.name+': the relay sent an unexpected answer');
+    var wb=XLSX.utils.book_new(); j.tabs.forEach(function(t){ var nm=String(t.name||'Sheet').slice(0,31); try{ XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(t.rows||[]),nm); }catch(e){} });
+    return new File([XLSX.write(wb,{type:'array',bookType:'xlsx'})],src.name); }
   return new File([await r.arrayBuffer()],src.name);
 }
-async function liveLoad(auto){
+async function liveLoad(auto,only){
   if(LIVE_BUSY) return; if(typeof XLSX==='undefined'){ liveStatus('err','Excel reader not loaded'); return; }
   LIVE_BUSY=true; liveStatus('load','Loading live data…');
   try{
-    var got=await Promise.allSettled(LIVE.sources.map(liveFetch)), files=[], failed=[];
-    got.forEach(function(g,ix){ if(g.status==='fulfilled') files.push(g.value); else failed.push(g.reason); });
+    /* V417: a user whose money figures are hidden does not load the contracts database (the relay refuses it too) */
+    var srcs=LIVE.sources.filter(function(s){ return !(accNoMoney()&&/contract/i.test(String(s.name||''))); });
+    /* V418: Refresh on one file of the Data sources fetches that file again and reuses the other one already loaded */
+    var want=srcs.map(function(s){ return only==null||s===LIVE.sources[only]||!LIVE_FILES[s.name]; });
+    var got=await Promise.allSettled(srcs.map(function(s,ix){ return want[ix]?liveFetch(s):Promise.resolve(LIVE_FILES[s.name].file); })), files=[], failed=[];
+    got.forEach(function(g,ix){ var s=srcs[ix]; if(g.status==='fulfilled'){ files.push(g.value); if(want[ix]){ LIVE_FILES[s.name]={file:g.value,at:Date.now()}; LIVE_ST[s.name]={ok:true,at:Date.now()}; } } else { failed.push(g.reason); LIVE_ST[s.name]={ok:false,at:Date.now(),err:String((g.reason&&g.reason.message)||g.reason||'')}; } });
     if(!files.length) throw failed[0]||new Error('No workbook could be loaded');
     if(failed.some(function(f){ return /sign in again/i.test(String(f&&f.message)); })) throw failed.filter(function(f){ return /sign in again/i.test(String(f&&f.message)); })[0];
     suUndo(); window.KEC_SHEETS={};
@@ -8967,10 +9139,10 @@ async function liveLoad(auto){
     await suSync(); } finally { RENDER_HOLD=false; if(RENDER_PENDING){ RENDER_PENDING=false; render(); } }
     var d=new Date(), hh=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
     if(failed.length){ liveStatus('err','Partly updated '+hh+': '+failed.map(function(f){ return String(f&&f.message||f); }).join(' · ')+'. The other figures are live; this part shows the last saved data.'); if(!auto) toast('Only part of the live data could be refreshed',true); }
-    else{ liveStatus('ok','Live data · updated '+hh);
+    else{ var dsw=dsWarnText(); if(dsw) liveStatus('warn','Live data · updated '+hh+' · '+dsw); else liveStatus('ok','Live data · updated '+hh);
     if(!auto) toast('Live data refreshed · cut-off '+d2(state.cutoff)); }
   }catch(e){ if(/sign in again/i.test(e.message)){ LIVE_BUSY=false; accExpire(); return; } liveStatus('err',(auto?'Live data unavailable: ':'')+e.message+(/allow-list|not allowed/i.test(e.message)?'. The relay in Cloudflare must be updated to accept this link.':'')+(auto?'. Showing the last saved data'+(kcDate()?' (saved '+kcDate()+')':'')+'.':'')); if(!auto) toast(e.message,true); }
-  LIVE_BUSY=false; INTRO.notify(!document.querySelector('#liveSt.err'));
+  LIVE_BUSY=false; INTRO.notify(!document.querySelector('#liveSt.err')); dsAfterLoad();
   if(NODATA) noDataMsg(true);
 }
 document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#liveRef'); if(a){ e.preventDefault(); liveLoad(false); } });
