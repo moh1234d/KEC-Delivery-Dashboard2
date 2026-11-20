@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V413</title>
+<title>TEST · KEC Project Controls Dashboard · V414</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1430,7 +1430,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V413</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V414</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1609,7 +1609,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V413';
+var APP_VER='V414';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -1660,7 +1660,7 @@ var PROG_COLS = {
   date:['data date'], code:['project code'], pname:['project name'], pkg:['package/plot','package / plot','package'],
   ctr:['contractor / consultant','contractor/consultant','contractor'], cno:['contract no.','contract no','contract number'],
   ps:['planned start'], pf:['planned finish'], eot:['extension of time (days)','extension of time','extension of time duration','eot'], rf:['revised planned finish date','revised planned finish','revised finish date','revised finish'], ff:['forecast finish'], cv:['contract value'], vo:['approved vos','approved vo'],
-  rv:['revised value'], gc:['gross certified amount','gross certified'], pv:['planned value'], ev:['earned value']
+  rv:['revised value'], gc:['gross certified amount','gross certified'], pv:['planned value'], ev:['earned value'], rm:['remarks / reason for change','remarks']
 };
 var PROG_REQ = ['date','code','pkg','ps','pf','ff','rv','pv','ev'];
 var PROG_LABEL = {date:'Data Date',code:'Project Code',pkg:'Package/Plot',ps:'Planned Start',pf:'Planned Finish',ff:'Forecast Finish',rv:'Revised Value',pv:'Planned Value',ev:'Earned Value'};
@@ -2843,7 +2843,8 @@ function normSite(objs,kind){
     var d=toISO(o[m.d]), code=o[m.code];
     if(!d||code==null||String(code).trim()==='') return;
     var r={d:d,code:String(code).trim(),pkg:str(o[m.pkg])};
-    Object.keys(spec).forEach(function(f){ if(f==='type'||f==='ctr') r[f]=str(o[m[f]]); else if(f==='trade') r[f]=(kind==='e1'&&/shop|material/i.test(str(o[m.type])))?trName(o[m[f]]):''; else r[f]=num(o[m[f]])||0; });
+    var bl=[]; Object.keys(spec).forEach(function(f){ if(f==='type'||f==='ctr') r[f]=str(o[m[f]]); else if(f==='trade') r[f]=(kind==='e1'&&/shop|material/i.test(str(o[m.type])))?trName(o[m[f]]):''; else { var rv0=m[f]===undefined?null:o[m[f]]; if(rv0==null||rv0==='') bl.push(f); r[f]=num(rv0)||0; } });
+    if(bl.length) r._b=bl.join(','); /* V414: cells left blank (sent as 0): for a row that already exists they keep the database value */
     out.push(r);
   });
   return out;
@@ -3161,7 +3162,7 @@ function ulReview(){
     var pj=(s.projects||[]).map(function(c){ var L=byP[c]||[], f=L.filter(function(x){ return x.flag; }).length;
       return '<div class="ulpj"><h4><label><input type="checkbox" class="ulpk" data-sid="'+s.id+'" value="'+esc(c)+'" checked> '+esc(pname(c))+'</label> <span class="ulp n">'+L.length+' changes</span>'+(f?' <span class="ulp r">'+f+' flagged</span>':'')+'</h4>'+L.slice(0,6).map(function(x){ var t=UL_TAG[x.sec]||['n',x.sec]; return '<div class="ulr"><b>'+esc(x.item||'')+' · '+esc(x.f)+'</b><span>'+(x.from!==''&&x.k!=='new'?'<span class="ulold">'+esc(x.from)+'</span> → ':'')+'<span class="'+({up:'up',dn:'dn'}[x.k]||'')+'">'+esc(x.to||x.item||'')+'</span>'+(x.flag?' <em class="ulfl">'+esc(x.flag)+'</em>':'')+'</span><span class="ulp '+t[0]+'">'+t[1]+'</span></div>'; }).join('')+(L.length>6?'<details><summary>Show all '+L.length+'</summary>'+L.slice(6).map(function(x){ return '<div class="ulr"><b>'+esc(x.item||'')+' · '+esc(x.f)+'</b><span>'+(x.from!==''&&x.k!=='new'?'<span class="ulold">'+esc(x.from)+'</span> → ':'')+esc(x.to||'')+(x.flag?' <em class="ulfl">'+esc(x.flag)+'</em>':'')+'</span><span></span></div>'; }).join('')+'</details>':'')+'</div>'; }).join('');
     return '<div class="card plain ulcard"><div class="ulh">'+ulHead(Object.assign({},s,{route:'site',by:String(s.by||'').replace(/^Link:\s*/,''),n:ch?ch.length:null,flags:fl,status:'pending'}))+'</div>'+
-      (ch?'':'<div class="ulnone">Preparing the list of changes…</div>')+pj+
+      suAutoLine(s)+(ch?'':'<div class="ulnone">Preparing the list of changes…</div>')+pj+
       (D.length?'<div class="ulsub bad"><b>'+D.length+' value'+(D.length===1?'':'s')+' differ from the contracts file</b> — see Site submissions for the detail.</div>':'')+
       '<div class="ulact"><button type="button" class="btn pri" data-ulapp="'+s.id+'">Approve selected projects</button><input type="text" id="ulr-'+s.id+'" class="ulrs" placeholder="Reason sent back to the site team (required to reject)"><button type="button" class="btn" data-ulrej="'+s.id+'">Reject</button></div></div>'; }).join('');
 }
@@ -4661,7 +4662,8 @@ function suParse(wb,okCode){
         ['date','ps','pf','rf','ff'].forEach(function(f){ if(r[f]!=null&&typeof r[f]!=='number'){ var t=toISO(r[f]); r[f]=t?Math.round(Date.parse(t+'T00:00:00Z')/864e5)+25569:r[f]; } });
         PROG_REQ.forEach(function(k){ if(['date','code','pkg'].indexOf(k)<0&&(r[k]==null||r[k]==='')&&errs.length<20) errs.push('Packages - Plots, '+r.code+' · '+r.pkg+': '+PROG_LABEL[k]+' is empty.'); });
         /* money and day columns must hold numbers: a number typed as text is converted, anything else is refused */
-        ['cv','vo','rv','gc','pv','ev','eot'].forEach(function(k){ var v0=r[k]; if(v0==null||v0===''||typeof v0==='number') return; var n0=/^\s*-?[\d,]*\.?\d+\s*$/.test(String(v0))?num(v0):null; if(n0==null){ if(errs.length<30) errs.push('Packages - Plots, '+r.code+' · '+r.pkg+': "'+String(v0).slice(0,20)+'" is not a number.'); } else r[k]=n0; }); }); } }
+        ['ps','pf','ff','rv','pv','ev'].forEach(function(k){ if(r[k]!=null&&String(r[k]).trim()==='-'&&errs.length<30) errs.push('Packages - Plots, '+r.code+' · '+r.pkg+': '+(PROG_LABEL[k]||k)+' is required and cannot be cleared with a dash.'); });
+        ['cv','vo','rv','gc','pv','ev','eot'].forEach(function(k){ var v0=r[k]; if(v0==null||v0===''||typeof v0==='number') return; if(String(v0).trim()==='-'){ r[k]='-'; return; } var n0=/^\s*-?[\d,]*\.?\d+\s*$/.test(String(v0))?num(v0):null; if(n0==null){ if(errs.length<30) errs.push('Packages - Plots, '+r.code+' · '+r.pkg+': "'+String(v0).slice(0,20)+'" is not a number.'); } else r[k]=n0; }); }); } }
   var C=get(/^areas\s*of\s*concern$/i); if(C&&C.rows){ data.con=normCon(C.rows);
     var noAct=data.con.filter(function(c){ return !c.action&&!/^closed$/i.test(String(c.status||'')); });
     noAct.slice(0,12).forEach(function(c){ errs.push('Areas of Concern: the Suggested action is missing for '+c.code+(c.pkg?' · '+c.pkg:'')+' — "'+String(c.concern||'').slice(0,60)+(String(c.concern||'').length>60?'…':'')+'". Every concern needs a Suggested action before it can be sent.'); });
@@ -4738,10 +4740,105 @@ function suLookupRows(){ var by={}, nm={};
   out.sort(function(a,b){ return a.code.toLowerCase()<b.code.toLowerCase()?-1:a.code.toLowerCase()>b.code.toLowerCase()?1:(a.pkg.toLowerCase()<b.pkg.toLowerCase()?-1:1); });
   if(out.length>398) (SU.trunc=SU.trunc||[]).push('Lookup list: '+(out.length-398)+' package(s) do not fit');
   return out.slice(0,398); }
+/* V414: Site Update Template v2.6 — one Data Date cell per sheet, a Row check column with plain-language problems,
+   last-report columns and a Remarks column on Packages - Plots, carried-forward values (light blue), locked headers and formulas,
+   hidden helper sheets. Column headers of v2.5 are unchanged, so v2.5 files still upload. */
+var SU_TPLV='2.6';
+function suX(s){ return String(s==null?'':s).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function suIS(ref,s,txt){ return '<c r="'+ref+'" s="'+s+'" t="inlineStr"><is><t xml:space="preserve">'+suX(txt)+'</t></is></c>'; }
+function suColN(L){ var n=0; for(var i=0;i<L.length;i++) n=n*26+L.charCodeAt(i)-64; return n; }
+function suColL(n){ var s=''; while(n>0){ var m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=(n-m-1)/26; } return s; }
+var SU_CHK={
+  prog:function(r){ var c=function(l){ return l+r; };
+    return 'IF('+c('B')+'="","",IF(COUNT('+c('K')+','+c('P')+','+c('Q')+')=0,"Note: not reported this time (no figures), the row is skipped",IF(OR('+c('K')+'="",'+c('P')+'="",'+c('Q')+'=""),"Required: Forecast Finish, Planned Value and Earned Value",'
+     +'IF(AND(ISNUMBER('+c('Q')+'),ISNUMBER('+c('N')+'),'+c('Q')+'>'+c('N')+'*1.0001),"Earned Value is above Revised Value",'
+     +'IF(AND(ISNUMBER('+c('P')+'),ISNUMBER('+c('N')+'),'+c('P')+'>'+c('N')+'*1.0001),"Planned Value is above Revised Value",'
+     +'IF(AND(ISNUMBER('+c('K')+'),ISNUMBER('+c('G')+'),'+c('K')+'<'+c('G')+'),"Forecast Finish is before Planned Start",'
+     +'IF(AND(ISNUMBER('+c('L')+'),ISNUMBER('+c('N')+'),ABS('+c('N')+'-'+c('L')+'-N('+c('M')+'))>1),"Revised Value is not Contract Value + Approved VOs",'
+     +'IF(AND(ISNUMBER('+c('A')+'),'+c('A')+'>TODAY()+31),"Data Date is more than a month ahead",'
+     +'IF(AND(ISNUMBER('+c('A')+'),ISNUMBER('+c('V')+'),'+c('A')+'<'+c('V')+'),"Data Date is older than the last report",'
+     +'IF(AND(ISNUMBER('+c('S')+'),ISNUMBER('+c('W')+'),'+c('S')+'<'+c('W')+'-0.0005,'+c('T')+'=""),"Progress is lower than the last report: give the reason in Remarks",'
+     +'IF(AND(ISNUMBER('+c('Q')+'),ISNUMBER('+c('Y')+'),'+c('Q')+'='+c('Y')+'),"Note: Earned Value unchanged since the last report","OK")))))))))))'; },
+  con:function(r){ return 'IF(C'+r+'="","",IF(AND(K'+r+'="Closed",M'+r+'=""),"Status is Closed: enter Date Closed",IF(AND(K'+r+'="Open",ISNUMBER(M'+r+')),"Date Closed is filled but Status is Open",IF(AND(ISNUMBER(L'+r+'),ISNUMBER(B'+r+'),L'+r+'>B'+r+'),"Date Raised is after the Data Date","OK"))))'; },
+  e1:function(r){ return 'IF(OR(B'+r+'="",COUNT(G'+r+':L'+r+')=0),"",IF(AND(ISNUMBER(I'+r+'),ISNUMBER(G'+r+'),I'+r+'>G'+r+'),"Actual Submitted is above Total Number",IF(AND(ISNUMBER(H'+r+'),ISNUMBER(G'+r+'),H'+r+'>G'+r+'),"Planned to Submit is above Total Number",IF(N(J'+r+')+N(K'+r+')+N(L'+r+')>N(I'+r+'),"Approved + Revise / Resubmit + Under Review is above Actual Submitted","OK"))))'; },
+  e2:function(r){ return 'IF(OR(B'+r+'="",COUNT(G'+r+':L'+r+')=0),"",IF(AND(ISNUMBER(F'+r+'),N(J'+r+')>F'+r+'),"Actual PO Issued is above Total Material Number",IF(AND(ISNUMBER(F'+r+'),N(L'+r+')>F'+r+'),"Actual Delivered is above Total Material Number",IF(AND(ISNUMBER(F'+r+'),N(I'+r+')>F'+r+'),"Planned PO Issuance is above Total Material Number","OK"))))'; },
+  qa:function(r){ return 'IF(OR(B'+r+'="",COUNT(F'+r+':G'+r+')=0),"",IF(N(G'+r+')>N(F'+r+'),"Closed is above Total Number","OK"))'; }
+};
+/* sheet number → kind, Data Date column, Project Code column, Row check column */
+var SU_HAS={prog:function(r){ return 'COUNT(K'+r+',P'+r+',Q'+r+')=0'; },con:function(r){ return 'F'+r+'=""'; },e1:function(r){ return 'COUNT(G'+r+':L'+r+')=0'; },e2:function(r){ return 'COUNT(G'+r+':L'+r+')=0'; },qa:function(r){ return 'COUNT(F'+r+':G'+r+')=0'; },mp:function(r){ return 'COUNT(F'+r+':G'+r+')=0'; }};
+var SU_SH={4:{k:'prog',dc:'A',cc:'B',chk:'U'},5:{k:'con',dc:'B',cc:'C',chk:'N'},6:{k:'e1',dc:'A',cc:'B',chk:'N'},7:{k:'e2',dc:'A',cc:'B',chk:'M'},8:{k:'qa',dc:'A',cc:'B',chk:'I'},9:{k:'mp',dc:'A',cc:'B',chk:null},10:{k:'pc',dc:null,cc:'B',chk:null}};
+async function suTpl26(z,withModel){
+  SU.tplSt={};
+  /* ---- styles: unlock input styles, add copies for type-over lookups, carried-forward (light blue) and row-check cells ---- */
+  var stf=z.file('xl/styles.xml'); if(!stf) return; var sx=await stf.async('string');
+  var mf=/<fills count="(\d+)">([\s\S]*?)<\/fills>/.exec(sx); if(!mf) return; var nFill=+mf[1];
+  sx=sx.replace(/<fills count="\d+">([\s\S]*?)<\/fills>/,function(m,inner){ return '<fills count="'+(nFill+1)+'">'+inner+'<fill><patternFill patternType="solid"><fgColor rgb="00E3EEFB"/></patternFill></fill></fills>'; });
+  var mx=/<cellXfs count="(\d+)">([\s\S]*?)<\/cellXfs>/.exec(sx); if(!mx) return;
+  var X=mx[2].match(/<xf [^>]*?(?:\/>|>[\s\S]*?<\/xf>)/g)||[];
+  var unlock=function(xf){ var a=/^<xf ([^>]*?)(\/?)>/.exec(xf); var attrs=a[1].replace(/ applyProtection="[^"]*"/,'')+' applyProtection="1"'; var inner=a[2]==='/'?'':xf.replace(/^<xf [^>]*>/,'').replace(/<\/xf>$/,'').replace(/<protection[^>]*\/>/,''); return '<xf '+attrs+'>'+inner+'<protection locked="0"/></xf>'; };
+  var wrap=function(xf){ var a=/^<xf ([^>]*?)(\/?)>/.exec(xf); var inner=a[2]==='/'?'':xf.replace(/^<xf [^>]*>/,'').replace(/<\/xf>$/,'').replace(/<alignment[^>]*\/>/,''); return '<xf '+a[1].replace(/ applyAlignment="[^"]*"/,'')+' applyAlignment="1"><alignment vertical="top" wrapText="1"/>'+inner+'</xf>'; };
+  [19,20,21,25].forEach(function(i){ if(X[i]) X[i]=unlock(X[i]); });
+  var add=function(xf){ X.push(xf); return X.length-1; };
+  SU.tplSt.U16=add(unlock(X[16])); SU.tplSt.U28=add(unlock(X[28]));
+  SU.tplSt.PF=add(unlock(X[21].replace(/fillId="\d+"/,'fillId="'+nFill+'"')));
+  SU.tplSt.CHK=add(wrap(X[16])); SU.tplSt.GNL=add(X[16].replace(/numFmtId="\d+"/,'numFmtId="3"'));
+  var gn=null; var s4f=z.file('xl/worksheets/sheet4.xml'), s4=s4f?await s4f.async('string'):''; var gm=/<c r="L7" s="(\d+)"><f>/.exec(s4); if(gm&&+gm[1]>32){ gn=+gm[1]; SU.tplSt.Ugn=add(unlock(X[gn])); }
+  sx=sx.replace(/<cellXfs count="\d+">[\s\S]*?<\/cellXfs>/,'<cellXfs count="'+X.length+'">'+X.join('')+'</cellXfs>'); z.file('xl/styles.xml',sx);
+  var S=SU.tplSt, PROT='<sheetProtection sheet="1" objects="1" scenarios="1" formatCells="0" formatColumns="0" formatRows="0" sort="0" autoFilter="0"/>';
+  /* ---- data sheets ---- */
+  for(var n=4;n<=10;n++){ var f=z.file('xl/worksheets/sheet'+n+'.xml'); if(!f) continue; var x=await f.async('string'), sp=SU_SH[n], P=sp.k==='prog';
+    var newCols=P?['T','U','V','W','X','Y']:(sp.chk?[sp.chk]:[]);
+    /* row 3: one Data Date for all rows */
+    if(sp.dc) x=x.replace(/<row r="3"[^>]*>[\s\S]*?<\/row>/,'<row r="3" ht="24" customHeight="1">'+suIS('A3',11,'DATA DATE ▸')+(P?'<c r="B3" s="19"/>'+suIS('C3',10,'Type the date your figures are valid for once here: every sheet and every row with figures uses it. A row can still carry its own date.'):'<c r="B3" s="19"><f>'+suX("IF('Packages - Plots'!$B$3=\"\",\"\",'Packages - Plots'!$B$3)")+'</f><v></v></c>'+suIS('C3',10,'Taken from Packages - Plots. Type another date here only if this sheet is for a different date.'))+'</row>');
+    /* header row */
+    x=x.replace(/(<row r="5"[^>]*>[\s\S]*?)(<\/row>)/,function(m,a,b){ var h=''; if(P) h=suIS('T5',13,'Remarks / reason for change')+suIS('U5',12,'Row check')+suIS('V5',12,'Last report: Data Date')+suIS('W5',12,'Last report: Act. %')+suIS('X5',12,'Last report: Forecast Finish')+suIS('Y5',12,'Last report: Earned Value'); else if(sp.chk) h=suIS(sp.chk+'5',12,'Row check'); return a+h+b; });
+    /* data rows */
+    x=x.replace(/<row r="(\d+)"([^>]*)>([\s\S]*?)<\/row>/g,function(m0,rn,at,body){ var r=+rn; if(r<6||r>306) return m0;
+      if(sp.dc){ var dcell='<c r="'+sp.dc+r+'" s="19"><f>'+suX('IF(OR('+sp.cc+r+'="",$B$3="",'+SU_HAS[sp.k](r)+'),"",$B$3)')+'</f><v></v></c>', re=new RegExp('<c r="'+sp.dc+r+'"[^>]*?(?:/>|>[\\s\\S]*?</c>)'); body=re.test(body)?body.replace(re,dcell):dcell+body; }
+      var rs=function(col,st){ body=body.replace(new RegExp('<c r="'+col+r+'"([^>]*?) s="\\d+"'),'<c r="'+col+r+'"$1 s="'+st+'"'); };
+      if(P){ rs('E',S.U16); rs('F',S.U16); rs('G',S.U28); if(new RegExp('<c r="H'+r+'" s="28"').test(body)) rs('H',S.U28); if(S.Ugn!=null){ if(new RegExp('<c r="L'+r+'" s="'+gn+'"').test(body)) rs('L',S.Ugn); if(new RegExp('<c r="N'+r+'" s="'+gn+'"').test(body)) rs('N',S.Ugn); }
+        body+='<c r="T'+r+'" s="25"/><c r="U'+r+'" s="'+S.CHK+'"><f>'+suX(SU_CHK.prog(r))+'</f><v></v></c><c r="V'+r+'" s="28"/><c r="W'+r+'" s="22"/><c r="X'+r+'" s="28"/><c r="Y'+r+'" s="'+S.GNL+'"/>'; }
+      else { if(sp.k==='mp') rs('E',S.U16); if(sp.chk) body+='<c r="'+sp.chk+r+'" s="'+S.CHK+'"><f>'+suX(SU_CHK[sp.k](r))+'</f><v></v></c>'; }
+      return '<row r="'+rn+'"'+at+'>'+body+'</row>'; });
+    if(newCols.length){
+      var widths={T:34,U:40,V:13,W:11,X:13,Y:16}; x=x.replace('</cols>',newCols.map(function(c){ var i=suColN(c); return '<col width="'+(P?widths[c]:46)+'" customWidth="1" min="'+i+'" max="'+i+'"/>'; }).join('')+'</cols>');
+      x=x.replace(/<dimension ref="A1:[A-Z]+(\d+)"\/>/,function(m,rr){ return '<dimension ref="A1:'+newCols[newCols.length-1]+rr+'"/>'; });
+      var cf=''; if(sp.chk){ var k=sp.chk; cf+='<conditionalFormatting sqref="'+k+'6:'+k+'306"><cfRule type="expression" priority="60" dxfId="0"><formula>'+suX('AND('+k+'6<>"",'+k+'6<>"OK",LEFT('+k+'6,5)<>"Note:")')+'</formula></cfRule><cfRule type="expression" priority="61" dxfId="3"><formula>'+suX('LEFT('+k+'6,5)="Note:"')+'</formula></cfRule></conditionalFormatting>'; }
+      if(P) cf+=[['Q6:Q306','AND($B6<>"",ISNUMBER(Q6),ISNUMBER($Y6),Q6=$Y6)',3],['S6:S306','AND(ISNUMBER(S6),ISNUMBER($W6),S6<$W6-0.0005)',2],['K6:K306','AND(ISNUMBER(K6),ISNUMBER($X6),K6>$X6)',3],['A6:A306','AND(ISNUMBER(A6),OR(A6>TODAY()+31,AND(ISNUMBER($V6),A6<$V6)))',2]].map(function(c,i){ return '<conditionalFormatting sqref="'+c[0]+'"><cfRule type="expression" priority="'+(62+i)+'" dxfId="'+c[2]+'"><formula>'+suX(c[1])+'</formula></cfRule></conditionalFormatting>'; }).join('');
+      if(cf){ var li=x.lastIndexOf('</conditionalFormatting>'); x=li>=0?x.slice(0,li+24)+cf+x.slice(li+24):x.replace(/(<dataValidations)/,cf+'$1'); } }
+    if(sp.dc){ x=x.replace(/(<conditionalFormatting)/,'<conditionalFormatting sqref="B3"><cfRule type="expression" priority="59" dxfId="3"><formula>B3=""</formula></cfRule></conditionalFormatting>$1');
+      var dv='<dataValidation sqref="B3" showDropDown="0" showInputMessage="1" showErrorMessage="1" allowBlank="1" promptTitle="Data Date" prompt="The date your figures are valid for. Every row uses it unless you type another date in the row." errorTitle="Data Date" error="Type the Data Date as a date, for example 19-Nov-2026. It cannot be more than a month ahead or more than a year back." type="date" operator="between"><formula1>TODAY()-366</formula1><formula2>TODAY()+31</formula2></dataValidation>';
+      x=x.replace(/<dataValidations count="(\d+)">/,function(m,c){ return '<dataValidations count="'+(+c+1)+'">'+dv; }); }
+    /* a package must come from the list on every sheet (it was only a warning on Packages - Plots) */
+    if(P) x=x.replace(/(<dataValidation sqref="D6:D306"[^>]*?) errorStyle="warning"/,'$1');
+    if(x.indexOf('<sheetProtection')<0) x=x.replace('</sheetData>','</sheetData>'+PROT);
+    z.file('xl/worksheets/sheet'+n+'.xml',x); }
+  /* legend on Packages - Plots */
+  var f4=z.file('xl/worksheets/sheet4.xml'); if(f4){ var x4=await f4.async('string'); x4=x4.replace(/(<c r="A4"[^>]*><is><t[^>]*>)[\s\S]*?(<\/t>)/,'$1'+suX('Orange = required · Blue = optional · Light blue = carried forward from the last report (Extension of Time, Approved VOs, Gross certified amount): change it only if it changed · Grey = filled in automatically (you can type over Contractor, Contract No., Planned Start, Planned Finish, Contract Value and Revised Value if they are wrong). Row check (column U) tells you what to correct before you upload.')+'$2'); z.file('xl/worksheets/sheet4.xml',x4); }
+  /* helper sheets: hidden and locked; workbook structure locked so sheets cannot be renamed, moved or unhidden */
+  for(var h=2;h<=3;h++){ var hf=z.file('xl/worksheets/sheet'+h+'.xml'); if(!hf) continue; var hx=await hf.async('string'); if(hx.indexOf('<sheetProtection')<0) hx=hx.replace('</sheetData>','</sheetData>'+PROT); z.file('xl/worksheets/sheet'+h+'.xml',hx); }
+  var wf=z.file('xl/workbook.xml'); if(wf){ var wx=await wf.async('string'); wx=wx.replace(/<workbookProtection[^>]*\/>/,'<workbookProtection lockStructure="1"/>').replace(/(<sheet [^>]*name="(?:Lists|Lookup)"[^>]*?)state="visible"/g,'$1state="hidden"'); z.file('xl/workbook.xml',wx); }
+  /* Instructions */
+  var i1=z.file('xl/worksheets/sheet1.xml'); if(i1){ var ix=await i1.async('string');
+    var setB=function(rn,txt){ ix=ix.replace(new RegExp('(<c r="B'+rn+'"[^>]*><is><t[^>]*>)[\\s\\S]*?(</t>)'),'$1'+suX(txt)+'$2'); };
+    setB(5,SU_TPLV);
+    setB(6,'1. Type the Data Date once in the orange cell at the top of each sheet (row 3): every row uses it. Choose the Project Code first; the Package/Plot list then shows only the packages of that project, and the grey columns fill in automatically.\n2. Light blue cells are carried forward from the last report (Extension of Time, Approved VOs, Gross certified amount). Change them only if they changed.\n3. Read the Row check column: it must say OK (or a Note) on every filled row before you upload.\n4. Upload the file on the site update page. You do not choose "new" or "modification": every row is compared with the database and marked New, Modified or Unchanged automatically.');
+    setB(16,'Dates must be real Excel dates (they show like 19-Nov-2026). Percentages are calculated, not typed. Headers, formulas and the helper sheets are locked: do not try to rename sheets or move columns. Download the latest template from the update page before each update.');
+    var extra=[['Data Date (row 3)','One date for the whole sheet. A row can still carry its own date: type it in the Data Date column of that row. A date more than a month ahead, more than a year back, or older than the last report is shown in red.'],
+      ['Last report columns','Packages - Plots, columns V to Y, show the last report of each package (date, Act. %, Forecast Finish, Earned Value) so you can compare. Earned Value equal to the last report is shaded amber, progress lower than the last report red, a later Forecast Finish amber.'],
+      ['Remarks / reason for change','Optional on Packages - Plots. Required by the Row check when progress is lower than the last report. The administrator sees it next to the change when approving.'],
+      ['New, modified or unchanged','A row is identified by Data Date + Project Code + Package/Plot (plus Submittal Type and Trade, or Type, on the other sheets). A row that does not exist yet is New; an existing row with different values is Modified (only the changed cells are updated); an identical row is Unchanged and is skipped. In a Modified row an empty cell keeps the value already in the database; type a dash (-) to clear a value. Rows that are not in your file are never deleted.'],
+      ['Lists built',new Date().toISOString().slice(0,16).replace('T',' ')+' UTC'+(withModel?'':' (master lists: download the template from the dashboard for the current lists)')]];
+    var rows=extra.map(function(e,i){ var rn=17+i; return '<row r="'+rn+'" ht="'+(i===4?18:66)+'" customHeight="1">'+suIS('A'+rn,5,e[0])+suIS('B'+rn,7,e[1])+'</row>'; }).join('');
+    ix=ix.replace('</sheetData>',rows+'</sheetData>').replace(/<dimension ref="A1:D\d+"\/>/,'<dimension ref="A1:D'+(16+extra.length)+'"/>');
+    z.file('xl/worksheets/sheet1.xml',ix); }
+}
+function suTplName(){ var c=suSelCodes(), d=new Date(), t=String(d.getDate()).padStart(2,'0')+'-'+MON[d.getMonth()]+'-'+d.getFullYear();
+  var p=c.length===1?String(c[0]):c.length?c.length+'-projects':'all'; return 'KEC_Site_Update_v'+SU_TPLV+'_'+p.replace(/[\\\/:*?"<>|\s]+/g,'-')+'_'+t+'.xlsx'; }
 async function suTplBuild(){
   var b=atob(SU_TPL), u=new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i]=b.charCodeAt(i);
   try{ if(!(await loadJSZip())) return u.buffer;
-    if(!model||!model.rows||!model.rows.length){ var z0=await JSZip.loadAsync(u); await suPrefill(z0,[]); return await z0.generateAsync({type:'arraybuffer',compression:'DEFLATE'}); }
+    if(!model||!model.rows||!model.rows.length){ var z0=await JSZip.loadAsync(u); await suTpl26(z0,false); await suPrefill(z0,[]); return await z0.generateAsync({type:'arraybuffer',compression:'DEFLATE'}); }
     var z=await JSZip.loadAsync(u), f=z.file('xl/worksheets/sheet3.xml'); if(!f) return u.buffer; var x=await f.async('string');
     var hs=/<c r="A1" s="(\d+)"/.exec(x), ds=/<c r="G2" s="(\d+)"/.exec(x); if(!hs||!ds) return u.buffer;
     var E=function(v){ return String(v==null?'':v).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f￾￿]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }, T=function(ref,v){ return v===''||v==null?'':'<c r="'+ref+'" t="inlineStr"><is><t xml:space="preserve">'+E(v)+'</t></is></c>'; };
@@ -4764,10 +4861,10 @@ async function suTplBuild(){
         var cix=function(ref){ var l=/^[A-Z]+/.exec(ref)[0]; return l.length*100+l.charCodeAt(l.length-1); };
         px=px.replace(/<row r="(\d+)"([^>]*)>([\s\S]*?)<\/row>/g,function(m0,rn,at,body){ var r=+rn; if(r<6||r>306) return m0;
           var cells={}; (body.match(/<c r="[A-Z]+\d+"[^>]*?(?:\/>|>[\s\S]*?<\/c>)/g)||[]).forEach(function(c){ cells[/r="([A-Z]+)\d+"/.exec(c)[1]]=c; });
-          cells.H='<c r="H'+r+'" s="28"><f>'+gcol('H',r)+'</f><v></v></c>'; cells.L='<c r="L'+r+'" s="'+gn+'"><f>'+gcol('I',r)+'</f><v></v></c>'; cells.M='<c r="M'+r+'" s="17"/>'; cells.N='<c r="N'+r+'" s="'+gn+'"><f>IF(ISNUMBER(L'+r+'),L'+r+'+N(M'+r+'),"")</f><v></v></c>';
+          cells.H='<c r="H'+r+'" s="28"><f>'+gcol('H',r)+'</f><v></v></c>'; cells.L='<c r="L'+r+'" s="'+gn+'"><f>'+gcol('I',r)+'</f><v></v></c>'; cells.M='<c r="M'+r+'" s="21"/>'; cells.N='<c r="N'+r+'" s="'+gn+'"><f>IF(ISNUMBER(L'+r+'),L'+r+'+N(M'+r+'),"")</f><v></v></c>';
           return '<row r="'+rn+'"'+at+'>'+Object.keys(cells).sort(function(a,b){ return cix(a)-cix(b); }).map(function(k){ return cells[k]; }).join('')+'</row>'; });
         z.file('xl/worksheets/sheet4.xml',px); } }
-    await suPrefill(z,suSelCodes());
+    await suTpl26(z,true); await suPrefill(z,suSelCodes());
     return await z.generateAsync({type:'arraybuffer',compression:'DEFLATE'});
   }catch(e){ console.warn('template build',e&&e.message); (SU.trunc=SU.trunc||[]).push('the project data could not be filled in, so this is the blank template'); return u.buffer; } }
 /* V345: the template is pre-filled for the project selected when "Site update" was pressed, from the last saved data. The example rows are removed. */
@@ -4779,6 +4876,10 @@ function suPrefillData(codes){
   var pk={}; (model.rows||[]).filter(inSel).forEach(function(r){ var k=lc(r.code)+'|'+lc(r.pkg); if(!pk[k]||r.date>=pk[k].date) pk[k]=r; });
   var pkgs=Object.keys(pk).map(function(k){ return {code:pk[k].code,pkg:pk[k].pkg}; }).sort(cmp), D={};
   D.prog=pkgs.map(function(p){ var r=pk[lc(p.code)+'|'+lc(p.pkg)], o={B:{s:p.code},D:{s:p.pkg}}, e=r.eot>0?Math.round(r.eot):0;
+    /* V414 (option A): Extension of Time, Approved VOs and Gross certified amount start from the last report (light blue; the site team changes them only if they changed); columns V-Y show the last report for comparison */
+    var stp=SU.tplSt&&SU.tplSt.PF, fin=function(v){ return typeof v==='number'&&isFinite(v); };
+    o.I={n:e,st:stp}; if(fin(r.vo)) o.M={n:r.vo,st:stp}; if(fin(r.gc)) o.O={n:r.gc,st:stp};
+    if(r.date) o.V={n:suSer(r.date)}; if(fin(r.ev)&&fin(r.rv)&&r.rv>0) o.W={n:Math.round(r.ev/r.rv*10000)/10000}; if(r.ff) o.X={n:suSer(r.ff)}; if(fin(r.ev)) o.Y={n:r.ev};
     return o; });
   /* the rows of the last saved update for each project / package */
   var latest=function(list,byPkg){ var mx={}; (list||[]).filter(inSel).forEach(function(r){ var k=lc(r.code)+(byPkg?'|'+lc(r.pkg):''); if(!mx[k]||r.d>mx[k]) mx[k]=r.d; }); return (list||[]).filter(function(r){ return inSel(r)&&r.d===mx[lc(r.code)+(byPkg?'|'+lc(r.pkg):'')]; }); };
@@ -4808,7 +4909,7 @@ async function suPrefill(z,codes){
       if(n===4) body=body.replace(new RegExp('<c r="J'+r+'"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'),function(c,attr){ var sm=/ s="(\d+)"/.exec(attr); return '<c r="J'+r+'"'+(sm?' s="'+sm[1]+'"':'')+'/>'; });
       var o=list[r-6];
       if(o) Object.keys(o).forEach(function(col){ var v=o[col]; if(v==null||(v.s!=null&&String(v.s)==='')&&v.n==null) return;
-        body=body.replace(new RegExp('<c r="'+col+r+'"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'),function(c,attr){ var sm=/ s="(\d+)"/.exec(attr), sa=sm?' s="'+sm[1]+'"':'';
+        body=body.replace(new RegExp('<c r="'+col+r+'"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'),function(c,attr){ var sm=/ s="(\d+)"/.exec(attr), sa=v.st!=null?' s="'+v.st+'"':(sm?' s="'+sm[1]+'"':'');
           return v.n!=null?'<c r="'+col+r+'"'+sa+'><v>'+v.n+'</v></c>':'<c r="'+col+r+'"'+sa+' t="inlineStr"><is><t xml:space="preserve">'+E(v.s)+'</t></is></c>'; }); });
       /* Material Procurement: Total Material Number = Local + Out of country (every row) */
       if(n===7) body=body.replace(new RegExp('<c r="F'+r+'"[^>]*?(?:/>|>[\\s\\S]*?</c>)'),'<c r="F'+r+'" s="26"><f>IF(AND(G'+r+'="",H'+r+'=""),"",N(G'+r+')+N(H'+r+'))</f><v></v></c>');
@@ -4816,7 +4917,7 @@ async function suPrefill(z,codes){
     if(n===4&&x.indexOf('data-lk-hl')<0&&/<\/conditionalFormatting>/.test(x)){ var hl=['E','F','H','L'].map(function(c,i){ return '<conditionalFormatting sqref="'+c+'6:'+c+'306"><cfRule type="expression" priority="'+(20+i)+'" dxfId="2"><formula>AND($B6&lt;&gt;"",$D6&lt;&gt;"",'+c+'6="")</formula></cfRule></conditionalFormatting>'; }).join(''); var li=x.lastIndexOf('</conditionalFormatting>')+24; x=x.slice(0,li)+hl+x.slice(li); }
     z.file('xl/worksheets/sheet'+n+'.xml',x); }
 }
-async function suTplDownload(){ try{ SU.trunc=[]; var buf=await suTplBuild(); xpSave(buf,'KEC_Site_Update_Template_v2.5.xlsx'); if(SU.trunc.length) toast('The template is full and some rows were left out ('+SU.trunc.join('; ')+'). Select fewer projects and download it again.',true,15000); }catch(e){ toast('The template could not be prepared',true); } }
+async function suTplDownload(){ try{ SU.trunc=[]; var buf=await suTplBuild(); xpSave(buf,suTplName()); if(SU.trunc.length) toast('The template is full and some rows were left out ('+SU.trunc.join('; ')+'). Select fewer projects and download it again.',true,15000); }catch(e){ toast('The template could not be prepared',true); } }
 function suSummary(P){
   var nm={prog:'Packages - Plots',con:'Areas of Concern',e1:'Technical Submittals',e2:'Material Procurement',qa:'Quality Statistics',mp:'Manpower',pc:'Contracts to be Awarded'};
   return '<p><b>Projects:</b> '+esc(P.codes.join(', ')||'—')+'</p><div class="svtw"><table class="svtb"><tbody>'+P.sum.map(function(x){ return '<tr><td>'+nm[x[0]]+'</td><td class="n">'+x[1]+' rows</td></tr>'; }).join('')+'</tbody></table></div>'+
@@ -4824,9 +4925,10 @@ function suSummary(P){
     (P.warns.length?'<div class="sepnote"><span class="ni">i</span><div><b>Check:</b><br>'+P.warns.slice(0,10).map(esc).join('<br>')+'</div></div>':'');
 }
 function suOpenUpload(){
+  SU.entry='auto';
   var mode=suMode(); if(mode==='off'){ toast('You do not have the right to upload site updates',true); return; }
   var t={live:'Your upload goes live straight away.',review:'Your upload waits for an administrator to approve it before it shows on the dashboard.',local:'There is no sign-in on this copy: the upload is applied in this browser only.'}[mode];
-  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p>'+(suMode()==='local'?'':'<div class="suen"><b>This upload is</b><label><input type="radio" name="suEntry" value="new"> New entry <small>adds new rows to the database</small></label><label><input type="radio" name="suEntry" value="mod"> Modification <small>changes existing rows (only the cells you fill in)</small></label></div>')+'<input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suEnt"></div><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
+  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p>'+(suMode()==='local'?'':'<div class="suen"><small>You do not choose "new" or "modification": every row is compared with the database and marked <b>New</b>, <b>Modified</b> or <b>Unchanged</b> automatically. In a modified row an empty cell keeps the database value; a dash (-) clears it.</small></div>')+'<input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suEnt"></div><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
 }
 async function suRead(file,okCode,resId){
   var out=document.getElementById(resId||'suRes'); out.innerHTML='Reading…';
@@ -4836,6 +4938,27 @@ async function suRead(file,okCode,resId){
 var SUE={n:0,block:false,left:null};
 function suEntryOn(){ return suMode()!=='local'&&!SU.tok; }
 function suBtn(){ var b=document.getElementById('suSend'); if(!b) return; var P=SU.parsed; b.disabled=!P||!!P.errs.length||(suEntryOn()&&!SU.entry)||SUE.block; b.title=(suEntryOn()&&!SU.entry)?'Choose New entry or Modification first':''; }
+
+/* V414: automatic New / Modified / Unchanged (relay V54) */
+var SU_FL={date:'Data Date',d:'Data Date',ps:'Planned Start',pf:'Planned Finish',eot:'Extension of Time',rf:'Revised Planned Finish',ff:'Forecast Finish',cv:'Contract Value',vo:'Approved VOs',rv:'Revised Value',gc:'Gross certified amount',pv:'Planned Value',ev:'Earned Value',ctr:'Contractor',cno:'Contract No.',pname:'Project Name',rm:'Remarks',
+  concern:'Concern',impact:'Impact',action:'Suggested Action',owner:'Owner',target:'Target Date',status:'Status',raised:'Date Raised',closed:'Date Closed',tot:'Total Number',plan:'Planned to Submit',sub:'Actual Submitted',app:'Approved',rev:'Revise / Resubmit',rvw:'Under Review',ns:'Not Submitted',
+  loc:'Local Material No.',ooc:'Out of Country Material No.',ppo:'Planned PO Issuance',apo:'Actual PO Issued',pdl:'Planned Delivery',adl:'Actual Delivered',cl:'Closed',op:'Open',pl:'Planned Manpower',ac:'Actual Manpower'};
+var SU_FD={date:1,d:1,ps:1,pf:1,rf:1,ff:1,target:1,raised:1,closed:1};
+function suFv(f,v){ if(v===''||v==null) return '(empty)'; if(v==='(cleared)') return '(cleared)'; if(SU_FD[f]){ var t=toISO(v); return t?d2(t):String(v); } if(typeof v==='number') return Math.abs(v)<10&&v%1?String(Math.round(v*1000)/1000):v.toLocaleString('en-GB',{maximumFractionDigits:2}); return String(v); }
+function suChgTable(list,max){ if(!list||!list.length) return ''; max=max||60;
+  return '<div class="svtw" style="max-height:38vh;overflow:auto"><table class="svtb"><thead><tr><th>Project · package</th><th>Date</th><th>Field</th><th class="n">Before</th><th class="n">After</th></tr></thead><tbody>'+list.slice(0,max).map(function(m){ return '<tr><td>'+esc(pname(m.code)+(m.pkg&&m.pkg!==m.code?' · '+m.pkg:''))+'</td><td>'+esc(m.date?d2(m.date):'')+'</td><td>'+esc(SU_FL[m.f]||m.f)+'</td><td class="n">'+esc(suFv(m.f,m.b))+'</td><td class="n"><b>'+esc(suFv(m.f,m.a))+'</b></td></tr>'; }).join('')+'</tbody></table></div>'; }
+function suCount(nNew,nMod,nSame){ var p=[]; p.push('<b>'+nNew+'</b> new row'+(nNew===1?'':'s')); p.push('<b>'+nMod+'</b> modified'); p.push('<b>'+nSame+'</b> unchanged'); return p.join(' · '); }
+function suOlderHtml(a,n){ if(!n) return ''; return '<div class="sepnote" style="border-color:var(--warn)"><span class="ni">!</span><div><b>'+n+' row'+(n>1?'s are corrections':' is a correction')+' to an older report</b><div class="jm">The project already has a later report. These rows wait for the administrator.</div>'+(a||[]).slice(0,10).map(function(x){ return '<div class="suci">'+esc(x.date?d2(x.date):'')+' · <b>'+esc(pname(x.code))+'</b>'+(x.pkg&&x.pkg!==x.code?' · '+esc(x.pkg):'')+'</div>'; }).join('')+'</div></div>'; }
+function suAutoHtml(j){
+  var h='<div class="sepnote" style="border-color:var(--good)"><span class="ni">✓</span><div><b>Checked against the database:</b> '+suCount(j.nNew||0,j.nMod||0,j.unchanged||0)+(j.changes?' <span class="jm">('+j.changes+' cell'+(j.changes>1?'s':'')+' change)</span>':'')+'</div></div>';
+  if(j.review) h+='<div class="sepnote" style="border-color:var(--warn)"><span class="ni">i</span><div>This upload changes data that is already in the database'+(j.nOlder?' or an older report':'')+', so it will <b>wait for the administrator to approve it</b>.</div></div>';
+  h+=suOlderHtml(j.older,j.nOlder);
+  if(j.changes) h+='<div class="ulcard" style="margin-top:8px"><b>What will change in the database</b>'+suChgTable(j.sample,60)+(j.changes>60?'<div class="jm">and '+(j.changes-60)+' more changes (the administrator sees them all)</div>':'')+'</div>';
+  if(!(j.nNew||0)&&!(j.nMod||0)) h+='<div class="sepnote"><span class="ni">i</span><div>Nothing in this file differs from the database. You can still send it.</div></div>';
+  return h; }
+function suRemarks(s){ var R=((s.data&&s.data.prog)||[]).filter(function(r){ return r&&r.rm&&String(r.rm).trim()!=='' && String(r.rm).trim()!=='-'; }); if(!R.length) return '';
+  return '<div class="ulsub"><b>Remarks from the site team</b>'+R.slice(0,12).map(function(r){ return '<div class="suci">'+esc(r.pkg||'')+': '+esc(String(r.rm).slice(0,300))+'</div>'; }).join('')+'</div>'; }
+function suAutoLine(s){ if(s.entry!=='auto') return ''; return '<div class="ulsub">'+suCount(s.nNew||0,s.nModRows||0,s.nSame||0)+(s.held?' · <b style="color:var(--warn)">held for approval: '+esc(s.held)+'</b>':'')+(s.unchecked?' · <b style="color:var(--bad)">not checked against the database ('+esc(s.unchecked)+')</b>':'')+'</div>'+suOlderHtml(s.older,s.nOlder)+suRemarks(s); }
 function suEntHtml(j){
   var lst=function(a){ return a.slice(0,15).map(function(x){ return '<div class="suci">'+esc(x.date?d2(x.date):'')+' · <b>'+esc(pname(x.code))+'</b>'+(x.pkg&&x.pkg!==x.code?' · '+esc(x.pkg):'')+'</div>'; }).join('')+(a.length>15?'<div class="jm">and '+(a.length-15)+' more</div>':''); };
   if(SU.entry==='new'&&j.nDups){ SUE.block=true; return '<div class="sepnote suchk" style="border-color:var(--bad)"><span class="ni">!</span><div><b>You selected New entry, but '+j.nDups+' row'+(j.nDups>1?'s':'')+' already exist'+(j.nDups>1?'':'s')+' in the database</b><div class="jm" style="margin:2px 0 6px">Did you mean Modification? New entry cannot add a row that is already there.</div>'+lst(j.dups)+'<div style="margin-top:8px"><button type="button" class="btn pri" data-suen="mod">Switch to Modification</button></div></div></div>'; }
@@ -4853,7 +4976,7 @@ async function suCheckEntry(){
   var box=document.getElementById('suEnt'); if(!box) return; SUE.block=false; box.innerHTML=''; var P=SU.parsed;
   if(!suEntryOn()||!SU.entry||!P||P.errs.length){ suBtn(); return; }
   var my=++SUE.n; box.innerHTML='<div class="jm">Checking the file against the database…</div>'; SUE.block=true; suBtn();
-  try{ var j=await accCall('POST','/site-check',{data:P.data,entry:SU.entry},60000); if(my!==SUE.n) return; SUE.block=false; SUE.rows=['prog','con','e1','e2','qa','mp'].reduce(function(n,k){ return n+((P.data[k]||[]).length); },0); if(j.checked===false){ box.innerHTML=''; } else box.innerHTML=suEntHtml(j); }
+  try{ var j=await accCall('POST','/site-check',{data:P.data,entry:SU.entry},60000); if(my!==SUE.n) return; SUE.block=false; SUE.rows=['prog','con','e1','e2','qa','mp'].reduce(function(n,k){ return n+((P.data[k]||[]).length); },0); if(j.checked===false){ box.innerHTML=''; } else if(SU.entry==='auto'){ box.innerHTML=j.auto?suAutoHtml(j):'<div class="sepnote"><span class="ni">i</span><div>The relay is older than V54, so rows are not compared automatically. The file is sent as before: rows with the same date, project and package replace the existing ones.</div></div>'; } else box.innerHTML=suEntHtml(j); }
   catch(e){ if(my!==SUE.n) return; SUE.block=true; box.innerHTML='<div class="sepnote"><span class="ni">!</span><div>'+esc((e&&e.status===404)?'The relay is older than V38. Deploy relay V38 to use New entry / Modification.':((e&&e.message)||'The file could not be checked'))+'</div></div>'; }
   suBtn();
 }
@@ -4861,7 +4984,6 @@ document.addEventListener('change',function(e){ var t=e.target; if(t&&t.name==='
 document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-suen]'); if(!t) return; var v=t.getAttribute('data-suen'), r=document.querySelector('input[name=suEntry][value='+v+']'); if(r){ r.checked=true; SU.entry=v; suCheckEntry(); } });
 async function suSubmit(){
   var P=SU.parsed; if(!P||P.errs.length) return; var b=document.getElementById('suSend');
-  if(suEntryOn()&&!SU.entry){ toast('Choose New entry or Modification first',true); return; }
   var JT=[], short=0; document.querySelectorAll('#suModal .sujt').forEach(function(t){ var v=t.value.trim(), x=SU.chk&&SU.chk[+t.getAttribute('data-suj')]; if(!v||!x) return; if(v.length<10) short++; else JT.push({x:x,v:v}); });
   if(short){ toast('A justification needs at least 10 characters. Complete it or clear it.',true); return; }
   b.disabled=true; b.textContent='Sending…';
@@ -4869,6 +4991,7 @@ async function suSubmit(){
     if(suMode()==='local'){ var pvl=[]; try{ pvl=ulPreview(P.data); }catch(e){} suMerge([{data:P.data}]); suReload(); toast('Update applied in this browser'); try{ ulSave({route:'site',by:'This browser',label:'Site update applied locally',cut:'',projects:P.codes||[],n:pvl.length,flags:pvl.filter(function(c){ return c.flag; }).length,changes:pvl.slice(0,600)},null); }catch(e){} }
     else{ var j; if(SU.tok){ var r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/site-upload',{method:'POST',headers:{'Content-Type':'application/json','X-KEC-Link':SU.tok},body:JSON.stringify({data:P.data})}); j=await r.json().catch(function(){return {};}); if(!r.ok) throw {message:j.error||('the relay answered '+r.status)}; }
       else j=await accCall('POST','/site-upload',{data:P.data,entry:suEntryOn()?SU.entry:undefined},60000);
+      if(j.entry==='auto') toast(j.status==='accepted'?'Update accepted and live ('+(j.nNew||0)+' new, '+(j.nMod||0)+' modified, '+(j.nSame||0)+' unchanged)':'Update sent for approval'+(j.held?': '+j.held:'')+' ('+(j.nNew||0)+' new, '+(j.nMod||0)+' modified)',false,9000); else
       toast((j.status==='accepted'?'Update accepted and live':'Update sent for approval')+(j.entry==='mod'?' (modification'+(j.notFound?', WARNING: '+j.notFound+' row'+(j.notFound>1?'s':'')+' NOT applied':'')+')':j.entry==='new'?' (new entry)':'')); try{ muLoad(); }catch(e){} if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } if(JT.length&&ACC.need) await suSaveJust(JT); }
     var m=document.getElementById('suModal'); if(m&&!SU.tok) m.remove(); else document.getElementById('suRes').innerHTML='<div class="sepnote"><span class="ni">✓</span><div>Update received. You can close this page.</div></div>';
   }catch(e){ toast((e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Upload failed'),true); b.disabled=false; b.textContent='Submit update'; if(e&&e.status===409) suCheckEntry(); }
@@ -4880,6 +5003,7 @@ async function suOpenAdmin(){
   catch(e){ document.getElementById('suAdmB').innerHTML='<div class="empty">'+esc(e&&e.status===404?'The relay does not support site updates yet. Deploy relay V23.':(e&&e.message)||'Could not load')+'</div>'; }
 }
 function suModsHtml(s){
+  if(s.entry==='auto') return suAutoLine(s)+((s.mods||[]).length?suChgTable(s.mods,300)+((s.nMods||0)>300?'<div class="jm">and '+(s.nMods-300)+' more changes</div>':''):'');
   if(s.entry!=='mod') return '';
   var h='<p><b>Modification:</b> '+(s.nMods||0)+' cell'+((s.nMods||0)===1?'':'s')+' change'+(s.nNf?' · <b style="color:var(--bad)">'+s.nNf+' row'+(s.nNf>1?'s':'')+' NOT applied (they do not exist yet)</b>':'')+'</p>'+(s.nNf?'<div class="sepnote" style="border-color:var(--bad)"><span class="ni">!</span><div>These rows are not in the database, so approving does not add them. Ask the sender to upload them again as <b>New entry</b>.</div></div>':'');
   if((s.mods||[]).length) h+='<div class="svtw"><table class="svtb"><thead><tr><th>Project · package</th><th>Date</th><th>Field</th><th class="n">Before</th><th class="n">After</th></tr></thead><tbody>'+s.mods.slice(0,25).map(function(m){ return '<tr><td>'+esc(pname(m.code)+(m.pkg&&m.pkg!==m.code?' · '+m.pkg:''))+'</td><td>'+esc(m.date?d2(m.date):'')+'</td><td>'+esc(m.f)+'</td><td class="n">'+esc(m.b===''?'(empty)':String(m.b))+'</td><td class="n"><b>'+esc(String(m.a))+'</b></td></tr>'; }).join('')+'</tbody></table></div>'+((s.mods||[]).length>25?'<div class="jm">and '+(s.nMods-25)+' more changes</div>':'');
@@ -4890,7 +5014,7 @@ function suDrawAdmin(){
   var subs=j.subs.map(function(s){ var D=(s.status==='accepted'||s.status==='pending')?suDiscrepancies(s.data):[], acts='';
     if(s.status==='pending') acts='<button class="btn pri" data-sureview="approve" data-id="'+s.id+'"'+(s.nNf?' title="'+s.nNf+' rows will not be applied"':'')+'>'+(s.nNf?'Approve anyway ('+s.nNf+' rows not applied)':'Approve')+'</button> <button class="btn" data-sureview="reject" data-id="'+s.id+'">Reject</button>';
     else if(s.status==='accepted') acts='<button class="btn" data-sureview="revoke" data-id="'+s.id+'">Take back</button>';
-    return '<div class="svch"><span class="svimp '+(s.status==='pending'?'warn':s.status==='accepted'?'good':'bad')+'">'+st[s.status]+'</span><div class="svcb"><b>'+esc(s.by)+' · '+esc(s.projects.join(', '))+'</b><small>'+ago(s.ts)+(s.entry?' · <b>'+(s.entry==='mod'?'Modification':'New entry')+'</b>':'')+' · '+Object.keys(s.cnt).filter(function(k){ return s.cnt[k]; }).map(function(k){ return k+' '+s.cnt[k]; }).join(' · ')+(s.sheet?' · '+(s.sheet.ok?'In the Sheet ('+s.sheet.add+' added, '+s.sheet.rep+' replaced'+(s.sheet.same?', '+s.sheet.same+' unchanged':'')+')':'<b style="color:#b3261e">Not written to the Sheet: '+esc(s.sheet.err||'error')+'</b>'):'')+'</small>'+
+    return '<div class="svch"><span class="svimp '+(s.status==='pending'?'warn':s.status==='accepted'?'good':'bad')+'">'+st[s.status]+'</span><div class="svcb"><b>'+esc(s.by)+' · '+esc(s.projects.join(', '))+'</b><small>'+ago(s.ts)+(s.entry&&s.entry!=='auto'?' · <b>'+(s.entry==='mod'?'Modification':'New entry')+'</b>':'')+' · '+Object.keys(s.cnt).filter(function(k){ return s.cnt[k]; }).map(function(k){ return k+' '+s.cnt[k]; }).join(' · ')+(s.sheet?' · '+(s.sheet.ok?'In the Sheet ('+s.sheet.add+' added, '+s.sheet.rep+' replaced'+(s.sheet.same?', '+s.sheet.same+' unchanged':'')+')':'<b style="color:#b3261e">Not written to the Sheet: '+esc(s.sheet.err||'error')+'</b>'):'')+'</small>'+
       suModsHtml(s)+(D.length?'<p class="'+(s.confirmed?'':'bad')+'"><b>Differs from the contracts file'+(s.confirmed?' (confirmed)':'')+':</b></p><div class="svtw"><table class="svtb"><thead><tr><th>Contract</th><th>Item</th><th class="n">Site team</th><th class="n">Contracts file</th></tr></thead><tbody>'+D.slice(0,12).map(function(d){ return '<tr><td>'+esc(d.code+' · '+d.cno)+'</td><td>'+d.f+'</td><td class="n">'+fm(d.site)+'</td><td class="n">'+fm(d.file)+'</td></tr>'; }).join('')+'</tbody></table></div>'+(s.confirmed?'':'<button class="btn" data-sureview="confirm" data-id="'+s.id+'">Confirm the site team figures</button>'):'')+'</div><div>'+acts+'</div></div>'; }).join('')||'<div class="empty">No submissions yet.</div>';
   var links=j.links.map(function(l){ var u=location.href.split('#')[0].split('?')[0]+'?site='+l.tok; return '<tr><td>'+esc(l.name)+'</td><td>'+esc(l.projects==='*'?'All projects':l.projects.join(', '))+'</td><td>'+(l.mode==='live'?'Live directly':'Needs approval')+'</td><td>'+(l.exp?(l.exp<Date.now()?'<b style="color:#b3261e">Expired</b>':'Until '+new Date(l.exp).toISOString().slice(0,10)):'No end date')+' · '+(l.n||0)+(l.max?' of '+l.max:'')+' upload'+((l.n||0)===1?'':'s')+'</td><td>'+(l.revoked?'Revoked':'<input readonly value="'+esc(u)+'" style="width:100%;font-size:11px" onclick="this.select()">')+'</td><td>'+(l.revoked?'':'<button class="btn" data-sulrev="'+l.tok+'">Revoke</button>')+'</td></tr>'; }).join('');
   var plist=[]; model.projects.forEach(function(p,k){ if(HIDE_PROJ.indexOf(k)<0) plist.push(k); });
