@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V420</title>
+<title>TEST · KEC Project Controls Dashboard · V421</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1155,6 +1155,33 @@ body.rptp .rp-gr,body.rptp .rp-th{display:none!important} .rp-th{position:absolu
 .ulpj details summary,.ulcard details summary{cursor:pointer;color:#1f4e79;font-size:12.5px;margin:4px 0}
 .ultabs{display:flex;gap:6px;align-items:center;margin:10px 0 14px;flex-wrap:wrap}.ultabs .sp{flex:1}
 .ultab{padding:8px 16px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}.ultab.on{background:#0b2a5e;color:#fff;border-color:#0b2a5e}
+/* V421: weekly tracker */
+.wtbar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;margin-bottom:14px}
+.wtnav{display:flex;gap:6px;align-items:center}.wtnav select,.wtf input,.wtf select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
+.wtnav button,.wtbtn{font:inherit;font-size:12px;font-weight:700;padding:7px 12px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
+.wtbtn.pri{background:#0b2a5e;border-color:#0b2a5e;color:#fff}.wtnav button:disabled{opacity:.4}
+.wtlink{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;cursor:pointer;font:inherit;font-size:12px}
+.wtf{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+.wtleft .l,.wtprog .l{display:block;font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}.wtleft b{font-size:22px}
+.wtprog{flex:1;min-width:200px}.wtpb{height:10px;border-radius:6px;background:var(--line);overflow:hidden;display:flex;margin-top:6px}.wtpb i{display:block;height:100%}.wtpb .g{background:#2e9b63}.wtpb .b{background:#9db7ec}.wtpb .r{background:#d9534f}
+.wtacts{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.wtkb{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.wtcol{background:rgba(127,127,127,.08);border-radius:12px;padding:10px;min-width:0}.wtcol h4{margin:2px 4px 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between}
+.wtc{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.wtc.g{border-left-color:#2e9b63}.wtc.a{border-left-color:#e3b341}.wtc.b{border-left-color:#9db7ec}.wtc.r{border-left-color:#d9534f}.wtc.n{border-left-color:#b9b2a3}
+.wtn{font-size:12px;color:var(--mut)}.wts{font-size:12px;color:var(--mut)}.wtl{color:#b42318}.wta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.wtnone{font-size:12px;color:var(--mut);padding:6px 4px}
+.wtexc{margin-top:12px;font-size:12px}.wtexc .wtc{display:inline-flex;margin:6px 8px 0 0;max-width:320px}
+.wtset{margin-bottom:14px}.wtset h4{margin:14px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.08em}.wtrow{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.wtreq{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:4px 14px;font-size:13px}
+.wthm .wtscr{overflow-x:auto}.wthm table{border-collapse:collapse;width:100%}.wthm th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:6px 4px;text-align:center;white-space:nowrap}.wthm th:first-child{text-align:left}
+.wthm th a{color:inherit;text-decoration:none}.wthm td{text-align:center;padding:4px;border-top:1px solid var(--line)}.wthm td.p{text-align:left;white-space:nowrap;position:sticky;left:0;background:var(--card);padding-right:12px}
+.wthm .wtq,.wtlg .wtq{display:inline-block;width:28px;height:22px;border-radius:5px;line-height:22px;font-size:11px;font-weight:700;text-decoration:none}
+.wtq.c1{background:#2e9b63;color:#fff}.wtq.c2{background:#e3b341;color:#3b2a00}.wtq.c3{background:#d9534f;color:#fff}.wtq.c4{background:#9db7ec;color:#14306b}.wtq.c0{background:rgba(127,127,127,.18);color:var(--mut)}.wtq.c5{background:transparent;border:1px dashed var(--line)}.wtq.c6{background:transparent;color:var(--mut)}
+.wtlg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:10px}.wtlg span{display:flex;gap:6px;align-items:center}.wtlg .wtq{width:16px;height:14px;box-sizing:border-box}.wthm .wtq{box-sizing:border-box}
+.wtmsg{margin:0 0 12px;padding:8px 12px;border-radius:8px;font-size:12.5px;background:rgba(31,79,180,.09)}.wtmsg.er{background:rgba(180,35,24,.1);color:#b42318}
+@media (max-width:900px){.wtkb{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.wtkb{grid-template-columns:1fr}.wtacts{margin-left:0}.wtbar{align-items:stretch}.wtf input{width:100%}}
 .ulact .btn,.ultabs .btn{padding:8px 16px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:2px solid #cfd6df;background:#fff;color:#142c3b}.ulact .btn.pri{background:#2f7d7a;border-color:#2f7d7a;color:#fff}.ulact .btn[data-ulrej]{color:#b9544b;border-color:#b9544b}
 .ulact{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.ulrs{flex:1;min-width:240px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
 .cell{display:inline-block;min-width:92px;text-align:center;padding:4px 8px;border-radius:8px;font-size:12px;font-weight:700;background:#eceff3;color:#44505a}.cell.g{background:#e3f2e6;color:#2e6b34}.cell.a{background:#fcebd5;color:#9c5a10}.cell.r{background:#fbe3e0;color:#b9544b}
@@ -1466,7 +1493,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V420</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V421</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1647,7 +1674,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V420';
+var APP_VER='V421';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3240,14 +3267,147 @@ function ulReview(){
 }
 function ulPage(){
   if(!UL.loaded) ulLoad();
-  var adm=ulAdmin(), tabs=(adm?[['review','Review inbox']]:[]).concat([['log','Update log'],['cov','Coverage']]);
+  var adm=ulAdmin(), tabs=(adm?[['review','Review inbox'],['week','Weekly tracker'],['hist','Weekly history']]:[]).concat([['log','Update log'],['cov','Coverage']]);
   if(!UL.tab||!tabs.some(function(t){ return t[0]===UL.tab; })) UL.tab=tabs[0][0];
   var pend=adm&&SU.admin?(SU.admin.subs||[]).filter(function(s){ return s.status==='pending'; }).length:0;
-  var body=!UL.loaded?'<div class="ulsub">Loading…</div>':UL.tab==='review'?ulReview():UL.tab==='log'?ulLog():ulCoverage();
+  var body=UL.tab==='week'?wtWeekTab():UL.tab==='hist'?wtHistTab():!UL.loaded?'<div class="ulsub">Loading…</div>':UL.tab==='review'?ulReview():UL.tab==='log'?ulLog():ulCoverage();
   return '<h2 class="pgtitle sm">Updates</h2><p class="pgsub">What changed, who changed it, and what is waiting for review · cut-off '+d2(state.cutoff)+'</p>'+
     '<div class="ultabs">'+tabs.map(function(t){ return '<button type="button" class="ultab'+(UL.tab===t[0]?' on':'')+'" data-ultab="'+t[0]+'">'+t[1]+(t[0]==='review'&&pend?' <span class="dcn">'+pend+'</span>':'')+'</button>'; }).join('')+'<span class="sp"></span>'+(adm&&ACC.need?suToSel('suToUl')+' ':'')+(adm&&ACC.need?'<label class="pnbset">Check for approvals <select id="pnbSel">'+[['1','every minute'],['2','every 2 min'],['5','every 5 min'],['10','every 10 min'],['0','off']].map(function(o){ return '<option value="'+o[0]+'"'+(String(pnbMin())===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></label>':'')+'<button type="button" class="btn" data-ulrefresh="1">Refresh</button></div>'+
     (UL.err?'<div class="sepnote"><span class="ni">i</span><div>'+esc(UL.err)+'</div></div>':'')+dbCard()+body;
 }
+
+/* ===== V421: Weekly site update tracker (administrators) =====
+   Each week has a data date and a last date to update (default rule: data date every Thursday, last date Sunday 09:00; both can be changed for any week).
+   A project counts as updated once its upload is APPROVED (or its rows for that week are already in the database). Approved after the last date = Late.
+   Reminder emails are drafted in the viewer's mail app (mailto) to the contacts of the project; the dashboard never sends mail itself. */
+var WT={st:null,busy:false,err:'',loaded:false,key:'',n:12,set:false,msg:null};
+try{ var _wn=parseInt(localStorage.getItem('kec.wtn.v1')||'',10); if(_wn===8||_wn===12||_wn===26) WT.n=_wn; }catch(e){}
+var WT_DOW=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function wtPad(n){ return ('0'+n).slice(-2); }
+function wtIso(d){ return d.getFullYear()+'-'+wtPad(d.getMonth()+1)+'-'+wtPad(d.getDate()); }
+function wtLoad(){ if(WT.busy) return; WT.busy=true;
+  accCall('GET','/ulog',null,60000).then(function(j){ WT.st=j; WT.err=''; }).catch(function(e){ var m=(e&&e.message)||'could not load'; WT.err=/missing \?url|get only|not on the relay allow-list|not found/i.test(m)?'The relay does not have the weekly tracker yet: deploy relay V60.':m; })
+    .then(function(){ WT.busy=false; WT.loaded=true; if(state.page==='updates'&&(UL.tab==='week'||UL.tab==='hist')) render(); });
+  if(!SU.admin&&typeof suAdminLoad==='function'){ try{ suAdminLoad(); }catch(e){} } }
+function wtPost(b,ok){ return accCall('POST','/ulog',b,30000).then(function(j){ if(j&&j.cfg&&WT.st) WT.st.cfg=j.cfg; if(ok) WT.msg={t:ok}; }).catch(function(e){ WT.msg={er:true,t:(e&&e.message)||'Could not save'}; }).then(function(){ if(state.page==='updates') render(); }); }
+function wtCfg(){ return (WT.st&&WT.st.cfg)||{dataDow:4,dueDow:0,dueTime:'09:00',weeks:{},skip:{},rem:{}}; }
+function wtKeys(n){ var c=wtCfg(), t=new Date(); t.setHours(0,0,0,0); var d=new Date(t); d.setDate(d.getDate()-((t.getDay()-c.dataDow+7)%7)); var out=[]; for(var i=0;i<n;i++){ out.unshift(wtIso(d)); d.setDate(d.getDate()-7); } return out; }
+function wtWeek(key){ var c=wtCfg(), w=c.weeks[key]||{}, d=new Date(key+'T00:00:00'), add=(c.dueDow-c.dataDow+7)%7; d.setDate(d.getDate()+add); var def=wtIso(d)+'T'+c.dueTime, due=w.due||def;
+  return {key:key,dd:w.dd||key,due:due,dueMs:new Date(due).getTime(),defDue:def,exc:w.exc||{},rem:(c.rem&&c.rem[key])||{},custom:!!(w.dd||w.due)}; }
+function wtCodes(){ var rows=(model&&model.rows)||[], seen={}, out=[], sk=wtCfg().skip||{}; rows.forEach(function(r){ if(r&&r.code&&!seen[r.code]&&HIDE_PROJ.indexOf(r.code)<0){ seen[r.code]=1; out.push(r.code); } }); out.sort(function(a,b){ return String(prog(a)+a).localeCompare(String(prog(b)+b)); }); return {all:out,req:out.filter(function(c){ return !sk[c]; })}; }
+function wtFmt(ms,withDay){ if(!ms&&ms!==0) return ''; var d=new Date(ms); if(isNaN(d)) return ''; return (withDay?WT_DOW[d.getDay()].slice(0,3)+' ':'')+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+wtPad(d.getHours())+':'+wtPad(d.getMinutes()); }
+function wtDay(iso){ var d=new Date(iso+'T00:00:00'); return WT_DOW[d.getDay()]+' '+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getFullYear(); }
+function wtLeft(ms){ var s=Math.round(Math.abs(ms)/60000), d=Math.floor(s/1440), hh=Math.floor((s%1440)/60), mm=s%60; return d?d+' d '+hh+' h':hh?hh+' h '+mm+' min':mm+' min'; }
+/* status of every required project for one week */
+function wtStatusAll(key){ var keys=wtKeys(Math.max(WT.n,30)), wk=wtWeek(key), i=keys.indexOf(key), prev=i>0?wtWeek(keys[i-1]).dd:(function(){ var d=new Date(wk.dd+'T00:00:00'); d.setDate(d.getDate()-7); return wtIso(d); })();
+  var ev=(WT.st&&WT.st.ev)||[], now=Date.now(), dbc={};
+  try{ (model.snaps||[]).forEach(function(s){ if(s>prev&&s<=wk.dd) rowsAt(s).forEach(function(r){ if(r&&r.code) dbc[String(r.code).toLowerCase()]=1; }); }); }catch(e){}
+  var inW=function(e){ var d=e.dd||(e.ts?wtIso(new Date(e.ts)):''); return d>prev&&d<=wk.dd||(!e.dd&&d>wk.dd&&d<=wtIso(new Date(wk.dueMs+6*864e5))); };
+  var C=wtCodes(), out={};
+  C.req.forEach(function(code){ var lc=String(code).toLowerCase(), E=ev.filter(function(e){ return String(e.code).toLowerCase()===lc&&inW(e); }).sort(function(a,b){ return a.ts-b.ts; });
+    var acc=E.filter(function(e){ return e.st==='accepted'; }), pend=E.filter(function(e){ return e.st==='pending'; }), rej=E.filter(function(e){ return e.st==='rejected'||e.st==='revoked'; }), o;
+    if(wk.exc[code]!=null) o={k:'exc',note:wk.exc[code]};
+    else if(acc.length){ var f=acc[0]; o={k:f.ts>wk.dueMs?'late':'ok',e:f}; }
+    else if(dbc[lc]) o={k:'ok',db:true};
+    else if(pend.length){ var p=pend[pend.length-1]; o={k:'wait',e:p,late:p.ts>wk.dueMs}; }
+    else if(rej.length){ var r=rej[rej.length-1]; o={k:'rej',e:r,over:now>wk.dueMs}; }
+    else o={k:now>wk.dueMs?'over':'out'};
+    o.rem=wk.rem[code]||null; out[code]=o; });
+  /* a past week with nothing received for any project (no data date that week, or before the tracker existed): not counted as missing */
+  if(now>wk.dueMs&&!C.req.some(function(c){ var k=out[c].k; return k!=='over'&&k!=='exc'; })) C.req.forEach(function(c){ if(out[c].k==='over') out[c]={k:'nr'}; });
+  return {wk:wk,st:out,codes:C}; }
+/* contacts and the reminder email */
+function wtContacts(code){ var c=(WT.st&&WT.st.contacts&&WT.st.contacts.rows)||[], lc=String(code).toLowerCase(), R=c.filter(function(x){ return x.on&&x.email&&String(x.code).toLowerCase()===lc; });
+  return {to:R.filter(function(x){ return x.role!=='CC'; }),cc:R.filter(function(x){ return x.role==='CC'; })}; }
+function wtMe(){ return (ACC.user&&ACC.user.name)||'Project Controls'; }
+function wtMail(codes,S){ var to=[], cc=[], names=[], seen={};
+  codes.forEach(function(code){ var k=wtContacts(code); k.to.forEach(function(x){ if(!seen[x.email.toLowerCase()]){ seen[x.email.toLowerCase()]=1; to.push(x.email); if(x.name) names.push(x.name.split(/\s+/)[0]); } }); k.cc.forEach(function(x){ if(!seen[x.email.toLowerCase()]){ seen[x.email.toLowerCase()]=1; cc.push(x.email); } }); });
+  var wk=S.wk, now=Date.now(), one=codes.length===1, st=one?S.st[codes[0]]:null;
+  var subj=one?'Reminder: weekly site progress update – '+pname(codes[0])+' ('+codes[0]+') – data date '+wtDay(wk.dd):'Reminder: weekly site progress updates outstanding – data date '+wtDay(wk.dd);
+  var lines=['Dear '+(names.length&&names.length<=3?names.join(', '):'Team')+',',''];
+  if(one&&st.k==='rej') lines.push('The weekly site progress update for '+pname(codes[0])+' ('+codes[0]+') was returned'+(st.e&&st.e.note?' with the comment: "'+st.e.note+'"':'')+'. Please correct it and upload it again.');
+  else if(one) lines.push('This is a reminder that the weekly site progress update for '+pname(codes[0])+' ('+codes[0]+') has not been received yet.');
+  else { lines.push('This is a reminder that the weekly site progress updates for the following projects have not been received yet:'); lines.push(''); codes.forEach(function(c){ var s=S.st[c]; lines.push('- '+pname(c)+' ('+c+')'+(s.k==='rej'?' – returned, please correct and upload again':'')); }); }
+  lines.push(''); lines.push('Data date: '+wtDay(wk.dd)); lines.push('Last date to update: '+wtDay(wk.due.slice(0,10))+', '+wk.due.slice(11,16));
+  if(now>wk.dueMs) lines.push('Status: overdue by '+wtLeft(now-wk.dueMs)); else lines.push('Time left: '+wtLeft(wk.dueMs-now));
+  lines.push(''); lines.push('Please upload the update using the site update template as soon as possible.'); lines.push(''); lines.push('Regards,'); lines.push(wtMe()); lines.push('Project Controls');
+  var q=[]; if(cc.length) q.push('cc='+encodeURIComponent(cc.join(','))); q.push('subject='+encodeURIComponent(subj)); q.push('body='+encodeURIComponent(lines.join('\r\n')));
+  return {to:to,cc:cc,href:'mailto:'+to.map(encodeURIComponent).join(',')+'?'+q.join('&')}; }
+/* ---- This week (cycle board) ---- */
+function wtHead(){ if(WT.err) return '<div class="sepnote"><span class="ni">i</span><div>'+esc(WT.err)+'</div></div>'; if(!WT.loaded){ wtLoad(); return '<div class="ulsub">Loading the weekly tracker…</div>'; } return ''; }
+function wtCard(code,o,S){ var e=o.e, k=wtContacts(code), sub='', cls={ok:'g',late:'a',wait:'b',rej:'r',over:'r',out:'n',exc:'n'}[o.k];
+  if(o.k==='ok'||o.k==='late') sub=o.db?'in the database (entered directly)':(wtFmt(e.ts,true)+' · '+esc(String(e.by||'').replace(/^Link:\s*/,'site link '))+' · '+(o.k==='late'?'<b class="wtl">late</b>':'on time')+(e.rby?'<br>approved by '+esc(e.rby)+' '+wtFmt(e.rts,true):''));
+  else if(o.k==='wait') sub='sent '+wtFmt(e.ts,true)+' by '+esc(String(e.by||''))+(o.late?' · <b class="wtl">after the last date</b>':'')+'<br>waiting '+wtLeft(Date.now()-e.ts)+' · <a href="#" data-ultab="review">Review</a>';
+  else if(o.k==='rej') sub='returned '+wtFmt(e.rts||e.ts,true)+(e.note?' · “'+esc(e.note)+'”':'');
+  else if(o.k==='exc') sub=esc(o.note||'Not required this week');
+  var who=k.to.map(function(x){ return x.name||x.email; }).join(', ');
+  var mail=(o.k==='over'||o.k==='out'||o.k==='rej');
+  var h='<div class="wtc '+cls+'"><b>'+esc(code)+'</b><span class="wtn">'+esc(pname(code))+(who?' · '+esc(who):'')+'</span>'+(sub?'<span class="wts">'+sub+'</span>':'');
+  if(mail){ h+='<div class="wta">'+(k.to.length?'<a class="wtbtn" href="'+esc(wtMail([code],S).href)+'" data-wtrem="'+esc(code)+'">✉ Email reminder</a>':'<span class="wts">No email in the contacts sheet</span>')+(o.k!=='rej'?'<button type="button" class="wtlink" data-wtexc="'+esc(code)+'">Not required this week</button>':'')+'</div>';
+    if(o.rem) h+='<span class="wts">Reminder drafted '+wtFmt(o.rem.at,true)+(o.rem.by?' by '+esc(o.rem.by):'')+'</span>'; }
+  if(o.k==='exc') h+='<div class="wta"><button type="button" class="wtlink" data-wtunexc="'+esc(code)+'">Required again</button></div>';
+  return h+'</div>'; }
+function wtWeekTab(){ var hd=wtHead(); if(hd) return hd;
+  var keys=wtKeys(WT.n); if(!WT.key||keys.indexOf(WT.key)<0) WT.key=keys[keys.length-1];
+  var S=wtStatusAll(WT.key), wk=S.wk, st=S.st, codes=S.codes.req, now=Date.now(), by=function(ks){ return codes.filter(function(c){ return ks.indexOf(st[c].k)>=0; }); };
+  var gOut=by(['over','out']), gRej=by(['rej']), gWait=by(['wait']), gOk=by(['ok','late']), gExc=by(['exc']), need=codes.length-gExc.length, isOver=now>wk.dueMs;
+  var pct=function(n){ return need?(n/need*100).toFixed(1):0; };
+  var h='';
+  if(WT.msg) h+='<div class="dsnote wtmsg'+(WT.msg.er?' er':'')+'">'+esc(WT.msg.t)+'</div>';
+  h+='<div class="wtbar card plain"><div class="wtnav"><button type="button" data-wtgo="-1"'+(keys.indexOf(WT.key)<=0?' disabled':'')+'>◀</button><select id="wtSel">'+keys.slice().reverse().map(function(k){ var w=wtWeek(k); return '<option value="'+k+'"'+(k===WT.key?' selected':'')+'>Week of '+d2(w.dd)+'</option>'; }).join('')+'</select><button type="button" data-wtgo="1"'+(keys.indexOf(WT.key)>=keys.length-1?' disabled':'')+'>▶</button></div>';
+  h+='<label class="wtf"><span>Data date</span><input type="date" id="wtDd" value="'+wk.dd+'"></label><label class="wtf"><span>Last date to update</span><input type="datetime-local" id="wtDue" value="'+wk.due+'"></label><button type="button" class="wtbtn pri" data-wtsave="1">Save dates</button>'+(wk.custom?'<button type="button" class="wtlink" data-wtreset="1">Use the default rule</button>':'');
+  h+='<div class="wtleft"><span class="l">'+(isOver?'Overdue since':'Time left')+'</span><b>'+(isOver?wtLeft(now-wk.dueMs):wtLeft(wk.dueMs-now))+'</b></div>';
+  h+='<div class="wtprog"><span class="l">'+(gOk.length+gWait.length+gRej.length)+' of '+need+' received · '+gOk.length+' approved</span><div class="wtpb"><i class="g" style="width:'+pct(gOk.length)+'%"></i><i class="b" style="width:'+pct(gWait.length)+'%"></i><i class="r" style="width:'+pct(gRej.length)+'%"></i></div></div>';
+  var allOver=gOut.concat(gRej).filter(function(c){ return wtContacts(c).to.length; });
+  h+='<div class="wtacts">'+(allOver.length?'<a class="wtbtn pri" href="'+esc(wtMail(allOver,S).href)+'" data-wtremall="'+esc(allOver.join('|'))+'">✉ Email all '+(isOver?'overdue':'outstanding')+' ('+allOver.length+')</a>':'')+'<button type="button" class="wtbtn" data-wtset="1">⚙ Settings</button><button type="button" class="wtbtn" data-wtref="1">⟳</button></div></div>';
+  if(WT.set) h+=wtSettings();
+  var col=function(t,list,cls){ return '<div class="wtcol"><h4><span>'+t+'</span><span>'+list.length+'</span></h4>'+(list.length?list.map(function(c){ return wtCard(c,st[c],S); }).join(''):'<div class="wtnone">None</div>')+'</div>'; };
+  h+='<div class="wtkb">'+col(isOver?'Overdue':'Outstanding',gOut)+col('Rejected · resubmit',gRej)+col('Waiting approval',gWait)+col('Approved',gOk)+'</div>';
+  if(gExc.length) h+='<div class="wtexc"><b>Not required this week:</b> '+gExc.map(function(c){ return wtCard(c,st[c],S); }).join('')+'</div>';
+  var cs=WT.st&&WT.st.contacts; if(cs&&!cs.ok) h+='<div class="sepnote"><span class="ni">i</span><div>Contacts: '+esc(cs.error||'not available')+'</div></div>';
+  return h; }
+function wtSettings(){ var c=wtCfg(), C=wtCodes(), cs=WT.st&&WT.st.contacts, sel=function(id,v){ return '<select id="'+id+'">'+WT_DOW.map(function(d,i){ return '<option value="'+i+'"'+(i===v?' selected':'')+'>'+d+'</option>'; }).join('')+'</select>'; };
+  var h='<div class="card plain wtset"><h3>Weekly tracker settings <small>shared by all administrators</small></h3><div class="wtrow"><label class="wtf"><span>Data date every</span>'+sel('wtDdw',c.dataDow)+'</label><label class="wtf"><span>Last date to update every</span>'+sel('wtDuw',c.dueDow)+'</label><label class="wtf"><span>at</span><input type="time" id="wtDut" value="'+esc(c.dueTime)+'"></label><button type="button" class="wtbtn pri" data-wtrule="1">Save rule</button></div>';
+  h+='<p class="wts">A week whose dates were changed keeps its own dates. A project counts as updated once its upload is approved; approved after the last date counts as late.</p>';
+  h+='<h4>Projects that must send the weekly update</h4><div class="wtreq">'+C.all.map(function(code){ return '<label><input type="checkbox" data-wtskip="'+esc(code)+'"'+(c.skip&&c.skip[code]?'':' checked')+'> '+esc(code)+' <span class="wtn">'+esc(pname(code))+'</span></label>'; }).join('')+'</div>';
+  h+='<h4>Contacts</h4><p class="wts">'+(cs&&cs.ok?cs.rows.filter(function(r){ return r.on&&r.email; }).length+' active email(s) in the contacts sheet. ':'')+(cs&&cs.id?'<a href="https://docs.google.com/spreadsheets/d/'+esc(cs.id)+'/edit" target="_blank" rel="noopener">Open the contacts Google Sheet ↗</a>':'Set DRIVE_CONTACTS_FILE on the relay.')+' Columns: Project Code, Project, Name, Role (Responsible / CC), Email, Phone, Active (Yes / No).</p>';
+  var miss=C.req.filter(function(code){ return !wtContacts(code).to.length; }); if(cs&&cs.ok&&miss.length) h+='<p class="wts"><b>No email yet for:</b> '+miss.map(esc).join(', ')+'</p>';
+  return h+'</div>'; }
+/* ---- History grid ---- */
+function wtHistTab(){ var hd=wtHead(); if(hd) return hd;
+  var keys=wtKeys(WT.n), now=Date.now(), C=wtCodes().req, A=keys.map(function(k){ return wtStatusAll(k); }), cur=A[A.length-1];
+  var sym={ok:['c1','✓','On time'],late:['c2','L','Late'],wait:['c4','…','Waiting approval'],rej:['c3','✗','Rejected'],over:['c3','✗','Missing'],out:['c5','','Not due yet'],exc:['c0','–','Not required'],nr:['c6','·','No update cycle that week']};
+  var cnt=function(ks){ return C.filter(function(c){ return ks.indexOf(cur.st[c].k)>=0; }).length; };
+  var h='<div class="wtbar card plain"><div><b>This week ('+d2(cur.wk.dd)+'):</b> '+cnt(['ok','late'])+' approved · '+cnt(['wait'])+' waiting · '+cnt(['rej'])+' rejected · <b class="wtl">'+cnt(['over','out'])+' '+(now>cur.wk.dueMs?'overdue':'outstanding')+'</b> <span class="wts">· last date '+wtFmt(cur.wk.dueMs,true)+'</span></div><div class="wtacts">'+[8,12,26].map(function(n){ return '<button type="button" class="wtbtn'+(WT.n===n?' pri':'')+'" data-wtn="'+n+'">'+n+' weeks</button>'; }).join('')+'<button type="button" class="wtbtn" data-wtx="1">Export</button></div></div>';
+  h+='<div class="card plain wthm"><div class="wtscr"><table><thead><tr><th>Project</th>'+A.map(function(a){ return '<th><a href="#" data-wtwk="'+a.wk.key+'">'+esc(d2(a.wk.dd).replace(/ \d\d$/,''))+'</a></th>'; }).join('')+'<th>On time</th></tr></thead><tbody>';
+  C.forEach(function(code){ var on=0, req=0; h+='<tr><td class="p"><b>'+esc(code)+'</b> <span class="wtn">'+esc(pname(code))+'</span></td>';
+    A.forEach(function(a){ var o=a.st[code], s=sym[o.k]; if(o.k!=='exc'&&o.k!=='out'&&o.k!=='wait'&&o.k!=='nr'){ req++; if(o.k==='ok') on++; }
+      var tip=s[2]+(o.e?' · sent '+wtFmt(o.e.ts,true)+' by '+(o.e.by||'')+(o.e.rby?' · reviewed by '+o.e.rby:''):o.db?' · in the database':'')+(o.note?' · '+o.note:'');
+      h+='<td><a href="#" class="wtq '+s[0]+'" data-wtwk="'+a.wk.key+'" title="'+esc(tip)+'">'+s[1]+'</a></td>'; });
+    h+='<td class="wtpc"><b>'+(req?Math.round(on/req*100)+'%':'–')+'</b></td></tr>'; });
+  h+='</tbody><tfoot><tr><td class="p wts">Approved on time</td>'+A.map(function(a){ var r=0,o=0; C.forEach(function(c){ var k=a.st[c].k; if(k==='exc'||k==='out'||k==='wait'||k==='nr') return; r++; if(k==='ok') o++; }); return '<td class="wts">'+(r?Math.round(o/r*100)+'%':'')+'</td>'; }).join('')+'<td></td></tr></tfoot></table></div>';
+  h+='<div class="wtlg">'+['ok','late','wait','rej','out','exc','nr'].map(function(k){ return '<span><i class="wtq '+sym[k][0]+'"></i>'+(k==='rej'?'Missing / rejected':sym[k][2])+'</span>'; }).join('')+'<span>Click a square or a week to open it in the Weekly tracker</span></div></div>';
+  return h; }
+function wtExport(){ var keys=wtKeys(WT.n), C=wtCodes().req, A=keys.map(function(k){ return wtStatusAll(k); }), T={ok:'On time',late:'Late',wait:'Waiting approval',rej:'Rejected',over:'Missing',out:'Not due yet',exc:'Not required',nr:'No update cycle'};
+  var aoa=[['Project Code','Project'].concat(A.map(function(a){ return a.wk.dd; }))]; C.forEach(function(c){ aoa.push([c,pname(c)].concat(A.map(function(a){ var o=a.st[c]; return T[o.k]+(o.e&&o.e.ts?' ('+wtFmt(o.e.ts,true)+')':''); }))); });
+  var wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(aoa),'Weekly updates'); XLSX.writeFile(wb,'KEC_weekly_site_updates_'+keys[keys.length-1]+'.xlsx'); }
+document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return; var b;
+  if((b=t.closest('[data-wtgo]'))){ var ks=wtKeys(WT.n), i=ks.indexOf(WT.key)+(+b.getAttribute('data-wtgo')); if(i>=0&&i<ks.length){ WT.key=ks[i]; WT.msg=null; render(); } return; }
+  if((b=t.closest('[data-wtwk]'))){ e.preventDefault(); WT.key=b.getAttribute('data-wtwk'); UL.tab='week'; WT.msg=null; render(); return; }
+  if((b=t.closest('[data-wtn]'))){ WT.n=+b.getAttribute('data-wtn'); try{ localStorage.setItem('kec.wtn.v1',String(WT.n)); }catch(x){} render(); return; }
+  if(t.closest('[data-wtset]')){ WT.set=!WT.set; render(); return; }
+  if(t.closest('[data-wtref]')){ WT.loaded=false; WT.msg=null; wtLoad(); return; }
+  if(t.closest('[data-wtx]')){ try{ wtExport(); }catch(x){ alert('Export failed: '+x.message); } return; }
+  if(t.closest('[data-wtsave]')){ var dd=(document.getElementById('wtDd')||{}).value||'', du=(document.getElementById('wtDue')||{}).value||''; if(!dd||!du){ WT.msg={er:true,t:'Enter both dates'}; render(); return; } if(du.slice(0,10)<dd){ WT.msg={er:true,t:'The last date to update must be on or after the data date'}; render(); return; } wtPost({action:'week',key:WT.key,dd:dd===WT.key?'':dd,due:du===wtWeek(WT.key).defDue?'':du.slice(0,16)},'Dates saved for the week of '+d2(WT.key)); return; }
+  if(t.closest('[data-wtreset]')){ wtPost({action:'week',key:WT.key,dd:'',due:''},'This week uses the default rule again'); return; }
+  if(t.closest('[data-wtrule]')){ wtPost({action:'cfg',dataDow:+document.getElementById('wtDdw').value,dueDow:+document.getElementById('wtDuw').value,dueTime:document.getElementById('wtDut').value},'Default rule saved'); return; }
+  if((b=t.closest('[data-wtexc]'))){ var r=prompt('Why is '+b.getAttribute('data-wtexc')+' not required this week?','Not required this week'); if(r==null) return; wtPost({action:'week',key:WT.key,code:b.getAttribute('data-wtexc'),excuse:true,reason:r},b.getAttribute('data-wtexc')+' is not required this week'); return; }
+  if((b=t.closest('[data-wtunexc]'))){ wtPost({action:'week',key:WT.key,code:b.getAttribute('data-wtunexc'),excuse:false},b.getAttribute('data-wtunexc')+' is required again'); return; }
+  if((b=t.closest('[data-wtrem]'))){ var c=b.getAttribute('data-wtrem'); wtPost({action:'remind',key:WT.key,code:c,to:wtContacts(c).to.map(function(x){ return x.email; }).join(',')}); return; }
+  if((b=t.closest('[data-wtremall]'))){ b.getAttribute('data-wtremall').split('|').forEach(function(c,i){ setTimeout(function(){ accCall('POST','/ulog',{action:'remind',key:WT.key,code:c,to:wtContacts(c).to.map(function(x){ return x.email; }).join(',')},30000).then(function(j){ if(j&&j.cfg&&WT.st) WT.st.cfg=j.cfg; if(state.page==='updates') render(); }).catch(function(){}); },i*400); }); return; } });
+document.addEventListener('change',function(e){ var t=e.target; if(!t) return;
+  if(t.id==='wtSel'){ WT.key=t.value; WT.msg=null; render(); return; }
+  if(t.hasAttribute&&t.hasAttribute('data-wtskip')){ wtPost({action:'skip',code:t.getAttribute('data-wtskip'),on:!t.checked},t.getAttribute('data-wtskip')+(t.checked?' must send the weekly update':' does not need to send the weekly update')); } });
 function ulLog(){
   var L=ulEntries().filter(function(e){ return !e.base; }); if(!L.length) return '<div class="ulnone">No updates recorded yet.</div>';
   return L.slice(0,40).map(function(e){ return '<div class="card plain ulcard"><div class="ulh">'+ulHead(e)+'</div>'+(e.changes&&e.changes.length?'<details'+(L[0]===e?' open':'')+'><summary>Show changes</summary>'+ulChanges(e.changes,5)+'</details>':'')+'</div>'; }).join('');
