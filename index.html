@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V418</title>
+<title>TEST · KEC Project Controls Dashboard · V419</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1185,7 +1185,9 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 .pcs{margin:6px 0 4px}.pcg{display:grid;grid-template-columns:minmax(0,1.75fr) 2px minmax(0,1fr);gap:0 22px;align-items:start}.pcsep{align-self:stretch;background:var(--bar-g);border-radius:2px;opacity:.7}
 .pch{display:flex;align-items:center;gap:8px;margin:0 0 10px;flex-wrap:wrap}.pch .sp{flex:1}.pct{font-size:17px;font-weight:700}
 .pcchip{font:600 12px inherit;font-family:inherit;border:1px solid var(--bar-g);background:var(--card);color:var(--ink);border-radius:20px;padding:5px 12px;cursor:pointer}.pcchip b{margin-left:3px}.pcchip.on{background:#0b2a5e;color:#fff;border-color:#0b2a5e}
-.mplb{float:right;font-size:12px;font-weight:500;color:var(--mut);cursor:pointer}.mplb input{vertical-align:middle;margin-right:4px}
+.mplb{float:right;font-size:12px;font-weight:500;color:var(--mut);cursor:pointer}
+.spit{margin-top:14px}.spit .mpk{margin:8px 0 12px}.spit .spibox{height:280px}.spit.off h3{margin-bottom:0}.spit h3 small{margin-right:8px}
+@media (max-width:640px){.spit .spibox{height:240px}.spit h3 .mplb{float:none;display:block;margin-top:6px}}.mplb input{vertical-align:middle;margin-right:4px}
 .trasat{font-size:11px;color:var(--mut);margin:2px 0 4px}.trdq{font-size:12px;background:#fbeccd;color:#8a5a00;border-radius:8px;padding:6px 10px;margin:4px 0}[data-theme=dark] .trdq{background:#3a2e12;color:#f0c76a}
 .trset{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--mut);margin:2px 0 10px}.trset input,.trset select{background:var(--chipbg);border:1px solid var(--line);border-radius:6px;color:var(--ink);padding:3px 6px;font:inherit}.trset input{width:54px}
 .trt{width:100%;border-collapse:collapse;font-size:13px}.trt th{font-size:10.5px;letter-spacing:.04em;color:var(--mut);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);line-height:1.25}.trt th.n,.trt td.n{text-align:right;font-variant-numeric:tabular-nums}.trt th.c,.trt td.c{text-align:center}
@@ -1464,7 +1466,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V418</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V419</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1645,7 +1647,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V418';
+var APP_VER='V419';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4081,7 +4083,7 @@ function pSiteGroup(rows,coreRows,cut){
   var pv=null, eac=null, anyX=false;
   if(FV&&FV.lines.length){ FV.lines.forEach(function(l){ if(l.pvoS!=null||l.eacS!=null) anyX=true; pv=(pv||0)+(l.pvoS||0); eac=(eac||0)+(l.eacS||0); }); }
   var fin=svFinHtml(AF,anyX,pv,eac,codes);
-  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>planned − forecast; negative = late</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
+  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>planned − forecast; negative = late</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>'+svSpiHtml(cut);
   /* trackers by project */
   var sumP=function(arr,tk,f){ return codes.map(function(c){ var L=svLatest(arr,svGrpScope(c),cut,tk); return {c:c,L:L,t:L.length?f(L):null}; }); };
   var e1r=sumP(cur.e1,'e1',function(L){ return {tot:svSum(L,'tot'),sub:svSum(L,'sub'),app:svSum(L,'app'),rev:svSum(L,'rev'),rvw:svSum(L,'rvw'),ns:svSum(L,'ns')}; }), anyE1=e1r.some(function(x){ return x.t; });
@@ -4345,7 +4347,7 @@ function pSiteBuild(rows,coreRows,cut){
   /* manpower + trends canvases */
   var mpAny=(cur.mp||[]).some(function(x){ return String(x.code).toLowerCase()===sc.lc; });
   var M=svMpHtml(svMpModel(sc,cut,false,null));
-  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>planned − forecast; negative = late</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>';
+  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>planned − forecast; negative = late</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>'+svSpiHtml(cut);
   /* challenges */
   var CL=svChalList(sc,cut), open=CL.all.filter(function(x){ return !/^closed/i.test(x.status); }), closed=CL.all.length-open.length;
   var O={High:0,Medium:1,Low:2}; open.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
@@ -4539,6 +4541,49 @@ function svMpCfg(m,ink,line,acc){
   return {type:'bar',data:{labels:m.rows.map(function(r){ return wrap(r.k); }),datasets:[{label:'Planned',data:m.rows.map(function(r){ return r.pl; }),backgroundColor:'#b9b09e',borderRadius:4},{label:'Actual',data:m.rows.map(function(r){ return r.ac; }),backgroundColor:acc,borderRadius:4}]},options:o,plugins:[lab]};
 }
 /* V369: value pills on the manpower chart (Option B): Actual pill, Planned pill, and the gap Actual - Planned */
+/* V419: SPI trend in Site view (option C): latest / change / lowest / highest, then the SPI by data date with the 1.00 = on plan line.
+   Neutral colours, no comments. Each viewer can hide it with the Show chart tick (kept in this browser, phone and web). */
+var SPIT={on:true};
+try{ var _sp=JSON.parse(localStorage.getItem('kec.spit.v1')||'null'); if(_sp&&_sp.on===false) SPIT.on=false; }catch(e){}
+function svSpiSeries(cut){ var o=[]; model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); if(a.spi==null||!isFinite(a.spi)||!(a.plan>0)) return; o.push({d:s,v:+a.spi.toFixed(2),pl:a.plan,ac:a.act}); }); return o; }
+function svSpiHtml(cut){
+  var head='<h3>SPI trend <small>schedule performance index = earned ÷ planned progress · 1.00 = on plan</small><label class="mplb"><input type="checkbox" id="spiTog"'+(SPIT.on?' checked':'')+'> Show chart</label></h3>';
+  if(!SPIT.on) return '<div class="card plain tcard spit off">'+head+'</div>';
+  var S=[]; try{ S=svSpiSeries(cut); }catch(e){}
+  if(!S.length) return '<div class="card plain tcard spit">'+head+'<div class="empty">No SPI yet. It needs planned progress above 0 in at least one data date.</div></div>';
+  var f=function(v){ return v.toFixed(2); }, L=S[S.length-1], P=S.length>1?S[S.length-2]:null, lo=S[0], hi=S[0];
+  S.forEach(function(x){ if(x.v<lo.v) lo=x; if(x.v>hi.v) hi=x; });
+  var ch=P?+(L.v-P.v).toFixed(2):null;
+  var k='<div class="mpk spik"><div><span class="l">Latest SPI</span><b>'+f(L.v)+'</b><span class="s">data date '+d2(L.d)+'</span></div>'+
+    '<div><span class="l">SPI change</span><b>'+(ch==null?'–':ch>0?'▲ +'+f(ch):ch<0?'▼ −'+f(-ch):'0.00')+'</b><span class="s">'+(P?'since '+d2(P.d):'needs two data dates')+'</span></div>'+
+    '<div><span class="l">Lowest SPI</span><b>'+f(lo.v)+'</b><span class="s">'+d2(lo.d)+'</span></div>'+
+    '<div><span class="l">Highest SPI</span><b>'+f(hi.v)+'</b><span class="s">'+d2(hi.d)+'</span></div></div>';
+  return '<div class="card plain tcard spit">'+head+k+(S.length>1?'<div class="chart-box spibox"><canvas id="svSpi"></canvas></div>':'<div class="empty">The trend line appears after two data dates.</div>')+'</div>';
+}
+function spiRgba(c,a){ c=String(c||'').trim(); var m=/^#([0-9a-f]{6})$/i.exec(c); if(m){ var n=parseInt(m[1],16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; } m=/^rgba?\(([^)]+)\)$/i.exec(c); if(m){ var p=m[1].split(',').slice(0,3).join(','); return 'rgba('+p+','+a+')'; } return 'rgba(47,111,214,'+a+')'; }
+function svSpiCfg(S,ink,line,acc){
+  var tx=cssv('--ink')||ink, halo=cssv('--card')||'#fff', V=S.map(function(x){ return x.v; }), n=V.length, lo=Math.min.apply(null,V), hi=Math.max.apply(null,V), mn=Math.min(lo,1), mx=Math.max(hi,1), pad=Math.max(.05,(mx-mn)*.15);
+  var plug={id:'spiP',
+    beforeDatasetsDraw:function(c){ var y=c.scales.y.getPixelForValue(1), a=c.chartArea, x=c.ctx; if(y<a.top||y>a.bottom) return; x.save(); x.strokeStyle=ink; x.setLineDash([5,4]); x.lineWidth=1.2; x.beginPath(); x.moveTo(a.left,y); x.lineTo(a.right,y); x.stroke(); x.restore(); },
+    afterDatasetsDraw:function(c){ var x=c.ctx, m=c.getDatasetMeta(0), a=c.chartArea, fs=c.width<520?9.5:10.5, room=Math.max(2,Math.floor((a.right-a.left)/(fs*5.2))), step=Math.max(1,Math.ceil(n/room)), drawn=[], boxes=[];
+      x.save(); x.font='600 '+fs+'px Inter,system-ui,sans-serif'; x.textAlign='center'; x.lineJoin='round'; x.lineWidth=4;
+      var iLo=V.indexOf(lo), iHi=V.indexOf(hi), ord=[n-1,iLo,iHi]; for(var j=n-2;j>=0;j--) if(ord.indexOf(j)<0&&!((n-1-j)%step)) ord.push(j);
+      ord.forEach(function(i){ var p=m.data[i]; if(!p) return; var t=V[i].toFixed(2), w=x.measureText(t).width+6, xx=Math.min(Math.max(p.x,a.left+w/2),a.right-w/2+6), yy=i===iLo&&i!==n-1?p.y+fs+6:p.y-9;
+        if(boxes.some(function(q){ return Math.abs(q.x-xx)<(q.w+w)/2&&Math.abs(q.y-yy)<fs+3; })) return; boxes.push({x:xx,y:yy,w:w,i:i}); });
+      var y1=c.scales.y.getPixelForValue(1);
+      if(y1>=a.top&&y1<=a.bottom){ var rt='1.00 = on plan', rw=x.measureText(rt).width+6, ry=y1-5, rx=a.right-rw/2-2;
+        if(boxes.some(function(q){ return Math.abs(q.x-rx)<(q.w+rw)/2&&Math.abs(q.y-ry)<fs+3; })) rx=a.left+rw/2+4;
+        if(boxes.some(function(q){ return Math.abs(q.x-rx)<(q.w+rw)/2&&Math.abs(q.y-ry)<fs+3; })) ry=y1+fs+4;
+        x.strokeStyle=halo; x.fillStyle=ink; x.strokeText(rt,rx,ry); x.fillText(rt,rx,ry); }
+      boxes.forEach(function(q){ x.strokeStyle=halo; x.fillStyle=q.i===n-1?tx:ink; x.strokeText(V[q.i].toFixed(2),q.x,q.y); x.fillText(V[q.i].toFixed(2),q.x,q.y); });
+      x.restore(); }};
+  var o={responsive:true,maintainAspectRatio:false,layout:{padding:{top:18,right:16,left:6}},
+    plugins:{legend:{display:false,labels:{}},tooltip:{callbacks:{label:function(c){ return 'SPI '+V[c.dataIndex].toFixed(2); },afterLabel:function(c){ var s=S[c.dataIndex]; return 'earned '+(s.ac*100).toFixed(1)+'% ÷ planned '+(s.pl*100).toFixed(1)+'%'; }}}},
+    scales:{x:{ticks:{color:ink,maxRotation:0,autoSkipPadding:10},grid:{display:false}},y:{min:Math.floor((mn-pad)*20)/20,max:Math.ceil((mx+pad)*20)/20,ticks:{color:ink,callback:function(v){ return (+v).toFixed(2); }},grid:{color:line}}}};
+  return {type:'line',data:{labels:S.map(function(x){ return d2(x.d); }),datasets:[{label:'SPI',data:V,borderColor:acc,borderWidth:2,tension:.3,cubicInterpolationMode:'monotone',fill:true,
+    backgroundColor:function(c){ var a=c.chart.chartArea; if(!a) return spiRgba(acc,.15); var g=c.chart.ctx.createLinearGradient(0,a.top,0,a.bottom); g.addColorStop(0,spiRgba(acc,.25)); g.addColorStop(1,spiRgba(acc,.02)); return g; },
+    pointRadius:V.map(function(v,i){ return i===n-1?5:(n>30?1.5:2.5); }),pointBackgroundColor:V.map(function(v,i){ return i===n-1?halo:acc; }),pointBorderColor:acc,pointBorderWidth:V.map(function(v,i){ return i===n-1?2.5:1; }),pointHoverRadius:6}]},options:o,plugins:[plug]};
+}
 var MPL={on:true};
 try{ var _m=JSON.parse(localStorage.getItem('kec.mpl.v1')||'null'); if(_m&&_m.on===false) MPL.on=false; }catch(e){}
 function mpPill(c,x,y,t,fg,bg,fs){ c.font='600 '+fs+'px system-ui,-apple-system,Segoe UI,sans-serif'; var w=c.measureText(t).width+fs*1.1, hh=fs*1.7, r=hh/2, l=x-w/2, tp=y-hh/2;
@@ -4557,6 +4602,7 @@ function svCfgs(){
   var sc=SV.cur.sc, cut=SV.cur.cut, ink=cssv('--mut'), line=cssv('--line'), acc=cssv('--accent'), bad=cssv('--bad'), out={};
   var base=function(){ return {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:ink,boxWidth:12}}},scales:{x:{ticks:{color:ink},grid:{color:line}},y:{ticks:{color:ink},grid:{color:line}}}}; };
   var MPm=svMpModel(sc,cut,!!SV.cur.grp,SV.cur.grp?SV.cur.codes:null);
+  if(SPIT.on&&document.getElementById('svSpi')){ var SPs=[]; try{ SPs=svSpiSeries(cut); }catch(e){} if(SPs.length>1) out.svSpi=function(){ return svSpiCfg(SPs,ink,line,acc); }; }
   if(MPm&&MPm.rows.length){ out.svMp=function(){ return svMpCfg(MPm,ink,line,acc); }; if(MPm.trend.length>1) out.svMpT=function(){ return svMpTrend(MPm,ink,line,acc); }; }
   var P=[],A=[],Od=[],L=[];
   model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.pf&&a.ff?dayDiff(a.ff,a.pf):0); });
@@ -4724,7 +4770,8 @@ function dqRun(){
     if(nsp.length) out.push({dq:1,code:nsp[0].code,t:'Package not in the approved list',m:nsp.length+' package(s) in the progress data are not in the <b>Packages List</b> / <b>Plots List</b> of the live Sheet: '+nsp.slice(0,6).map(function(r){ return '<b>'+esc(r.pkg)+'</b> ('+esc(r.code)+')'; }).join('; ')+(nsp.length>6?' …':'')+'. Administrator: add it to the list, or map the old spelling on the <b>Package Aliases</b> tab.'}); }
   model.dqN=out.length; out.forEach(function(i){ model.issues.push(i); });
 }
-document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='mpLbl'){ MPL.on=!!t.checked; try{ localStorage.setItem('kec.mpl.v1',JSON.stringify(MPL)); }catch(x){} try{ var ch=Chart.getChart(document.getElementById('svMpT')); if(ch) ch.draw(); }catch(x){} return; }
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='spiTog'){ SPIT.on=!!t.checked; try{ localStorage.setItem('kec.spit.v1',JSON.stringify(SPIT)); }catch(x){} var sy=window.scrollY; render(); window.scrollTo(0,sy); return; }
+  if(t&&t.id==='mpLbl'){ MPL.on=!!t.checked; try{ localStorage.setItem('kec.mpl.v1',JSON.stringify(MPL)); }catch(x){} try{ var ch=Chart.getChart(document.getElementById('svMpT')); if(ch) ch.draw(); }catch(x){} return; }
   if(!t) return; if(t.id==='dqSil'||t.id==='dqChg'){ var v=parseFloat(t.value); if(!(v>0&&v<=365)){ t.value=t.id==='dqSil'?DQ.silent:DQ.chg; return; } if(t.id==='dqSil') DQ.silent=v; else DQ.chg=v; dqSave(); dqRun(); try{ render(); }catch(x){} } });
 function suParse(wb,okCode){
   var errs=[], warns=[], data={ver:0,prog:[],con:[],e1:[],e2:[],qa:[],mp:[],pc:[]}, sum=[];
@@ -9354,6 +9401,12 @@ var D={
 'Progress variance trend':'اتجاه انحراف التقدم',
 'actual − planned, %':'الفعلي − المخطط، %',
 'Overrun trend (days)':'اتجاه التأخير (أيام)',
+'SPI trend':'اتجاه مؤشر أداء الجدول (SPI)',
+'schedule performance index = earned ÷ planned progress · 1.00 = on plan':'مؤشر أداء الجدول = المكتسب ÷ التقدم المخطط · 1.00 = حسب الخطة',
+'Latest SPI':'آخر SPI','SPI change':'تغيّر SPI','Lowest SPI':'أدنى SPI','Highest SPI':'أعلى SPI','Show chart':'إظهار المخطط',
+'since':'منذ','needs two data dates':'يحتاج تاريخَي بيانات',
+'No SPI yet. It needs planned progress above 0 in at least one data date.':'لا يوجد SPI بعد. يحتاج تقدماً مخططاً أكبر من 0 في تاريخ بيانات واحد على الأقل.',
+'The trend line appears after two data dates.':'يظهر خط الاتجاه بعد تاريخَي بيانات.',
 'planned − forecast finish; negative = forecast later than plan':'المخطط − الانتهاء المتوقع؛ السالب = المتوقع بعد الخطة',
 'Overrun (days)':'التأخير (أيام)',
 'Package trend by reporting date':'اتجاه الحزمة حسب تاريخ التقرير',
