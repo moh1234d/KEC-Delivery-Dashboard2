@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V423</title>
+<title>TEST · KEC Project Controls Dashboard · V424</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1151,7 +1151,25 @@ body.rptp .rp-gr,body.rptp .rp-th{display:none!important} .rp-th{position:absolu
 .ulpg{margin:12px 0 2px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#ba965a;font-weight:800}
 .ulpj{border-top:1px solid var(--line);padding:8px 0 4px}.ulpj h4{margin:0 0 4px;font-size:14.5px}
 .ulr{display:grid;grid-template-columns:minmax(180px,1.1fr) 2fr auto;gap:10px;align-items:center;font-size:13px;padding:3px 0}
-.ulold{color:var(--mut);text-decoration:line-through}.up{color:#2e6b34;font-weight:700}.dn{color:#b9544b;font-weight:700}.ulfl{font-style:normal;font-size:11.5px;font-weight:700;color:#b9544b;margin-left:6px}
+.ulold{color:var(--mut);text-decoration:line-through}
+/* V424: review card (side-by-side compare + checks) */
+.rvsum{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}.rvc{background:rgba(120,110,90,.12);border-radius:8px;padding:5px 10px;font-size:12.5px}.rvc b{font-size:14px;margin-right:5px}
+.rvc.w{background:rgba(240,170,40,.2);color:#8a5a00}.rvc.e{background:rgba(200,60,50,.15);color:#b42318}.rvc.g{background:rgba(26,127,75,.13);color:#1a7f4b}
+.rvprj{display:flex;gap:6px 16px;flex-wrap:wrap;align-items:center;font-size:12.5px;margin:0 0 8px;color:var(--mut)}.rvprj label{color:var(--ink);font-weight:600;cursor:pointer}
+.rvtabs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}.rvtb{font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.rvtb.on{background:#0b2a5e;border-color:#0b2a5e;color:#fff}.rvtb.bad{border-color:#e7b3ad;color:#b42318}.rvtb.bad.on{background:#b42318;border-color:#b42318;color:#fff}.rvtb.wrn{border-color:#f0d48a;color:#8a5a00}.rvtb.wrn.on{background:#b7791f;border-color:#b7791f;color:#fff}.rvtb.okc{color:#1a7f4b}.rvtb.okc.on{background:#1a7f4b;border-color:#1a7f4b;color:#fff}
+.rvtw{overflow-x:auto;-webkit-overflow-scrolling:touch}.rvt{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}
+.rvt th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}.rvt td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.rvt .n{text-align:right;white-space:nowrap}.rvt th.c,.rvt td.c{background:rgba(120,110,90,.06)}.rvt td.ch{background:rgba(240,190,40,.22);font-weight:700}.rvt td.up{color:#1a7f4b;font-weight:700}.rvt td.dn{color:#b42318;font-weight:700}
+.rvt tr.rvpk td{background:rgba(120,110,90,.09);font-size:12.5px}.rvmut{color:var(--mut)}.rvnum{white-space:nowrap}
+.rvtg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:4px;white-space:nowrap}.rvtg.w{background:rgba(240,170,40,.22);color:#8a5a00}.rvtg.g{background:rgba(26,127,75,.14);color:#1a7f4b}.rvtg.r{background:rgba(200,60,50,.14);color:#b42318}
+.rvsv{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px}.rvsv.e{background:rgba(200,60,50,.15);color:#b42318}.rvsv.w{background:rgba(240,170,40,.22);color:#8a5a00}.rvsv.g{background:rgba(26,127,75,.14);color:#1a7f4b}.rvsv.n{background:rgba(120,110,90,.14);color:var(--mut)}
+.rvnote{font-size:12px;color:var(--mut);margin:6px 0 0}.rvallok{padding:10px 12px;border-radius:10px;background:rgba(26,127,75,.1);color:#1a7f4b;font-weight:700}
+.rvpass{margin:8px 0}.rvpass summary{cursor:pointer;color:#1f4e79;font-size:12.5px}.rvpr{font-size:12.5px;padding:3px 0;color:var(--mut)}
+.rvchkf{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:6px;font-size:12px}
+.rvchkf .btn{font:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.rvok{display:flex;gap:6px;align-items:center;font-size:12.5px;font-weight:700;color:#b42318;white-space:nowrap}
+.rvset{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;padding:4px 0}.rvset input[type=number]{width:80px;font:inherit;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}.rvh4{margin:12px 0 4px;font-size:13px}.up{color:#2e6b34;font-weight:700}.dn{color:#b9544b;font-weight:700}.ulfl{font-style:normal;font-size:11.5px;font-weight:700;color:#b9544b;margin-left:6px}
 .ulpj details summary,.ulcard details summary{cursor:pointer;color:#1f4e79;font-size:12.5px;margin:4px 0}
 .ultabs{display:flex;gap:6px;align-items:center;margin:10px 0 14px;flex-wrap:wrap}.ultabs .sp{flex:1}
 .ultab{padding:8px 16px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}.ultab.on{background:#0b2a5e;color:#fff;border-color:#0b2a5e}
@@ -1507,7 +1525,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V423</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V424</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1688,7 +1706,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V423';
+var APP_VER='V424';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3128,7 +3146,7 @@ function ulDiff(a,b){
   trk('m','Manpower / equipment',['pl','ac'],{pl:'planned',ac:'actual'});
   return out;
 }
-function ulPack(ch){ return {n:ch.length,flags:ch.filter(function(c){ return c.flag; }).length,changes:ch.slice(0,600)}; }
+function ulPack(ch){ return {v:2,n:ch.length,flags:ch.filter(function(c){ return c.flag; }).length,changes:ch.slice(0,600)}; }
 /* ---- storage: the relay when there is one, this browser otherwise ---- */
 function ulLocal(){ try{ return JSON.parse(localStorage.getItem(UL_KEY)||'null')||{entries:[],snap:null}; }catch(e){ return {entries:[],snap:null}; } }
 function ulLocalSave(o){ try{ localStorage.setItem(UL_KEY,JSON.stringify(o)); }catch(e){} }
@@ -3171,12 +3189,13 @@ function ulPreview(data){
   return ulDiff(b,a);
 }
 async function ulSiteDiffs(){
-  var subs=(SU.admin&&SU.admin.subs)||[], need=subs.filter(function(s){ return !s.diff&&s.data&&(s.status==='pending'||s.status==='accepted'); }); if(!need.length) return;
+  var subs=(SU.admin&&SU.admin.subs)||[], old=Date.now()-30*864e5, need=subs.filter(function(s){ return s.data&&(s.status==='pending'||s.status==='accepted')&&(!s.diff||(s.diff.v!==2&&(s.status==='pending'||(s.ts||0)>old))); }); if(!need.length) return;
+  var nd={}; need.forEach(function(s){ nd[s.id]=1; }); /* V424: the list (and its count) is the one the review card shows */
   var K=['prog','con','e1','e2','qa','mp'], keep={pre:SU.pre,post:SU.post}, now={}; K.forEach(function(k){ now[k]=cur[k]; });
   suUndo(); var res={}, accepted=subs.filter(function(s){ return s.status==='accepted'&&s.data; }).sort(function(x,y){ return x.ts-y.ts; });
-  accepted.forEach(function(s){ var b=ulSnap(); suMerge([{data:s.data}]); res[s.id]=ulDiff(b,ulSnap()); });
+  accepted.forEach(function(s){ if(nd[s.id]){ try{ res[s.id]=rvFlat(rvBuild(s)); }catch(e){ res[s.id]=[]; } } suMerge([{data:s.data}]); });
   var after={}; K.forEach(function(k){ after[k]=cur[k]; });
-  need.filter(function(s){ return s.status==='pending'; }).forEach(function(s){ var b=ulSnap(); suMerge([{data:s.data}]); res[s.id]=ulDiff(b,ulSnap()); K.forEach(function(k){ cur[k]=after[k]; }); });
+  need.filter(function(s){ return s.status==='pending'; }).forEach(function(s){ try{ res[s.id]=rvFlat(rvBuild(s)); }catch(e){ res[s.id]=[]; } K.forEach(function(k){ cur[k]=after[k]; }); });
   K.forEach(function(k){ cur[k]=now[k]; }); SU.pre=keep.pre; SU.post=keep.post;
   for(var i=0;i<need.length;i++){ var s=need[i], p=ulPack(res[s.id]||[]); s.diff=p;
     try{ await accCall('POST','/site-review',{id:s.id,action:'diff',diff:p},30000); }catch(e){}
@@ -3236,7 +3255,7 @@ function suHiddenOk(sub){ var hd=suHiddenBy(sub); return !hd.length||confirm('Ap
 function suSubById(id){ return (((SU.admin&&SU.admin.subs)||[]).concat(UL.subs||[])).filter(function(x){ return x&&x.id===id; })[0]; }
 var UL_ST={recorded:['b','Master update'],baseline:['n','Baseline'],pending:['a','Waiting for review'],accepted:['g','Accepted · live'],rejected:['r','Rejected'],revoked:['r','Taken back']};
 function ulHead(e){
-  var st=e.route==='site'?(function(x){ return [x.k,x.t]; })(suStatusText(e)):(UL_ST[e.status]||['n',e.status]), cnt=e.n==null?'details being prepared':(e.n+(e.n===1?' change':' changes')+(e.flags?' · '+e.flags+' flagged':'')), pr=(e.projects||[]).map(pname).join(', ');
+  var st=e.route==='site'?(function(x){ return [x.k,x.t]; })(suStatusText(e)):(UL_ST[e.status]||['n',e.status]), cnt=e.n==null?'details being prepared':(e.n+(e.n===1?' change':' changes')+(e.flags?' · '+e.flags+' need'+(e.flags===1?'s':'')+' attention':'')), pr=(e.projects||[]).map(pname).join(', ');
   return '<span class="ulp '+(e.route==='site'?'a':'b')+'">'+(e.route==='site'?'Site team':'Master')+'</span> <span class="ulp '+st[0]+'">'+st[1]+'</span> <b>'+esc(e.by||'')+'</b> · '+svStamp(e.ts)+(e.cut?' · cut-off '+d2(e.cut):'')+'<div class="ulsub">'+esc(cnt)+(pr?' · '+esc(pr):'')+(e.partial&&e.partial.rejected&&e.partial.rejected.length?' · not approved: '+esc(e.partial.rejected.map(pname).join(', ')):'')+(e.reviewed&&e.reviewed.reason?' · reason: '+esc(e.reviewed.reason):'')+(e.route==='site'&&ulAdmin()&&suNeedsWrite(e)?' <button type="button" class="btn" data-ulrw="'+esc(e.id)+'">Retry write</button>':'')+'</div>';
 }
 /* ---- Data notes section ---- */
@@ -3270,20 +3289,195 @@ function ulCoverage(){
   po.forEach(function(g){ h+='<tr class="ulpgrow"><td colspan="'+(secs.length+2)+'">'+esc(g)+'</td></tr>'; P[g].sort(function(a,b){ return pname(a)<pname(b)?-1:1; }).forEach(function(c){ h+='<tr><td><b>'+esc(pname(c))+'</b></td><td>'+(siteRoute(c)?'Site team':'Master')+'</td>'+secs.map(function(s){ return '<td>'+cell(c,s)+'</td>'; }).join('')+'</tr>'; }); });
   return h+'</tbody></table></div><div class="ullg"><span class="cell g">on time</span><span class="cell a">late up to 14 days, or waiting for review</span><span class="cell r">more than 14 days late</span><span class="cell n">no data</span></div>';
 }
+/* ===== V424: review of a site update — option C (side-by-side compare) with a Checks tab.
+   One count everywhere: every change listed in the tabs is counted once, and the same number is shown on the card, in the chips, in the Update log and in
+   "Changes since the last update". A change is a cell of this upload that differs from the row already in the database for the same data date or,
+   when there is none, from the last report of the same package. "In the database" uses the values the relay read from the Google Sheet when it has them. */
+var RV={tab:{},cache:{},pk:{},ok:{}};
+var CHK_LIST=[
+  ['p_ac_drop','Actual progress lower than the last report','Error','Progress'],
+  ['p_pl_drop','Planned progress lower than the last report','Error','Progress'],
+  ['p_range','Progress below 0% or above 100%','Error','Progress'],
+  ['p_jump','Actual progress jumps more than {jump} points in one week','Warning','Progress'],
+  ['p_ff_past','Forecast finish before the data date but actual progress under 100%','Error','Progress'],
+  ['m_gc_cv','Gross certified more than the revised value (contract value + approved VOs)','Error','Money'],
+  ['m_gc_ev','Gross certified more than earned value by more than {gcEv}%','Error','Money'],
+  ['m_gc_drop','Gross certified lower than the last report','Error','Money'],
+  ['m_cv_novo','Contract value changed but approved VOs did not','Warning','Money'],
+  ['s_sum','Approved + revise/resubmit + under review more than submitted','Warning','Submittals and quality'],
+  ['s_grow','A running total (submitted, approved, PO issued, delivered, NCRs issued) lower than the last report','Warning','Submittals and quality'],
+  ['q_ncr','Closed more than the total issued (quality)','Error','Submittals and quality'],
+  ['mp_zero','Actual progress went up but actual manpower is 0','Warning','Manpower and dates'],
+  ['d_date','Data date in the future, or older than the latest report of the project','Error','Manpower and dates']];
+var CHK_DEF={off:{},drop:0,jump:10,gcEv:10,attMoney:25,attDays:30};
+function chkCfg(){ var c=(typeof WT!=='undefined'&&WT.st&&WT.st.cfg&&WT.st.cfg.chk)||null; if(!c){ try{ c=JSON.parse(localStorage.getItem('kec.chk.v1')||'null'); }catch(e){} }
+  var o=Object.assign({},CHK_DEF,c||{}); o.off=Object.assign({},(c&&c.off)||{}); return o; }
+function chkTitle(L,C){ return L[1].replace('{jump}',C.jump).replace('{gcEv}',C.gcEv); }
+var RVF=[['pl','Planned progress','p'],['ac','Actual progress','p'],['ps','Planned start','d'],['pf','Planned finish','d'],['rf','Revised finish','d'],['ff','Forecast finish','d'],
+  ['cv','Contract value','m'],['vo','Approved VOs','m'],['rv','Revised value','m'],['gc','Gross certified','m'],['eot','Extension of time (days)','n'],['ctr','Contractor','t'],['cno','Contract no.','t']];
+var RV_OPT={ps:1,ctr:1,cno:1};
+function rvVals(r){ if(!r) return null; var g=function(f){ var v=r[f]; if(v==null||v==='') return null; if(String(v).trim()==='-') return null; return v; }, n=function(f){ var v=g(f); return v==null?null:num(v); };
+  var rv=n('rv'), pv=n('pv'), ev=n('ev'), o={rv:rv,pv:pv,ev:ev,cv:n('cv'),vo:n('vo'),gc:n('gc'),eot:n('eot'),ctr:g('ctr')==null?null:str(g('ctr')),cno:g('cno')==null?null:str(g('cno'))};
+  ['ps','pf','rf','ff'].forEach(function(f){ var v=g(f); o[f]=v==null?null:(toISO(v)||null); });
+  o.pl=rv&&pv!=null?pv/rv:null; o.ac=rv&&ev!=null?ev/rv:null; return o; }
+function rvSame(t,a,b){ if(a==null||a==='') return b==null||b===''; if(b==null||b==='') return false;
+  if(t==='p') return Math.abs(a-b)<0.0005; if(t==='m') return Math.abs(a-b)<1; if(t==='n') return Math.abs(a-b)<0.5; if(t==='d') return a===b; return String(a).trim().toLowerCase()===String(b).trim().toLowerCase(); }
+function rvMoney(v){ if(v==null) return '—'; if(typeof accNoMoney==='function'&&accNoMoney()) return '•••'; return Math.round(v).toLocaleString('en-US'); }
+function rvFmt(t,v){ if(v==null||v==='') return '—'; if(t==='p') return (v*100).toFixed(1)+'%'; if(t==='d') return d2(v); if(t==='m') return rvMoney(v); if(t==='n') return String(Math.round(v)); return String(v); }
+function rvDelta(t,a,b){ /* [text, class] for the change from a to b */
+  if(a==null||a==='') return [b==null?'':'added','']; if(b==null||b==='') return ['cleared','dn'];
+  if(t==='p'){ var d=(b-a)*100; return [(d>=0?'+':'−')+Math.abs(d).toFixed(1)+' pts',d>0?'up':d<0?'dn':'']; }
+  if(t==='d'){ var dd=dayDiff(a,b); return [(dd>0?'+':'−')+Math.abs(dd)+' days',dd>0?'dn':'up']; }
+  if(t==='m'){ if(typeof accNoMoney==='function'&&accNoMoney()) return ['changed','']; var dm=b-a; return [a?((dm>=0?'+':'−')+Math.abs(dm/a*100).toFixed(Math.abs(dm/a)<0.1?1:0)+'%'):(dm>=0?'+':'−')+rvMoney(Math.abs(dm)),dm>0?'up':'dn']; }
+  if(t==='n'){ var dn=b-a; return [(dn>=0?'+':'−')+Math.abs(Math.round(dn)),'']; }
+  return ['changed','']; }
+/* the dashboard before and after this upload (restored afterwards) */
+function rvSnaps(data){ var K=['prog','con','e1','e2','qa','mp'], now={}, keep={pre:SU.pre,post:SU.post,led:SU.led}; K.forEach(function(k){ now[k]=cur[k]; });
+  var b=ulSnap(), a=b; try{ suMerge([{data:Object.assign({},data,{pc:[]})}]); a=ulSnap(); }catch(e){} K.forEach(function(k){ cur[k]=now[k]; }); SU.pre=keep.pre; SU.post=keep.post; SU.led=keep.led; return {b:b,a:a}; }
+var RV_TRK=[['e1','sq','Technical submittals',['tot','sub','app','rev','rvw','ns'],{tot:'Total',sub:'Submitted',app:'Approved',rev:'Revise & resubmit',rvw:'Under review',ns:'Not submitted'}],
+  ['e2','sq','Material procurement',['tot','loc','ooc','ppo','apo','pdl','adl'],{tot:'Total',loc:'Local',ooc:'Imported',ppo:'PO planned',apo:'PO issued',pdl:'Delivery planned',adl:'Delivered'}],
+  ['q','sq','Quality',['tot','cl','op'],{tot:'Total',cl:'Closed',op:'Open'}],
+  ['m','mp','Manpower & equipment',['pl','ac'],{pl:'Planned',ac:'Actual'}]];
+function rvBuild(s){
+  var d=s.data||{}, C=chkCfg(), M={prog:[],con:[],sq:[],mp:[],rows:[],checks:[],flat:[],cnt:{prog:0,con:0,sq:0,mp:0},nNew:0,nDb:0,nSame:0,nAtt:0,nErr:0,nWarn:0,codes:{}};
+  var add=function(tab,c){ M.flat.push(c); M.cnt[tab]++; if(M.codes[c.c]!=null) M.codes[c.c]++; else M.codes[c.c]=1; };
+  var fail=function(id,code,where,vals){ if(C.off[id]) return; var L=CHK_LIST.filter(function(x){ return x[0]===id; })[0]; if(!L) return; M.checks.push({id:id,sev:L[2],code:code,where:where,vals:vals}); if(L[2]==='Error') M.nErr++; else M.nWarn++; };
+  var rel={}; (s.mods||[]).forEach(function(m){ if(!m||m.kind!=='prog') return; var k=String(m.code).toLowerCase()+'|'+svN(m.pkg)+'|'+m.date; (rel[k]=rel[k]||{})[m.f]=m.b; });
+  var P=cur.prog||[], today=new Date().toISOString().slice(0,10), dated={}, up={};
+  (d.prog||[]).forEach(function(u){
+    var code=String(u.code), lc=code.toLowerCase(), du=toISO(u.date)||'', pk=svN(u.pkg), db=null, last=null, lastD='', latest='';
+    P.forEach(function(r){ if(String(r.code).toLowerCase()!==lc) return; var rd=toISO(r.date)||''; if(rd>latest) latest=rd; if(svN(r.pkg)!==pk) return; if(rd===du) db=r; else if(rd<du&&rd>lastD){ last=r; lastD=rd; } });
+    var R=rel[lc+'|'+pk+'|'+du], dbRaw=null;
+    if(db||R){ dbRaw=Object.assign({},db||u); if(R) Object.keys(R).forEach(function(f){ dbRaw[f]=R[f]; }); }
+    var raw=Object.assign({},dbRaw||{}); Object.keys(u).forEach(function(f){ var v=u[f]; if(v!=null&&v!=='') raw[f]=v; });
+    var U=rvVals(raw), D=dbRaw?rvVals(dbRaw):null, L=last?rvVals(last):null, ref=D||L, row={code:code,pkg:String(u.pkg||''),du:du,ld:lastD,db:!!D,isNew:!ref,cells:[],nch:0,natt:0};
+    if(!ref){ M.nNew++; add('prog',{c:code,pkg:row.pkg,sec:'progress',item:row.pkg,f:'Package added',from:'',to:rvFmt('p',U.ac)+' actual','k':'new',flag:''}); }
+    RVF.forEach(function(F){ var f=F[0], t=F[2], uv=U[f], rf=ref?ref[f]:null, ch=!!ref&&!rvSame(t,rf,uv);
+      if(RV_OPT[f]&&!ch) return; if((L?L[f]:null)==null&&(D?D[f]:null)==null&&uv==null) return;
+      var att='';
+      if(ch&&f==='gc'&&rf>0&&uv!=null&&Math.abs(uv-rf)/rf*100>C.attMoney) att='> '+C.attMoney+'%';
+      if(ch&&f==='ff'&&rf&&uv&&Math.abs(dayDiff(rf,uv))>C.attDays) att='> '+C.attDays+' days';
+      var dl=ch?rvDelta(t,rf,uv):['',''];
+      row.cells.push({f:f,lab:F[1],t:t,last:L?L[f]:null,dbv:D?D[f]:null,up:uv,ch:ch,att:att,dl:dl});
+      if(ch){ row.nch++; if(att){ row.natt++; M.nAtt++; } add('prog',{c:code,pkg:row.pkg,sec:t==='d'?'date':t==='m'?'value':'progress',item:row.pkg,f:F[1],from:rvFmt(t,rf),to:rvFmt(t,uv)+(dl[0]&&dl[0]!=='changed'?' ('+dl[0]+')':''),k:dl[1]==='up'?'up':dl[1]==='dn'?'dn':'chg',flag:att?(F[1]+' '+att):''}); } });
+    if(ref){ if(row.nch&&D) M.nDb++; if(!row.nch) M.nSame++; }
+    M.prog.push(row); M.rows.push({sh:'Packages - Plots',code:code,item:row.pkg,d:du,res:row.isNew?'new':row.nch?(row.nch+' change'+(row.nch>1?'s':'')+(row.db?' · replaces the database row':'')):'unchanged'});
+    up[lc]=up[lc]||(L&&U.ac!=null&&L.ac!=null&&U.ac>L.ac+0.0005);
+    /* checks */
+    var w=pname(code)+' · '+row.pkg;
+    if(L&&U.ac!=null&&L.ac!=null&&U.ac<L.ac-C.drop/100-1e-6) fail('p_ac_drop',code,w,rvFmt('p',L.ac)+' → '+rvFmt('p',U.ac)+' ('+rvDelta('p',L.ac,U.ac)[0]+')');
+    if(L&&U.pl!=null&&L.pl!=null&&U.pl<L.pl-C.drop/100-1e-6) fail('p_pl_drop',code,w,rvFmt('p',L.pl)+' → '+rvFmt('p',U.pl)+' ('+rvDelta('p',L.pl,U.pl)[0]+')');
+    [['ac','Actual'],['pl','Planned']].forEach(function(x){ var v=U[x[0]]; if(v!=null&&(v<-1e-6||v>1.0005)) fail('p_range',code,w,x[1]+' '+rvFmt('p',v)); });
+    if(L&&U.ac!=null&&L.ac!=null&&U.ac-L.ac>C.jump/100+1e-6) fail('p_jump',code,w,rvFmt('p',L.ac)+' → '+rvFmt('p',U.ac)+' ('+rvDelta('p',L.ac,U.ac)[0]+')');
+    if(U.ff&&du&&U.ff<du&&U.ac!=null&&U.ac<0.9995) fail('p_ff_past',code,w,'forecast finish '+d2(U.ff)+' · data date '+d2(du)+' · actual '+rvFmt('p',U.ac));
+    var cap=U.rv!=null?U.rv:(U.cv!=null?U.cv+(U.vo||0):null);
+    if(U.gc!=null&&cap!=null&&U.gc>cap+1) fail('m_gc_cv',code,w,rvMoney(U.gc)+' > '+rvMoney(cap));
+    if(U.gc!=null&&U.ev!=null&&U.gc>U.ev*(1+C.gcEv/100)+1) fail('m_gc_ev',code,w,rvMoney(U.gc)+' > '+rvMoney(U.ev)+(U.ac!=null?' (earned value = '+rvFmt('p',U.ac)+' × '+rvMoney(U.rv)+')':''));
+    if(L&&L.gc!=null&&L.gc>0&&U.gc!=null&&U.gc<L.gc-1) fail('m_gc_drop',code,w,rvMoney(L.gc)+' → '+rvMoney(U.gc));
+    if(L&&L.cv!=null&&U.cv!=null&&!rvSame('m',L.cv,U.cv)&&rvSame('m',L.vo||0,U.vo||0)) fail('m_cv_novo',code,w,rvMoney(L.cv)+' → '+rvMoney(U.cv)+' · VOs '+rvMoney(U.vo||0));
+    if(du&&!dated[lc+'|'+du]){ dated[lc+'|'+du]=1; if(du>today) fail('d_date',code,pname(code),'data date '+d2(du)+' is in the future'); else if(latest>du) fail('d_date',code,pname(code),'data date '+d2(du)+' is older than the latest report ('+d2(latest)+')'); }
+  });
+  /* concerns, submittals, quality, manpower: compared with the dashboard before the upload */
+  var S=rvSnaps(d), b=S.b, a=S.a, chK={};
+  ulDiff(b,a).filter(function(c){ return c.sec==='concern'; }).forEach(function(c){ add('con',Object.assign({},c,{flag:c.flag||''})); M.con.push(c); });
+  RV_TRK.forEach(function(T){ var key=T[0], A=a[key]||{}, B=b[key]||{};
+    Object.keys(A).forEach(function(k){ var n=A[k], o=B[k]; if(o&&T[3].every(function(f){ return n[f]===o[f]; })) return; chK[key+'|'+k]=1;
+      var item=n.k+(n.y?' · '+n.y:''), row={code:n.c,item:item,grp:T[2],isNew:!o,cells:[]};
+      if(!o){ M.nNew++; add(T[1],{c:n.c,pkg:n.k,sec:'tracker',item:item,f:T[2]+' added',from:'',to:T[3].map(function(f){ return T[4][f]+' '+n[f]; }).join(' · '),k:'new',flag:''}); }
+      T[3].forEach(function(f){ var ch=!!o&&n[f]!==o[f]; row.cells.push({lab:T[4][f],from:o?o[f]:null,to:n[f],ch:ch});
+        if(ch){ var dd=n[f]-o[f]; add(T[1],{c:n.c,pkg:n.k,sec:'tracker',item:item,f:T[2]+' · '+T[4][f],from:String(o[f]),to:String(n[f])+' ('+(dd>=0?'+':'−')+Math.abs(dd)+')',k:'chg',flag:''}); } });
+      (T[1]==='sq'?M.sq:M.mp).push(row);
+      var w=pname(n.c)+' · '+item;
+      if(key==='e1'&&(n.app+n.rev+n.rvw)>n.sub&&n.sub>=0&&(n.app+n.rev+n.rvw)>0) fail('s_sum',n.c,w,n.app+' + '+n.rev+' + '+n.rvw+' > '+n.sub+' submitted');
+      if(o){ var G={e1:['sub','app'],e2:['apo','adl'],q:['tot']}[key]||[]; G.forEach(function(f){ if(n[f]<o[f]) fail('s_grow',n.c,w,T[4][f]+' '+o[f]+' → '+n[f]); }); }
+      if(key==='q'&&n.cl>n.tot) fail('q_ncr',n.c,w,n.cl+' closed > '+n.tot+' total');
+    }); });
+  /* rows of the upload that changed nothing */
+  var kf={e1:function(r){ return r.trade?ulK(r.code,r.pkg,r.type,r.trade):ulK(r.code,r.pkg,r.type); },e2:function(r){ return ulK(r.code,r.pkg); },qa:function(r){ return ulK(r.code,r.pkg,r.type); },mp:function(r){ return mpType(r.type)==='Equipment'?ulK(r.code,r.pkg,'equipment'):ulK(r.code,r.pkg); }};
+  var shn={e1:'Technical Submittals',e2:'Material Procurement',qa:'Quality',mp:'Manpower'}, sk={e1:'e1',e2:'e2',qa:'q',mp:'m'};
+  ['e1','e2','qa','mp'].forEach(function(t){ (d[t]||[]).forEach(function(r){ var k=kf[t](r), hit=chK[sk[t]+'|'+k], o=(b[sk[t]]||{})[k]; if(!hit) M.nSame++;
+    M.rows.push({sh:shn[t],code:r.code,item:String(r.pkg||'')+(r.type?' · '+r.type:'')+(r.trade?' · '+r.trade:''),d:r.d,res:hit?(o?'changed':'new'):'unchanged'}); }); });
+  (d.con||[]).forEach(function(c){ M.rows.push({sh:'Areas of Concern',code:c.code,item:String(c.concern||'').slice(0,90),d:c.d,res:'listed'}); });
+  /* manpower 0 while progress went up */
+  (d.mp||[]).forEach(function(r){ if(mpType(r.type)!=='Manpower') return; if((r.ac||0)===0&&!(r._b&&/(^|,)ac(,|$)/.test(r._b))&&up[String(r.code).toLowerCase()]) fail('mp_zero',r.code,pname(r.code)+' · '+(r.pkg||''),'actual manpower 0 · actual progress went up'); });
+  M.n=M.flat.length; return M;
+}
+function rvModel(s){ var k=s.id+'|'+(s.ts||0)+'|'+((cur.prog||[]).length)+'|'+((cur.e1||[]).length)+'|'+((s.mods||[]).length)+'|'+JSON.stringify(chkCfg());
+  if(RV.cache[s.id]&&RV.cache[s.id].k===k) return RV.cache[s.id].m; var m; try{ m=rvBuild(s); }catch(e){ m=null; try{ console.error(e); }catch(x){} } RV.cache[s.id]={k:k,m:m}; return m; }
+function rvFlat(M){ return M?M.flat:[]; }
+/* ---- the card ---- */
+function rvChip(n,t,c){ return '<span class="rvc'+(c?' '+c:'')+'"><b>'+n+'</b>'+t+'</span>'; }
+function rvAutoExtra(s){ if(s.entry!=='auto') return ''; var x=(s.held?'<b style="color:var(--warn)">held for approval: '+esc(s.held)+'</b>':'')+(s.unchecked?(s.held?' · ':'')+'<b style="color:var(--bad)">not checked against the database ('+esc(s.unchecked)+')</b>':'');
+  return (x?'<div class="ulsub">'+x+'</div>':'')+suOlderHtml(s.older,s.nOlder)+suRemarks(s); }
+function rvProgTab(M){
+  if(!M.prog.length) return '<div class="ulnone">This upload has no rows on Packages - Plots.</div>';
+  var ch=M.prog.filter(function(r){ return r.isNew||r.nch; }), same=M.prog.filter(function(r){ return !r.isNew&&!r.nch; }), multi={}; M.prog.forEach(function(r){ multi[r.code]=1; }); var mp=Object.keys(multi).length>1;
+  var h='<div class="rvtw"><table class="rvt"><thead><tr><th>Item</th><th class="n c">Last report</th><th class="n">In the database</th><th class="n">This upload</th><th class="n">Change</th></tr></thead><tbody>';
+  ch.forEach(function(r){
+    h+='<tr class="rvpk"><td colspan="5"><b>'+esc(r.pkg)+'</b>'+(mp?' · '+esc(pname(r.code)):'')+' <span class="rvmut">· last report '+(r.ld?d2(r.ld):'none')+' · data date '+d2(r.du)+'</span>'+(r.isNew?' <span class="rvtg g">new package</span>':'')+(r.db&&r.nch?' <span class="rvtg r">replaces the database row</span>':'')+'</td></tr>';
+    r.cells.forEach(function(c){ h+='<tr><td>'+esc(c.lab)+(c.att?' <span class="rvtg w">'+esc(c.att)+'</span>':'')+'</td><td class="n c">'+rvFmt(c.t,c.last)+'</td><td class="n rvmut">'+(r.db?rvFmt(c.t,c.dbv):'—')+'</td><td class="n'+(c.ch||r.isNew?' ch':'')+'">'+rvFmt(c.t,c.up)+'</td><td class="n '+(c.dl[1]||'')+'">'+(r.isNew?'new':c.ch?esc(c.dl[0]):'<span class="rvmut">same</span>')+'</td></tr>'; }); });
+  if(same.length) h+='<tr><td colspan="5" class="rvmut">'+same.length+' package'+(same.length>1?'s':'')+' unchanged: '+esc(same.map(function(r){ return r.pkg; }).slice(0,12).join(', '))+(same.length>12?' …':'')+'</td></tr>';
+  return h+'</tbody></table></div><p class="rvnote">Yellow = changed by this upload. “In the database” is the row already saved for the same data date (approving replaces it); “—” means there is none yet. The change is measured against the database row when there is one, otherwise against the last report.</p>';
+}
+function rvListTab(L,empty){ if(!L.length) return '<div class="ulnone">'+empty+'</div>';
+  return '<div class="rvtw"><table class="rvt"><thead><tr><th>Item</th><th>What</th><th class="n c">Before</th><th class="n">This upload</th></tr></thead><tbody>'+L.map(function(c){ return '<tr><td>'+esc(c.item||'')+(c.flag?' <span class="rvtg w">'+esc(c.flag)+'</span>':'')+'</td><td>'+esc(c.f)+'</td><td class="n c">'+(c.k==='new'?'—':esc(c.from||'—'))+'</td><td class="n ch">'+(c.k==='del'?'<span class="rvmut">removed</span>':esc(c.to||''))+'</td></tr>'; }).join('')+'</tbody></table></div>'; }
+function rvTrkTab(L,empty){ if(!L.length) return '<div class="ulnone">'+empty+'</div>';
+  return '<div class="rvtw"><table class="rvt"><thead><tr><th>Item</th><th class="n c">Last report / database</th><th class="n">This upload</th><th class="n">Change</th></tr></thead><tbody>'+L.map(function(r){
+    return '<tr class="rvpk"><td colspan="4"><b>'+esc(r.item)+'</b> <span class="rvmut">· '+esc(r.grp)+(r.code?' · '+esc(pname(r.code)):'')+'</span>'+(r.isNew?' <span class="rvtg g">new</span>':'')+'</td></tr>'+r.cells.map(function(c){ var dd=c.from==null?null:c.to-c.from; return '<tr><td>'+esc(c.lab)+'</td><td class="n c">'+(c.from==null?'—':c.from)+'</td><td class="n'+(c.ch||r.isNew?' ch':'')+'">'+c.to+'</td><td class="n">'+(r.isNew?'new':c.ch?(dd>=0?'+':'−')+Math.abs(dd):'<span class="rvmut">same</span>')+'</td></tr>'; }).join(''); }).join('')+'</tbody></table></div>'; }
+function rvAllTab(M){ return '<div class="rvtw"><table class="rvt"><thead><tr><th>Sheet</th><th>Project</th><th>Package / item</th><th>Data date</th><th>Result</th></tr></thead><tbody>'+M.rows.map(function(r){ return '<tr><td>'+esc(r.sh)+'</td><td>'+esc(pname(r.code))+'</td><td>'+esc(r.item)+'</td><td>'+(r.d?d2(r.d):'')+'</td><td class="'+(r.res==='unchanged'||r.res==='listed'?'rvmut':'')+'">'+esc(r.res)+'</td></tr>'; }).join('')+'</tbody></table></div>'; }
+function rvChkTab(s,M){ var C=chkCfg(), F=M.checks.slice().sort(function(x,y){ return (x.sev==='Error'?0:1)-(y.sev==='Error'?0:1); }), byId={}; F.forEach(function(x){ byId[x.id]=1; });
+  var h='<div class="rvtw"><table class="rvt"><thead><tr><th style="width:84px">Result</th><th>Check</th><th>Where</th><th>Values</th></tr></thead><tbody>';
+  F.forEach(function(x){ var L=CHK_LIST.filter(function(y){ return y[0]===x.id; })[0]; h+='<tr><td><span class="rvsv '+(x.sev==='Error'?'e':'w')+'">'+x.sev+'</span></td><td><b>'+esc(chkTitle(L,C))+'</b></td><td>'+esc(x.where)+'</td><td class="rvnum">'+esc(x.vals)+'</td></tr>'; });
+  var ok=CHK_LIST.filter(function(L){ return !byId[L[0]]; });
+  h+='</tbody></table></div>';
+  if(!F.length) h='<div class="rvallok">✓ All '+CHK_LIST.filter(function(L){ return !C.off[L[0]]; }).length+' checks passed.</div>';
+  h+='<details class="rvpass"><summary>'+ok.length+' check'+(ok.length>1?'s':'')+' passed or switched off</summary>'+ok.map(function(L){ return '<div class="rvpr"><span class="rvsv '+(C.off[L[0]]?'n':'g')+'">'+(C.off[L[0]]?'Off':'Passed')+'</span> '+esc(chkTitle(L,C))+'</div>'; }).join('')+'</details>';
+  return h+'<div class="rvchkf"><span class="rvmut">Failed checks do not block approval. To approve with an error, tick “I checked the failed checks”.</span><button type="button" class="btn" data-rvchkset="1">Check settings</button></div>'; }
+function rvCard(s){
+  var M=rvModel(s), by=String(s.by||'').replace(/^Link:\s*/,'');
+  if(!M) return '<div class="card plain ulcard"><div class="ulh">'+ulHead(Object.assign({},s,{route:'site',by:by,n:null,status:'pending'}))+'</div><div class="ulnone">The changes of this update could not be prepared.</div>'+rvActions(s,null)+'</div>';
+  var tab=RV.tab[s.id]||'prog', D=suDiscrepancies(s.data||{}), nf=M.nErr+M.nWarn;
+  var T=[['prog','Progress & money',M.cnt.prog],['con','Concerns',M.cnt.con],['sq','Submittals & quality',M.cnt.sq],['mp','Manpower',M.cnt.mp],['all','All rows',M.rows.length],['chk',(nf?'⚠ ':'✓ ')+'Checks',nf]];
+  var body=tab==='con'?rvListTab(M.con,'No concern changed.'):tab==='sq'?rvTrkTab(M.sq,'No submittal, procurement or quality row changed.'):tab==='mp'?rvTrkTab(M.mp,'No manpower or equipment row changed.'):tab==='all'?rvAllTab(M):tab==='chk'?rvChkTab(s,M):rvProgTab(M);
+  var pk=RV.pk[s.id]||{};
+  return '<div class="card plain ulcard rvcard"><div class="ulh">'+ulHead(Object.assign({},s,{route:'site',by:by,n:M.n,flags:M.nAtt,status:'pending'}))+'</div>'+
+    suHiddenHtml(s)+rvAutoExtra(s)+
+    '<div class="rvsum">'+rvChip(M.n,M.n===1?'change':'changes')+rvChip(M.nNew,M.nNew===1?'new row':'new rows')+rvChip(M.nDb,M.nDb===1?'row changes the database':'rows change the database')+rvChip(M.nSame,'unchanged')+(M.nAtt?rvChip(M.nAtt,M.nAtt===1?'needs attention':'need attention','w'):'')+(nf?rvChip(nf,nf===1?'failed check':'failed checks',M.nErr?'e':'w'):rvChip('✓','all checks passed','g'))+'</div>'+
+    '<div class="rvprj">Projects to approve: '+(s.projects||[]).map(function(c){ return '<label><input type="checkbox" class="ulpk" data-sid="'+s.id+'" value="'+esc(c)+'"'+(pk[c]===false?'':' checked')+'> '+esc(pname(c))+' <span class="rvmut">('+(M.codes[c]||0)+')</span></label>'; }).join('')+'</div>'+
+    '<div class="rvtabs">'+T.map(function(t){ return '<button type="button" class="rvtb'+(t[0]==='chk'?(nf?(M.nErr?' bad':' wrn'):' okc'):'')+(tab===t[0]?' on':'')+'" data-rvtab="'+esc(s.id)+'|'+t[0]+'">'+t[1]+' ('+t[2]+')</button>'; }).join('')+'</div>'+body+
+    (D.length?'<div class="ulsub bad"><b>'+D.length+' value'+(D.length===1?'':'s')+' differ from the contracts file</b> — see Site submissions for the detail.</div>':'')+rvActions(s,M)+'</div>';
+}
+function rvActions(s,M){ return '<div class="ulact">'+(M&&M.nErr?'<label class="rvok"><input type="checkbox" id="rvok-'+esc(s.id)+'"'+(RV.ok[s.id]?' checked':'')+'> I checked the failed checks</label>':'')+'<button type="button" class="btn pri" data-ulapp="'+s.id+'">Approve selected projects</button><input type="text" id="ulr-'+s.id+'" class="ulrs" placeholder="Reason sent back to the site team (required to reject)"><button type="button" class="btn" data-ulrej="'+s.id+'">Reject</button></div>'; }
+/* ---- check settings (shared on the relay; phone and web) ---- */
+function rvChkSettings(){ var C=chkCfg();
+  var num1=function(k,lab,unit){ return '<label class="rvset">'+lab+' <input type="number" min="0" step="1" id="rvc-'+k+'" value="'+C[k]+'"> '+unit+'</label>'; };
+  var groups={}; CHK_LIST.forEach(function(L){ (groups[L[3]]=groups[L[3]]||[]).push(L); });
+  var body='<p class="rvmut" style="margin-top:0">These settings are shared by every administrator, on the phone and on the web.</p>'+
+    '<h4 class="rvh4">Limits</h4>'+num1('drop','Progress may go down by up to','points without an error (0 = any drop)')+num1('jump','Weekly jump warning above','points')+num1('gcEv','Gross certified may exceed earned value by up to','%')+num1('attMoney','“Needs attention”: gross certified changes by more than','%')+num1('attDays','“Needs attention”: forecast finish moves by more than','days')+
+    '<h4 class="rvh4">Checks</h4>'+Object.keys(groups).map(function(g){ return '<div class="rvmut" style="margin:8px 0 2px;font-weight:700">'+esc(g)+'</div>'+groups[g].map(function(L){ return '<label class="rvset"><input type="checkbox" data-rvcon="'+L[0]+'"'+(C.off[L[0]]?'':' checked')+'> '+esc(chkTitle(L,C))+' <span class="rvsv '+(L[2]==='Error'?'e':'w')+'">'+L[2]+'</span></label>'; }).join(''); }).join('');
+  suModal('rvChk','Check settings',body,'<button type="button" class="btn pri" data-rvchksave="1">Save</button>'); }
+function rvChkSave(){ var g=function(k,d){ var e=document.getElementById('rvc-'+k), v=e?Number(e.value):d; return isFinite(v)&&v>=0?v:d; }, off={};
+  Array.prototype.slice.call(document.querySelectorAll('[data-rvcon]')).forEach(function(x){ if(!x.checked) off[x.getAttribute('data-rvcon')]=1; });
+  var chk={off:off,drop:g('drop',0),jump:g('jump',10),gcEv:g('gcEv',10),attMoney:g('attMoney',25),attDays:g('attDays',30)};
+  var done=function(){ var m=document.getElementById('rvChk'); if(m) m.remove(); RV.cache={}; render(); };
+  if(!ACC.need){ try{ localStorage.setItem('kec.chk.v1',JSON.stringify(chk)); }catch(e){} toast('Check settings saved in this browser'); done(); return; }
+  accCall('POST','/ulog',{action:'checks',chk:chk},30000).then(function(j){ if(j&&j.cfg){ WT.st=WT.st||{}; WT.st.cfg=j.cfg; } toast('Check settings saved for every administrator'); done(); })
+    .catch(function(e){ toast((e&&e.status===400&&/Unknown action/i.test(e.message||''))||(e&&e.status===404)?'The relay cannot keep check settings yet: deploy relay V64.':((e&&e.message)||'Could not save'),true); }); }
+document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return; var b;
+  if((b=t.closest('[data-rvtab]'))){ var p=b.getAttribute('data-rvtab').split('|'); RV.tab[p[0]]=p[1]; render(); return; }
+  if(t.closest('[data-rvchkset]')){ rvChkSettings(); return; }
+  if(t.closest('[data-rvchksave]')){ rvChkSave(); return; } });
+document.addEventListener('change',function(e){ var t=e.target; if(!t) return;
+  if(t.classList&&t.classList.contains('ulpk')){ var sid=t.getAttribute('data-sid'); (RV.pk[sid]=RV.pk[sid]||{})[t.value]=t.checked; }
+  if(t.id&&t.id.indexOf('rvok-')===0) RV.ok[t.id.slice(5)]=t.checked; });
+
 function ulReview(){
   if(!ulAdmin()) return '';
   var subs=((SU.admin&&SU.admin.subs)||[]).filter(function(s){ return s.status==='pending'; });
   if(!ulRelay()) return '<div class="ulsub">Without sign-in there is no approval step: uploads are applied directly in this browser.</div>';
   if(!subs.length) return '<div class="ulnone">Nothing is waiting for review.</div>';
-  return subs.slice().reverse().map(function(s){
-    var ch=s.diff?s.diff.changes:null, D=suDiscrepancies(s.data||{}), fl=ch?ch.filter(function(c){ return c.flag; }).length:0;
-    var byP={}; (ch||[]).forEach(function(c){ (byP[c.c]=byP[c.c]||[]).push(c); });
-    var pj=(s.projects||[]).map(function(c){ var L=byP[c]||[], f=L.filter(function(x){ return x.flag; }).length;
-      return '<div class="ulpj"><h4><label><input type="checkbox" class="ulpk" data-sid="'+s.id+'" value="'+esc(c)+'" checked> '+esc(pname(c))+'</label> <span class="ulp n">'+L.length+' changes</span>'+(f?' <span class="ulp r">'+f+' flagged</span>':'')+'</h4>'+L.slice(0,6).map(function(x){ var t=UL_TAG[x.sec]||['n',x.sec]; return '<div class="ulr"><b>'+esc(x.item||'')+' · '+esc(x.f)+'</b><span>'+(x.from!==''&&x.k!=='new'?'<span class="ulold">'+esc(x.from)+'</span> → ':'')+'<span class="'+({up:'up',dn:'dn'}[x.k]||'')+'">'+esc(x.to||x.item||'')+'</span>'+(x.flag?' <em class="ulfl">'+esc(x.flag)+'</em>':'')+'</span><span class="ulp '+t[0]+'">'+t[1]+'</span></div>'; }).join('')+(L.length>6?'<details><summary>Show all '+L.length+'</summary>'+L.slice(6).map(function(x){ return '<div class="ulr"><b>'+esc(x.item||'')+' · '+esc(x.f)+'</b><span>'+(x.from!==''&&x.k!=='new'?'<span class="ulold">'+esc(x.from)+'</span> → ':'')+esc(x.to||'')+(x.flag?' <em class="ulfl">'+esc(x.flag)+'</em>':'')+'</span><span></span></div>'; }).join('')+'</details>':'')+'</div>'; }).join('');
-    return '<div class="card plain ulcard"><div class="ulh">'+ulHead(Object.assign({},s,{route:'site',by:String(s.by||'').replace(/^Link:\s*/,''),n:ch?ch.length:null,flags:fl,status:'pending'}))+'</div>'+
-      suHiddenHtml(s)+suAutoLine(s)+(ch?'':'<div class="ulnone">Preparing the list of changes…</div>')+pj+
-      (D.length?'<div class="ulsub bad"><b>'+D.length+' value'+(D.length===1?'':'s')+' differ from the contracts file</b> — see Site submissions for the detail.</div>':'')+
-      '<div class="ulact"><button type="button" class="btn pri" data-ulapp="'+s.id+'">Approve selected projects</button><input type="text" id="ulr-'+s.id+'" class="ulrs" placeholder="Reason sent back to the site team (required to reject)"><button type="button" class="btn" data-ulrej="'+s.id+'">Reject</button></div></div>'; }).join('');
+  if(!WT.loaded&&!WT.busy&&ACC.need) wtLoad();
+  return subs.slice().reverse().map(rvCard).join('');
 }
 function ulPage(){
   if(!UL.loaded) ulLoad();
@@ -3307,7 +3501,7 @@ function wtPad(n){ return ('0'+n).slice(-2); }
 function wtIso(d){ return d.getFullYear()+'-'+wtPad(d.getMonth()+1)+'-'+wtPad(d.getDate()); }
 function wtLoad(){ if(WT.busy) return; WT.busy=true;
   accCall('GET','/ulog',null,60000).then(function(j){ WT.st=j; WT.err=''; }).catch(function(e){ var m=(e&&e.message)||'could not load'; WT.err=/missing \?url|get only|not on the relay allow-list|not found/i.test(m)?'The relay does not have the weekly tracker yet: deploy relay V60.':m; })
-    .then(function(){ WT.busy=false; WT.loaded=true; if(state.page==='updates'&&(UL.tab==='week'||UL.tab==='hist')) render(); });
+    .then(function(){ WT.busy=false; WT.loaded=true; if(state.page==='updates'&&(UL.tab==='week'||UL.tab==='hist'||UL.tab==='review')){ RV.cache={}; render(); } });
   if(!SU.admin&&typeof suAdminLoad==='function'){ try{ suAdminLoad(); }catch(e){} } }
 function wtPost(b,ok){ return accCall('POST','/ulog',b,30000).then(function(j){ if(j&&j.cfg&&WT.st) WT.st.cfg=j.cfg; if(ok) WT.msg={t:ok}; }).catch(function(e){ WT.msg={er:true,t:(e&&e.message)||'Could not save'}; }).then(function(){ if(state.page==='updates') render(); }); }
 function wtCfg(){ return (WT.st&&WT.st.cfg)||{dataDow:4,dueDow:0,dueTime:'09:00',weeks:{},skip:{},rem:{}}; }
@@ -3458,6 +3652,7 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
   else if(t.hasAttribute('data-ulrefresh')){ UL.loaded=false; ulLoad(true); }
   else if(t.hasAttribute('data-ulapp')){ var id=t.getAttribute('data-ulapp'), all=Array.prototype.slice.call(document.querySelectorAll('.ulpk[data-sid="'+id+'"]')), on=all.filter(function(x){ return x.checked; }).map(function(x){ return x.value; });
     if(!on.length){ toast('Tick at least one project to approve',true); return; }
+    var rvk=document.getElementById('rvok-'+id); if(rvk&&!rvk.checked){ RV.tab[id]='chk'; render(); toast('Some checks failed: look at the Checks tab and tick “I checked the failed checks”, or reject the update',true,7000); return; }
     if(!suHiddenOk(suSubById(id))) return;
     t.disabled=true; var t0=t.textContent; t.textContent='Approving… (writing to the database can take up to '+Math.round(SU_TO.review/60000)+' min)'; accCall('POST','/site-review',{id:id,action:'approve',only:on.length===all.length?undefined:on},SU_TO.review).then(function(j){ suWriteToast(j,'Approved'+(on.length<all.length?' · '+on.length+' of '+all.length+' projects':'')); return ulAfterReview(); }).catch(function(er){ t.disabled=false; t.textContent=t0; if(suReviewErr(er,ulAfterReview)) return; toast((er&&er.message)||'Could not approve',true); }); }
   else if(t.hasAttribute('data-ulrej')){ var id2=t.getAttribute('data-ulrej'), rs=(document.getElementById('ulr-'+id2)||{}).value||''; if(!rs.trim()){ toast('Write the reason that goes back to the site team',true); return; }
