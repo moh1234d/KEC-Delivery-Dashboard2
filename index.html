@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V421</title>
+<title>TEST · KEC Project Controls Dashboard · V423</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1213,6 +1213,20 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 .pch{display:flex;align-items:center;gap:8px;margin:0 0 10px;flex-wrap:wrap}.pch .sp{flex:1}.pct{font-size:17px;font-weight:700}
 .pcchip{font:600 12px inherit;font-family:inherit;border:1px solid var(--bar-g);background:var(--card);color:var(--ink);border-radius:20px;padding:5px 12px;cursor:pointer}.pcchip b{margin-left:3px}.pcchip.on{background:#0b2a5e;color:#fff;border-color:#0b2a5e}
 .mplb{float:right;font-size:12px;font-weight:500;color:var(--mut);cursor:pointer}
+/* V423: completed projects */
+.uc.cpdone{position:relative;background-image:repeating-linear-gradient(135deg,rgba(26,127,75,.04) 0 10px,transparent 10px 20px)}
+.uc.cpdone>*:not(.cpbadge):not(.cpfz){filter:saturate(.3);opacity:.85}
+.cpbadge{position:absolute;top:-11px;left:12px;background:#1a7f4b;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;letter-spacing:.04em;z-index:3}
+.cpfz{font-size:11.5px;font-weight:600;color:#1a7f4b;margin-top:6px;text-align:center}
+.cpsug{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fff8e6;border:1px solid #f0d48a;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:13px;color:#5a4300}
+.cpsug b{color:#3b2a00}.cpst{font-size:18px}.cpsug>div{flex:1;min-width:220px}.cpbt{display:flex;gap:8px;flex-wrap:wrap}
+.cpsug button,.cpban button{font:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.cpsug button.pri{background:#1a7f4b;border-color:#1a7f4b;color:#fff}
+.cpd{font:inherit;font-size:12px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+.cpban{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:rgba(26,127,75,.09);border:1px solid rgba(26,127,75,.35);border-radius:12px;padding:12px 16px;margin:0 0 14px;font-size:13px}
+.cpban .ck{width:34px;height:34px;border-radius:50%;background:#1a7f4b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex:0 0 auto}
+.cpban>div{flex:1;min-width:220px}.cpban b{font-size:14px}.cpban .r{flex:0 1 auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cpchg{font-size:12px;color:var(--mut);display:flex;gap:6px;align-items:center}
+@media print{.cpsug,.cpban .r{display:none!important}}
+.mpt .mpsub{float:right;font-size:12px;font-weight:500;color:var(--mut)}@media (max-width:640px){.mpt .mpsub{float:none;display:block;margin-top:2px}}
 .spit{margin-top:14px}.spit .mpk{margin:8px 0 12px}.spit .spibox{height:280px}.spit.off h3{margin-bottom:0}.spit h3 small{margin-right:8px}
 @media (max-width:640px){.spit .spibox{height:240px}.spit h3 .mplb{float:none;display:block;margin-top:6px}}.mplb input{vertical-align:middle;margin-right:4px}
 .trasat{font-size:11px;color:var(--mut);margin:2px 0 4px}.trdq{font-size:12px;background:#fbeccd;color:#8a5a00;border-radius:8px;padding:6px 10px;margin:4px 0}[data-theme=dark] .trdq{background:#3a2e12;color:#f0c76a}
@@ -1493,7 +1507,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V421</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V423</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1674,7 +1688,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V421';
+var APP_VER='V423';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -2259,7 +2273,8 @@ function ucard(title,a,cls,code,photo){
   var gap=(a.act-a.plan)*100, started=a.pv>0||a.ev>0, dl=dayDiff(a.pf,a.ff);
   var gapR=(Math.round(a.act*1000)-Math.round(a.plan*1000))/10, gtxt=gapR===0?'0.0':sgn(gapR,1,' %'), gc=Math.abs(gap)<0.005?'':gap<0?'bad':'good';
   var st=pkgStatus(a.act,a.pv,a.ev,a.spi,a.overrun);
-  var h='<div class="uc '+(cls||'')+' st-'+st+'"'+(code?' data-project="'+esc(code)+'" style="cursor:pointer" title="Click to filter to this project"':'')+'>'+(code&&photo?'<div class="uc-hd"><div class="uc-t"><h4>'+esc(title)+'</h4>'+(PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':'')+'</div>'+photoTile(code,title)+'</div>':'<h4>'+esc(title)+'</h4>'+(code&&PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':''))+
+  var pdn=code&&cls!=='sep'&&cls!=='pk'?pdOf(code):null;
+  var h='<div class="uc '+(cls||'')+' st-'+st+(pdn?' cpdone':'')+'"'+(code?' data-project="'+esc(code)+'" style="cursor:pointer" title="Click to filter to this project"':'')+'>'+(code&&photo?'<div class="uc-hd"><div class="uc-t"><h4>'+esc(title)+'</h4>'+(PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':'')+'</div>'+photoTile(code,title)+'</div>':'<h4>'+esc(title)+'</h4>'+(code&&PKGONLY[code]?'<div class="pkonly">'+esc(PKGONLY[code])+'</div>':''))+
     '<div class="ur"><span>Planned</span>'+bar(a.plan,null,'g')+'<span class="v">'+pct(a.plan)+'</span></div>'+
     '<div class="ur"><span>Actual</span>'+bar(a.act,null,'')+'<span class="v">'+pct(a.act)+'</span></div>'+
     '<div class="uv"><span>Variance</span><b class="'+gc+'">'+gtxt+'</b></div>';
@@ -2267,7 +2282,8 @@ function ucard(title,a,cls,code,photo){
   else if(!started) h+='<div class="usl"><span class="dt" style="font-weight:600;color:var(--mut)">Not started yet'+(a.start?' · planned start '+fd(a.start):'')+'</span></div>';
   else if(dl===0) h+='<div class="usl"><span>On plan</span><span class="tgt"></span><span class="dt">'+fd(a.pf)+'</span><span>Planned = Forecast</span></div>';
   else h+='<div class="usl"><span class="dd '+(dl>0?(dl>T.delayAmber?'bad':'warn'):'good')+'">'+(dl>0?'−'+dl+' days':'+'+(-dl)+' days early')+'</span><div class="sl"><i class="o"></i><div></div><i class="f"></i></div><div class="sd"><div><b>'+fd(a.pf)+'</b>'+(a.cf&&a.cf!==a.pf?(cls==='pk'?'Revised planned finish':'Revised planned'):(cls==='pk'?'Planned finish':'Planned'))+'</div><div><b>'+fd(a.ff)+'</b>'+(cls==='pk'?'Forecast finish':'Forecast')+'</div></div></div>';
-  return h+((code&&mixedDates())?'<div class="ucdd">Data date '+d2(projCut(code,state.cutoff))+'</div>':'')+'</div>';
+  if(pdn) h+='<span class="cpbadge">✓ COMPLETED PROJECT</span><div class="cpfz">Figures frozen as of '+d2(pdn.d)+'</div>';
+  return h+((code&&mixedDates()&&!pdn)?'<div class="ucdd">Data date '+d2(projCut(code,state.cutoff))+'</div>':'')+'</div>';
 }
 function sepList(pj){
   var cards=[]; pj.forEach(function(g){ var sp=g.rows.filter(isSep); if(sp.length&&sp.length<g.rows.length) sp.forEach(function(r){ cards.push(ucard(pname(g.name)+' · '+dp(r.pkg)+' (separate)',agg([r]),'sep',g.name)); }); });
@@ -2897,8 +2913,11 @@ var SITE_SPEC={
   e1:{type:/submittal\s*type|^type/,trade:/^trade/,tot:/^total/,plan:/planned/,sub:/actual\s*submitted|^submitted/,app:/^approved/,rev:/revise|resubmit/,rvw:/under\s*review/,ns:/not\s*submitted/},
   e2:{type:/submittal\s*type|^type/,tot:/^total/,loc:/^local/,ooc:/out\s*of\s*country/,ppo:/planned\s*po/,apo:/actual\s*po/,pdl:/planned\s*deliver/,adl:/actual\s*deliver/},
   qa:{type:/submittal\s*type|^type/,tot:/^total/,cl:/^closed/,op:/^open/},
-  mp:{ctr:/contractor/,pl:/^planned/,ac:/^actual/}
+  mp:{type:/^type$/,ctr:/contractor/,pl:/^planned/,ac:/^actual/}
 };
+/* V422: Manpower & Equipment — a manpower row has a Type: Equipment (machines and plant) or Manpower (people; also when the Type is empty, as in older files) */
+function mpType(v){ var s=String(v==null?'':v).trim(); return /equip|machin|plant/i.test(s)?'Equipment':'Manpower'; }
+function mpTypeOk(v){ var s=String(v==null?'':v).trim(); return !s||/^(man\s*power|equipment|equipments|machinery|machines?|plant)$/i.test(s); }
 function normSite(objs,kind){
   var spec=SITE_SPEC[kind], out=[];
   (objs||[]).forEach(function(o){
@@ -2911,12 +2930,13 @@ function normSite(objs,kind){
     var r={d:d,code:String(code).trim(),pkg:str(o[m.pkg])};
     var bl=[]; Object.keys(spec).forEach(function(f){ if(f==='type'||f==='ctr') r[f]=str(o[m[f]]); else if(f==='trade') r[f]=(kind==='e1'&&/shop|material/i.test(str(o[m.type])))?trName(o[m[f]]):''; else { var rv0=m[f]===undefined?null:o[m[f]]; if(rv0==null||rv0==='') bl.push(f); r[f]=num(rv0)||0; } });
     if(bl.length) r._b=bl.join(','); /* V414: cells left blank (sent as 0): for a row that already exists they keep the database value */
+    if(kind==='mp'){ if(!r.type) r._tn=1; else if(!mpTypeOk(r.type)) r._tx=r.type; r.type=mpType(r.type); }
     out.push(r);
   });
   return out;
 }
 /* a tracker row is identified by data date + project + package (+ submittal type for the submittal and quality trackers); only those rows are replaced, the others of that project and date stay */
-function svSameRow(kind,o,a){ var typed=(kind==='e1'||kind==='qa'), lc=function(x){ return String(x==null?'':x).trim().toLowerCase(); }; return o.d===a.d&&lc(o.code)===lc(a.code)&&svN(o.pkg)===svN(a.pkg)&&(!typed||lc(o.type)===lc(a.type))&&(kind!=='e1'||svN(o.trade)===svN(a.trade)); } /* same package only: a similar name ("Finishes" / "External Finishes") is another package */
+function svSameRow(kind,o,a){ var typed=(kind==='e1'||kind==='qa'), lc=function(x){ return String(x==null?'':x).trim().toLowerCase(); }; return o.d===a.d&&lc(o.code)===lc(a.code)&&svN(o.pkg)===svN(a.pkg)&&(!typed||lc(o.type)===lc(a.type))&&(kind!=='mp'||mpType(o.type)===mpType(a.type))&&(kind!=='e1'||svN(o.trade)===svN(a.trade)); } /* same package only: a similar name ("Finishes" / "External Finishes") is another package */
 function svMergeRows(kind,old,add){
   if(!add||!add.length) return old||[];
   var keep=(old||[]).filter(function(o){ return !add.some(function(a){ return svSameRow(kind,o,a); }); });
@@ -2947,7 +2967,7 @@ function svScope(rows,cut){
     ok:function(pkg){ if(!filt||this.single) return true; return names.some(function(n){ return svPkgMatch(n,pkg); }); }};
 }
 function svLatest(arr,sc,cut,tk){
-  var m={}, xs=accRows(arr||[],'code').filter(function(x){ return String(x.code).toLowerCase()===sc.lc&&x.d<=cut&&sc.ok(x.pkg); });
+  var m={}, cz=pdCut(sc.code,cut), xs=accRows(arr||[],'code').filter(function(x){ return String(x.code).toLowerCase()===sc.lc&&x.d<=cz&&sc.ok(x.pkg); });
   if(tk==='e1'){ /* V368: a row without trade that has exactly the same figures as a traded row of the same date, package and type is the same row without its trade name (e.g. the Sheet has no Trade column): drop it, so it is not counted twice or shown as Unassigned */
     var tup=function(x){ return [x.d,svN(x.pkg),svN(x.type),x.tot,x.plan,x.sub,x.app,x.rev,x.rvw,x.ns].join('|'); }, tr={};
     xs.forEach(function(x){ if(x.trade) tr[tup(x)]=1; });
@@ -3038,7 +3058,7 @@ function svChalLoad(){
    .catch(function(e){ SV.busy=false; SV.local=true; SV.err=(e&&e.status===404)?'The relay (Cloudflare worker) does not store challenge edits yet. Deploy relay V22. Edits are kept in this browser only.':'Could not reach the relay. Edits are kept in this browser only.'; svLocalLoad(); if(state.page==='site') render(); });
 }
 function svChalList(sc,cut){
-  var base=accRows(cur.con||[],'code').filter(function(c){ return pcodeOf(c.code)===sc.code&&c.d<=cut; });
+  var base=accRows(cur.con||[],'code').filter(function(c){ return pcodeOf(c.code)===sc.code&&c.d<=pdCut(sc.code,cut); });
   var mx=base.reduce(function(m,c){ return c.d>m?c.d:m; },'');
   var items=base.filter(function(c){ return c.d===mx; }).map(function(c){
     return {id:c.id||('k:'+sc.code+'|'+c.pkg+'|'+c.concern),code:sc.code,pkg:c.pkg||'',concern:c.concern,impact:c.impact||'Medium',action:c.action||'',owner:c.owner||'',target:c.target||'',status:c.status||'Open',raised:c.raised||c.d,closed:c.closed||'',changed:c.changed||'',ts:0,from:'file'}; });
@@ -3078,7 +3098,7 @@ function ulSnap(){
   tr(cur.e1,function(r){ return r.trade?ulK(r.code,r.pkg,r.type,r.trade):ulK(r.code,r.pkg,r.type); },['tot','sub','app','rev','rvw','ns'],S.e1);
   tr(cur.e2,function(r){ return ulK(r.code,r.pkg); },['tot','loc','ooc','ppo','apo','pdl','adl'],S.e2);
   tr(cur.qa,function(r){ return ulK(r.code,r.pkg,r.type); },['tot','cl','op'],S.q);
-  tr(cur.mp,function(r){ return ulK(r.code,r.pkg); },['pl','ac'],S.m);
+  tr(cur.mp,function(r){ return mpType(r.type)==='Equipment'?ulK(r.code,r.pkg,'equipment'):ulK(r.code,r.pkg); },['pl','ac'],S.m);
   return S;
 }
 function ulDiff(a,b){
@@ -3105,7 +3125,7 @@ function ulDiff(a,b){
   trk('e1','Technical submittals',['tot','sub','app','rev','rvw','ns'],{tot:'total',sub:'submitted',app:'approved',rev:'revise',rvw:'review',ns:'not submitted'});
   trk('e2','Material procurement',['tot','loc','ooc','ppo','apo','pdl','adl'],{tot:'total',loc:'local',ooc:'import',ppo:'PO planned',apo:'PO issued',pdl:'delivery planned',adl:'delivered'});
   trk('q','Quality',['tot','cl','op'],{tot:'total',cl:'closed',op:'open'});
-  trk('m','Manpower',['pl','ac'],{pl:'planned',ac:'actual'});
+  trk('m','Manpower / equipment',['pl','ac'],{pl:'planned',ac:'actual'});
   return out;
 }
 function ulPack(ch){ return {n:ch.length,flags:ch.filter(function(c){ return c.flag; }).length,changes:ch.slice(0,600)}; }
@@ -3294,7 +3314,7 @@ function wtCfg(){ return (WT.st&&WT.st.cfg)||{dataDow:4,dueDow:0,dueTime:'09:00'
 function wtKeys(n){ var c=wtCfg(), t=new Date(); t.setHours(0,0,0,0); var d=new Date(t); d.setDate(d.getDate()-((t.getDay()-c.dataDow+7)%7)); var out=[]; for(var i=0;i<n;i++){ out.unshift(wtIso(d)); d.setDate(d.getDate()-7); } return out; }
 function wtWeek(key){ var c=wtCfg(), w=c.weeks[key]||{}, d=new Date(key+'T00:00:00'), add=(c.dueDow-c.dataDow+7)%7; d.setDate(d.getDate()+add); var def=wtIso(d)+'T'+c.dueTime, due=w.due||def;
   return {key:key,dd:w.dd||key,due:due,dueMs:new Date(due).getTime(),defDue:def,exc:w.exc||{},rem:(c.rem&&c.rem[key])||{},custom:!!(w.dd||w.due)}; }
-function wtCodes(){ var rows=(model&&model.rows)||[], seen={}, out=[], sk=wtCfg().skip||{}; rows.forEach(function(r){ if(r&&r.code&&!seen[r.code]&&HIDE_PROJ.indexOf(r.code)<0){ seen[r.code]=1; out.push(r.code); } }); out.sort(function(a,b){ return String(prog(a)+a).localeCompare(String(prog(b)+b)); }); return {all:out,req:out.filter(function(c){ return !sk[c]; })}; }
+function wtCodes(){ var rows=(model&&model.rows)||[], seen={}, out=[], sk=Object.assign({},wtCfg().skip||{}); Object.keys(PD.map||{}).forEach(function(c){ sk[c]=1; }); rows.forEach(function(r){ if(r&&r.code&&!seen[r.code]&&HIDE_PROJ.indexOf(r.code)<0){ seen[r.code]=1; out.push(r.code); } }); out.sort(function(a,b){ return String(prog(a)+a).localeCompare(String(prog(b)+b)); }); return {all:out,req:out.filter(function(c){ return !sk[c]; })}; }
 function wtFmt(ms,withDay){ if(!ms&&ms!==0) return ''; var d=new Date(ms); if(isNaN(d)) return ''; return (withDay?WT_DOW[d.getDay()].slice(0,3)+' ':'')+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+wtPad(d.getHours())+':'+wtPad(d.getMinutes()); }
 function wtDay(iso){ var d=new Date(iso+'T00:00:00'); return WT_DOW[d.getDay()]+' '+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getFullYear(); }
 function wtLeft(ms){ var s=Math.round(Math.abs(ms)/60000), d=Math.floor(s/1440), hh=Math.floor((s%1440)/60), mm=s%60; return d?d+' d '+hh+' h':hh?hh+' h '+mm+' min':mm+' min'; }
@@ -3828,7 +3848,8 @@ function dbKey(kind,g){ /* g(field) returns the value of a field */
   if(kind==='prog') return (toISO(g('date'))||'')+'|'+c+'|'+str(g('pkg')).toLowerCase();
   if(kind==='e1') return (toISO(g('d'))||'')+'|'+c+'|'+svN(g('pkg'))+'|'+svN(g('type'))+'|'+svN(g('trade'));
   if(kind==='qa') return (toISO(g('d'))||'')+'|'+c+'|'+svN(g('pkg'))+'|'+svN(g('type'));
-  if(kind==='e2'||kind==='mp') return (toISO(g('d'))||'')+'|'+c+'|'+svN(g('pkg'));
+  if(kind==='mp') return (toISO(g('d'))||'')+'|'+c+'|'+svN(g('pkg'))+'|'+mpType(g('type')).toLowerCase(); /* V422 */
+  if(kind==='e2') return (toISO(g('d'))||'')+'|'+c+'|'+svN(g('pkg'));
   if(kind==='con'){ var id=g('id'); var b=(toISO(g('d'))||'')+'|'+c+'|'; return id?b+'#'+String(id).toLowerCase():b+String(g('pkg')||'').toLowerCase()+'|'+String(g('concern')||'').toLowerCase(); }
   return (toISO(g('d'))||'')+'|'+c;
 }
@@ -4135,9 +4156,34 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
   if(t.hasAttribute('data-pkadd')) pkModal(); else if(t.hasAttribute('data-pkcancel')){ var m=document.getElementById('pkModal'); if(m) m.remove(); } else pkSave(); });
 /* V288: every project has its own reporting cut-off (its latest report on or before the selected date); the administrator can override it */
 var PCUT={}, PCRV=0, PCM={m:null};
+/* V423: completed projects. A package is completed at 100% actual progress (as before). A project is completed only when an administrator marks it;
+   its figures are then frozen at a date (default: the actual finish of its last package) on every page and at every later cut-off. Kept on the relay (/pdone). */
+var PD={map:{},no:{},loaded:false};
+function pdOf(code){ if(!code) return null; var m=PD.map||{}, lc=String(code).toLowerCase(); for(var k in m) if(k.toLowerCase()===lc) return m[k]; return null; }
+function pdCut(code,cut){ var f=pdOf(code); return f&&f.d<cut?f.d:cut; }
+function pcutLim(code){ var o=PCUT[code], f=pdOf(code); return f&&(!o||f.d<o)?f.d:o; }
+function pdApply(j){ if(!j) return; var a=JSON.stringify([PD.map,PD.no]), b=JSON.stringify([j.map||{},j.no||{}]); PD.map=j.map||{}; PD.no=j.no||{}; PD.loaded=true; if(a!==b){ PCRV++; if(model) render(); } }
+function pdLoad(){ try{ if(!ACC.need){ pdApply(JSON.parse(localStorage.getItem('kec_pdone')||'null')||{map:{},no:{}}); return; } }catch(e){}
+  if(!ACC.token) return; accCall('GET','/pdone',null,15000).then(pdApply).catch(function(){}); }
+function pdPost(b,okMsg){ if(!ACC.need){ var j={map:Object.assign({},PD.map),no:Object.assign({},PD.no)}; if(b.action==='done'){ j.map[b.code]={d:b.d,by:'this browser',at:Date.now()}; delete j.no[b.code]; } else if(b.action==='undo') delete j.map[b.code]; else if(b.action==='notyet') j.no[b.code]={at:Date.now(),k:b.k||''}; try{ localStorage.setItem('kec_pdone',JSON.stringify(j)); }catch(e){} pdApply(j); toast(okMsg); return; }
+  accCall('POST','/pdone',b,20000).then(function(j){ pdApply(j); toast(okMsg); }).catch(function(e){ toast((e&&e.status===404?'The relay does not know completed projects yet: deploy relay V62.':(e&&e.message)||'Could not save'),true); }); }
+/* a project whose packages are all completed at the cut-off, not yet marked, and not answered "Not yet" for the same finish date */
+function pdCands(rows){ var by={}, out=[]; (rows||[]).forEach(function(r){ if(HIDE_PROJ.indexOf(r.code)>=0) return; (by[r.code]=by[r.code]||[]).push(r); });
+  Object.keys(by).forEach(function(c){ var rr=by[c]; if(pdOf(c)||!rr.length||!rr.every(function(r){ return r.status==='done'||agg([r]).act>=0.9999; })) return;
+    var ff=rr.reduce(function(m,r){ return r.ff&&r.ff>m?r.ff:m; },''), k=ff||projCut(c,state.cutoff), no=PD.no&&PD.no[c]; if(no&&no.k===k) return; out.push({code:c,d:k}); });
+  return out; }
+function pdPrompt(rows){ if(!pkCan()) return ''; var L=pdCands(rows); if(!L.length) return '';
+  return L.map(function(x){ return '<div class="cpsug"><span class="cpst">★</span><div><b>'+esc(pname(x.code))+'</b>: all packages are at 100% (actual finish '+d2(x.d)+'). Mark the project as completed? Its figures will be frozen at <input type="date" class="cpd" data-pdd="'+esc(x.code)+'" value="'+x.d+'">.</div><span class="cpbt"><button type="button" class="pri" data-pddone="'+esc(x.code)+'">✓ Mark completed</button><button type="button" data-pdno="'+esc(x.code)+'" data-pdk="'+x.d+'">Not yet</button></span></div>'; }).join(''); }
+function pdBanner(code){ var f=pdOf(code); if(!f) return ''; var adm=pkCan();
+  return '<div class="cpban"><span class="ck">✓</span><div><b>Completed project</b><br>All figures on this page are frozen as of <b>'+d2(f.d)+'</b>'+(f.by?'. Marked completed by '+esc(f.by)+(f.at?' on '+d2(new Date(f.at).toISOString().slice(0,10)):''):'')+'. New uploads for this project need administrator approval.</div>'+
+    (adm?'<div class="r"><label class="cpchg">Frozen at <input type="date" class="cpd" data-pdd="'+esc(code)+'" value="'+f.d+'"></label><button type="button" data-pddone="'+esc(code)+'">Save date</button><button type="button" data-pdundo="'+esc(code)+'">Undo completion</button></div>':'')+'</div>'; }
+document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return; var b;
+  if((b=t.closest('[data-pddone]'))){ e.stopPropagation(); var c=b.getAttribute('data-pddone'), inp=document.querySelector('.cpd[data-pdd="'+c.replace(/"/g,'\\"')+'"]'), d=inp&&inp.value; if(!/^\d{4}-\d{2}-\d{2}$/.test(d||'')){ toast('Choose the date the figures are frozen at',true); return; } pdPost({action:'done',code:c,d:d},pname(c)+' is marked completed (figures frozen at '+d2(d)+')'); return; }
+  if((b=t.closest('[data-pdundo]'))){ e.stopPropagation(); var c2=b.getAttribute('data-pdundo'); pdPost({action:'undo',code:c2},pname(c2)+' is active again'); return; }
+  if((b=t.closest('[data-pdno]'))){ e.stopPropagation(); var c3=b.getAttribute('data-pdno'); pdPost({action:'notyet',code:c3,k:b.getAttribute('data-pdk')},pname(c3)+' stays active'); return; } }, true);
 function pcutDates(cut){
   if(PCM.m&&PCM.cut===cut&&PCM.mod===model&&PCM.rev===PCRV&&PCM.n===model.rows.length) return PCM.m;
-  var by={}, ov={}; for(var i=0;i<model.rows.length;i++){ var r=model.rows[i]; if(r.date>cut) break; by[r.code]=r.date; var o=PCUT[r.code]; if(o&&r.date<=o) ov[r.code]=r.date; }
+  var by={}, ov={}; for(var i=0;i<model.rows.length;i++){ var r=model.rows[i]; if(r.date>cut) break; by[r.code]=r.date; var o=pcutLim(r.code); if(o&&r.date<=o) ov[r.code]=r.date; }
   Object.keys(ov).forEach(function(c){ by[c]=ov[c]; });
   PCM={m:by,cut:cut,mod:model,rev:PCRV,n:model.rows.length}; return by; }
 function projCut(code,cut){ cut=cut||state.cutoff; return pcutDates(cut)[code]||cut; }
@@ -4463,7 +4509,7 @@ function pSiteBuild(rows,coreRows,cut){
     var pg={}, po=[]; ps.forEach(function(c){ var g=prog(c); if(!pg[g]){ pg[g]=[]; po.push(g); } pg[g].push(c); }); po.sort();
     return head('Site view','Open a whole program, or choose one project')+po.map(function(g){ return '<div class="card plain svpg"><div class="svpgh"><div><b>'+esc(g)+'</b><small>'+pg[g].length+(pg[g].length===1?' project':' projects')+'</small></div><button type="button" class="btn" data-svprog="'+esc(g)+'">Open program overview</button></div><div class="svpick">'+pg[g].map(function(c){ return '<button type="button" class="svpb" data-svpj="'+esc(c)+'"><b>'+esc(pname(c))+'</b><small>'+esc(c)+'</small></button>'; }).join('')+'</div></div>'; }).join('');
   }
-  var code=state.project, pi=model.projects.get(code)||{}, sc=svScope(rows,cut);
+  var code=state.project; cut=pdCut(code,cut); var pi=model.projects.get(code)||{}, sc=svScope(rows,cut);
   svChalLoad();
   var core=coreRows.length?coreRows:rows, A=agg(core), AF=agg(rows);
   var cs=selList('C'), ks=selList('K').map(function(k){ return dp(k.split('|').slice(1).join('|')); });
@@ -4520,7 +4566,7 @@ function pSiteBuild(rows,coreRows,cut){
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(pname(code))+(cs.length?' · '+esc(cs.join(', ')):'')+(ks.length?' · '+esc(ks.join(', ')):'')+'</span><em>Page '+n+' of 2</em></div>'; };
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+cutTxt([code],cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
   SV.cur={sc:sc,open:open,all:CL.all,cut:cut};
-  return head('Site view',esc(pname(code))+' · cut-off '+cutTxt([code],cut))+tools+
+  return head('Site view',esc(pname(code))+' · cut-off '+cutTxt([code],cut))+tools+pdBanner(code)+pdPrompt(rows.filter(function(r){ return r.code===code; }))+
     '<div class="sitepg">'+pageHd(1)+banner+profile+kp+sec('svP','Packages','same cards as Progress detail')+pk+sec('svF','Contract & financial','')+fin+(cs.length||ks.length?'':pcBox([code]))+T+pageFt+'</div>'+
     '<div class="sitepg">'+pageHd(2)+'<div class="svscope mini'+(gold?' sel':'')+'"><span class="svs1">VIEWING</span><b>'+esc(pname(code))+'</b><b>'+(cs.length?esc(cs.join(', ')):'All contractors')+'</b><b>'+(ks.length?esc(ks.join(', ')):'All packages')+'</b></div>'/* V420: Longest path section removed from Site view (saved data kept) */+E1+E2+Q+M+ch+phBox([code])+pageFt+'</div>';
 }
@@ -4664,19 +4710,21 @@ document.addEventListener('click',function(e){
 /* ---- manpower block (V299): latest data date, by package, values + variance, summary cards, table ---- */
 function svMpModel(sc,cut,grp,codes){
   var lcs=(codes||[]).map(function(q){ return String(q).toLowerCase(); }), by={};
-  (cur.mp||[]).forEach(function(x){ var ok=grp?lcs.indexOf(String(x.code).toLowerCase())>=0:String(x.code).toLowerCase()===sc.lc; if(!ok||x.d>cut||!sc.ok(x.pkg)) return; (by[x.d]||(by[x.d]=[])).push(x); });
+  (cur.mp||[]).forEach(function(x){ var ok=grp?lcs.indexOf(String(x.code).toLowerCase())>=0:String(x.code).toLowerCase()===sc.lc; if(!ok||x.d>pdCut(x.code,cut)||!sc.ok(x.pkg)) return; (by[x.d]||(by[x.d]=[])).push(x); });
   var ds=Object.keys(by).sort(); if(!ds.length) return null;
   var d=ds[ds.length-1], g={}, ord=[];
-  by[d].forEach(function(x){ var k=grp?pname(x.code):(dp(x.pkg)||'Project'); if(!g[k]){ g[k]={k:k,pl:0,ac:0}; ord.push(g[k]); } g[k].pl+=x.pl||0; g[k].ac+=x.ac||0; });
-  ord.sort(function(a,b){ return b.pl-a.pl||b.ac-a.ac; });
-  var tot={pl:0,ac:0}; ord.forEach(function(r){ tot.pl+=r.pl; tot.ac+=r.ac; });
-  var trend=ds.slice(-14).map(function(q){ var p=0,a=0; by[q].forEach(function(x){ p+=x.pl||0; a+=x.ac||0; }); return {d:q,pl:p,ac:a}; });
-  return {d:d,rows:ord,tot:tot,trend:trend,grp:grp};
+  var hasEq=false;
+  by[d].forEach(function(x){ var k=grp?pname(x.code):(dp(x.pkg)||'Project'), eq=mpType(x.type)==='Equipment'; if(eq) hasEq=true; if(!g[k]){ g[k]={k:k,pl:0,ac:0,epl:0,eac:0}; ord.push(g[k]); } if(eq){ g[k].epl+=x.pl||0; g[k].eac+=x.ac||0; } else { g[k].pl+=x.pl||0; g[k].ac+=x.ac||0; } });
+  ord.sort(function(a,b){ return b.pl-a.pl||b.ac-a.ac||b.epl-a.epl; });
+  var tot={pl:0,ac:0,epl:0,eac:0}; ord.forEach(function(r){ tot.pl+=r.pl; tot.ac+=r.ac; tot.epl+=r.epl; tot.eac+=r.eac; });
+  var trend=ds.slice(-14).map(function(q){ var p=0,a=0; by[q].forEach(function(x){ if(mpType(x.type)==='Equipment') return; p+=x.pl||0; a+=x.ac||0; }); return {d:q,pl:p,ac:a}; });
+  return {d:d,rows:ord,tot:tot,trend:trend,grp:grp,hasEq:hasEq};
 }
 function svMpVar(v){ return (v>0?'+':v<0?'−':'')+Math.abs(v).toLocaleString('en-US'); }
 function svMpHtml(m){
   var t=sec('svM','Manpower','planned vs actual · variance = actual − planned · negative = fewer people on site than planned');
   if(!m) return t+'<div class="card plain"><div class="empty">Manpower data has not been loaded yet. It will appear here once the Manpower sheet is filled in the database.</div></div>';
+  if(m.hasEq) return svMpEqHtml(m);
   var N=function(v){ return Math.round(v).toLocaleString('en-US'); }, vr=m.tot.ac-m.tot.pl, pc=m.tot.pl?Math.round(m.tot.ac/m.tot.pl*100):null;
   var vc=function(v){ return v<0?'var(--bad)':v>0?'var(--good)':'var(--mut)'; };
   var kp='<div class="mpk"><div><span class="l">Planned</span><b>'+N(m.tot.pl)+'</b><span class="s">people · '+d2(m.d)+'</span></div><div><span class="l">Actual</span><b>'+N(m.tot.ac)+'</b><span class="s">people on site</span></div><div><span class="l">Variance</span><b style="color:'+vc(vr)+'">'+svMpVar(vr)+'</b><span class="s">actual − planned</span></div><div><span class="l">Actual vs plan</span><b>'+(pc==null?'–':pc+'%')+'</b><span class="s">'+(pc==null?'':pc>=100?'at or above plan':'below plan')+'</span></div></div>';
@@ -4687,6 +4735,37 @@ function svMpHtml(m){
   return t+(one?'<div class="mpone">'+kp+cc+'</div>':kp+cc)+
     svTable([m.grp?'Project':'Package / plot','Planned','Actual','Variance','Actual % of plan'],rows,foot)+
     (m.trend.length>1?'<div class="card plain"><div class="mpt">Total manpower by data date <label class="mplb"><input type="checkbox" id="mpLbl"'+(MPL.on?' checked':'')+'> Show values</label></div><div class="chart-box" style="height:270px"><canvas id="svMpT"></canvas></div></div>':'');
+}
+/* V422: Manpower & Equipment block (chosen layout): per package Manpower planned | actual, a gap, Equipment planned | actual; people on the left scale, machines on the right */
+function svMpEqHtml(m){
+  var t=sec('svM','Manpower & equipment','planned vs actual · people and machines · variance = actual − planned · negative = fewer than planned');
+  var N=function(v){ return Math.round(v).toLocaleString('en-US'); }, vc=function(v){ return v<0?'var(--bad)':v>0?'var(--good)':'var(--mut)'; }, T=m.tot;
+  var box=function(l,a,p,u){ var pc=p?Math.round(a/p*100):null; return '<div><span class="l">'+l+'</span><b>'+N(a)+'</b><span class="s">of '+N(p)+' planned '+u+(pc==null?'':' ('+pc+'%)')+'</span></div>'; };
+  var vbox=function(l,v){ return '<div><span class="l">'+l+'</span><b style="color:'+vc(v)+'">'+svMpVar(v)+'</b><span class="s">actual − planned · '+d2(m.d)+'</span></div>'; };
+  var kp='<div class="mpk">'+box('Manpower · actual',T.ac,T.pl,'people')+vbox('Manpower variance',T.ac-T.pl)+box('Equipment · actual',T.eac,T.epl,'machines')+vbox('Equipment variance',T.eac-T.epl)+'</div>';
+  var cell=function(v){ return '<td class="n" style="color:'+vc(v)+';font-weight:700">'+svMpVar(v)+'</td>'; };
+  var rows=m.rows.map(function(r){ return '<tr><td>'+esc(r.k)+'</td><td class="n">'+N(r.pl)+'</td><td class="n">'+N(r.ac)+'</td>'+cell(r.ac-r.pl)+'<td class="n">'+N(r.epl)+'</td><td class="n">'+N(r.eac)+'</td>'+cell(r.eac-r.epl)+'</tr>'; }).join('');
+  var foot='<tr><td>Total</td><td class="n">'+N(T.pl)+'</td><td class="n">'+N(T.ac)+'</td>'+cell(T.ac-T.pl)+'<td class="n">'+N(T.epl)+'</td><td class="n">'+N(T.eac)+'</td>'+cell(T.eac-T.epl)+'</tr>';
+  var h=Math.max(280,Math.min(440,220+m.rows.length*10));
+  var cc='<div class="card plain"><div class="mpt">By '+(m.grp?'project':'package')+' · data date '+d2(m.d)+' <span class="mpsub">people on the left scale · machines on the right scale</span></div><div class="chart-box" style="height:'+h+'px"><canvas id="svMp"></canvas></div></div>';
+  return t+kp+cc+svTable([m.grp?'Project':'Package / plot','Manpower planned','Manpower actual','Manpower variance','Equipment planned','Equipment actual','Equipment variance'],rows,foot)+
+    (m.trend.length>1?'<div class="card plain"><div class="mpt">Total manpower by data date <label class="mplb"><input type="checkbox" id="mpLbl"'+(MPL.on?' checked':'')+'> Show values</label></div><div class="chart-box" style="height:270px"><canvas id="svMpT"></canvas></div></div>':'');
+}
+function svMpEqCfg(m,ink,line,acc){
+  var EQP='#a9d3cc', EQA='#0f8a7e', MPP='#b9b09e', tx=cssv('--ink')||ink, halo=cssv('--card')||'#fff';
+  var wrap=function(s){ s=String(s); if(s.length<=14) return s; var w=s.split(' '),o=[],c=''; w.forEach(function(x){ if((c+' '+x).trim().length>14&&c){ o.push(c); c=x; } else c=(c+' '+x).trim(); }); if(c) o.push(c); return o; };
+  var lab={id:'mpeLbl',afterDatasetsDraw:function(ch){ var c=ch.ctx, small=ch.width<560; c.save(); c.textAlign='center'; c.textBaseline='bottom'; c.font='600 '+(small?9.5:11)+'px Inter,system-ui,sans-serif'; c.lineJoin='round'; c.lineWidth=3;
+    ch.data.datasets.forEach(function(d,i){ if(d.spacer||!ch.isDatasetVisible(i)) return; ch.getDatasetMeta(i).data.forEach(function(b,k){ var v=d.data[k]; if(v==null) return; var s=Math.round(v).toLocaleString('en-US'); c.strokeStyle=halo; c.strokeText(s,b.x,b.y-3); c.fillStyle=tx; c.fillText(s,b.x,b.y-3); }); }); c.restore(); }};
+  var o={responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{position:'top',align:'end',labels:{color:ink,boxWidth:12,usePointStyle:true,filter:function(it,d){ return !d.datasets[it.datasetIndex].spacer; }}},
+    tooltip:{filter:function(it){ return !it.dataset.spacer; },callbacks:{label:function(c){ return c.dataset.label+': '+Math.round(c.raw).toLocaleString('en-US'); }}}},
+    scales:{x:{ticks:{color:ink,maxRotation:0,autoSkip:false},grid:{display:false}},y:{beginAtZero:true,grace:'18%',title:{display:true,text:'People',color:acc},ticks:{color:acc,precision:0},grid:{color:line}},y2:{position:'right',beginAtZero:true,grace:'18%',title:{display:true,text:'Machines',color:EQA},ticks:{color:EQA,precision:0},grid:{display:false}}},categoryPercentage:.82,barPercentage:.92,datasets:{bar:{maxBarThickness:46}}};
+  var R=m.rows, col=function(f){ return R.map(function(r){ return r[f]; }); };
+  return {type:'bar',data:{labels:R.map(function(r){ return wrap(r.k); }),datasets:[
+    {label:'Manpower planned',data:col('pl'),backgroundColor:MPP,borderRadius:4,yAxisID:'y'},
+    {label:'Manpower actual',data:col('ac'),backgroundColor:acc,borderRadius:4,yAxisID:'y'},
+    {label:'',spacer:true,data:R.map(function(){ return null; }),backgroundColor:'rgba(0,0,0,0)',yAxisID:'y'},
+    {label:'Equipment planned',data:col('epl'),backgroundColor:EQP,borderRadius:4,yAxisID:'y2'},
+    {label:'Equipment actual',data:col('eac'),backgroundColor:EQA,borderRadius:4,yAxisID:'y2'}]},options:o,plugins:[lab]};
 }
 function svMpCfg(m,ink,line,acc){
   var good=cssv('--good'), bad=cssv('--bad'), halo=cssv('--card')||'#fff';
@@ -4763,7 +4842,7 @@ function svCfgs(){
   var base=function(){ return {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:ink,boxWidth:12}}},scales:{x:{ticks:{color:ink},grid:{color:line}},y:{ticks:{color:ink},grid:{color:line}}}}; };
   var MPm=svMpModel(sc,cut,!!SV.cur.grp,SV.cur.grp?SV.cur.codes:null);
   if(SPIT.on&&document.getElementById('svSpi')){ var SPs=[]; try{ SPs=svSpiSeries(cut); }catch(e){} if(SPs.length>1) out.svSpi=function(){ return svSpiCfg(SPs,ink,line,acc); }; }
-  if(MPm&&MPm.rows.length){ out.svMp=function(){ return svMpCfg(MPm,ink,line,acc); }; if(MPm.trend.length>1) out.svMpT=function(){ return svMpTrend(MPm,ink,line,acc); }; }
+  if(MPm&&MPm.rows.length){ out.svMp=function(){ return MPm.hasEq?svMpEqCfg(MPm,ink,line,acc):svMpCfg(MPm,ink,line,acc); }; if(MPm.trend.length>1) out.svMpT=function(){ return svMpTrend(MPm,ink,line,acc); }; }
   var P=[],A=[],Od=[],L=[];
   model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.pf&&a.ff?dayDiff(a.ff,a.pf):0); });
   var halo=cssv('--card')||'#fff';
@@ -4956,6 +5035,14 @@ function suParse(wb,okCode){
     noAct.slice(0,12).forEach(function(c){ errs.push('Areas of Concern: the Suggested action is missing for '+c.code+(c.pkg?' · '+c.pkg:'')+' — "'+String(c.concern||'').slice(0,60)+(String(c.concern||'').length>60?'…':'')+'". Every concern needs a Suggested action before it can be sent.'); });
     if(noAct.length>12) errs.push('Areas of Concern: '+(noAct.length-12)+' more concern(s) have no Suggested action.'); }
   [['e1',/^technical\s*submittals?$/i],['e2',/^material\s*procurement$/i],['qa',/^quality/i],['mp',/^manpower$/i]].forEach(function(x){ var S=get(x[1]); if(S&&S.rows&&S.rows.length){ data[x[0]]=normSite(S.rows,x[0]); if(x[0]==='e1'){ var seenT={}; data.e1.forEach(function(r){ var k=svN(r.code)+'|'+svN(r.pkg)+'|'+svN(r.type)+'|'+svN(r.trade)+'|'+r.d; if(seenT[k]&&warns.length<30) warns.push('Technical Submittals: '+r.code+' · '+r.pkg+' · '+r.type+(r.trade?' · '+r.trade:'')+' is listed more than once; the last row is used.'); seenT[k]=1; var ck=trChk({tot:r.tot,sub:r.sub,app:r.app,rev:r.rev,rvw:r.rvw,ns:r.ns}); if(ck.length&&warns.length<30) warns.push('Technical Submittals: '+r.code+' · '+r.pkg+' · '+r.type+(r.trade?' · '+r.trade:'')+': '+ck.join('; ')+'.'); }); } data[x[0]].forEach(function(r,i){ if(!r.pkg) errs.push(S.n+': Package/Plot is missing for '+r.code+'.'); Object.keys(r).forEach(function(k){ if(typeof r[k]==='number'&&r[k]<0&&errs.length<200) errs.push(S.n+', '+r.code+' · '+r.pkg+': a negative number ('+r[k]+') is not allowed.'); }); }); } });
+  /* V422: Manpower & Equipment rows need a Type (template 2.7); an older file without the Type column is read as Manpower */
+  (function(){ var mp=data.mp||[], hasT=mp.some(function(r){ return !r._tn; }), seen={};
+    mp.forEach(function(r){ var w=r.code+' · '+r.pkg;
+      if(r._tx&&errs.length<200) errs.push('Manpower & Equipment: “'+r._tx+'” is not a Type for '+w+'. Choose Manpower or Equipment from the drop-down list.');
+      else if(r._tn&&(hasT||(data.ver&&data.ver>=2.7))&&((r.pl||0)>0||(r.ac||0)>0)&&errs.length<200) errs.push('Manpower & Equipment: choose the Type (Manpower or Equipment) for '+w+'.');
+      var k=svN(r.code)+'|'+svN(r.pkg)+'|'+r.type+'|'+r.d; if(seen[k]&&!r._tn&&!r._tx&&errs.length<200) errs.push('Manpower & Equipment: '+w+' · '+r.type+' is listed more than once for the same date. Keep one row.'); seen[k]=1;
+      delete r._tn; delete r._tx; });
+    if(mp.length&&!hasT&&!(data.ver&&data.ver>=2.7)&&warns.length<30) warns.push('This file has no Type column on the Manpower sheet, so all its rows are read as Manpower. Download the current template ('+SU_TPLV+') to report equipment as well.'); })();
   suParsePC(wb,data,errs);
   /* project codes are written the way the dashboard knows them (hb-hh becomes HB-HH), so the database does not get a second spelling */
   if(typeof model!=='undefined'&&model&&model.projects){ ['prog','con','e1','e2','qa','mp','pc'].forEach(function(k){ data[k].forEach(function(r){ var c0=pcodeOf(String(r.code).trim()); if(c0) r.code=c0; }); }); }
@@ -5043,7 +5130,7 @@ function suLookupRows(){ if((!model||!model.rows||!model.rows.length)&&suMetaOn(
 /* V414: Site Update Template v2.6 — one Data Date cell per sheet, a Row check column with plain-language problems,
    last-report columns and a Remarks column on Packages - Plots, carried-forward values (light blue), locked headers and formulas,
    hidden helper sheets. Column headers of v2.5 are unchanged, so v2.5 files still upload. */
-var SU_TPLV='2.6';
+var SU_TPLV='2.7';
 function suX(s){ return String(s==null?'':s).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function suIS(ref,s,txt){ return '<c r="'+ref+'" s="'+s+'" t="inlineStr"><is><t xml:space="preserve">'+suX(txt)+'</t></is></c>'; }
 function suColN(L){ var n=0; for(var i=0;i<L.length;i++) n=n*26+L.charCodeAt(i)-64; return n; }
@@ -5135,10 +5222,57 @@ async function suTpl26(z,withModel){
 }
 function suTplName(){ var c=(suMetaOn()&&!(model&&model.rows&&model.rows.length))?suMetaCodes():suSelCodes(), d=new Date(), t=String(d.getDate()).padStart(2,'0')+'-'+MON[d.getMonth()]+'-'+d.getFullYear();
   var p=c.length===1?String(c[0]):c.length?c.length+'-projects':'all'; return 'KEC_Site_Update_v'+SU_TPLV+'_'+p.replace(/[\\\/:*?"<>|\s]+/g,'-')+'_'+t+'.xlsx'; }
+/* V422: Site Update Template v2.7 — the Manpower sheet becomes "Manpower & Equipment": a Type column (Manpower / Equipment) is inserted at E,
+   every pre-filled package gets two rows (one Manpower, one Equipment), Planned/Actual read "Planned (No.)" / "Actual (No.)",
+   a missing Type is highlighted, and the same project + package + type twice is highlighted. The sheet keeps its name "Manpower". */
+function suT27col(c){ var n=0; for(var i=0;i<c.length;i++) n=n*26+c.charCodeAt(i)-64; return n; }
+function suT27name(n){ var s=''; while(n){ var r=(n-1)%26; s=String.fromCharCode(65+r)+s; n=(n-1-r)/26; } return s; }
+function suT27sh(c){ return suT27col(c)>=5?suT27name(suT27col(c)+1):c; }
+function suT27f(f){ /* shift this sheet's own references (column E and after) in a formula; other sheets' references and quoted text stay */
+  return String(f).split(/("[^"]*")/).map(function(part){ if(part.charAt(0)==='"') return part; var keep=[];
+    part=part.replace(/(?:'[^']+'|[A-Za-z_][\w.]*)!\$?[A-Z]{1,3}\$?\d+(?::\$?[A-Z]{1,3}\$?\d+)?/g,function(m){ keep.push(m); return '\u0000'+(keep.length-1)+'\u0000'; });
+    part=part.replace(/(^|[^A-Za-z0-9_.$\u0000])(\$?)([A-Z]{1,3})(\$?\d+)/g,function(m,p,d1,c,r){ return p+d1+suT27sh(c)+r; });
+    return part.replace(/\u0000(\d+)\u0000/g,function(m,i){ return keep[+i]; }); }).join(''); }
+function suT27row(body){ return body.replace(/<c r="([A-Z]+)(\d+)"([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g,function(m,c,r,at,inner){
+  if(inner===undefined) return '<c r="'+suT27sh(c)+r+'"'+at+'/>';
+  inner=inner.replace(/<f>([\s\S]*?)<\/f>/g,function(x,f){ return '<f>'+suT27f(f)+'</f>'; });
+  return '<c r="'+suT27sh(c)+r+'"'+at+'>'+inner+'</c>'; }); }
+function suT27renum(body,r){ body=body.replace(/<c r="([A-Z]+)\d+"/g,function(m,c){ return '<c r="'+c+r+'"'; });
+  return body.replace(/<f>([\s\S]*?)<\/f>/g,function(x,f){ return '<f>'+f.replace(/(^|[^A-Za-z0-9_.$!])(\$?)([A-Z])(\d+)(?!\d)/g,function(m,p,d1,c,n){ return d1||+n<6?m:p+c+r; })+'</f>'; }); }
+function suT27type(body,t){ var e=/<c r="F(\d+)"/.exec(body); if(!e) return body; var cell=t?'<c r="E'+e[1]+'" s="20" t="inlineStr"><is><t>'+t+'</t></is></c>':'<c r="E'+e[1]+'" s="20"/>'; return body.replace(e[0],cell+e[0]); }
+async function suTpl27(z){
+  var p='xl/worksheets/sheet9.xml', f=z.file(p); if(!f) return; var s=await f.async('string'); if(s.indexOf('Manpower')<0||s.indexOf('<t>Type</t>')>=0) return;
+  var i1=s.indexOf('<sheetData>'), i2=s.indexOf('</sheetData>'); if(i1<0||i2<0) return;
+  var head=s.slice(0,i1), data=s.slice(i1+11,i2), tail=s.slice(i2+12);
+  head=head.replace(/<dimension ref="[^"]*"\/>/,'<dimension ref="A1:I400"/>');
+  head=head.replace(/<cols>([\s\S]*?)<\/cols>/,function(m,cols){ var out=[]; cols.replace(/<col width="([\d.]+)" customWidth="1" min="(\d+)" max="\d+"\/>/g,function(x,w,n){ n=+n; if(n===5) out.push([5,'14']); out.push([n>=5?n+1:n,n===4?'30':w]); return x; });
+    return '<cols>'+out.map(function(c){ return '<col width="'+c[1]+'" customWidth="1" min="'+c[0]+'" max="'+c[0]+'"/>'; }).join('')+'</cols>'; });
+  var rows=[]; data.replace(/<row r="(\d+)"([^>]*)>([\s\S]*?)<\/row>/g,function(m,r,at,b){ rows.push([+r,at,b]); return m; });
+  var out=[];
+  rows.filter(function(x){ return x[0]<=5; }).forEach(function(x){ var r=x[0], b=suT27row(x[2]);
+    if(r===1){ b=b.replace('<t>Manpower</t>','<t>Manpower &amp; Equipment</t>').replace('<c r="F1"','<c r="E1" s="2" t="n"></c><c r="F1"'); }
+    if(r===2){ b=b.replace('Planned vs actual manpower by package','Planned vs actual manpower and equipment by package · one row for Manpower and one row for Equipment').replace('<c r="F2"','<c r="E2" s="2" t="n"></c><c r="F2"'); }
+    if(r===5){ b=b.replace(/<c r="F5" s="(\d+)"/,function(m,st){ return '<c r="E5" s="11" t="inlineStr"><is><t>Type</t></is></c><c r="F5" s="'+st+'"'; }).replace('<t>Planned Manpower</t>','<t>Planned (No.)</t>').replace('<t>Actual Manpower</t>','<t>Actual (No.)</t>'); }
+    out.push('<row r="'+r+'"'+x[1]+'>'+b+'</row>'); });
+  var dr=rows.filter(function(x){ return x[0]>=6; }), bl=dr.filter(function(x){ return x[2].indexOf('inlineStr')<0; })[0]||dr[dr.length-1];
+  var blank=bl?suT27row(bl[2]):'', gen=[];
+  dr.filter(function(x){ return x[2].indexOf('inlineStr')>=0; }).forEach(function(x){ var b=suT27row(x[2]); gen.push(suT27type(b,'Manpower')); gen.push(suT27type(b,'Equipment')); });
+  var r=6; gen.forEach(function(b){ if(r<=400) out.push('<row r="'+r+'">'+suT27renum(b,r)+'</row>'); r++; });
+  if(gen.length>395) (SU.trunc=SU.trunc||[]).push('Manpower & Equipment: '+(gen.length-395)+' row(s) do not fit');
+  for(;r<=400;r++) out.push('<row r="'+r+'">'+suT27renum(suT27type(blank,''),r)+'</row>');
+  tail=tail.replace(/sqref="([^"]*)"/g,function(m,q){ return 'sqref="'+q.replace(/\b([A-Z]{1,3})(\d+)\b/g,function(x,c,n){ return suT27sh(c)+(n==='306'||n==='305'?'400':n); })+'"'; });
+  tail=tail.replace(/<formula>([\s\S]*?)<\/formula>/g,function(m,f){ return '<formula>'+suT27f(f)+'</formula>'; }).replace(/<formula1>([\s\S]*?)<\/formula1>/g,function(m,f){ return '<formula1>'+suT27f(f)+'</formula1>'; });
+  tail=tail.replace(/<dataValidations count="(\d+)">/,function(m,n){ return '<dataValidations count="'+(+n+1)+'"><dataValidation sqref="E6:E400" showDropDown="0" showInputMessage="1" showErrorMessage="1" allowBlank="1" promptTitle="Type" prompt="Manpower = number of people. Equipment = number of machines and plant. Use one row for each." error="Choose Manpower or Equipment" type="list" errorStyle="stop"><formula1>"Manpower,Equipment"</formula1></dataValidation>'; });
+  var cf='<conditionalFormatting sqref="E6:E400"><cfRule type="expression" priority="2" dxfId="3"><formula>AND(B6&lt;&gt;"",E6="")</formula></cfRule></conditionalFormatting><conditionalFormatting sqref="B6:I400"><cfRule type="expression" priority="3" dxfId="0"><formula>AND($B6&lt;&gt;"",$E6&lt;&gt;"",COUNTIFS($B$6:$B$400,$B6,$D$6:$D$400,$D6,$E$6:$E$400,$E6)&gt;1)</formula></cfRule></conditionalFormatting>';
+  tail=tail.indexOf('<dataValidations')>=0?tail.replace('<dataValidations',cf+'<dataValidations'):tail.replace('<pageMargins',cf+'<pageMargins');
+  z.file(p,head+'<sheetData>'+out.join('')+'</sheetData>'+tail);
+  var ip='xl/worksheets/sheet1.xml', inf=z.file(ip); if(inf){ var ins=await inf.async('string'); ins=ins.replace('Manpower sheets may also be reported','Manpower sheet (now Manpower &amp; Equipment): give each package two rows, one with Type = Manpower (number of people) and one with Type = Equipment (number of machines and plant). Manpower may also be reported'); z.file(ip,ins); }
+}
+
 async function suTplBuild(){
   var b=atob(SU_TPL), u=new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i]=b.charCodeAt(i);
   try{ if(!(await loadJSZip())) return u.buffer;
-    if((!model||!model.rows||!model.rows.length)&&!suMetaOn()){ var z0=await JSZip.loadAsync(u); await suTpl26(z0,false); await suPrefill(z0,[]); return await z0.generateAsync({type:'arraybuffer',compression:'DEFLATE'}); }
+    if((!model||!model.rows||!model.rows.length)&&!suMetaOn()){ var z0=await JSZip.loadAsync(u); await suTpl26(z0,false); await suPrefill(z0,[]); await suTpl27(z0); return await z0.generateAsync({type:'arraybuffer',compression:'DEFLATE'}); }
     var z=await JSZip.loadAsync(u), f=z.file('xl/worksheets/sheet3.xml'); if(!f) return u.buffer; var x=await f.async('string');
     var hs=/<c r="A1" s="(\d+)"/.exec(x), ds=/<c r="G2" s="(\d+)"/.exec(x); if(!hs||!ds) return u.buffer;
     var E=function(v){ return String(v==null?'':v).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f￾￿]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }, T=function(ref,v){ return v===''||v==null?'':'<c r="'+ref+'" t="inlineStr"><is><t xml:space="preserve">'+E(v)+'</t></is></c>'; };
@@ -5164,7 +5298,7 @@ async function suTplBuild(){
           cells.H='<c r="H'+r+'" s="28"><f>'+gcol('H',r)+'</f><v></v></c>'; cells.L='<c r="L'+r+'" s="'+gn+'"><f>'+gcol('I',r)+'</f><v></v></c>'; cells.M='<c r="M'+r+'" s="21"/>'; cells.N='<c r="N'+r+'" s="'+gn+'"><f>IF(ISNUMBER(L'+r+'),L'+r+'+N(M'+r+'),"")</f><v></v></c>';
           return '<row r="'+rn+'"'+at+'>'+Object.keys(cells).sort(function(a,b){ return cix(a)-cix(b); }).map(function(k){ return cells[k]; }).join('')+'</row>'; });
         z.file('xl/worksheets/sheet4.xml',px); } }
-    await suTpl26(z,true); await suPrefill(z,suMetaOn()&&!(model&&model.rows&&model.rows.length)?suMetaCodes():suSelCodes());
+    await suTpl26(z,true); await suPrefill(z,suMetaOn()&&!(model&&model.rows&&model.rows.length)?suMetaCodes():(function(){ var c=suSelCodes(); return c.length>1?c.filter(function(x){ return !pdOf(x); }):c; })()); await suTpl27(z);
     return await z.generateAsync({type:'arraybuffer',compression:'DEFLATE'});
   }catch(e){ console.warn('template build',e&&e.message); (SU.trunc=SU.trunc||[]).push('the project data could not be filled in, so this is the blank template'); return u.buffer; } }
 /* V345: the template is pre-filled for the project selected when "Site update" was pressed, from the last saved data. The example rows are removed. */
@@ -5305,6 +5439,7 @@ async function suSubmit(){
     if(suMode()==='local'){ var pvl=[]; try{ pvl=ulPreview(P.data); }catch(e){} suMerge([{data:P.data}]); suReload(); toast('Update applied in this browser'); try{ ulSave({route:'site',by:'This browser',label:'Site update applied locally',cut:'',projects:P.codes||[],n:pvl.length,flags:pvl.filter(function(c){ return c.flag; }).length,changes:pvl.slice(0,600)},null); }catch(e){} }
     else{ var j; if(SU.tok){ var r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/site-upload',{method:'POST',headers:{'Content-Type':'application/json','X-KEC-Link':SU.tok},body:JSON.stringify({data:P.data})}); j=await r.json().catch(function(){return {};}); if(!r.ok) throw {message:j.error||('the relay answered '+r.status)}; }
       else j=await accCall('POST','/site-upload',{data:P.data,entry:suEntryOn()?SU.entry:undefined,unchecked:SUE.unchecked?true:undefined},90000);
+      if(j.doneHold&&j.doneHold.length) toast('This is a completed project ('+j.doneHold.join(', ')+'): your update was sent to the administrator for approval.',false,12000); else
       if(j.entry==='auto') toast(j.status==='accepted'?'Update accepted and live ('+(j.nNew||0)+' new, '+(j.nMod||0)+' modified, '+(j.nSame||0)+' unchanged)':'Update sent for approval'+(j.held?': '+j.held:'')+' ('+(j.nNew||0)+' new, '+(j.nMod||0)+' modified)',false,9000); else
       toast((j.status==='accepted'?'Update accepted and live':'Update sent for approval')+(j.entry==='mod'?' (modification'+(j.notFound?', WARNING: '+j.notFound+' row'+(j.notFound>1?'s':'')+' NOT applied':'')+')':j.entry==='new'?' (new entry)':'')); try{ muLoad(); }catch(e){} if(j.status==='accepted'&&!SU.tok){ suUndo(); suSync(); } if(JT.length&&ACC.need) await suSaveJust(JT); }
     var m=document.getElementById('suModal'); if(m&&!SU.tok) m.remove(); else document.getElementById('suRes').innerHTML='<div class="sepnote"><span class="ni">✓</span><div>Update received. You can close this page.</div></div>';
@@ -5884,7 +6019,7 @@ function render0(){ accGuard(); try{ actView(); }catch(e){} navTrack(); paintDc(
   }
   var sepStarted=sepRows.filter(function(r){return r.pv>0||r.ev>0;}), sepIdle=sepRows.filter(function(r){return !(r.pv>0||r.ev>0);});
   var sepOv=(sel&&sepRows.length)?(sepStarted.length?'<div class="card plain" style="margin-bottom:12px"><h3>Separate plot'+(sepStarted.length>1?'s':'')+' <small>reported separately · not included in the project figures above</small></h3><div class="ucs sepu">'+sepStarted.map(function(r){ return ucard(r.pkg,agg([r]),'sep'); }).join('')+'</div></div>':'')+sepNote(sepIdle,'project'):'';
-  var pOverview=lyBar()+pageHead(scopeName,sel?'Project summary · cut-off '+cutTxt(null,cut):'Planned vs actual progress and planned vs forecast finish by project · cut-off '+cutTxt(null,cut),true)+facts+ovK+sepOv+finCard+boxes;
+  var pOverview=lyBar()+pageHead(scopeName,sel?'Project summary · cut-off '+cutTxt(null,cut):'Planned vs actual progress and planned vs forecast finish by project · cut-off '+cutTxt(null,cut),true)+pdPrompt(rows)+(sel&&state.project?pdBanner(state.project):'')+facts+ovK+sepOv+finCard+boxes;
   var ganttOv=ganttSection(rows,sel);
   if(!sel) pOverview='<div class="ovwrap">'+pOverview+'</div>'+ganttOv; else pOverview+=ganttOv;
 
@@ -6412,7 +6547,7 @@ async function downloadTemplate(){
    ['11','“Technical Submittals” (E1): one row per package per Submittal Type (Shop Drawing, Material Submittal, Method Statement, As-Built Drawing) per Data Date; Shop Drawing and Material Submittal rows also carry a Trade (Civil, Electrical…), one row per trade. Not Submitted = Total Number − Actual Submitted. Approved + Revise / Resubmit + Under Review should not exceed Actual Submitted.'],
    ['12','“Material Procurement” (E2): one row per package per Data Date. Local Material No. + Out of Country Material No. = Total Material Number.'],
    ['13','“Quality Statistics”: one row per package per Submittal Type (NCR, Site Instructions; SOR is the same as Site Instructions and is recorded under it) per Data Date. Total Number = Closed + Open. The Site view shows totals, open and closed as charts.'],
-   ['14','“Manpower”: planned and actual manpower per package per Data Date. Variance = Planned − Actual.'],
+   ['14','“Manpower”: planned and actual manpower and equipment per package per Data Date; Type = Manpower (people) or Equipment (machines and plant); an empty Type is Manpower. Variance = Planned − Actual.'],
    ['15','“Areas of Concern” now also holds the challenge-tracking columns: Challenge ID (CH-0001… keep the same ID for the same challenge at every Data Date; empty for a new one), Owner, Target Date, Status (Open / Closed), Date Raised, Date Closed. “Last Changed” is stamped by the dashboard when a challenge is edited; the most recent change by date and time wins.'],
    ['16','Site uploads use the separate site template (same sheets and column names, no serial column). Approved uploads are appended to these sheets. Each data row needs both Project Code and Package/Plot.'],
    [],['This workbook was exported from the dashboard on '+new Date().toISOString().slice(0,10)+' and already includes the challenge edits made in the Site view. Paste or load it as the new master.']];
@@ -6441,7 +6576,7 @@ async function downloadTemplate(){
   sheet('Technical Submittals',['serial','Data Date','Project Code','Project Name','Package/Plot','Submittal Type','Trade','Total Number','Planned to Submit','Actual Submitted','Approved','Revise / Resubmit','Under Review','Not Submitted'],srt(cur.e1).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,r.type,r.trade||'',r.tot,r.plan,r.sub,r.app,r.rev,r.rvw,r.ns]; }),{fx:2,w:[9,13,14,30,26,22,16,13,16,16,12,16,13,14],f:[null,DT,null,null,null,null,null,NUM,NUM,NUM,NUM,NUM,NUM,NUM]});
   sheet('Material Procurement',['serial','Data Date','Project Code','Project Name','Package/Plot','Submittal Type','Total Material Number','Local Material No.','Out of Country Material No.','Planned PO Issuance','Actual PO Issued','Planned Delivery','Actual Delivered'],srt(cur.e2).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,r.type,r.tot,r.loc,r.ooc,r.ppo,r.apo,r.pdl,r.adl]; }),{fx:2,w:[9,13,14,30,26,22,16,16,18,16,16,16,16],f:[null,DT,null,null,null,null,NUM,NUM,NUM,NUM,NUM,NUM,NUM]});
   sheet('Quality Statistics',['serial','Data Date','Project Code','Project Name','Package/Plot','Submittal Type','Total Number','Closed','Open'],srt(cur.qa).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,r.type,r.tot,r.cl,r.op]; }),{fx:2,w:[9,13,14,30,26,22,13,10,10],f:[null,DT,null,null,null,null,NUM,NUM,NUM]});
-  sheet('Manpower',['serial','Data Date','Project Code','Project Name','Package/Plot','Contractor / Consultant','Planned Manpower','Actual Manpower','Variance (Planned - Actual)'],srt(cur.mp).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,nn(r.ctr),r.pl,r.ac,(r.pl||0)-(r.ac||0)]; }),{fx:2,w:[9,13,14,30,26,26,16,16,18],f:[null,DT,null,null,null,null,NUM,NUM,NUM]});
+  sheet('Manpower',['serial','Data Date','Project Code','Project Name','Package/Plot','Type','Contractor / Consultant','Planned Manpower','Actual Manpower','Variance (Planned - Actual)'],srt(cur.mp).map(function(r,i){ return [i+1,dt(r.d),r.code,nn(pname(r.code)),r.pkg,mpType(r.type),nn(r.ctr),r.pl,r.ac,(r.pl||0)-(r.ac||0)]; }),{fx:2,w:[9,13,14,30,26,12,26,16,16,18],f:[null,DT,null,null,null,null,null,NUM,NUM,NUM]});
   var buf=await wb.xlsx.writeBuffer(), fn='KEC_Dashboard_Update_Template.xlsx';
   var dl=null; try{ if(window.claude&&window.claude.use) dl=await window.claude.use('downloads'); }catch(e){}
   if(dl){ try{ await dl.save({filename:fn,data:buf}); }catch(e){ if(!e||e.code!=='declined') toast('Download unavailable here',true); } return; }
@@ -6742,7 +6877,7 @@ function accApply(){
 }
 function accReapply(){ if(cur.prog){ try{ setData(cur.prog,cur.info,source,sourceKind); }catch(e){} } else render(); }
 function accWhen(fn){ if(ACC.ready) fn(); else ACC.cbs.push(fn); }
-function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} try{ jsLoad(); }catch(e){} try{ muLoad(); }catch(e){} try{ dfixLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
+function accReady(){ ACC.ready=true; try{ pcutLoad(); }catch(e){} try{ pdLoad(); }catch(e){} try{ jsLoad(); }catch(e){} try{ muLoad(); }catch(e){} try{ dfixLoad(); }catch(e){} var q=ACC.cbs; ACC.cbs=[]; q.forEach(function(f){ try{ f(); }catch(e){} }); }
 function accShowLogin(msg){
   var o=document.getElementById('accLogin'); if(!o) return; o.hidden=false; document.body.classList.add('acc-locked');
   o.querySelector('.accerr').textContent=msg||''; var lg=document.querySelector('aside .brand img'), al=document.getElementById('accLogoImg'); if(lg&&al&&!al.getAttribute('src')) al.src=lg.src; var i=o.querySelector('input'); i.value=''; setTimeout(function(){ i.focus(); },50);
