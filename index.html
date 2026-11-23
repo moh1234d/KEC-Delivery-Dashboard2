@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V426</title>
+<title>TEST · KEC Project Controls Dashboard · V427</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -67,7 +67,10 @@ nav a i{font-style:normal;font-size:10px;opacity:.55;width:16px}
 /* V418: Data sources */
 .livest.warn{color:#ffd27a}
 .dsdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#8a97ab;margin-left:6px;vertical-align:middle}.dsdot.ok{background:#35c27a}.dsdot.warn{background:#f0b429}.dsdot.bad{background:#ff6b5b}
-body.acc-lim #dsBtn{display:none!important}
+body.acc-lim #dsBtn{display:none!important} body.acc-lim #hcBtn{display:none!important}
+.hchead{font-size:13px;margin:8px 0 2px}.hcrep{font-size:13px;margin:0 0 10px}.hcf{border:1px solid var(--line);border-radius:10px;margin:6px 0;overflow:hidden}.hcf.error{border-left:4px solid #b42318}.hcf.warn{border-left:4px solid #b7791f}.hcf.info{border-left:4px solid #8a97ab}
+.hcft{all:unset;box-sizing:border-box;display:block;width:100%;padding:8px 10px;cursor:pointer;font-size:13px;font-weight:600}.hcfd{padding:0 12px 10px;font-size:12.5px;display:grid;gap:6px}.hcpre{white-space:pre-line;color:var(--ink)}
+.hcset{margin:12px 0 0;font-size:13px}.hcset summary{cursor:pointer;font-weight:700;color:#1f4e79}.hcset .rvset label{margin-right:8px}
 #dsModal{position:fixed;inset:0;z-index:311;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:4vh 10px;overflow:auto}#dsModal.on{display:flex}
 #dsModal .dsbox{background:var(--bg,#f3f5f9);color:var(--ink,#0f1b33);border-radius:12px;max-width:1060px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.35);box-sizing:border-box;overflow:hidden}
 #dsModal .dshead{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:16px 20px;background:var(--card,#fff);border-bottom:1px solid var(--line,#e1e7f0)}
@@ -1525,7 +1528,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V426</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V427</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1553,7 +1556,7 @@ body.printsite>*:not(.app){display:none!important}
       <button id="tplBtn" type="button">Download template</button>
       <a href="#" id="lkOpen" class="lklink">&#9881; Live data links</a>
       <button id="dsBtn" type="button" hidden title="Status of the database files: Google Drive connection, last change, errors, refresh and sync">Data sources <span class="dsdot" id="dsDot"></span></button>
-      <button id="dcBtn" type="button">Data warnings <span class="dcn" id="dcN">0</span></button>
+      <button id="hcBtn" type="button" hidden title="Health check of the dashboard: uploads, database, weekly updates and files (administrators)">Health check <span class="dsdot" id="hcDot"></span></button>       <button id="dcBtn" type="button">Data warnings <span class="dcn" id="dcN">0</span></button>
       <button id="notesBtn" type="button">Show data notes</button>
     </div>
     <div class="sfg"><div class="sfh">Print &amp; export</div>
@@ -1706,7 +1709,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V426';
+var APP_VER='V427';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -5322,6 +5325,50 @@ function suDiscrepancies(data){
     Object.keys(exp).forEach(function(f){ if(got[f]==null) return; if(Math.abs(got[f]-exp[f])>1000) out.push({code:r.code,cno:c.cno,pkg:r.pkg,f:f,site:got[f],file:exp[f]}); }); });
   return out;
 }
+/* ===== V427: Dashboard health check (Level 1, reads only) — shown to administrators. The relay (V66) runs the checks on the chosen days and hour or when asked,
+   sends a Telegram summary, and the health agent (a Claude scheduled task) adds the full Word report in Google Drive. Settings are shared (phone and web). ===== */
+var HC={st:null,busy:'',err:'',at:0,open:{}};
+var HC_DAYS=[['6','Sat'],['0','Sun'],['1','Mon'],['2','Tue'],['3','Wed'],['4','Thu'],['5','Fri']];
+function hcWhen(ts){ if(!ts) return ''; var d=new Date(ts); return d2(d.toISOString().slice(0,10))+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function hcLoad(){ return accCall('GET','/agent',null,30000).then(function(j){ HC.st=j; HC.err=''; HC.at=Date.now(); hcDot(); })
+  .catch(function(e){ HC.err=(e&&(e.status===404||/unknown path|not found/i.test(e.message||'')))?'The relay does not have the health check yet: deploy relay V66.':((e&&e.message)||'The health check could not be read'); }); }
+function hcDot(){ var d=document.getElementById('hcDot'); if(!d) return; var h=HC.st&&HC.st.health; d.className='dsdot'+(h?(h.sum.error?' bad':h.sum.warn?' warn':' ok'):''); }
+function hcChip(n,t,c){ return '<span class="rvc'+(c?' '+c:'')+'"><b>'+n+'</b>'+t+'</span>'; }
+function hcBody(){
+  if(HC.err) return '<div class="ulsub bad">'+esc(HC.err)+'</div>';
+  if(!HC.st) return '<div class="ulnone">Loading…</div>';
+  var S=HC.st, h=S.health, c=S.cfg, rep=S.report, req=S.req, x='';
+  x+='<p class="rvmut" style="margin-top:0">The relay checks the uploads it keeps and the Google Sheet, and sends a short summary to Telegram. The health agent then writes the full Word report into Google Drive (folder “KEC Dashboard Health Agent / Reports”). Level 1: nothing is changed.</p>';
+  if(req) x+='<div class="ulsub">A check was asked for by '+esc(req.by||'an administrator')+' at '+hcWhen(req.ts)+(req.started?' and is running…':': it starts within a few minutes.')+'</div>';
+  if(h){ x+='<div class="hchead"><b>Last check:</b> '+hcWhen(h.ts)+' · '+(h.trigger==='request'?'asked by '+esc(h.by||'an administrator'):'scheduled')+'</div>';
+    x+='<div class="rvsum">'+hcChip(h.sum.error,h.sum.error===1?'error':'errors',h.sum.error?'e':'')+hcChip(h.sum.warn,h.sum.warn===1?'warning':'warnings',h.sum.warn?'w':'')+hcChip(h.sum.info,h.sum.info===1?'note':'notes','')+'</div>';
+    x+='<div class="hcrep">'+(rep&&rep.id===h.id&&rep.url?'📄 <a href="'+esc(rep.url)+'" target="_blank" rel="noopener">Word report of this check</a>':'📄 The Word report of this check is being prepared by the health agent. It looks for new checks at 08:17, 11:17, 14:17, 17:17 and 20:17 (Riyadh time).')+'</div>';
+    if(!h.findings.length) x+='<div class="rvallok">✓ No problems found.</div>';
+    else x+=h.findings.map(function(f,i){ var on=!!HC.open[h.id+'|'+i]; return '<div class="hcf '+f.sev+'"><button type="button" class="hcft" data-hcf="'+h.id+'|'+i+'"><span class="rvsv '+(f.sev==='error'?'e':f.sev==='warn'?'w':'n')+'">'+(f.sev==='error'?'Error':f.sev==='warn'?'Warning':'Note')+'</span> '+esc(f.title)+' <span class="rvmut">· '+esc(f.cat)+'</span></button>'+(on?'<div class="hcfd">'+(f.where?'<div><b>Where:</b> '+esc(f.where)+'</div>':'')+(f.detail?'<div class="hcpre">'+esc(f.detail)+'</div>':'')+(f.fix?'<div><b>Suggested fix:</b> '+esc(f.fix)+'</div>':'')+'</div>':'')+'</div>'; }).join(''); }
+  else x+='<div class="ulnone">No check has run yet.</div>';
+  x+='<details class="hcset"'+(HC.setOpen?' open':'')+'><summary>Settings (shared by every administrator)</summary>'+
+    '<label class="rvset"><input type="checkbox" id="hcOn"'+(c.on?' checked':'')+'> Run the check automatically</label>'+
+    '<div class="rvset">Days: '+HC_DAYS.map(function(d){ return '<label><input type="checkbox" class="hcday" value="'+d[0]+'"'+(c.days.indexOf(+d[0])>=0?' checked':'')+'> '+d[1]+'</label>'; }).join(' ')+'</div>'+
+    '<label class="rvset">From (Riyadh time) <select id="hcHour">'+Array.from({length:24},function(_,i){ return '<option value="'+i+'"'+(i===c.hour?' selected':'')+'>'+String(i).padStart(2,'0')+':00</option>'; }).join('')+'</select></label>'+
+    '<label class="rvset">Report an update waiting for approval after <input type="number" id="hcWait" min="1" max="240" value="'+c.waitH+'"> hours</label>'+
+    '<label class="rvset"><input type="checkbox" id="hcTg"'+(c.tg?' checked':'')+'> Send the summary to Telegram'+(S.tg?'':' <span class="rvmut">(Telegram is not set up on the relay)</span>')+'</label>'+
+    '<button type="button" class="btn" data-hcsave="1">Save settings</button></details>';
+  var H=(S.hist||[]).slice(0,10); if(H.length>1) x+='<details class="hcset"><summary>Earlier checks</summary>'+H.map(function(r){ return '<div class="rvpr">'+hcWhen(r.ts)+' · '+(r.trigger==='request'?'asked by '+esc(r.by||''):'scheduled')+' · '+r.sum.error+' errors, '+r.sum.warn+' warnings</div>'; }).join('')+'<div class="rvpr">All Word reports are in Google Drive, folder “KEC Dashboard Health Agent / Reports”.</div></details>';
+  return x; }
+function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V427',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
+  .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
+function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
+  var cfg={on:document.getElementById('hcOn').checked,tg:document.getElementById('hcTg').checked,days:days,hour:+document.getElementById('hcHour').value,waitH:+document.getElementById('hcWait').value||24};
+  HC.setOpen=true; accCall('POST','/agent',{action:'cfg',cfg:cfg},30000).then(function(j){ HC.st=j; toast('Health check settings saved'); hcRender(); }).catch(function(e){ toast((e&&e.message)||'Could not save',true); }); }
+document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return; var b;
+  if(t.closest('#hcBtn')){ e.preventDefault(); hcOpen(); return; }
+  if(t.closest('[data-hcrun]')){ hcRun(); return; }
+  if(t.closest('[data-hcreload]')){ hcLoad().then(hcRender); return; }
+  if(t.closest('[data-hcsave]')){ hcSave(); return; }
+  if((b=t.closest('[data-hcf]'))){ var k=b.getAttribute('data-hcf'); HC.open[k]=!HC.open[k]; hcRender(); return; } });
+
 function suModal(id,title,body,foot){ var o=document.getElementById(id); if(o) o.remove(); var m=document.createElement('div'); m.className='svm'; m.id=id; m.innerHTML='<div class="svmb" role="dialog" aria-modal="true" style="width:min(880px,96vw)"><h3>'+title+'</h3><div id="'+id+'B">'+body+'</div><div class="svma">'+(foot||'')+'<button type="button" class="btn" data-suclose="'+id+'">Close</button></div></div>'; document.body.appendChild(m); return m; }
 function suCno(v){ var t=String(v==null?'':v).replace(/\u00a0/g,' ').trim(), m=/CNT\s*-?\s*(\d+)\s*(?:-\s*([A-Za-z]+))?/i.exec(t); return m?'CNT-'+m[1]+(m[2]?'-'+m[2].toUpperCase():''):t; } /* one spelling for a contract number: P0030-CNT939, CNT939 and CNT-939 all show as CNT-939 */
 /* V415: on the private-link page the template is built from the lists the administrator's dashboard sent to the relay */
@@ -9163,7 +9210,7 @@ document.addEventListener('click',function(e){ if(e.target&&e.target.closest&&e.
 function aiShow(){ var adm=!!(ACC.need&&ACC.user&&ACC.user.admin), ok=!!(ACC.need&&ACC.user&&(ACC.user.admin||ACC.user.ai)); var b=document.getElementById('aiBtn'); if(b) b.hidden=!ok;
   if(ok){ aiApplyLang(); voInit(); setTimeout(aiTease,700); } else { AI.teased=false; var tz0=document.getElementById('aiTease'); if(tz0) tz0.hidden=true; var p=document.getElementById('aiPanel'); if(p) p.classList.remove('on'); }
   var lb=document.getElementById('aiLogBtn'); if(lb) lb.hidden=!adm; var xb=document.getElementById('actLogBtn'); if(xb) xb.hidden=!adm; var nb=document.getElementById('ntBtn'); if(nb) nb.hidden=!adm;
-  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var dsb=document.getElementById('dsBtn'); if(dsb) dsb.hidden=!(adm||ACC.need===false); var cb=document.getElementById('csBtn'); if(cb){ cb.hidden=!adm; if(adm&&!CS.st&&!CS.loading){ CS.loading=true; csLoad().then(function(){ CS.loading=false; }); } } var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; var xb2=document.getElementById('xcBtn'); if(xb2) xb2.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
+  var ub=document.getElementById('usrBtn'); if(ub) ub.hidden=!adm; var hcb=document.getElementById('hcBtn'); if(hcb){ hcb.hidden=!adm||!ACC.need; if(adm&&ACC.need&&!HC.st&&!HC.err&&Date.now()-HC.at>300000){ HC.at=Date.now(); hcLoad(); } } var dsb=document.getElementById('dsBtn'); if(dsb) dsb.hidden=!(adm||ACC.need===false); var cb=document.getElementById('csBtn'); if(cb){ cb.hidden=!adm; if(adm&&!CS.st&&!CS.loading){ CS.loading=true; csLoad().then(function(){ CS.loading=false; }); } } var rb=document.getElementById('rptBtn'); if(rb) rb.hidden=!adm; var xb2=document.getElementById('xcBtn'); if(xb2) xb2.hidden=!adm; ['pcutTop','dfixTop'].forEach(function(i){ var x=document.getElementById(i); if(x) x.hidden=!(adm||ACC.need===false); });
   var t=document.getElementById('aiTest'); if(t) t.hidden=!/kec-dashboard-test/.test(LIVE.relay); }
 function aiDigest(){
   if(!model||!model.rows||!model.rows.length) return '';
