@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V427</title>
+<title>TEST · KEC Project Controls Dashboard · V428</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -70,7 +70,7 @@ nav a i{font-style:normal;font-size:10px;opacity:.55;width:16px}
 body.acc-lim #dsBtn{display:none!important} body.acc-lim #hcBtn{display:none!important}
 .hchead{font-size:13px;margin:8px 0 2px}.hcrep{font-size:13px;margin:0 0 10px}.hcf{border:1px solid var(--line);border-radius:10px;margin:6px 0;overflow:hidden}.hcf.error{border-left:4px solid #b42318}.hcf.warn{border-left:4px solid #b7791f}.hcf.info{border-left:4px solid #8a97ab}
 .hcft{all:unset;box-sizing:border-box;display:block;width:100%;padding:8px 10px;cursor:pointer;font-size:13px;font-weight:600}.hcfd{padding:0 12px 10px;font-size:12.5px;display:grid;gap:6px}.hcpre{white-space:pre-line;color:var(--ink)}
-.hcset{margin:12px 0 0;font-size:13px}.hcset summary{cursor:pointer;font-weight:700;color:#1f4e79}.hcset .rvset label{margin-right:8px}
+.hcset{margin:12px 0 0;font-size:13px}.hcfx{display:grid;grid-template-columns:28px 1fr;gap:4px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;font-size:12.5px}.hcfx b{font-size:13px}.hcfxo{margin-top:4px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--ink);word-break:break-word}.btn.bad{background:#b42318;color:#fff;border-color:#b42318}.hcset summary{cursor:pointer;font-weight:700;color:#1f4e79}.hcset .rvset label{margin-right:8px}
 #dsModal{position:fixed;inset:0;z-index:311;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:4vh 10px;overflow:auto}#dsModal.on{display:flex}
 #dsModal .dsbox{background:var(--bg,#f3f5f9);color:var(--ink,#0f1b33);border-radius:12px;max-width:1060px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.35);box-sizing:border-box;overflow:hidden}
 #dsModal .dshead{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:16px 20px;background:var(--card,#fff);border-bottom:1px solid var(--line,#e1e7f0)}
@@ -1528,7 +1528,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V427</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V428</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1709,7 +1709,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V427';
+var APP_VER='V428';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -5346,6 +5346,7 @@ function hcBody(){
     if(!h.findings.length) x+='<div class="rvallok">✓ No problems found.</div>';
     else x+=h.findings.map(function(f,i){ var on=!!HC.open[h.id+'|'+i]; return '<div class="hcf '+f.sev+'"><button type="button" class="hcft" data-hcf="'+h.id+'|'+i+'"><span class="rvsv '+(f.sev==='error'?'e':f.sev==='warn'?'w':'n')+'">'+(f.sev==='error'?'Error':f.sev==='warn'?'Warning':'Note')+'</span> '+esc(f.title)+' <span class="rvmut">· '+esc(f.cat)+'</span></button>'+(on?'<div class="hcfd">'+(f.where?'<div><b>Where:</b> '+esc(f.where)+'</div>':'')+(f.detail?'<div class="hcpre">'+esc(f.detail)+'</div>':'')+(f.fix?'<div><b>Suggested fix:</b> '+esc(f.fix)+'</div>':'')+'</div>':'')+'</div>'; }).join(''); }
   else x+='<div class="ulnone">No check has run yet.</div>';
+  x+=hcFixes();
   x+='<details class="hcset"'+(HC.setOpen?' open':'')+'><summary>Settings (shared by every administrator)</summary>'+
     '<label class="rvset"><input type="checkbox" id="hcOn"'+(c.on?' checked':'')+'> Run the check automatically</label>'+
     '<div class="rvset">Days: '+HC_DAYS.map(function(d){ return '<label><input type="checkbox" class="hcday" value="'+d[0]+'"'+(c.days.indexOf(+d[0])>=0?' checked':'')+'> '+d[1]+'</label>'; }).join(' ')+'</div>'+
@@ -5355,8 +5356,35 @@ function hcBody(){
     '<button type="button" class="btn" data-hcsave="1">Save settings</button></details>';
   var H=(S.hist||[]).slice(0,10); if(H.length>1) x+='<details class="hcset"><summary>Earlier checks</summary>'+H.map(function(r){ return '<div class="rvpr">'+hcWhen(r.ts)+' · '+(r.trigger==='request'?'asked by '+esc(r.by||''):'scheduled')+' · '+r.sum.error+' errors, '+r.sum.warn+' warnings</div>'; }).join('')+'<div class="rvpr">All Word reports are in Google Drive, folder “KEC Dashboard Health Agent / Reports”.</div></details>';
   return x; }
+/* V428: fixes prepared by the health agent (relay V67, KV agent:fixes) — applied to the Google Sheet only after an administrator ticks and confirms them.
+   The relay checks again, just before changing anything, that each row still holds exactly the expected values. */
+HC.sel={}; HC.confirm=false;
+function hcRows(a){ a=a.slice().sort(function(x,y){ return x-y; }); var out=[], s=a[0], p=a[0]; for(var i=1;i<=a.length;i++){ if(a[i]===p+1){ p=a[i]; continue; } out.push(s===p?String(s):s+'–'+p); s=p=a[i]; } return out.join(', '); }
+function hcOpTxt(o){ return o.op==='delete'?'Deletes '+o.rows.length+' row'+(o.rows.length>1?'s':'')+' on '+esc(o.tab)+': '+hcRows(o.rows):o.op==='replace'?'Writes '+esc(o.tab)+' '+esc(o.range)+' (new values: '+esc(o.values.map(function(r){ return r.map(function(v){ return v===''||v==null?'·':String(v).replace(/\s+/g,' ').slice(0,18); }).join(' | '); }).slice(0,2).join(' ; '))+(o.values.length>2?' …':'')+')':esc(o.op); }
+function hcFixes(){ var P=HC.st&&HC.st.fixes; if(!P||!P.items||!P.items.length) return '';
+  var open=P.items.filter(function(i){ return i.status==='proposed'||i.status==='failed'; }), st={proposed:['Proposed','w'],failed:['Failed','e'],stale:['Sheet changed','n'],done:['Applied','g'],dismissed:['Dismissed','n']};
+  var x='<h4 class="rvh4" style="margin-top:14px">Prepared fixes'+(open.length?' ('+open.length+' waiting for your approval)':'')+'</h4><p class="rvmut" style="margin:0 0 6px;font-size:12.5px">Prepared by '+esc(P.by||'the health agent')+'. Nothing changes until you tick a fix and confirm. Just before changing anything, the relay checks that each row still holds exactly the expected values; if not, the fix is skipped.</p>';
+  x+=P.items.map(function(it){ var s=st[it.status]||[it.status,'n'], can=it.status==='proposed'||it.status==='failed';
+    return '<div class="hcfx">'+(can?'<label class="hcfxc"><input type="checkbox" class="hcfxs" value="'+esc(it.id)+'"'+(HC.sel[it.id]?' checked':'')+'></label>':'<span class="hcfxc"></span>')+'<div><div><span class="rvsv '+s[1]+'">'+s[0]+'</span> <b>'+esc(it.title)+'</b></div>'+(it.why?'<div class="rvmut">'+esc(it.why)+'</div>':'')+'<div class="hcfxo">'+it.ops.map(hcOpTxt).join('<br>')+'</div>'+(it.msg&&it.status!=='proposed'?'<div class="rvmut">'+esc(it.msg)+(it.by?' · '+esc(it.by):'')+(it.at?' · '+hcWhen(it.at):'')+'</div>':'')+'</div></div>'; }).join('');
+  if(open.length){ var n=Object.keys(HC.sel).filter(function(k){ return HC.sel[k]; }).length;
+    x+='<div class="rvchkf"><span class="rvmut">'+n+' selected</span><span><button type="button" class="btn" data-hcfxall="1">Select all</button> <button type="button" class="btn" data-hcfxdis="1"'+(n?'':' disabled')+'>Dismiss selected</button> <button type="button" class="btn '+(HC.confirm?'bad':'pri')+'" data-hcfxgo="1"'+(n?'':' disabled')+'>'+(HC.confirm?'Confirm: change the Google Sheet ('+n+')':'Apply selected fixes')+'</button></span></div>'; }
+  return x; }
+function hcFixGo(){ var ids=Object.keys(HC.sel).filter(function(k){ return HC.sel[k]; }); if(!ids.length) return;
+  if(!HC.confirm){ HC.confirm=true; hcRender(); return; }
+  HC.confirm=false; HC.busy='fix'; hcRender();
+  accCall('POST','/agent',{action:'fix',ids:ids},120000).then(function(j){ HC.st=j; HC.sel={}; var it=(j.fixes&&j.fixes.items)||[], d=it.filter(function(i){ return ids.indexOf(i.id)>=0&&i.status==='done'; }).length; toast(d+' of '+ids.length+' fix'+(ids.length>1?'es':'')+' applied'+(d<ids.length?' — see the message on the others':'')+'. Run the check again to confirm.',d<ids.length); })
+    .catch(function(e){ toast((e&&(e.status===400&&/unknown action/i.test(e.message||'')))?'The relay cannot apply fixes yet: deploy relay V67.':((e&&e.message)||'The fixes could not be applied'),true); })
+    .then(function(){ HC.busy=''; hcRender(); }); }
+function hcFixDismiss(){ var ids=Object.keys(HC.sel).filter(function(k){ return HC.sel[k]; }); if(!ids.length) return; HC.confirm=false;
+  accCall('POST','/agent',{action:'fixdismiss',ids:ids},30000).then(function(j){ HC.st=j; HC.sel={}; hcRender(); }).catch(function(e){ toast((e&&e.message)||'Could not dismiss',true); }); }
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.classList&&t.classList.contains('hcfxs')){ HC.sel[t.value]=t.checked; HC.confirm=false; hcRender(); } });
+document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return;
+  if(t.closest('[data-hcfxgo]')){ hcFixGo(); return; }
+  if(t.closest('[data-hcfxdis]')){ hcFixDismiss(); return; }
+  if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
+
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V427',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V428',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
