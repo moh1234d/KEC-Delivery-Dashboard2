@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V430</title>
+<title>TEST · KEC Project Controls Dashboard · V431</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1171,6 +1171,7 @@ body.rptp .rp-gr,body.rptp .rp-th{display:none!important} .rp-th{position:absolu
 .rvpass{margin:8px 0}.rvpass summary{cursor:pointer;color:#1f4e79;font-size:12.5px}.rvpr{font-size:12.5px;padding:3px 0;color:var(--mut)}
 .rvchkf{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:6px;font-size:12px}
 .rvchkf .btn{font:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.sunod{display:flex;gap:6px;align-items:center;font-size:12.5px;margin:-4px 0 8px;color:var(--mut)}
 .rvok{display:flex;gap:6px;align-items:center;font-size:12.5px;font-weight:700;color:#b42318;white-space:nowrap}
 .rvset{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;padding:4px 0}.rvset input[type=number]{width:80px;font:inherit;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}.rvh4{margin:12px 0 4px;font-size:13px}.up{color:#2e6b34;font-weight:700}.dn{color:#b9544b;font-weight:700}.ulfl{font-style:normal;font-size:11.5px;font-weight:700;color:#b9544b;margin-left:6px}
 .ulpj details summary,.ulcard details summary{cursor:pointer;color:#1f4e79;font-size:12.5px;margin:4px 0}
@@ -1528,7 +1529,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V430</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V431</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1709,7 +1710,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V430';
+var APP_VER='V431';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -5388,7 +5389,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V430',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V431',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
@@ -5575,13 +5576,15 @@ async function suTplBuild(){
     for(var r=2;r<=400;r++){ var o=rows[r-2]; sd+='<row r="'+r+'"><c r="A'+r+'"><f>'+(o?'B'+r+'&amp;"|"&amp;C'+r:'IF(B'+r+'="","",B'+r+'&amp;"|"&amp;C'+r+')')+'</f></c>'+(o?T('B'+r,o.code)+T('C'+r,o.pkg)+T('D'+r,o.name)+T('E'+r,o.ctr)+T('F'+r,o.cno):'')+'<c r="G'+r+'" s="'+ds[1]+'"'+(o&&o.ps?'><v>'+o.ps+'</v></c>':'/>')+'<c r="H'+r+'" s="'+ds[1]+'"'+(o&&o.pf?'><v>'+o.pf+'</v></c>':'/>')+(o&&o.cv!==''&&o.cv!=null?'<c r="I'+r+'"><v>'+o.cv+'</v></c>':'')+(o&&o.vo!==''&&o.vo!=null?'<c r="J'+r+'"><v>'+o.vo+'</v></c>':'')+'</row>'; }
     x=x.replace(/<sheetData>[\s\S]*<\/sheetData>/,sd+'</sheetData>'); z.file('xl/worksheets/sheet3.xml',x);
     /* Lists sheet: Project Code, Project Name and Package columns follow the dashboard; Impact, Status, type and trade lists stay as they are */
-    var lf=z.file('xl/worksheets/sheet2.xml'); if(lf){ var lx=await lf.async('string'), keep={}; (lx.match(/<row r="\d+">[\s\S]*?<\/row>/g)||[]).forEach(function(rw){ var rn=+/r="(\d+)"/.exec(rw)[1]; keep[rn]=(rw.match(/<c r="[D-H]\d+"[\s\S]*?<\/c>/g)||[]).join(''); });
+    var lf=z.file('xl/worksheets/sheet2.xml'); if(lf){ var lx=await lf.async('string'), keep={}; (lx.match(/<row r="\d+">[\s\S]*?<\/row>/g)||[]).forEach(function(rw){ var rn=+/r="(\d+)"/.exec(rw)[1]; keep[rn]=(rw.match(/<c r="[D-G]\d+"[\s\S]*?<\/c>/g)||[]).join(''); });
+      var TRL=suTradeList();
       var cs=[], seen={}, pk=[], seenp={}; rows.forEach(function(o){ var lc=String(o.code).toLowerCase(); if(!seen[lc]){ seen[lc]=1; cs.push({c:o.code,n:o.name}); } if(o.pkg&&o.pkg!==o.name&&!seenp[o.pkg]){ seenp[o.pkg]=1; pk.push(o.pkg); } });
-      var hd=/<row r="1">[\s\S]*?<\/row>/.exec(lx), LN=Math.max(cs.length,pk.length,37), ls='<sheetData>'+(hd?hd[0]:'');
-      for(var q=2;q<=LN+1;q++){ var cc=cs[q-2], pp=pk[q-2]; ls+='<row r="'+q+'">'+(cc?T('A'+q,cc.c)+T('B'+q,cc.n):'')+(pp?T('C'+q,pp):'')+(keep[q]||'')+'</row>'; }
+      var hd=/<row r="1">[\s\S]*?<\/row>/.exec(lx), LN=Math.max(cs.length,pk.length,37,TRL.length), ls='<sheetData>'+(hd?hd[0]:'');
+      for(var q=2;q<=LN+1;q++){ var cc=cs[q-2], pp=pk[q-2]; ls+='<row r="'+q+'">'+(cc?T('A'+q,cc.c)+T('B'+q,cc.n):'')+(pp?T('C'+q,pp):'')+(keep[q]||'')+(TRL[q-2]?T('H'+q,TRL[q-2]):'')+'</row>'; }
       lx=lx.replace(/<sheetData>[\s\S]*<\/sheetData>/,ls+'</sheetData>').replace(/<dimension ref="[^"]*"\/>/,'<dimension ref="A1:G'+(LN+1)+'"/>'); z.file('xl/worksheets/sheet2.xml',lx);
       /* every project-code drop-down reads the whole live list, so a new project appears by itself */
-      for(var n=3;n<=10;n++){ var sf=z.file('xl/worksheets/sheet'+n+'.xml'); if(!sf) continue; var sx=await sf.async('string'); if(sx.indexOf('Lists!$A$2:$A$10')<0) continue; z.file('xl/worksheets/sheet'+n+'.xml',sx.split('=Lists!$A$2:$A$10').join('OFFSET(Lists!$A$2,0,0,MAX(1,COUNTA(Lists!$A$2:$A$300)),1)')); } }
+      for(var n=3;n<=10;n++){ var sf=z.file('xl/worksheets/sheet'+n+'.xml'); if(!sf) continue; var sx=await sf.async('string'); if(sx.indexOf('Lists!$A$2:$A$10')<0) continue; z.file('xl/worksheets/sheet'+n+'.xml',sx.split('=Lists!$A$2:$A$10').join('OFFSET(Lists!$A$2,0,0,MAX(1,COUNTA(Lists!$A$2:$A$300)),1)')); }
+      var tf=z.file('xl/worksheets/sheet6.xml'); if(tf){ var tx=await tf.async('string'); z.file('xl/worksheets/sheet6.xml',tx.split('Lists!$H$2:$H$60').join('Lists!$H$2:$H$300')); } }
     /* Packages - Plots: Planned Finish, Contract Value, Approved VOs and Revised Value come from the contract number (grey = looked up; type over a cell only to override) */
     var pf=z.file('xl/worksheets/sheet4.xml'), stf=z.file('xl/styles.xml');
     if(pf&&stf){ var px=await pf.async('string'), sx2=await stf.async('string'), gn=33;
@@ -5599,11 +5602,20 @@ async function suTplBuild(){
 /* V345: the template is pre-filled for the project selected when "Site update" was pressed, from the last saved data. The example rows are removed. */
 function suSelCodes(){ var c=state.project?[state.project]:((state.mP||[]).slice()); return c.filter(function(x){ return !!x; }); }
 function suSer(iso){ return iso?Math.round(Date.parse(iso+'T00:00:00Z')/864e5)+25569:''; }
+/* V431: the Trade drop-down = the standard trades, then every other trade already used in the database or an approved update (typed once by a site team, offered to everyone next time) */
+function suTradeList(){ var L=TR_STD.slice(), seen={}, ex=[]; L.forEach(function(t){ seen[svN(t)]=1; });
+  var lev=function(a,b){ var m=a.length,n=b.length,d=[],i,j; if(Math.abs(m-n)>2) return 9; for(i=0;i<=m;i++){ d[i]=[i]; } for(j=1;j<=n;j++) d[0][j]=j; for(i=1;i<=m;i++) for(j=1;j<=n;j++) d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)); return d[m][n]; };
+  (cur.e1||[]).forEach(function(r){ var t=trName(r.trade); if(!t) return; var k=svN(t); if(!k||seen[k]) return; seen[k]=1; if(k.length>4&&TR_STD.some(function(x){ return lev(svN(x),k)<=2; })) return; /* a misspelling of a standard trade (e.g. Eletrical) is not offered */ ex.push(t); });
+  ex.sort(function(a,b){ return a.toLowerCase()<b.toLowerCase()?-1:1; }); return L.concat(ex).slice(0,299); }
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='suNoDone'){ try{ localStorage.setItem('kec.tplnodone',t.checked?'1':'0'); }catch(x){} } });
+function suNoDone(){ try{ return localStorage.getItem('kec.tplnodone')!=='0'; }catch(e){ return true; } }
 function suPrefillData(codes){
   if((!model||!model.rows||!model.rows.length)&&suMetaOn()) return suMetaPrefill(codes);
   var lc=function(v){ return String(v==null?'':v).toLowerCase(); }, set={}; codes.forEach(function(c){ set[lc(c)]=1; });
   var inSel=function(r){ return !!set[lc(r.code)]; }, cmp=function(a,b){ return lc(a.code)<lc(b.code)?-1:lc(a.code)>lc(b.code)?1:(lc(a.pkg)<lc(b.pkg)?-1:lc(a.pkg)>lc(b.pkg)?1:0); };
   var pk={}; (model.rows||[]).filter(inSel).forEach(function(r){ var k=lc(r.code)+'|'+lc(r.pkg); if(!pk[k]||r.date>=pk[k].date) pk[k]=r; });
+  /* V431: a package whose last report shows 100% actual is complete: it is not asked for again (setting in the Site update window, on by default) */
+  SU.tplDone=[]; if(suNoDone()) Object.keys(pk).forEach(function(k){ var r=pk[k]; if(r.rv>0&&r.ev/r.rv>=0.9999){ SU.tplDone.push(r.code+' · '+r.pkg); delete pk[k]; } });
   var pkgs=Object.keys(pk).map(function(k){ return {code:pk[k].code,pkg:pk[k].pkg}; }).sort(cmp), D={};
   D.prog=pkgs.map(function(p){ var r=pk[lc(p.code)+'|'+lc(p.pkg)], o={B:{s:p.code},D:{s:p.pkg}}, e=r.eot>0?Math.round(r.eot):0;
     /* V414 (option A): Extension of Time, Approved VOs and Gross certified amount start from the last report (light blue; the site team changes them only if they changed); columns V-Y show the last report for comparison */
@@ -5682,7 +5694,7 @@ function suOpenUpload(){
   SU.entry='auto';
   var mode=suMode(); if(mode==='off'){ toast('You do not have the right to upload site updates',true); return; }
   var t={live:'Your upload goes live straight away.',review:'Your upload waits for an administrator to approve it before it shows on the dashboard.',local:'There is no sign-in on this copy: the upload is applied in this browser only.'}[mode];
-  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <button type="button" class="btn" data-suconv="1" title="For a file made on an older template: carries the information into the latest template, and checks a file before you upload it">Download converter tool</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p>'+(suMode()==='local'?'':'<div class="suen"><small>You do not choose "new" or "modification": every row is compared with the database and marked <b>New</b>, <b>Modified</b> or <b>Unchanged</b> automatically. In a modified row an empty cell keeps the database value; a dash (-) clears it.</small></div>')+'<input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suEnt"></div><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
+  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <button type="button" class="btn" data-suconv="1" title="For a file made on an older template: carries the information into the latest template, and checks a file before you upload it">Download converter tool</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p><label class="sunod"><input type="checkbox" id="suNoDone"'+(suNoDone()?' checked':'')+'> Leave completed packages (100% actual) out of the template</label>'+(suMode()==='local'?'':'<div class="suen"><small>You do not choose "new" or "modification": every row is compared with the database and marked <b>New</b>, <b>Modified</b> or <b>Unchanged</b> automatically. In a modified row an empty cell keeps the database value; a dash (-) clears it.</small></div>')+'<input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suEnt"></div><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
 }
 async function suRead(file,okCode,resId){
   var out=document.getElementById(resId||'suRes'); out.innerHTML='Reading…';
