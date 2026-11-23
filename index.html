@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V428</title>
+<title>TEST · KEC Project Controls Dashboard · V429</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1528,7 +1528,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V428</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V429</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1709,7 +1709,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V428';
+var APP_VER='V429';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -5343,6 +5343,7 @@ function hcBody(){
   if(h){ x+='<div class="hchead"><b>Last check:</b> '+hcWhen(h.ts)+' · '+(h.trigger==='request'?'asked by '+esc(h.by||'an administrator'):'scheduled')+'</div>';
     x+='<div class="rvsum">'+hcChip(h.sum.error,h.sum.error===1?'error':'errors',h.sum.error?'e':'')+hcChip(h.sum.warn,h.sum.warn===1?'warning':'warnings',h.sum.warn?'w':'')+hcChip(h.sum.info,h.sum.info===1?'note':'notes','')+'</div>';
     x+='<div class="hcrep">'+(rep&&rep.id===h.id&&rep.url?'📄 <a href="'+esc(rep.url)+'" target="_blank" rel="noopener">Word report of this check</a>':'📄 The Word report of this check is being prepared by the health agent. It looks for new checks at 08:17, 11:17, 14:17, 17:17 and 20:17 (Riyadh time).')+'</div>';
+    if(rep&&rep.log&&rep.log.url) x+='<div class="hcrep">📊 <a href="'+esc(rep.log.url)+'" target="_blank" rel="noopener">Issue log (Excel)</a> <span class="rvmut">· every error and warning, open and solved, with the fixes applied'+(rep.log.ts?' · updated '+hcWhen(rep.log.ts):'')+'</span></div>';
     if(!h.findings.length) x+='<div class="rvallok">✓ No problems found.</div>';
     else x+=h.findings.map(function(f,i){ var on=!!HC.open[h.id+'|'+i]; return '<div class="hcf '+f.sev+'"><button type="button" class="hcft" data-hcf="'+h.id+'|'+i+'"><span class="rvsv '+(f.sev==='error'?'e':f.sev==='warn'?'w':'n')+'">'+(f.sev==='error'?'Error':f.sev==='warn'?'Warning':'Note')+'</span> '+esc(f.title)+' <span class="rvmut">· '+esc(f.cat)+'</span></button>'+(on?'<div class="hcfd">'+(f.where?'<div><b>Where:</b> '+esc(f.where)+'</div>':'')+(f.detail?'<div class="hcpre">'+esc(f.detail)+'</div>':'')+(f.fix?'<div><b>Suggested fix:</b> '+esc(f.fix)+'</div>':'')+'</div>':'')+'</div>'; }).join(''); }
   else x+='<div class="ulnone">No check has run yet.</div>';
@@ -5356,7 +5357,8 @@ function hcBody(){
     '<button type="button" class="btn" data-hcsave="1">Save settings</button></details>';
   var H=(S.hist||[]).slice(0,10); if(H.length>1) x+='<details class="hcset"><summary>Earlier checks</summary>'+H.map(function(r){ return '<div class="rvpr">'+hcWhen(r.ts)+' · '+(r.trigger==='request'?'asked by '+esc(r.by||''):'scheduled')+' · '+r.sum.error+' errors, '+r.sum.warn+' warnings</div>'; }).join('')+'<div class="rvpr">All Word reports are in Google Drive, folder “KEC Dashboard Health Agent / Reports”.</div></details>';
   return x; }
-/* V428: fixes prepared by the health agent (relay V67, KV agent:fixes) — applied to the Google Sheet only after an administrator ticks and confirms them.
+/* V429: after fixes are applied the check runs again by itself, so solved problems leave the list (they stay in the Excel issue log, KV agent:report.log, kept by the health agent).
+   V428: fixes prepared by the health agent (relay V67, KV agent:fixes) — applied to the Google Sheet only after an administrator ticks and confirms them.
    The relay checks again, just before changing anything, that each row still holds exactly the expected values. */
 HC.sel={}; HC.confirm=false;
 function hcRows(a){ a=a.slice().sort(function(x,y){ return x-y; }); var out=[], s=a[0], p=a[0]; for(var i=1;i<=a.length;i++){ if(a[i]===p+1){ p=a[i]; continue; } out.push(s===p?String(s):s+'–'+p); s=p=a[i]; } return out.join(', '); }
@@ -5372,9 +5374,9 @@ function hcFixes(){ var P=HC.st&&HC.st.fixes; if(!P||!P.items||!P.items.length) 
 function hcFixGo(){ var ids=Object.keys(HC.sel).filter(function(k){ return HC.sel[k]; }); if(!ids.length) return;
   if(!HC.confirm){ HC.confirm=true; hcRender(); return; }
   HC.confirm=false; HC.busy='fix'; hcRender();
-  accCall('POST','/agent',{action:'fix',ids:ids},120000).then(function(j){ HC.st=j; HC.sel={}; var it=(j.fixes&&j.fixes.items)||[], d=it.filter(function(i){ return ids.indexOf(i.id)>=0&&i.status==='done'; }).length; toast(d+' of '+ids.length+' fix'+(ids.length>1?'es':'')+' applied'+(d<ids.length?' — see the message on the others':'')+'. Run the check again to confirm.',d<ids.length); })
-    .catch(function(e){ toast((e&&(e.status===400&&/unknown action/i.test(e.message||'')))?'The relay cannot apply fixes yet: deploy relay V67.':((e&&e.message)||'The fixes could not be applied'),true); })
-    .then(function(){ HC.busy=''; hcRender(); }); }
+  accCall('POST','/agent',{action:'fix',ids:ids},120000).then(function(j){ HC.st=j; HC.sel={}; var it=(j.fixes&&j.fixes.items)||[], d=it.filter(function(i){ return ids.indexOf(i.id)>=0&&i.status==='done'; }).length; toast(d+' of '+ids.length+' fix'+(ids.length>1?'es':'')+' applied'+(d<ids.length?' — see the message on the others':'')+(d?'. Checking again so the solved problems are cleared…':'.'),d<ids.length); return d; })
+    .catch(function(e){ toast((e&&(e.status===400&&/unknown action/i.test(e.message||'')))?'The relay cannot apply fixes yet: deploy relay V67.':((e&&e.message)||'The fixes could not be applied'),true); return 0; })
+    .then(function(d){ HC.busy=''; hcRender(); if(d) setTimeout(hcRun,1500); }); }
 function hcFixDismiss(){ var ids=Object.keys(HC.sel).filter(function(k){ return HC.sel[k]; }); if(!ids.length) return; HC.confirm=false;
   accCall('POST','/agent',{action:'fixdismiss',ids:ids},30000).then(function(j){ HC.st=j; HC.sel={}; hcRender(); }).catch(function(e){ toast((e&&e.message)||'Could not dismiss',true); }); }
 document.addEventListener('change',function(e){ var t=e.target; if(t&&t.classList&&t.classList.contains('hcfxs')){ HC.sel[t.value]=t.checked; HC.confirm=false; hcRender(); } });
@@ -5384,7 +5386,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V428',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V429',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
