@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V432</title>
+<title>TEST · KEC Project Controls Dashboard · V433</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -48,6 +48,7 @@ nav a i{font-style:normal;font-size:10px;opacity:.55;width:16px}
 #lkModal{position:fixed;inset:0;z-index:310;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:6vh 16px;overflow:auto}#lkModal.on{display:flex}
 #lkModal .lkbox{background:var(--card,#fff);color:var(--ink,#1c2a3a);border-radius:10px;max-width:640px;width:100%;padding:18px 20px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
 #lkModal h3{margin:0 0 4px;font-size:16px}#lkModal p{font-size:12px;margin:4px 0 10px;opacity:.8}
+#lkModal .lkby{font-size:12px;margin:2px 0 6px;opacity:1}
 #lkModal label{display:block;font-size:12px;font-weight:600;margin:10px 0 3px}
 #lkModal input{width:100%;box-sizing:border-box;padding:7px 8px;font-size:12px;border:1px solid #9aa7b8;border-radius:6px;background:transparent;color:inherit}
 /* V380: contracts sync (OneDrive to Drive, add-only) */
@@ -1529,7 +1530,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V432</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V433</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1710,7 +1711,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V432';
+var APP_VER='V433';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -5389,7 +5390,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V432',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V433',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
@@ -9629,26 +9630,38 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var m=doc
 var LIVE_KEY='kecdash.v1.live', LIVE_EXP_DEF='2026-11-28';
 var LIVE_DEF={p:LIVE.sources[0].url,c:LIVE.sources[1].url,exp:LIVE_EXP_DEF};
 function liveSaved(){ try{ var o=JSON.parse(localStorage.getItem(LIVE_KEY)||'null'); return o&&typeof o==='object'?o:{}; }catch(e){ return {}; } }
-function liveApply(){ var o=liveSaved();
+/* V433: the live data links are kept on the relay (relay V69, /links) for every user, phone and web; an administrator renews them in Live data links and the relay checks and allows them. This browser's own copy is used only when the relay has none. */
+var LIVE_SHARED=null;
+function liveApply(){ var o=LIVE_SHARED&&LIVE_SHARED.c?LIVE_SHARED:liveSaved();
   LIVE.sources[0].url=(o.p&&/^https:\/\//.test(o.p))?o.p:LIVE_DEF.p;
   LIVE.sources[1].url=(o.c&&/^https:\/\//.test(o.c))?o.c:LIVE_DEF.c;
   LIVE_EXPIRY=(o.exp&&/^\d{4}-\d{2}-\d{2}$/.test(o.exp))?o.exp:LIVE_DEF.exp; }
 var LIVE_EXPIRY=LIVE_EXP_DEF;
 liveApply();
+async function lkShared(){ try{ var j=await accCall('GET','/links',null,8000); LIVE_SHARED=(j&&j.links&&j.links.c)?j.links:null; }catch(e){ return; } liveApply(); try{ liveExpiry(); }catch(e){} }
 function lkOpen(){ var m=document.getElementById('lkModal'); if(!m) return; var o=liveSaved();
-  m.innerHTML='<div class="lkbox"><h3>Live data links</h3><p>Paste the new SharePoint "Anyone" links here when they are renewed. The data relay in Cloudflare only accepts links on its own allow-list, so it has to be updated to the same links. If it rejects a link, the sidebar will say so.</p>'
+  var S=LIVE_SHARED, adm=!!(ACC.user&&ACC.user.admin===true);
+  m.innerHTML='<div class="lkbox"><h3>Live data links</h3><p>Paste the new SharePoint "Anyone with the link" links here when they are renewed. When you save, the relay reads each new link once to check it, adds it to its allow-list and keeps it for every user, on phone and web. The old link keeps working until it expires.</p>'
+  +(S?'<p class="lkby">Saved for everyone by <b>'+esc(S.by||'—')+'</b> on '+esc(new Date(S.ts).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}))+'</p>':'')
+  +(!adm&&ACC.need?'<p class="lkby" style="color:#b23b3b">Only an administrator can change the links.</p>':'')
   +'<label for="lkP">Progress workbook link</label><input id="lkP" type="url" value="'+esc(LIVE.sources[0].url)+'">'
   +'<label for="lkC">Contracts workbook link</label><input id="lkC" type="url" value="'+esc(LIVE.sources[1].url)+'">'
   +'<label for="lkE">Links expire on (reminder date)</label><input id="lkE" type="date" value="'+esc(LIVE_EXPIRY)+'">'
   +'<div class="lkerr" id="lkErr"></div><div class="lkact"><button class="pri" id="lkSave">Save &amp; refresh</button><button id="lkReset">Reset to default</button><button id="lkClose">Cancel</button></div></div>';
   m.classList.add('on'); }
-function lkSave(){ var p=document.getElementById('lkP').value.trim(), c=document.getElementById('lkC').value.trim(), x=document.getElementById('lkE').value.trim(), er=document.getElementById('lkErr');
+async function lkSave(){ var p=document.getElementById('lkP').value.trim(), c=document.getElementById('lkC').value.trim(), x=document.getElementById('lkE').value.trim(), er=document.getElementById('lkErr'), bt=document.getElementById('lkSave');
   if(!/^https:\/\/\S+$/.test(p)||!/^https:\/\/\S+$/.test(c)){ er.textContent='Both links must start with https://'; return; }
   if(!/^\d{4}-\d{2}-\d{2}$/.test(x)){ er.textContent='Choose the expiry date'; return; }
+  if(ACC.token){ er.textContent=''; bt.disabled=true; bt.textContent='Checking the links…';
+    try{ var j=await accCall('POST','/links',{p:p,c:c,exp:x},60000); LIVE_SHARED=j.links; try{ localStorage.removeItem(LIVE_KEY); }catch(e){} liveApply(); liveExpiry();
+      document.getElementById('lkModal').classList.remove('on'); toast('Links checked and saved for everyone'); liveLoad(false); }
+    catch(e){ er.textContent=(e&&e.status===400&&/GET only|Missing \?url/i.test(e.message||''))||(e&&e.status===405)?'The relay cannot keep the links yet: deploy relay V69.':((e&&e.message)||'The links could not be saved'); }
+    bt.disabled=false; bt.textContent='Save & refresh'; return; }
   try{ localStorage.setItem(LIVE_KEY,JSON.stringify({p:p,c:c,exp:x})); }catch(e){ er.textContent='This browser blocked saving. The links will apply until the page is closed.'; }
   LIVE.sources[0].url=p; LIVE.sources[1].url=c; LIVE_EXPIRY=x; liveExpiry();
   document.getElementById('lkModal').classList.remove('on'); liveLoad(false); }
-function lkReset(){ try{ localStorage.removeItem(LIVE_KEY); }catch(e){} liveApply(); liveExpiry();
+async function lkReset(){ if(ACC.token&&LIVE_SHARED){ try{ await accCall('POST','/links',{action:'reset'},15000); LIVE_SHARED=null; }catch(e){ document.getElementById('lkErr').textContent=(e&&e.message)||'Could not reset'; return; } }
+  try{ localStorage.removeItem(LIVE_KEY); }catch(e){} liveApply(); liveExpiry();
   document.getElementById('lkModal').classList.remove('on'); liveLoad(false); }
 document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return;
   if(t.closest('#lkOpen')){ e.preventDefault(); lkOpen(); return; }
@@ -9789,6 +9802,7 @@ async function liveLoad(auto,only){
   LIVE_BUSY=true; liveStatus('load','Loading live data…');
   try{
     /* V417: a user whose money figures are hidden does not load the contracts database (the relay refuses it too) */
+    await lkShared();
     var srcs=LIVE.sources.filter(function(s){ return !(accNoMoney()&&/contract/i.test(String(s.name||''))); });
     /* V418: Refresh on one file of the Data sources fetches that file again and reuses the other one already loaded */
     var want=srcs.map(function(s){ return only==null||s===LIVE.sources[only]||!LIVE_FILES[s.name]; });
@@ -9805,7 +9819,7 @@ async function liveLoad(auto,only){
     if(failed.length){ liveStatus('err','Partly updated '+hh+': '+failed.map(function(f){ return String(f&&f.message||f); }).join(' · ')+'. The other figures are live; this part shows the last saved data.'); if(!auto) toast('Only part of the live data could be refreshed',true); }
     else{ var dsw=dsWarnText(); if(dsw) liveStatus('warn','Live data · updated '+hh+' · '+dsw); else liveStatus('ok','Live data · updated '+hh);
     if(!auto) toast('Live data refreshed · cut-off '+d2(state.cutoff)); }
-  }catch(e){ if(/sign in again/i.test(e.message)){ LIVE_BUSY=false; accExpire(); return; } liveStatus('err',(auto?'Live data unavailable: ':'')+e.message+(/allow-list|not allowed/i.test(e.message)?'. The relay in Cloudflare must be updated to accept this link.':'')+(auto?'. Showing the last saved data'+(kcDate()?' (saved '+kcDate()+')':'')+'.':'')); if(!auto) toast(e.message,true); }
+  }catch(e){ if(/sign in again/i.test(e.message)){ LIVE_BUSY=false; accExpire(); return; } liveStatus('err',(auto?'Live data unavailable: ':'')+e.message+(/allow-list|not allowed/i.test(e.message)&&!/Live data links/.test(e.message)?'. An administrator can add the link in Live data links.':'')+(auto?'. Showing the last saved data'+(kcDate()?' (saved '+kcDate()+')':'')+'.':'')); if(!auto) toast(e.message,true); }
   LIVE_BUSY=false; INTRO.notify(!document.querySelector('#liveSt.err')); dsAfterLoad();
   if(NODATA) noDataMsg(true);
 }
