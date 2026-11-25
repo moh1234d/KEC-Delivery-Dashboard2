@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V436</title>
+<title>TEST · KEC Project Controls Dashboard · V437</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1250,6 +1250,18 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 .cpban>div{flex:1;min-width:220px}.cpban b{font-size:14px}.cpban .r{flex:0 1 auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cpchg{font-size:12px;color:var(--mut);display:flex;gap:6px;align-items:center}
 @media print{.cpsug,.cpban .r{display:none!important}}
 .mpt .mpsub{float:right;font-size:12px;font-weight:500;color:var(--mut)}@media (max-width:640px){.mpt .mpsub{float:none;display:block;margin-top:2px}}
+
+/* V437: Trends card with tabs on its top edge */
+.trw{margin-bottom:14px}
+.trtabs{display:flex;gap:6px;margin:0 0 -1px 14px;position:relative;z-index:1}
+.trtabs button{display:flex;align-items:center;gap:9px;padding:11px 22px;font:inherit;font-size:14.5px;font-weight:700;color:var(--mut);background:color-mix(in srgb,var(--line) 55%,var(--card));border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;cursor:pointer}
+.trtabs button i{width:11px;height:11px;border-radius:50%;background:var(--c)}
+.trtabs button.on{background:var(--card);color:var(--ink);box-shadow:inset 0 4px 0 var(--c);padding-top:13px;margin-top:-2px}
+.trtabs button:not(.on):hover{color:var(--ink)}
+.trcard{margin-bottom:0}.trcard .mpk{margin:8px 0 10px}.trcard .trbox{height:360px}
+.trk b.bad{color:var(--bad)}
+.trlg{display:flex;gap:14px;font-size:11.5px;font-weight:700;margin:-2px 0 2px}.trlg .pl{color:#8a7f68}.trlg .ac{color:var(--accent)}
+@media (max-width:640px){.trtabs{margin-left:6px;gap:4px}.trtabs{margin-right:6px}.trtabs button{flex:1 1 0;min-width:0;justify-content:center;padding:10px 6px;font-size:13px;gap:6px;white-space:nowrap}.trtabs .trd{display:none}.trtabs button i{width:9px;height:9px}.trtabs button.on{padding-top:12px}.trcard .trbox{height:270px}.trcard .mpk{grid-template-columns:repeat(2,1fr)!important}}
 .spit{margin-top:14px}.spit .mpk{margin:8px 0 12px}.spit .spibox{height:280px}.spit.off h3{margin-bottom:0}.spit h3 small{margin-right:8px}
 @media (max-width:640px){.spit .spibox{height:240px}.spit h3 .mplb{float:none;display:block;margin-top:6px}}.mplb input{vertical-align:middle;margin-right:4px}
 .trasat{font-size:11px;color:var(--mut);margin:2px 0 4px}.trdq{font-size:12px;background:#fbeccd;color:#8a5a00;border-radius:8px;padding:6px 10px;margin:4px 0}[data-theme=dark] .trdq{background:#3a2e12;color:#f0c76a}
@@ -1584,7 +1596,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V436</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V437</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1765,7 +1777,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V436';
+var APP_VER='V437';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4559,7 +4571,7 @@ function pSiteGroup(rows,coreRows,cut){ SV.rep=null;
   var pv=null, eac=null, anyX=false;
   if(FV&&FV.lines.length){ FV.lines.forEach(function(l){ if(l.pvoS!=null||l.eacS!=null) anyX=true; pv=(pv||0)+(l.pvoS||0); eac=(eac||0)+(l.eacS||0); }); }
   var fin=svFinHtml(AF,anyX,pv,eac,codes);
-  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>planned − forecast; negative = late</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>'+svSpiHtml(cut);
+  var T=sec('svT','Trends','actual vs planned progress, overrun in days and SPI, by data date')+svTrendsHtml(cut);
   /* trackers by project */
   var sumP=function(arr,tk,f){ return codes.map(function(c){ var L=svLatest(arr,svGrpScope(c),cut,tk); return {c:c,L:L,t:L.length?f(L):null}; }); };
   var e1r=sumP(cur.e1,'e1',function(L){ return {tot:svSum(L,'tot'),sub:svSum(L,'sub'),app:svSum(L,'app'),rev:svSum(L,'rev'),rvw:svSum(L,'rvw'),ns:svSum(L,'ns')}; }), anyE1=e1r.some(function(x){ return x.t; });
@@ -4823,7 +4835,7 @@ function pSiteBuild(rows,coreRows,cut){
   /* manpower + trends canvases */
   var mpAny=(cur.mp||[]).some(function(x){ return String(x.code).toLowerCase()===sc.lc; });
   var M=svMpHtml(svMpModel(sc,cut,false,null));
-  var T=sec('svT','Trends','actual vs planned progress and overrun in days, by data date')+'<div class="svtwo"><div class="card plain tcard"><h3>Actual vs planned progress</h3><div class="chart-box"><canvas id="svTa"></canvas></div></div><div class="card plain tcard"><h3>Overrun trend (days) <small>planned − forecast; negative = late</small></h3><div class="chart-box"><canvas id="svTo"></canvas></div></div></div>'+svSpiHtml(cut);
+  var T=sec('svT','Trends','actual vs planned progress, overrun in days and SPI, by data date')+svTrendsHtml(cut);
   /* challenges */
   var CL=svChalList(sc,cut), open=CL.all.filter(function(x){ return !/^closed/i.test(x.status); }), closed=CL.all.length-open.length;
   var O={High:0,Medium:1,Low:2}; open.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
@@ -5192,11 +5204,38 @@ function svMpCfg(m,ink,line,acc){
 var SPIT={on:true};
 try{ var _sp=JSON.parse(localStorage.getItem('kec.spit.v1')||'null'); if(_sp&&_sp.on===false) SPIT.on=false; }catch(e){}
 function svSpiSeries(cut){ var o=[]; model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); if(a.spi==null||!isFinite(a.spi)||!(a.plan>0)) return; o.push({d:s,v:+a.spi.toFixed(2),pl:a.plan,ac:a.act}); }); return o; }
+/* V437: the Trends card: one chart, chosen with the tabs on its top edge (Progress · Overrun (days) · SPI), remembered on each device */
+var TRT={tab:'prog'};
+try{ var _tt=localStorage.getItem('kec.trtab.v1'); if(_tt==='prog'||_tt==='ov'||_tt==='spi') TRT.tab=_tt; }catch(e){}
+function svTrSeries(cut){ var o=[]; model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); o.push({d:s,p:a.plan*100,a:a.act*100,o:a.pf&&a.ff?dayDiff(a.ff,a.pf):0}); }); return o; }
+function svTrTile(l,v,s,cls){ return '<div><span class="l">'+l+'</span><b'+(cls?' class="'+cls+'"':'')+'>'+v+'</b><span class="s">'+s+'</span></div>'; }
+function svTrendsHtml(cut){
+  var tabs=[['prog','Progress','var(--accent)'],['ov','Overrun<span class="trd"> (days)</span>','var(--bad)'],['spi','SPI','var(--ink)']], k=TRT.tab;
+  var bar='<div class="trtabs" role="tablist">'+tabs.map(function(t){ return '<button type="button" role="tab" aria-selected="'+(t[0]===k)+'" data-trtab="'+t[0]+'" class="'+(t[0]===k?'on':'')+'" style="--c:'+t[2]+'"><i></i>'+t[1]+'</button>'; }).join('')+'</div>';
+  var body='';
+  if(k==='spi') body='<h3>SPI trend <small>schedule performance index = earned ÷ planned progress · 1.00 = on plan</small></h3>'+svSpiInner(cut);
+  else { var S=[]; try{ S=svTrSeries(cut); }catch(e){} var L=S[S.length-1], P=S.length>1?S[S.length-2]:null;
+    if(!L) body='<h3>'+(k==='prog'?'Actual vs planned progress':'Overrun trend (days)')+'</h3><div class="empty">No progress data at or before the cut-off.</div>';
+    else if(k==='prog'){ var g=L.a-L.p, gp=P?P.a-P.p:null, dg=gp==null?null:g-gp;
+      body='<h3>Actual vs planned progress <small>by data date</small></h3><div class="mpk trk" style="grid-template-columns:repeat(3,1fr)">'+
+        svTrTile('Actual progress',L.a.toFixed(1)+'%','data date '+d2(L.d))+svTrTile('Planned progress',L.p.toFixed(1)+'%','same date')+
+        svTrTile('Gap',(g>=0?'+':'−')+Math.abs(g).toFixed(1)+' pts',dg==null?'needs two data dates':(Math.abs(dg)<0.05?'unchanged since '+d2(P.d):(dg<0?'▼ widened ':'▲ narrowed ')+Math.abs(dg).toFixed(1)+' pts since '+d2(P.d)),g<-0.05?'bad':'')+'</div>'+
+        '<div class="chart-box trbox"><canvas id="svTa"></canvas></div>'; }
+    else { var o=Math.round(L.o), dO=P?o-Math.round(P.o):null;
+      body='<h3>Overrun trend (days) <small>planned − forecast finish · negative = late</small></h3><div class="mpk trk" style="grid-template-columns:repeat(2,1fr)">'+
+        svTrTile('Latest overrun',(o<0?'−':o>0?'+':'')+Math.abs(o)+' days',o<0?'forecast later than planned':o>0?'forecast earlier than planned':'on the planned date',o<0?'bad':'')+
+        svTrTile('Change',dO==null?'–':dO===0?'0 days':(dO<0?'▼ ':'▲ ')+Math.abs(dO)+' days',P?'since '+d2(P.d):'needs two data dates',dO<0?'bad':'')+'</div>'+
+        '<div class="chart-box trbox"><canvas id="svTo"></canvas></div>'; } }
+  return '<div class="trw">'+bar+'<div class="card plain tcard trcard">'+body+'</div></div>';
+}
 function svSpiHtml(cut){
   var head='<h3>SPI trend <small>schedule performance index = earned ÷ planned progress · 1.00 = on plan</small><label class="mplb"><input type="checkbox" id="spiTog"'+(SPIT.on?' checked':'')+'> Show chart</label></h3>';
   if(!SPIT.on) return '<div class="card plain tcard spit off">'+head+'</div>';
+  return '<div class="card plain tcard spit">'+head+svSpiInner(cut)+'</div>';
+}
+function svSpiInner(cut){
   var S=[]; try{ S=svSpiSeries(cut); }catch(e){}
-  if(!S.length) return '<div class="card plain tcard spit">'+head+'<div class="empty">No SPI yet. It needs planned progress above 0 in at least one data date.</div></div>';
+  if(!S.length) return '<div class="empty">No SPI yet. It needs planned progress above 0 in at least one data date.</div>';
   var f=function(v){ return v.toFixed(2); }, L=S[S.length-1], P=S.length>1?S[S.length-2]:null, lo=S[0], hi=S[0];
   S.forEach(function(x){ if(x.v<lo.v) lo=x; if(x.v>hi.v) hi=x; });
   var ch=P?+(L.v-P.v).toFixed(2):null;
@@ -5204,14 +5243,14 @@ function svSpiHtml(cut){
     '<div><span class="l">SPI change</span><b>'+(ch==null?'–':ch>0?'▲ +'+f(ch):ch<0?'▼ −'+f(-ch):'0.00')+'</b><span class="s">'+(P?'since '+d2(P.d):'needs two data dates')+'</span></div>'+
     '<div><span class="l">Lowest SPI</span><b>'+f(lo.v)+'</b><span class="s">'+d2(lo.d)+'</span></div>'+
     '<div><span class="l">Highest SPI</span><b>'+f(hi.v)+'</b><span class="s">'+d2(hi.d)+'</span></div></div>';
-  return '<div class="card plain tcard spit">'+head+k+(S.length>1?'<div class="chart-box spibox"><canvas id="svSpi"></canvas></div>':'<div class="empty">The trend line appears after two data dates.</div>')+'</div>';
+  return k+(S.length>1?'<div class="chart-box spibox trbox"><canvas id="svSpi"></canvas></div>':'<div class="empty">The trend line appears after two data dates.</div>');
 }
 function spiRgba(c,a){ c=String(c||'').trim(); var m=/^#([0-9a-f]{6})$/i.exec(c); if(m){ var n=parseInt(m[1],16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; } m=/^rgba?\(([^)]+)\)$/i.exec(c); if(m){ var p=m[1].split(',').slice(0,3).join(','); return 'rgba('+p+','+a+')'; } return 'rgba(47,111,214,'+a+')'; }
 function svSpiCfg(S,ink,line,acc){
   var tx=cssv('--ink')||ink, halo=cssv('--card')||'#fff', V=S.map(function(x){ return x.v; }), n=V.length, lo=Math.min.apply(null,V), hi=Math.max.apply(null,V), mn=Math.min(lo,1), mx=Math.max(hi,1), pad=Math.max(.05,(mx-mn)*.15);
   var plug={id:'spiP',
     beforeDatasetsDraw:function(c){ var y=c.scales.y.getPixelForValue(1), a=c.chartArea, x=c.ctx; if(y<a.top||y>a.bottom) return; x.save(); x.strokeStyle=ink; x.setLineDash([5,4]); x.lineWidth=1.2; x.beginPath(); x.moveTo(a.left,y); x.lineTo(a.right,y); x.stroke(); x.restore(); },
-    afterDatasetsDraw:function(c){ var x=c.ctx, m=c.getDatasetMeta(0), a=c.chartArea, fs=c.width<520?9.5:10.5, room=Math.max(2,Math.floor((a.right-a.left)/(fs*5.2))), step=Math.max(1,Math.ceil(n/room)), drawn=[], boxes=[];
+    afterDatasetsDraw:function(c){ var x=c.ctx, m=c.getDatasetMeta(0), a=c.chartArea, fs=c.width<520?9.5:10.5, room=Math.max(2,Math.floor((a.right-a.left)/(fs*3.3))), step=Math.max(1,Math.ceil(n/room)), drawn=[], boxes=[];
       x.save(); x.font='600 '+fs+'px Inter,system-ui,sans-serif'; x.textAlign='center'; x.lineJoin='round'; x.lineWidth=4;
       var iLo=V.indexOf(lo), iHi=V.indexOf(hi), ord=[n-1,iLo,iHi]; for(var j=n-2;j>=0;j--) if(ord.indexOf(j)<0&&!((n-1-j)%step)) ord.push(j);
       ord.forEach(function(i){ var p=m.data[i]; if(!p) return; var t=V[i].toFixed(2), w=x.measureText(t).width+6, xx=Math.min(Math.max(p.x,a.left+w/2),a.right-w/2+6), yy=i===iLo&&i!==n-1?p.y+fs+6:p.y-9;
@@ -5248,7 +5287,7 @@ function svCfgs(){
   var sc=SV.cur.sc, cut=SV.cur.cut, ink=cssv('--mut'), line=cssv('--line'), acc=cssv('--accent'), bad=cssv('--bad'), out={};
   var base=function(){ return {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:ink,boxWidth:12}}},scales:{x:{ticks:{color:ink},grid:{color:line}},y:{ticks:{color:ink},grid:{color:line}}}}; };
   var MPm=svMpModel(sc,cut,!!SV.cur.grp,SV.cur.grp?SV.cur.codes:null);
-  if(SPIT.on&&document.getElementById('svSpi')){ var SPs=[]; try{ SPs=svSpiSeries(cut); }catch(e){} if(SPs.length>1) out.svSpi=function(){ return svSpiCfg(SPs,ink,line,acc); }; }
+  if(document.getElementById('svSpi')){ var SPs=[]; try{ SPs=svSpiSeries(cut); }catch(e){} if(SPs.length>1) out.svSpi=function(){ return svSpiCfg(SPs,ink,line,acc); }; }
   if(MPm&&MPm.rows.length){ out.svMp=function(){ return MPm.hasEq?svMpEqCfg(MPm,ink,line,acc):svMpCfg(MPm,ink,line,acc); }; if(MPm.trend.length>1) out.svMpT=function(){ return svMpTrend(MPm,ink,line,acc); }; }
   var P=[],A=[],Od=[],L=[];
   model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); L.push(d2(s)); P.push(+(a.plan*100).toFixed(2)); A.push(+(a.act*100).toFixed(2)); Od.push(a.pf&&a.ff?dayDiff(a.ff,a.pf):0); });
@@ -5256,7 +5295,7 @@ function svCfgs(){
   var lbl=function(o){ return {id:'svLbl',afterDatasetsDraw:function(ch){ var c=ch.ctx; c.save(); c.font='600 10.5px Inter,system-ui,sans-serif'; c.textAlign='center'; c.lineJoin='round'; c.lineWidth=4; var drawn=[];
       o.forEach(function(d){ var meta=ch.getDatasetMeta(d.i); if(!meta||meta.hidden) return; var data=ch.data.datasets[d.i].data, lastX=null;
         for(var k=data.length-1;k>=0;k--){ var pt=meta.data[k]; if(!pt||data[k]==null) continue; var txt=d.f(data[k]), w=c.measureText(txt).width+6, x=Math.max(pt.x,ch.chartArea.left+w/2+2), y=pt.y+(d.pos==='below'?15:-9);
-          if(k<data.length-1&&data[k]===data[k+1]&&k>0&&data[k]===data[k-1]) continue;
+          x=Math.min(x,ch.chartArea.right+14-w/2);
           if(drawn.some(function(q){ return Math.abs(q.x-x)<(q.w+w)/2&&Math.abs(q.y-y)<13; })) continue;
           c.strokeStyle=halo; c.fillStyle=d.c; c.strokeText(txt,x,y); c.fillText(txt,x,y); drawn.push({x:x,y:y,w:w}); } });
       c.restore(); }}; };
@@ -5417,6 +5456,7 @@ function dqRun(){
     if(nsp.length) out.push({dq:1,code:nsp[0].code,t:'Package not in the approved list',m:nsp.length+' package(s) in the progress data are not in the <b>Packages List</b> / <b>Plots List</b> of the live Sheet: '+nsp.slice(0,6).map(function(r){ return '<b>'+esc(r.pkg)+'</b> ('+esc(r.code)+')'; }).join('; ')+(nsp.length>6?' …':'')+'. Administrator: add it to the list, or map the old spelling on the <b>Package Aliases</b> tab.'}); }
   model.dqN=out.length; out.forEach(function(i){ model.issues.push(i); });
 }
+document.addEventListener('click',function(e){ var b=e.target&&e.target.closest&&e.target.closest('[data-trtab]'); if(!b) return; var v=b.getAttribute('data-trtab'); if(v===TRT.tab) return; TRT.tab=v; try{ localStorage.setItem('kec.trtab.v1',v); }catch(x){} var sy=window.scrollY; render(); window.scrollTo(0,sy); });
 document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='spiTog'){ SPIT.on=!!t.checked; try{ localStorage.setItem('kec.spit.v1',JSON.stringify(SPIT)); }catch(x){} var sy=window.scrollY; render(); window.scrollTo(0,sy); return; }
   if(t&&t.id==='mpLbl'){ MPL.on=!!t.checked; try{ localStorage.setItem('kec.mpl.v1',JSON.stringify(MPL)); }catch(x){} try{ var ch=Chart.getChart(document.getElementById('svMpT')); if(ch) ch.draw(); }catch(x){} return; }
   if(!t) return; if(t.id==='dqSil'||t.id==='dqChg'){ var v=parseFloat(t.value); if(!(v>0&&v<=365)){ t.value=t.id==='dqSil'?DQ.silent:DQ.chg; return; } if(t.id==='dqSil') DQ.silent=v; else DQ.chg=v; dqSave(); dqRun(); try{ render(); }catch(x){} } });
@@ -5582,7 +5622,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V436',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V437',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
