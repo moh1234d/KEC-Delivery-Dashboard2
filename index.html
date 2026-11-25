@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V444</title>
+<title>TEST · KEC Project Controls Dashboard · V446</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1526,8 +1526,8 @@ body.pf-arr .sec-bar{display:none}
 
 /* V434: Print report (A3) */
 #repBox{position:absolute;left:-40000px;top:0;background:#fff;color:#1c2a3a;font-family:Inter,"Segoe UI",Arial,sans-serif}
-#repBox .rpg{position:relative;width:281mm;height:403mm;padding:0;display:flex;flex-direction:column;gap:10px;overflow:hidden;background:#fff;page:rep;box-sizing:border-box}
-#repBox .rpg.L{width:404mm;height:280mm}
+#repBox .rpg{position:relative;width:297mm;height:419mm;padding:8mm;display:flex;flex-direction:column;gap:10px;overflow:hidden;background:#fff;page:rep;box-sizing:border-box}
+#repBox .rpg.L{width:420mm;height:296mm}
 #repBox .rpg:not(:last-child){break-after:page;page-break-after:always}
 #repBox .rbody{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:14px}
 #repBox .rhd{display:flex;align-items:center;gap:16px;background:#0b2a5e;color:#fff;padding:12px 18px;border-bottom:4px solid #C8963E;border-radius:8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -1601,7 +1601,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V444</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V446</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1782,7 +1782,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V444';
+var APP_VER='V446';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3097,7 +3097,8 @@ function trDelay(o){ if(!(o.pl>0)) return {k:'na',n:0,p:0}; if(o.sub>=o.pl) retu
    A trade row whose Total is as large as all the other trades together (3 or more of them) looks like a total row: a warning. */
 function e1Totals(rows){ var g={}, out={errs:[],warns:[]}, key=function(r){ return [String(r.d||''),String(r.code).trim().toLowerCase(),svN(r.pkg),svN(r.type)].join('|'); };
   (rows||[]).forEach(function(r){ if(!r||!r.type) return; (g[key(r)]=g[key(r)]||[]).push(r); });
-  Object.keys(g).forEach(function(k){ var L=g[k], T=L.filter(function(r){ return String(r.trade||'').trim(); }), N=L.filter(function(r){ return !String(r.trade||'').trim(); }); if(!T.length) return;
+  out.multi=[]; /* V446: two or more rows of one type with no Trade cannot be told apart in the database */
+  Object.keys(g).forEach(function(k){ var L=g[k], T=L.filter(function(r){ return String(r.trade||'').trim(); }), N=L.filter(function(r){ return !String(r.trade||'').trim(); }); if(!T.length&&N.length>1) out.multi.push({code:L[0].code,w:L[0].code+' · '+L[0].pkg+' · '+L[0].type,n:N.length,tots:N.map(function(r){ return +r.tot||0; })}); if(!T.length) return;
     var w=L[0].code+' · '+L[0].pkg+' · '+L[0].type;
     N.forEach(function(r){ out.errs.push({code:L[0].code,w:w,t:'a row with no Trade (Total '+(+r.tot||0)+') next to '+T.length+' rows with a Trade ('+T.slice(0,4).map(function(x){ return x.trade; }).join(', ')+(T.length>4?', …':'')+')',tot:+r.tot||0,sum:T.reduce(function(a,x){ return a+(+x.tot||0); },0)}); });
     if(T.length>=4) T.forEach(function(r){ var s=T.reduce(function(a,x){ return x===r?a:a+(+x.tot||0); },0); if(s>0&&(+r.tot||0)>=s) out.warns.push({code:L[0].code,w:w+' · '+r.trade,t:'Total '+(+r.tot||0)+(+r.tot===s?' equals':' is more than')+' all the other trades together ('+s+')',tot:+r.tot||0,sum:s}); }); });
@@ -3331,6 +3332,10 @@ var SU_TO=(function(){ var o={review:120000}; try{ var s0=JSON.parse(localStorag
 function suToSel(id){ return '<label class="pnbset">Approval time limit <select id="'+id+'" data-suto="1">'+[[60000,'1 min'],[120000,'2 min'],[240000,'4 min']].map(function(o){ return '<option value="'+o[0]+'"'+(SU_TO.review===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></label>'; }
 document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='suLinkMoney'){ try{ localStorage.setItem('kec.linkMoney.v1',t.checked?'1':'0'); }catch(_){} PH_MH=''; try{ phMetaPost(); }catch(_){} toast('Saved · the lists for private links are sent again'); } });
 document.addEventListener('change',function(e){ var t=e.target; if(t&&t.getAttribute&&t.getAttribute('data-suto')){ SU_TO.review=+t.value||120000; try{ localStorage.setItem('kec.suTo.v1',JSON.stringify(SU_TO)); }catch(_){} document.querySelectorAll('[data-suto]').forEach(function(x){ x.value=String(SU_TO.review); }); } });
+/* V446: once the relay confirms an approved update is in the Google Sheet, the live data is loaded again (only the changed file is downloaded) */
+function suAfterWrite(j){ var sh=j&&j.sheet; if(!(sh&&sh.ok&&!sh.pending)||!LIVE.sources.length) return;
+  var go=function(n){ if(LIVE_BUSY){ if(n<40) setTimeout(function(){ go(n+1); },500); return; } liveLoad(true).then(function(){ if(!document.querySelector('#liveSt.err')) toast('Figures updated from the Google Sheet'); }); };
+  setTimeout(function(){ go(0); },600); }
 function suWriteToast(j,verb){ var sh=j&&j.sheet; if(j&&j.already){ toast('This update was already approved · '+suStatusText({status:'accepted',sheet:sh===undefined?undefined:sh}).t,false,9000); return; }
   if(sh===undefined){ toast(verb||'Approved'); return; }
   var x=suStatusText({status:'accepted',sheet:sh}); toast((/^Approved/.test(x.t)&&/^Approved/.test(verb||'Approved')?x.t:(verb||'Approved')+' · '+x.t)+(x.k==='r'?' · press Retry write':''),x.k==='r',x.k==='r'?15000:8000); }
@@ -3742,7 +3747,7 @@ async function ulAfterReview(){
   try{ SU.admin=await accCall('GET','/site-admin',null,30000); PNB.subs=(SU.admin&&SU.admin.subs)||PNB.subs; PNB.t=Date.now(); pnbPaint(); }catch(e){}
   suUndo(); await suSync(); UL.loaded=false; await ulLoad(true); render();
 }
-document.addEventListener('click',function(e){ var w=e.target.closest&&e.target.closest('[data-ulrw]'); if(w){ w.disabled=true; w.textContent='Writing…'; accCall('POST','/site-review',{id:w.getAttribute('data-ulrw'),action:'rewrite'},SU_TO.review).then(function(j){ suWriteToast(j,'Retry write'); return ulAfterReview(); }).catch(function(er){ w.disabled=false; w.textContent='Retry write'; toast((er&&er.status===400?'The relay is older than V55: Retry write needs relay V55':(er&&er.message))||'Could not write',true); }); return; } });
+document.addEventListener('click',function(e){ var w=e.target.closest&&e.target.closest('[data-ulrw]'); if(w){ w.disabled=true; w.textContent='Writing…'; accCall('POST','/site-review',{id:w.getAttribute('data-ulrw'),action:'rewrite'},SU_TO.review).then(function(j){ suWriteToast(j,'Retry write'); suAfterWrite(j); return ulAfterReview(); }).catch(function(er){ w.disabled=false; w.textContent='Retry write'; toast((er&&er.status===400?'The relay is older than V55: Retry write needs relay V55':(er&&er.message))||'Could not write',true); }); return; } });
 document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-ultab],[data-ulapp],[data-ulrej],[data-ulrefresh]'); if(!t) return;
   if(t.hasAttribute('data-ultab')){ UL.tab=t.getAttribute('data-ultab'); render(); }
   else if(t.hasAttribute('data-ulrefresh')){ UL.loaded=false; ulLoad(true); }
@@ -3750,7 +3755,7 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
     if(!on.length){ toast('Tick at least one project to approve',true); return; }
     var rvk=document.getElementById('rvok-'+id); if(rvk&&!rvk.checked){ RV.tab[id]='chk'; render(); toast('Some checks failed: look at the Checks tab and tick “I checked the failed checks”, or reject the update',true,7000); return; }
     if(!suHiddenOk(suSubById(id))) return;
-    t.disabled=true; var t0=t.textContent; t.textContent='Approving… (writing to the database can take up to '+Math.round(SU_TO.review/60000)+' min)'; accCall('POST','/site-review',{id:id,action:'approve',only:on.length===all.length?undefined:on},SU_TO.review).then(function(j){ suWriteToast(j,'Approved'+(on.length<all.length?' · '+on.length+' of '+all.length+' projects':'')); return ulAfterReview(); }).catch(function(er){ t.disabled=false; t.textContent=t0; if(suReviewErr(er,ulAfterReview)) return; toast((er&&er.message)||'Could not approve',true); }); }
+    t.disabled=true; var t0=t.textContent; t.textContent='Approving… (writing to the database can take up to '+Math.round(SU_TO.review/60000)+' min)'; accCall('POST','/site-review',{id:id,action:'approve',only:on.length===all.length?undefined:on},SU_TO.review).then(function(j){ suWriteToast(j,'Approved'+(on.length<all.length?' · '+on.length+' of '+all.length+' projects':'')); suAfterWrite(j); return ulAfterReview(); }).catch(function(er){ t.disabled=false; t.textContent=t0; if(suReviewErr(er,ulAfterReview)) return; toast((er&&er.message)||'Could not approve',true); }); }
   else if(t.hasAttribute('data-ulrej')){ var id2=t.getAttribute('data-ulrej'), rs=(document.getElementById('ulr-'+id2)||{}).value||''; if(!rs.trim()){ toast('Write the reason that goes back to the site team',true); return; }
     t.disabled=true; accCall('POST','/site-review',{id:id2,action:'reject',reason:rs.trim()},SU_TO.review).then(function(){ toast('Rejected · the reason is shown to the site team'); return ulAfterReview(); }).catch(function(er){ t.disabled=false; toast((er&&er.message)||'Could not reject',true); }); }
 });
@@ -4248,12 +4253,15 @@ function dbName(plan){ var b=String(plan.file||'KEC_Database').replace(/\.[a-z0-
 function dbPreviewHtml(plan,publish){
   var rows=plan.rows, sh={}; rows.forEach(function(r){ sh[r.sheet]=(sh[r.sheet]||0)+1; });
   var tb=function(L){ return '<div class="svtw" style="max-height:340px;overflow:auto"><table class="svtb"><thead><tr><th>Sheet</th><th>Action</th><th>Date</th><th>Project</th><th>Package</th><th>Details</th></tr></thead><tbody>'+L.map(function(r){ return '<tr><td>'+esc(r.sheet)+'</td><td><b>'+esc(r.act)+'</b></td><td>'+(r.date?esc(d2(r.date)):'')+'</td><td>'+esc(r.proj||'')+'</td><td>'+esc(r.pkg||'')+'</td><td>'+esc(r.desc||'')+'</td></tr>'; }).join('')+'</tbody></table></div>'; };
-  if(!rows.length) return '<p>The approved site updates are already part of the file, or no update has been approved yet. Nothing would change.'+(plan.same?' '+plan.same+' row'+(plan.same===1?'':'s')+' already in the Sheet with identical values '+(plan.same===1?'was':'were')+' left out.':'')+'</p>';
+  if(!rows.length) return '<p><b>All approved updates are already in the Google Sheet.</b> Nothing would change.'+(plan.same?' '+plan.same+' row'+(plan.same===1?'':'s')+' already in the Sheet with identical values '+(plan.same===1?'was':'were')+' left out.':'')+'</p>';
   return '<p><b>'+plan.n.add+'</b> row'+(plan.n.add===1?'':'s')+' added · <b>'+plan.n.rep+'</b> replaced · from <b>'+plan.subs+'</b> approved update'+(plan.subs===1?'':'s')+'. File: <b>'+esc(plan.file)+'</b></p>'+(plan.same?'<p class="jm">'+plan.same+' row'+(plan.same===1?'':'s')+' already in the Sheet with identical values '+(plan.same===1?'was':'were')+' left out.</p>':'')+tb(rows.slice(0,300))+(rows.length>300?'<p class="ulsub">Showing the first 300 of '+rows.length+' rows.</p>':'')+
     (publish?'<div class="sepnote"><span class="ni">i</span><div>'+(DB.info&&DB.info.gs?'Only the rows listed above are written into the Google Sheet; nothing else in it changes. Google keeps every earlier version (File › Version history).':'Publishing replaces the file on Google Drive. Drive keeps the previous version (File › Version history). Charts, pivot tables and macros inside the workbook may not survive the rewrite: check the downloaded copy first if the file has any.')+'</div></div><label style="display:block;margin-top:8px">Note for the version history (optional) <input type="text" id="dbNote" maxlength="200" style="width:100%"></label>':'');
 }
 async function dbRun(act){
-  if(DB.busy) return; DB.busy=true; toast('Preparing the merged database…');
+  if(DB.busy) return; DB.busy=true;
+  if(act==='publish'&&LIVE.sources.length){ toast('Reading the live Google Sheet first…'); for(var w0=0;LIVE_BUSY&&w0<120;w0++) await new Promise(function(r){ setTimeout(r,500); });
+    await liveLoad(true); if(document.querySelector('#liveSt.err')){ DB.busy=false; toast('The live Google Sheet could not be read, so nothing is written (rows could otherwise be added twice). Try again in a moment.',true); return; } }
+  toast('Preparing the merged database…');
   var plan; try{ plan=await dbBuild(); }catch(e){ DB.busy=false; toast((e&&e.message)||'Could not prepare the database',true); return; }
   DB.plan=plan; DB.busy=false;
   var foot=plan.rows.length?(act==='publish'?'<button type="button" class="btn pri" id="dbGo" data-dbact="go-publish">'+(DB.info&&DB.info.gs?'Write to the Google Sheet':'Publish to Google Drive')+'</button>':'<button type="button" class="btn pri" id="dbGo" data-dbact="go-download">Download .xlsx</button>'):'';
@@ -5011,7 +5019,7 @@ async function repPhotos(R){
     var out=[]; for(var i=0;i<its.length;i++){ try{ var u=await Promise.race([phBlob(its[i].id,false),new Promise(function(_,rj){ setTimeout(function(){ rj(new Error('slow')); },15000); })]); out.push({u:u,d:its[i].d,pk:its[i].pk}); }catch(e){ try{ out.push({u:await phBlob(its[i].id,true),d:its[i].d,pk:its[i].pk}); }catch(e2){} } }
     return out; }catch(e){ return []; } }
 function repStyle(){ var s=document.getElementById('repPage'); if(!s){ s=document.createElement('style'); s.id='repPage'; document.head.appendChild(s); }
-  s.textContent='@page rep{size:A3 '+(REP.orient==='L'?'landscape':'portrait')+';margin:8mm}'; }
+  var z='size:A3 '+(REP.orient==='L'?'landscape':'portrait')+';margin:0'; s.textContent='@page rep{'+z+'}'+(document.body.classList.contains('printrep')?'@page{'+z+'}':''); }
 async function repBuild(){
   var R=SV.rep; if(!R) return 0; R.photos=await repPhotos(R);
   var box=document.getElementById('repBox'); if(!box){ box=document.createElement('div'); box.id='repBox'; document.body.appendChild(box); }
@@ -5029,7 +5037,7 @@ async function repGo(){
   var b=document.getElementById('repGo'); REP.busy=true; if(b){ b.disabled=true; b.textContent='Preparing…'; }
   try{ await repBuild(); }catch(e){ REP.busy=false; if(b){ b.disabled=false; b.textContent='Print'; } toast('The report could not be prepared: '+((e&&e.message)||e),true); return; }
   REP.busy=false; var m=document.getElementById('repModal'); if(m) m.classList.remove('on');
-  document.body.classList.add('printrep'); var done=function(){ document.body.classList.remove('printrep'); window.removeEventListener('afterprint',done); }; window.addEventListener('afterprint',done); setTimeout(function(){ window.print(); },120); }
+  document.body.classList.add('printrep'); repStyle(); var done=function(){ document.body.classList.remove('printrep'); repStyle(); window.removeEventListener('afterprint',done); }; window.addEventListener('afterprint',done); setTimeout(function(){ window.print(); },120); }
 document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return; if(t.closest('#repGo')){ repGo(); return; } if(t.id==='repX'||t.id==='repModal'){ var m=document.getElementById('repModal'); if(m) m.classList.remove('on'); } });
 
 /* ===== Arrange sections (V311): each user orders the Site view sections and picks the package cards per row; saved per user ===== */
@@ -5515,7 +5523,8 @@ function suParse(wb,okCode){
     noAct.slice(0,12).forEach(function(c){ errs.push('Areas of Concern: the Suggested action is missing for '+c.code+(c.pkg?' · '+c.pkg:'')+' — "'+String(c.concern||'').slice(0,60)+(String(c.concern||'').length>60?'…':'')+'". Every concern needs a Suggested action before it can be sent.'); });
     if(noAct.length>12) errs.push('Areas of Concern: '+(noAct.length-12)+' more concern(s) have no Suggested action.'); }
   [['e1',/^technical\s*submittals?$/i],['e2',/^material\s*procurement$/i],['qa',/^quality/i],['mp',/^manpower$/i]].forEach(function(x){ var S=get(x[1]); if(S&&S.rows&&S.rows.length){ data[x[0]]=normSite(S.rows,x[0]); if(x[0]==='e1'){ var seenT={}; data.e1.forEach(function(r){ var k=svN(r.code)+'|'+svN(r.pkg)+'|'+svN(r.type)+'|'+svN(r.trade)+'|'+r.d; if(seenT[k]&&warns.length<30) warns.push('Technical Submittals: '+r.code+' · '+r.pkg+' · '+r.type+(r.trade?' · '+r.trade:'')+' is listed more than once; the last row is used.'); seenT[k]=1; var ck=trChk({tot:r.tot,sub:r.sub,app:r.app,rev:r.rev,rvw:r.rvw,ns:r.ns}); if(ck.length&&warns.length<30) warns.push('Technical Submittals: '+r.code+' · '+r.pkg+' · '+r.type+(r.trade?' · '+r.trade:'')+': '+ck.join('; ')+'.'); }); } data[x[0]].forEach(function(r,i){ if(!r.pkg) errs.push(S.n+': Package/Plot is missing for '+r.code+'.'); Object.keys(r).forEach(function(k){ if(typeof r[k]==='number'&&r[k]<0&&errs.length<200) errs.push(S.n+', '+r.code+' · '+r.pkg+': a negative number ('+r[k]+') is not allowed.'); }); }); } });
-  (function(){ var tt=e1Totals(data.e1); tt.errs.slice(0,10).forEach(function(x){ errs.push('Technical Submittals, '+x.w+': '+x.t+'. This looks like a total row: the dashboard adds up the trades itself, so it would be counted twice. Delete that row, or give it its own Trade.'); });
+  (function(){ var tt=e1Totals(data.e1); (tt.multi||[]).slice(0,10).forEach(function(x){ errs.push('Technical Submittals, '+x.w+': '+x.n+' rows have no Trade (Totals '+x.tots.join(', ')+'). Rows of the same type can only be told apart by their Trade: choose the Trade of each row, then upload again.'); });
+    tt.errs.slice(0,10).forEach(function(x){ errs.push('Technical Submittals, '+x.w+': '+x.t+'. This looks like a total row: the dashboard adds up the trades itself, so it would be counted twice. Delete that row, or give it its own Trade.'); });
     tt.warns.slice(0,10).forEach(function(x){ if(warns.length<30) warns.push('Technical Submittals, '+x.w+': '+x.t+'. Check that this row is not a total of the other trades.'); }); })(); /* V426 */
   /* V422: Manpower & Equipment rows need a Type (template 2.7); an older file without the Type column is read as Manpower */
   (function(){ var mp=data.mp||[], hasT=mp.some(function(r){ return !r._tn; }), seen={};
@@ -5653,7 +5662,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V444',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V446',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
@@ -6059,7 +6068,7 @@ function suDrawAdmin(){
     (links?'<div class="svtw"><table class="svtb"><thead><tr><th>Name</th><th>Projects</th><th>Mode</th><th>Valid · uploads</th><th>Link</th><th></th></tr></thead><tbody>'+links+'</tbody></table></div>':'')+
     '<div class="svmg" style="margin-top:8px"><div class="svf h"><label>Link name</label><input id="suLn" type="text" placeholder="e.g. Hilton Hotel site team"></div><div class="svf h"><label>Mode</label><select id="suLm"><option value="review">Needs approval</option><option value="live">Live directly</option></select></div><div class="svf h"><label>Valid for (days, 0 = no end date)</label><input id="suLd" type="number" min="0" max="730" value="0"></div><div class="svf h"><label>Max uploads (0 = no limit)</label><input id="suLx" type="number" min="0" max="100000" value="0"></div><div class="svf"><label>Projects</label><div style="display:flex;flex-wrap:wrap;gap:4px 14px">'+plist.map(function(k){ return '<label style="text-transform:none;letter-spacing:0;font-weight:500;font-size:12.5px"><input type="checkbox" class="suLp" value="'+esc(k)+'" style="width:auto"> '+esc(pname(k))+'</label>'; }).join('')+'</div></div></div><button class="btn pri" data-sulnew="1">Create link</button>';
 }
-async function suAdminAct(path,body){ try{ var rv=path==='/site-review', j=await accCall('POST',path,body,rv?SU_TO.review:30000); if(rv&&(body.action==='approve'||body.action==='rewrite')) suWriteToast(j,body.action==='rewrite'?'Retry write':'Approved'); if(path==='/site-review'){ var x=await accCall('GET','/site-admin',null,30000); SU.admin=x; PNB.subs=(x&&x.subs)||PNB.subs; PNB.t=Date.now(); pnbPaint(); suDrawAdmin(); suUndo(); suSync(); UL.loaded=false; ulLoad(true); } else if(j.links){ SU.admin.links=j.links; suDrawAdmin(); } }catch(e){ if(path==='/site-review'&&suReviewErr(e,function(){ suOpenAdmin(); })) return; toast((e&&e.message)||'Could not save',true); } }
+async function suAdminAct(path,body){ try{ var rv=path==='/site-review', j=await accCall('POST',path,body,rv?SU_TO.review:30000); if(rv&&(body.action==='approve'||body.action==='rewrite')){ suWriteToast(j,body.action==='rewrite'?'Retry write':'Approved'); suAfterWrite(j); } if(path==='/site-review'){ var x=await accCall('GET','/site-admin',null,30000); SU.admin=x; PNB.subs=(x&&x.subs)||PNB.subs; PNB.t=Date.now(); pnbPaint(); suDrawAdmin(); suUndo(); suSync(); UL.loaded=false; ulLoad(true); } else if(j.links){ SU.admin.links=j.links; suDrawAdmin(); } }catch(e){ if(path==='/site-review'&&suReviewErr(e,function(){ suOpenAdmin(); })) return; toast((e&&e.message)||'Could not save',true); } }
 /* the private link page (no sign-in): ?site=TOKEN */
 async function suBoot(){
   var tok=(location.hash.match(/[#&]site=([A-Za-z0-9]+)/)||[])[1], q=(location.search.match(/[?&]site=([A-Za-z0-9]+)/)||[])[1];
@@ -10021,6 +10030,7 @@ function dsRender(){ var md=document.getElementById('dsModal'); if(!md||!md.clas
   [['g','Google Drive'],['o','OneDrive']].forEach(function(g){ var cc=cards.filter(function(c){ return c.grp===g[0]; }); if(!cc.length) return;
     h+='<div class="dsgrp"><div class="dsgh">'+g[1]+'</div><div class="dsgrid">'+cc.map(dsCard).join('')+'</div></div>'; });
   if(LIVE_T){ var sx=function(ms){ return (ms/1000).toFixed(1)+' s'; }; h+='<div class="dsfn2 dstime"><b>Last load '+sx(LIVE_T.total)+'</b> · checking and downloading '+sx(LIVE_T.dl)+' · reading the files '+(LIVE_T.skip?'skipped (no file changed)':sx(LIVE_T.read))+' · site updates '+sx(LIVE_T.sync)+' · '+(LIVE_T.same===LIVE_T.n?'no file had changed, so none was downloaded again':LIVE_T.same?LIVE_T.same+' of '+LIVE_T.n+' files unchanged (not downloaded again)':'all files downloaded')+'</div>'; }
+  h+='<div class="dsfn2 dsfollow"><label><b>Check for new data while the dashboard is open:</b> <select id="dsFollow">'+[[1,'every minute'],[2,'every 2 minutes'],[5,'every 5 minutes'],[0,'off']].map(function(o){ return '<option value="'+o[0]+'"'+(LIVE_FOLLOW===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></label> · kept on this device · the figures reload only when the database changed (an approved update or an edit in the Sheet)</div>';
   h+='<div class="dsfn2">Refresh loads that file again into the dashboard. Sync now checks the OneDrive contracts file for contracts the Google Drive copy does not have; nothing is written until you review and add them. Error cells (#N/A, #REF!, #ERROR!) are values a formula could not work out: the dashboard counts them as 0, so fix them in the file.</div></div>';
   md.innerHTML=h; dsDot(); }
 function dsFetch(){ if(!(ACC.user&&ACC.user.admin)){ DS.st=null; dsRender(); return Promise.resolve(); }
@@ -10107,6 +10117,17 @@ async function liveLoad(auto,only){
 }
 document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#liveRef'); if(a){ e.preventDefault(); liveLoad(false); } });
 liveExpiry(); window.__liveExpiry=liveExpiry;
+/* V446: follow the database while the dashboard is open. Every few minutes (setting in Data sources, kept on this device) the relay is asked whether
+   the live files changed; the answer is a short "unchanged" unless an update was approved or the Sheet was edited, and only then are the figures reloaded. */
+var LIVE_FOLLOW=(function(){ try{ var v=parseInt(localStorage.getItem('kec.follow.v1'),10); return isNaN(v)?1:v; }catch(e){ return 1; } })(), LIVE_FOLLOW_T=0;
+function liveFollowBusy(){ return LIVE_BUSY||document.hidden||!ACC.token||!LIVE.sources.length||!!document.querySelector('.svm, #suModal, #dbModal, #lkModal.on, #repModal.on')||/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||''); }
+async function liveFollowTick(){ if(!LIVE_FOLLOW||liveFollowBusy()) return; if(Date.now()-LIVE_FOLLOW_T<LIVE_FOLLOW*60000-5000) return; LIVE_FOLLOW_T=Date.now();
+  var srcs=LIVE.sources.filter(function(s){ return !(accNoMoney()&&/contract/i.test(String(s.name||''))); }), changed=false;
+  for(var i=0;i<srcs.length;i++){ var pv=LIVE_FILES[srcs[i].name]; if(!pv||!pv.file||!pv.file._ver) continue; try{ var f=await liveFetch(srcs[i]); if(!f._same||f._ver!==pv.file._ver) changed=true; }catch(e){ return; } }
+  if(changed&&!liveFollowBusy()){ await liveLoad(true); if(!document.querySelector('#liveSt.err')) toast('Figures updated · new data in the database'); } }
+setInterval(function(){ liveFollowTick().catch(function(){}); },20000);
+document.addEventListener('visibilitychange',function(){ if(!document.hidden){ LIVE_FOLLOW_T=0; liveFollowTick().catch(function(){}); } });
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.id==='dsFollow'){ LIVE_FOLLOW=parseInt(t.value,10)||0; try{ localStorage.setItem('kec.follow.v1',String(LIVE_FOLLOW)); }catch(x){} toast(LIVE_FOLLOW?'This device checks for new data every '+LIVE_FOLLOW+' min':'Automatic check for new data is off on this device'); } });
 setTimeout(function(){ accWhen(function(){ if(LIVE.sources.length) liveLoad(true); else INTRO.notify(true); }); },300);
 suBoot();
 accStart();
