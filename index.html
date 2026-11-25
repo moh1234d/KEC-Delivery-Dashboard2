@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V437</title>
+<title>TEST · KEC Project Controls Dashboard · V438</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1596,7 +1596,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V437</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V438</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1777,7 +1777,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V437';
+var APP_VER='V438';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3055,8 +3055,14 @@ function svScope(rows,cut){
   return {code:code,lc:String(code).toLowerCase(),filt:filt,names:names,single:total<=1,
     ok:function(pkg){ if(!filt||this.single) return true; return names.some(function(n){ return svPkgMatch(n,pkg); }); }};
 }
+/* V438: packages that are complete (actual 100% at the cut-off) are left out of technical submittals and quality (NCR, site instructions) */
+var SV_SKIP={};
+function svDoneSet(code,cut){ var s=new Set(), lc=String(code).toLowerCase(); try{ rowsAt(cut).forEach(function(r){ if(String(r.code).toLowerCase()!==lc) return; if(derive(r,cut).status==='done') s.add(svN(r.pkg)); }); }catch(e){} return s; }
+function svSkipTxt(codes){ var o=[]; (codes||[]).forEach(function(c){ (SV_SKIP[String(c).toLowerCase()]||[]).forEach(function(p){ if(o.indexOf(p)<0) o.push(p); }); }); return o.length?' · completed package'+(o.length>1?'s':'')+' not shown: '+o.map(function(p){ return dp(p); }).join(', '):''; }
 function svLatest(arr,sc,cut,tk){
   var m={}, cz=pdCut(sc.code,cut), xs=accRows(arr||[],'code').filter(function(x){ return String(x.code).toLowerCase()===sc.lc&&x.d<=cz&&sc.ok(x.pkg); });
+  if(tk==='e1'||tk==='type'){ var dn=svDoneSet(sc.code,cz), sk=SV_SKIP[sc.lc]=(tk==='e1'?[]:(SV_SKIP[sc.lc]||[]));
+    if(dn.size) xs=xs.filter(function(x){ if(!dn.has(svN(x.pkg))) return true; if(sk.indexOf(x.pkg)<0) sk.push(x.pkg); return false; }); }
   if(tk==='e1'){ /* V368: a row without trade that has exactly the same figures as a traded row of the same date, package and type is the same row without its trade name (e.g. the Sheet has no Trade column): drop it, so it is not counted twice or shown as Unassigned */
     var tup=function(x){ return [x.d,svN(x.pkg),svN(x.type),x.tot,x.plan,x.sub,x.app,x.rev,x.rvw,x.ns].join('|'); }, tr={};
     xs.forEach(function(x){ if(x.trade) tr[tup(x)]=1; });
@@ -4575,12 +4581,12 @@ function pSiteGroup(rows,coreRows,cut){ SV.rep=null;
   /* trackers by project */
   var sumP=function(arr,tk,f){ return codes.map(function(c){ var L=svLatest(arr,svGrpScope(c),cut,tk); return {c:c,L:L,t:L.length?f(L):null}; }); };
   var e1r=sumP(cur.e1,'e1',function(L){ return {tot:svSum(L,'tot'),sub:svSum(L,'sub'),app:svSum(L,'app'),rev:svSum(L,'rev'),rvw:svSum(L,'rvw'),ns:svSum(L,'ns')}; }), anyE1=e1r.some(function(x){ return x.t; });
-  var E1=sec('svE1','Engineering tracker · Technical submittals','by project · latest update at or before the cut-off')+(anyE1?svTable(['Project','Total','Submitted','Approved','Revise / resubmit','Under review','Not submitted'],e1r.map(function(x){ var t=x.t; return '<tr><td>'+esc(pname(x.c))+'</td>'+(t?'<td class="n">'+t.tot+'</td><td class="n">'+t.sub+'</td><td class="n">'+t.app+'</td><td class="n">'+t.rev+'</td><td class="n">'+t.rvw+'</td><td class="n">'+t.ns+'</td>':'<td class="n" colspan="6">no update loaded</td>')+'</tr>'; }).join('')):svEmpty(cur.e1,'technical-submittal','Technical Submittals'));
+  var E1=sec('svE1','Engineering tracker · Technical submittals','by project · latest update at or before the cut-off'+svSkipTxt(codes))+(anyE1?svTable(['Project','Total','Submitted','Approved','Revise / resubmit','Under review','Not submitted'],e1r.map(function(x){ var t=x.t; return '<tr><td>'+esc(pname(x.c))+'</td>'+(t?'<td class="n">'+t.tot+'</td><td class="n">'+t.sub+'</td><td class="n">'+t.app+'</td><td class="n">'+t.rev+'</td><td class="n">'+t.rvw+'</td><td class="n">'+t.ns+'</td>':'<td class="n" colspan="6">no update loaded</td>')+'</tr>'; }).join('')):svEmpty(cur.e1,'technical-submittal','Technical Submittals'));
   var e2r=sumP(cur.e2,'',function(L){ return {tot:svSum(L,'tot'),loc:svSum(L,'loc'),ooc:svSum(L,'ooc'),ppo:svSum(L,'ppo'),apo:svSum(L,'apo'),pdl:svSum(L,'pdl'),adl:svSum(L,'adl')}; }), anyE2=e2r.some(function(x){ return x.t; });
   var E2=sec('svE2','Procurement tracker · Material procurement','by project · latest update at or before the cut-off')+(anyE2?svTable(['Project','Total material','Local','Out of country','Planned PO','PO issued','Planned delivery','Delivered'],e2r.map(function(x){ var t=x.t; return '<tr><td>'+esc(pname(x.c))+'</td>'+(t?'<td class="n">'+t.tot+'</td><td class="n">'+t.loc+'</td><td class="n">'+t.ooc+'</td><td class="n">'+t.ppo+'</td><td class="n">'+t.apo+'</td><td class="n">'+t.pdl+'</td><td class="n">'+t.adl+'</td>':'<td class="n" colspan="7">no update loaded</td>')+'</tr>'; }).join('')):svEmpty(cur.e2,'material-procurement','Material Procurement'));
   var qa=codes.map(function(c){ var L=svLatest(cur.qa,svGrpScope(c),cut,'type'), q=function(re){ var l=L.filter(function(x){ return re.test(String(x.type)); }); return {t:svSum(l,'tot'),c:svSum(l,'cl'),o:svSum(l,'op')}; }; return {c:c,any:L.length>0,n:q(/ncr/i),s:q(/site\s*instr|^sor|site\s*obs/i)}; });
   var nq={t:0,c:0,o:0}, si={t:0,c:0,o:0}; qa.forEach(function(x){ ['t','c','o'].forEach(function(k){ nq[k]+=x.n[k]; si[k]+=x.s[k]; }); });
-  var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open')+(qa.some(function(x){ return x.any; })?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>'+svTable(['Project','NCR total','NCR open','SOR total','SOR open'],qa.map(function(x){ return '<tr><td>'+esc(pname(x.c))+'</td><td class="n">'+x.n.t+'</td><td class="n">'+x.n.o+'</td><td class="n">'+x.s.t+'</td><td class="n">'+x.s.o+'</td></tr>'; }).join('')):svEmpty(cur.qa,'quality','Quality Statistics'));
+  var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open'+svSkipTxt(codes))+(qa.some(function(x){ return x.any; })?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>'+svTable(['Project','NCR total','NCR open','SOR total','SOR open'],qa.map(function(x){ return '<tr><td>'+esc(pname(x.c))+'</td><td class="n">'+x.n.t+'</td><td class="n">'+x.n.o+'</td><td class="n">'+x.s.t+'</td><td class="n">'+x.s.o+'</td></tr>'; }).join('')):svEmpty(cur.qa,'quality','Quality Statistics'));
   var mpAny=(cur.mp||[]).some(function(x){ return codes.some(function(c){ return String(c).toLowerCase()===String(x.code).toLowerCase(); }); });
   var M=svMpHtml(svMpModel({lc:'',ok:function(){ return true; }},cut,true,codes));
   /* challenges across the group */
@@ -4824,14 +4830,14 @@ function pSiteBuild(rows,coreRows,cut){
   var fin=svFinHtml(AF,anyX,pv,eac,(selList('C').length||selList('K').length)?null:[code]);
   /* E1 / E2 */
   var e1L=svLatest(cur.e1,sc,cut,'e1'); TRD.L=e1L;
-  var E1=sec('svE1','Engineering tracker · Technical submittals','by submittal type and trade · latest update at or before the cut-off')+(e1L.length?trSection(e1L):svEmpty(cur.e1,'technical-submittal','Technical Submittals'));
+  var E1=sec('svE1','Engineering tracker · Technical submittals','by submittal type and trade · latest update at or before the cut-off'+svSkipTxt([code]))+(e1L.length?trSection(e1L):svEmpty(cur.e1,'technical-submittal','Technical Submittals'));
   var e2L=svLatest(cur.e2,sc,cut,''), e2b=e2L.sort(function(a,b){ return b.tot-a.tot; }).map(function(x){ var t=x.tot||0; return '<tr><td>'+esc(dp(x.pkg))+'</td><td class="n">'+t+'</td><td class="n">'+(x.loc||0)+'</td><td class="n">'+(x.ooc||0)+'</td><td class="n">'+(x.ppo||0)+'</td><td class="n">'+(x.apo||0)+'</td><td class="n">'+(x.pdl||0)+'</td><td class="n">'+(x.adl||0)+'</td><td class="n">'+svPctBar(t?(x.adl||0)/t:0)+'</td></tr>'; }).join('');
   var t2=svSum(e2L,'tot'), e2f='<tr><td>Total</td><td class="n">'+t2+'</td><td class="n">'+svSum(e2L,'loc')+'</td><td class="n">'+svSum(e2L,'ooc')+'</td><td class="n">'+svSum(e2L,'ppo')+'</td><td class="n">'+svSum(e2L,'apo')+'</td><td class="n">'+svSum(e2L,'pdl')+'</td><td class="n">'+svSum(e2L,'adl')+'</td><td class="n">'+svPctBar(t2?svSum(e2L,'adl')/t2:0)+'</td></tr>';
   var E2=sec('svE2','Procurement tracker · Material procurement','by package · latest update at or before the cut-off')+(e2L.length?svTable(['Package / plot','Total material','Local','Out of country','Planned PO','PO issued','Planned delivery','Delivered','Delivered %'],e2b,e2f):svEmpty(cur.e2,'material-procurement','Material Procurement'));
   /* quality */
-  var qL=svLatest(cur.qa,sc,cut,'type'), qs=function(re){ var l=qL.filter(function(x){ return re.test(String(x.type)); }); return {t:svSum(l,'tot'),c:svSum(l,'cl'),o:svSum(l,'op')}; };
+  var qL=svLatest(cur.qa,sc,cut,'type'), qSkip=svSkipTxt([code]), qs=function(re){ var l=qL.filter(function(x){ return re.test(String(x.type)); }); return {t:svSum(l,'tot'),c:svSum(l,'cl'),o:svSum(l,'op')}; };
   var nq=qs(/ncr/i), si=qs(/site\s*instr|^sor|site\s*obs/i);
-  var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open')+(qL.length?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>':svEmpty(cur.qa,'quality','Quality Statistics'));
+  var Q=sec('svQ','Quality','NCRs and site instructions (SOR) · total, closed and open'+qSkip)+(qL.length?'<div class="svtwo">'+svDonut('Non-conformance reports (NCR)',nq.t,nq.c,nq.o,'var(--good)')+svDonut('Site instructions (SOR)',si.t,si.c,si.o,'var(--accent)')+'</div>':svEmpty(cur.qa,'quality','Quality Statistics'));
   /* manpower + trends canvases */
   var mpAny=(cur.mp||[]).some(function(x){ return String(x.code).toLowerCase()===sc.lc; });
   var M=svMpHtml(svMpModel(sc,cut,false,null));
@@ -5622,7 +5628,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V437',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V438',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
