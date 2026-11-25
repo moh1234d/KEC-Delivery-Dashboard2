@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V439</title>
+<title>TEST · KEC Project Controls Dashboard · V443</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1252,14 +1252,18 @@ body .uc{border:1.5px solid color-mix(in srgb,var(--ink) 28%,var(--line));border
 .mpt .mpsub{float:right;font-size:12px;font-weight:500;color:var(--mut)}@media (max-width:640px){.mpt .mpsub{float:none;display:block;margin-top:2px}}
 
 /* V437: Trends card with tabs on its top edge */
-.trw{margin-bottom:14px}
+.trwrap{margin-bottom:14px}
 .trtabs{display:flex;gap:6px;margin:0 0 -1px 14px;position:relative;z-index:1}
 .trtabs button{display:flex;align-items:center;gap:9px;padding:11px 22px;font:inherit;font-size:14.5px;font-weight:700;color:var(--mut);background:color-mix(in srgb,var(--line) 55%,var(--card));border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;cursor:pointer}
 .trtabs button i{width:11px;height:11px;border-radius:50%;background:var(--c)}
 .trtabs button.on{background:var(--card);color:var(--ink);box-shadow:inset 0 4px 0 var(--c);padding-top:13px;margin-top:-2px}
 .trtabs button:not(.on):hover{color:var(--ink)}
 .trcard{margin-bottom:0}.trcard .mpk{margin:8px 0 10px}.trcard .trbox{height:360px}
-.trk b.bad{color:var(--bad)}
+.trk b.bad{color:var(--bad)}.trk b.good{color:var(--good)}
+.trh3{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.trpill{margin-left:auto;font-size:12.5px;font-weight:800;padding:4px 12px;border-radius:16px;letter-spacing:.02em;align-self:center}
+.trpill.g{background:color-mix(in srgb,var(--good) 14%,var(--card));color:var(--good)}.trpill.r{background:color-mix(in srgb,var(--bad) 12%,var(--card));color:var(--bad)}.trpill.n{background:color-mix(in srgb,var(--line) 60%,var(--card));color:var(--mut)}
+.trfd{display:block;font-size:12.5px;margin-top:5px}.trfd b{display:inline!important;font-size:14px!important;margin:0!important}.trfd b.good{color:var(--good)}.trfd b.bad{color:var(--bad)}
+.trlgz{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--mut);margin:-2px 0 2px}.trlgz i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}.trlgz i.g{background:color-mix(in srgb,var(--good) 28%,transparent)}.trlgz i.r{background:color-mix(in srgb,var(--bad) 24%,transparent)}
 .trlg{display:flex;gap:14px;font-size:11.5px;font-weight:700;margin:-2px 0 2px}.trlg .pl{color:#8a7f68}.trlg .ac{color:var(--accent)}
 @media (max-width:640px){.trtabs{margin-left:6px;gap:4px}.trtabs{margin-right:6px}.trtabs button{flex:1 1 0;min-width:0;justify-content:center;padding:10px 6px;font-size:13px;gap:6px;white-space:nowrap}.trtabs .trd{display:none}.trtabs button i{width:9px;height:9px}.trtabs button.on{padding-top:12px}.trcard .trbox{height:270px}.trcard .mpk{grid-template-columns:repeat(2,1fr)!important}}
 .spit{margin-top:14px}.spit .mpk{margin:8px 0 12px}.spit .spibox{height:280px}.spit.off h3{margin-bottom:0}.spit h3 small{margin-right:8px}
@@ -1484,6 +1488,7 @@ body.pf-arr .sec-bar{display:none}
 .pa-seg{display:flex}.pa-seg span{border:1.5px solid #d9d3c3;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer}.pa-seg span:first-child{border-radius:8px 0 0 8px}.pa-seg span:last-child{border-radius:0 8px 8px 0}.pa-seg span.on{background:#14304f;color:#fff;border-color:#14304f}
 .pa-all{display:flex;gap:7px;align-items:center;margin-top:14px;font-weight:600}.pa-go{display:flex;gap:10px;margin-top:14px}.pa-go button{border:0;border-radius:8px;padding:9px 16px;font:700 13px Carlito,Calibri,Arial,sans-serif;cursor:pointer}.pa-p{background:#ba965a;color:#fff;flex:1}.pa-q{background:#eef0f3;color:#14304f}.pa-note{font-size:11px;color:#637785;margin-top:10px}
 .rp-rsl .rp-vdel{background:#b9544b!important;color:#fff!important}.rp-rsl .rp-vdel.rp-dga{background:#8f2d24!important;outline:2px solid #fff}
+.svco{margin-bottom:22px}.svcoh{display:flex;align-items:baseline;gap:10px;margin:4px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink)}.svcoh span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700}.svcoh b{font-size:20px}.svcoh small{color:var(--mut);font-size:12px;margin-left:auto}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
 .svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
@@ -1596,7 +1601,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V439</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V443</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1777,7 +1782,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V439';
+var APP_VER='V443';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4796,8 +4801,12 @@ function pSiteBuild(rows,coreRows,cut){
   if(selList('P').length!==1){
     var ps=[]; rows.forEach(function(r){ if(ps.indexOf(r.code)<0&&HIDE_PROJ.indexOf(r.code)<0) ps.push(r.code); });
     ps.sort(function(a,b){ return pname(a)<pname(b)?-1:1; });
-    var pg={}, po=[]; ps.forEach(function(c){ var g=prog(c); if(!pg[g]){ pg[g]=[]; po.push(g); } pg[g].push(c); }); po.sort();
-    return head('Site view','Open a whole program, or choose one project')+po.map(function(g){ return '<div class="card plain svpg"><div class="svpgh"><div><b>'+esc(g)+'</b><small>'+pg[g].length+(pg[g].length===1?' project':' projects')+'</small></div><button type="button" class="btn" data-svprog="'+esc(g)+'">Open program overview</button></div><div class="svpick">'+pg[g].map(function(c){ return '<button type="button" class="svpb" data-svpj="'+esc(c)+'"><b>'+esc(pname(c))+'</b><small>'+esc(c)+'</small></button>'; }).join('')+'</div></div>'; }).join('');
+    /* V440: grouped by company (same order as the Overview), then by program */
+    var pg={}, po=[], cg={}, co=[]; ps.forEach(function(c){ var g=prog(c), k=coOf(c)+'\u0001'+g; if(!pg[k]){ pg[k]=[]; po.push(k); var cc=coOf(c); if(!cg[cc]){ cg[cc]=[]; co.push(cc); } cg[cc].push(k); } pg[k].push(c); });
+    co.sort(function(a,b){ var x=CO_ORDER.indexOf(a), y=CO_ORDER.indexOf(b); x=x<0?(a==='Other'?100:99):x; y=y<0?(b==='Other'?100:99):y; return x-y||(a<b?-1:1); });
+    var card=function(k){ var g=k.split('\u0001')[1]; return '<div class="card plain svpg"><div class="svpgh"><div><b>'+esc(g)+'</b><small>'+pg[k].length+(pg[k].length===1?' project':' projects')+'</small></div><button type="button" class="btn" data-svprog="'+esc(g)+'">Open program overview</button></div><div class="svpick">'+pg[k].map(function(c){ return '<button type="button" class="svpb" data-svpj="'+esc(c)+'"><b>'+esc(pname(c))+'</b><small>'+esc(c)+'</small></button>'; }).join('')+'</div></div>'; };
+    return head('Site view','Open a whole program, or choose one project · grouped by company, then program')+co.map(function(c){ var ks=cg[c].sort(function(a,b){ return a<b?-1:1; }), np=ks.reduce(function(s,k){ return s+pg[k].length; },0);
+      return '<div class="svco"><div class="svcoh"><span>Company</span><b>'+esc(c)+'</b><small>'+ks.length+(ks.length===1?' program':' programs')+' · '+np+(np===1?' project':' projects')+'</small></div>'+ks.map(card).join('')+'</div>'; }).join('');
   }
   var code=state.project; cut=pdCut(code,cut); var pi=model.projects.get(code)||{}, sc=svScope(rows,cut);
   svChalLoad();
@@ -5215,7 +5224,7 @@ function svSpiSeries(cut){ var o=[]; model.snaps.filter(function(s){ return s<=c
 /* V437: the Trends card: one chart, chosen with the tabs on its top edge (Progress · Overrun (days) · SPI), remembered on each device */
 var TRT={tab:'prog'};
 try{ var _tt=localStorage.getItem('kec.trtab.v1'); if(_tt==='prog'||_tt==='ov'||_tt==='spi') TRT.tab=_tt; }catch(e){}
-function svTrSeries(cut){ var o=[]; model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); o.push({d:s,p:a.plan*100,a:a.act*100,o:a.pf&&a.ff?dayDiff(a.ff,a.pf):0}); }); return o; }
+function svTrSeries(cut){ var o=[]; model.snaps.filter(function(s){ return s<=cut; }).forEach(function(s){ var rr=rowsAt(s).filter(inScope).map(function(r){ return derive(r,s); }); if(!rr.length) return; var a=agg(rr,undefined,true); o.push({d:s,p:a.plan*100,a:a.act*100,o:a.pf&&a.ff?dayDiff(a.ff,a.pf):0,pf:a.pf,ff:a.ff}); }); return o; }
 function svTrTile(l,v,s,cls){ return '<div><span class="l">'+l+'</span><b'+(cls?' class="'+cls+'"':'')+'>'+v+'</b><span class="s">'+s+'</span></div>'; }
 function svTrendsHtml(cut){
   var tabs=[['prog','Progress','var(--accent)'],['ov','Overrun<span class="trd"> (days)</span>','var(--bad)'],['spi','SPI','var(--ink)']], k=TRT.tab;
@@ -5230,11 +5239,14 @@ function svTrendsHtml(cut){
         svTrTile('Gap',(g>=0?'+':'−')+Math.abs(g).toFixed(1)+' pts',dg==null?'needs two data dates':(Math.abs(dg)<0.05?'unchanged since '+d2(P.d):(dg<0?'▼ widened ':'▲ narrowed ')+Math.abs(dg).toFixed(1)+' pts since '+d2(P.d)),g<-0.05?'bad':'')+'</div>'+
         '<div class="chart-box trbox"><canvas id="svTa"></canvas></div>'; }
     else { var o=Math.round(L.o), dO=P?o-Math.round(P.o):null;
-      body='<h3>Overrun trend (days) <small>planned − forecast finish · negative = late</small></h3><div class="mpk trk" style="grid-template-columns:repeat(2,1fr)">'+
-        svTrTile('Latest overrun',(o<0?'−':o>0?'+':'')+Math.abs(o)+' days',o<0?'forecast later than planned':o>0?'forecast earlier than planned':'on the planned date',o<0?'bad':'')+
-        svTrTile('Change',dO==null?'–':dO===0?'0 days':(dO<0?'▼ ':'▲ ')+Math.abs(dO)+' days',P?'since '+d2(P.d):'needs two data dates',dO<0?'bad':'')+'</div>'+
-        '<div class="chart-box trbox"><canvas id="svTo"></canvas></div>'; } }
-  return '<div class="trw">'+bar+'<div class="card plain tcard trcard">'+body+'</div></div>';
+      /* V442: ahead / delayed note (option B): a status pill, the finish dates and shaded zones in the chart */
+      var pill=o>0?'<span class="trpill g">▲ AHEAD · '+o+' day'+(o===1?'':'s')+'</span>':o<0?'<span class="trpill r">▼ DELAYED · '+(-o)+' day'+(o===-1?'':'s')+'</span>':'<span class="trpill n">● ON PLAN</span>';
+      body='<h3 class="trh3">Overrun trend (days) <small>planned − forecast finish</small>'+pill+'</h3><div class="mpk trk" style="grid-template-columns:repeat(3,1fr)">'+
+        svTrTile('Latest overrun',(o<0?'−':o>0?'+':'')+Math.abs(o)+' days',o<0?'forecast later than planned':o>0?'forecast earlier than planned':'on the planned date',o<0?'bad':o>0?'good':'')+
+        svTrTile('Change',dO==null?'–':dO===0?'0 days':(dO<0?'▼ ':'▲ ')+Math.abs(dO)+' days',P?'since '+d2(P.d):'needs two data dates',dO<0?'bad':dO>0?'good':'')+
+        '<div><span class="l">Finish dates</span><span class="trfd">Planned <b>'+(L.pf?d2(L.pf):'–')+'</b></span><span class="trfd">Forecast <b class="'+(o>0?'good':o<0?'bad':'')+'">'+(L.ff?d2(L.ff):'–')+'</b>'+(o?' · '+Math.abs(o)+' day'+(Math.abs(o)===1?'':'s')+(o>0?' earlier':' later'):'')+'</span></div></div>'+
+        '<div class="trlgz"><span><i class="g"></i>above the line = ahead of plan</span><span><i class="r"></i>below the line = delayed</span></div><div class="chart-box trbox"><canvas id="svTo"></canvas></div>'; } }
+  return '<div class="trwrap">'+bar+'<div class="card plain tcard trcard">'+body+'</div></div>';
 }
 function svSpiHtml(cut){
   var head='<h3>SPI trend <small>schedule performance index = earned ÷ planned progress · 1.00 = on plan</small><label class="mplb"><input type="checkbox" id="spiTog"'+(SPIT.on?' checked':'')+'> Show chart</label></h3>';
@@ -5305,11 +5317,20 @@ function svCfgs(){
         for(var k=data.length-1;k>=0;k--){ var pt=meta.data[k]; if(!pt||data[k]==null) continue; var txt=d.f(data[k]), w=c.measureText(txt).width+6, x=Math.max(pt.x,ch.chartArea.left+w/2+2), y=pt.y+(d.pos==='below'?15:-9);
           x=Math.min(x,ch.chartArea.right+14-w/2);
           if(drawn.some(function(q){ return Math.abs(q.x-x)<(q.w+w)/2&&Math.abs(q.y-y)<13; })) continue;
-          c.strokeStyle=halo; c.fillStyle=d.c; c.strokeText(txt,x,y); c.fillText(txt,x,y); drawn.push({x:x,y:y,w:w}); } });
+          c.strokeStyle=halo; c.fillStyle=typeof d.c==='function'?d.c(data[k]):d.c; c.strokeText(txt,x,y); c.fillText(txt,x,y); drawn.push({x:x,y:y,w:w}); } });
       c.restore(); }}; };
   var lopt=function(){ var b=base(); b.layout={padding:{top:20,right:18,bottom:2,left:12}}; return b; };
   out.svTa=function(){ return {type:'line',data:{labels:L.slice(),datasets:[{label:'Planned %',data:P.slice(),borderColor:'#b9b09e',borderDash:[6,4],pointRadius:2,tension:.2},{label:'Actual %',data:A.slice(),borderColor:acc,backgroundColor:acc,pointRadius:3,tension:.2}]},options:lopt(),plugins:[lbl([{i:0,c:'#8a7f68',pos:'above',f:function(v){ return v.toFixed(1)+'%'; }},{i:1,c:acc,pos:'below',f:function(v){ return v.toFixed(1)+'%'; }}])]}; };
-  out.svTo=function(){ return {type:'line',data:{labels:L.slice(),datasets:[{label:'Overrun (days)',data:Od.slice(),borderColor:bad,backgroundColor:bad,pointRadius:3,tension:.2}]},options:lopt(),plugins:[lbl([{i:0,c:bad,pos:'above',f:function(v){ return String(Math.round(v)); }}])]}; };
+  /* V441: overrun colours: ahead of plan (positive) green, late (negative) red, on the planned date grey */
+  var good=cssv('--good')||'#1e8449', oc=function(v){ return v>0?good:v<0?bad:ink; }, lastO=Od.length?Od[Od.length-1]:0;
+  out.svTo=function(){ return {type:'line',data:{labels:L.slice(),datasets:[{label:'Overrun (days)',data:Od.slice(),borderColor:oc(lastO)===ink?bad:oc(lastO),backgroundColor:oc(lastO)===ink?bad:oc(lastO),pointRadius:3,tension:.2,
+      pointBackgroundColor:Od.map(oc),pointBorderColor:Od.map(oc),segment:{borderColor:function(x){ var a=x.p0.parsed.y, b=x.p1.parsed.y; return a<0||b<0?bad:a>0||b>0?good:ink; }}}]},
+    options:(function(){ var b=lopt(); b.scales.y.beginAtZero=true; b.plugins.legend={display:false}; b.scales.y.ticks.callback=function(v){ return (v>0?'+':'')+v; }; return b; })(),
+    plugins:[{id:'trZones',beforeDatasetsDraw:function(ch){ var c=ch.ctx, a=ch.chartArea, y0=ch.scales.y.getPixelForValue(0); if(!isFinite(y0)) return; y0=Math.max(a.top,Math.min(a.bottom,y0)); c.save();
+      c.fillStyle='rgba(26,127,75,.08)'; c.fillRect(a.left,a.top,a.width,y0-a.top); c.fillStyle='rgba(180,35,24,.07)'; c.fillRect(a.left,y0,a.width,a.bottom-y0);
+      c.font='700 11px Inter,system-ui,sans-serif'; c.textAlign='left'; if(y0-a.top>20){ c.fillStyle=good; c.fillText('▲ AHEAD OF PLAN',a.left+8,a.top+14); } if(a.bottom-y0>20){ c.fillStyle=bad; c.fillText('▼ DELAYED',a.left+8,a.bottom-8); }
+      c.strokeStyle=ink; c.globalAlpha=.6; c.setLineDash([5,4]); c.beginPath(); c.moveTo(a.left,y0); c.lineTo(a.right,y0); c.stroke(); c.restore(); }},
+      lbl([{i:0,c:oc,pos:'above',f:function(v){ return (v>0?'+':'')+String(Math.round(v)); }}])]}; };
   return out;
 }
 function drawSite(){
@@ -5630,7 +5651,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V439',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V443',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
@@ -7363,7 +7384,7 @@ async function kcLoad(){
   if(!rec) return null;
   try{ var str=rec.gz?await new Response(new Blob([rec.b]).stream().pipeThrough(new DecompressionStream('gzip'))).text():rec.s; return {data:JSON.parse(str),t:rec.t}; }catch(e){ return null; }
 }
-function kcClear(){ try{ localStorage.removeItem(STORE); }catch(e){} kcOpen().then(function(db){ if(!db) return; try{ var tx=db.transaction('c','readwrite'); tx.objectStore('c').delete('main'); tx.oncomplete=tx.onerror=tx.onabort=function(){ try{ db.close(); }catch(e){} }; }catch(e){ try{ db.close(); }catch(_){} } }); }
+function kcClear(){ try{ localStorage.removeItem(STORE); }catch(e){} kcOpen().then(function(db){ if(!db) return; try{ var tx=db.transaction('c','readwrite'); tx.objectStore('c').delete('main'); try{ tx.objectStore('c').delete(IDBKeyRange.bound('file:','file:\uffff')); }catch(e){} tx.oncomplete=tx.onerror=tx.onabort=function(){ try{ db.close(); }catch(e){} }; }catch(e){ try{ db.close(); }catch(_){} } }); }
 function kcDate(){ return KC.at?new Date(KC.at).toISOString().slice(0,10):''; }
 
 /* V330 S-01: notice shown until the live data has loaded (does not touch the page sections) */
@@ -9871,14 +9892,14 @@ var LIVE_KEY='kecdash.v1.live', LIVE_EXP_DEF='2026-11-28';
 var LIVE_DEF={p:LIVE.sources[0].url,c:LIVE.sources[1].url,exp:LIVE_EXP_DEF};
 function liveSaved(){ try{ var o=JSON.parse(localStorage.getItem(LIVE_KEY)||'null'); return o&&typeof o==='object'?o:{}; }catch(e){ return {}; } }
 /* V433: the live data links are kept on the relay (relay V69, /links) for every user, phone and web; an administrator renews them in Live data links and the relay checks and allows them. This browser's own copy is used only when the relay has none. */
-var LIVE_SHARED=null;
+var LIVE_SHARED=(function(){ try{ var o=JSON.parse(localStorage.getItem('kec.lkshared.v1')||'null'); return o&&o.c?o:null; }catch(e){ return null; } })();
 function liveApply(){ var o=LIVE_SHARED&&LIVE_SHARED.c?LIVE_SHARED:liveSaved();
   LIVE.sources[0].url=(o.p&&/^https:\/\//.test(o.p))?o.p:LIVE_DEF.p;
   LIVE.sources[1].url=(o.c&&/^https:\/\//.test(o.c))?o.c:LIVE_DEF.c;
   LIVE_EXPIRY=(o.exp&&/^\d{4}-\d{2}-\d{2}$/.test(o.exp))?o.exp:LIVE_DEF.exp; }
 var LIVE_EXPIRY=LIVE_EXP_DEF;
 liveApply();
-async function lkShared(){ try{ var j=await accCall('GET','/links',null,8000); LIVE_SHARED=(j&&j.links&&j.links.c)?j.links:null; }catch(e){ return; } liveApply(); try{ liveExpiry(); }catch(e){} }
+async function lkShared(){ try{ var j=await accCall('GET','/links',null,8000); LIVE_SHARED=(j&&j.links&&j.links.c)?j.links:null; try{ if(LIVE_SHARED) localStorage.setItem('kec.lkshared.v1',JSON.stringify({p:LIVE_SHARED.p,c:LIVE_SHARED.c,exp:LIVE_SHARED.exp,by:LIVE_SHARED.by,ts:LIVE_SHARED.ts})); else localStorage.removeItem('kec.lkshared.v1'); }catch(e){} }catch(e){ return; } liveApply(); try{ liveExpiry(); }catch(e){} }
 function lkOpen(){ var m=document.getElementById('lkModal'); if(!m) return; var o=liveSaved();
   var S=LIVE_SHARED, adm=!!(ACC.user&&ACC.user.admin===true);
   m.innerHTML='<div class="lkbox"><h3>Live data links</h3><p>Paste the new SharePoint "Anyone with the link" links here when they are renewed. When you save, the relay reads each new link once to check it, adds it to its allow-list and keeps it for every user, on phone and web. The old link keeps working until it expires.</p>'
@@ -9997,6 +10018,7 @@ function dsRender(){ var md=document.getElementById('dsModal'); if(!md||!md.clas
   if(DS.note) h+='<div class="dsnote'+(DS.note.er?' er':'')+'">'+esc(DS.note.t)+'</div>';
   [['g','Google Drive'],['o','OneDrive']].forEach(function(g){ var cc=cards.filter(function(c){ return c.grp===g[0]; }); if(!cc.length) return;
     h+='<div class="dsgrp"><div class="dsgh">'+g[1]+'</div><div class="dsgrid">'+cc.map(dsCard).join('')+'</div></div>'; });
+  if(LIVE_T){ var sx=function(ms){ return (ms/1000).toFixed(1)+' s'; }; h+='<div class="dsfn2 dstime"><b>Last load '+sx(LIVE_T.total)+'</b> · checking and downloading '+sx(LIVE_T.dl)+' · reading the files '+(LIVE_T.skip?'skipped (no file changed)':sx(LIVE_T.read))+' · site updates '+sx(LIVE_T.sync)+' · '+(LIVE_T.same===LIVE_T.n?'no file had changed, so none was downloaded again':LIVE_T.same?LIVE_T.same+' of '+LIVE_T.n+' files unchanged (not downloaded again)':'all files downloaded')+'</div>'; }
   h+='<div class="dsfn2">Refresh loads that file again into the dashboard. Sync now checks the OneDrive contracts file for contracts the Google Drive copy does not have; nothing is written until you review and add them. Error cells (#N/A, #REF!, #ERROR!) are values a formula could not work out: the dashboard counts them as 0, so fix them in the file.</div></div>';
   md.innerHTML=h; dsDot(); }
 function dsFetch(){ if(!(ACC.user&&ACC.user.admin)){ DS.st=null; dsRender(); return Promise.resolve(); }
@@ -10025,9 +10047,16 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var m=document.getElementById('dsModal'); if(m&&m.classList.contains('on')) dsClose(); } });
 function liveStatus(kind,msg){ var e=document.getElementById('liveSt'); if(!e) return;
   e.className='livest '+kind; e.innerHTML=(kind==='ok'?'● ':kind==='err'||kind==='warn'?'⚠ ':'⟳ ')+esc(msg)+(kind==='load'?'':' <a href="#" id="liveRef">'+(kind==='err'?'Retry':'Refresh')+'</a>'+(dsCan()?' · <a href="#" id="dsLink">Sources</a>':'')); }
+/* V443 (relay V72): faster loading, always live. Each workbook is kept in this browser with its version. At every load the relay checks the live file;
+   only when it is the very same version does it answer "unchanged" (204) and the kept copy is used, so the same file is not downloaded again. */
+var LIVE_T=null;
+function lfUser(){ return (ACC.user&&ACC.user.name)||''; }
+async function lfGet(name){ try{ var db=await kcOpen(); if(!db) return null; var rec=await new Promise(function(res){ try{ var q=db.transaction('c').objectStore('c').get('file:'+name); q.onsuccess=function(){ res(q.result||null); }; q.onerror=function(){ res(null); }; }catch(e){ res(null); } }); try{ db.close(); }catch(e){} return rec&&rec.b&&rec.ver?rec:null; }catch(e){ return null; } }
+async function lfPut(name,rec){ try{ var db=await kcOpen(); if(!db) return; await new Promise(function(res){ try{ var tx=db.transaction('c','readwrite'); tx.objectStore('c').put(rec,'file:'+name); tx.oncomplete=tx.onerror=tx.onabort=function(){ res(); }; }catch(e){ res(); } }); try{ db.close(); }catch(e){} }catch(e){} }
 async function liveFetch(src){
-  var ctl=new AbortController(), tm=setTimeout(function(){ ctl.abort(); },60000), r;
-  try{ r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/?url='+encodeURIComponent(src.url),{signal:ctl.signal,headers:ACC.token?{'X-KEC-Token':ACC.token}:{}}); }
+  var ctl=new AbortController(), tm=setTimeout(function(){ ctl.abort(); },60000), r, url0=src.url, kept=await lfGet(src.name);
+  if(kept&&(kept.url!==url0||kept.u!==lfUser())) kept=null;
+  try{ r=await fetch(LIVE.relay.replace(/\/+$/,'')+'/?url='+encodeURIComponent(url0)+(kept?'&ifv='+encodeURIComponent(kept.ver):''),{signal:ctl.signal,cache:'no-store',headers:ACC.token?{'X-KEC-Token':ACC.token}:{}}); }
   catch(e){ clearTimeout(tm); throw new Error(src.name+': could not reach the relay'+(e&&e.name==='AbortError'?' (timed out)':'')); }
   clearTimeout(tm);
   if(!r.ok){ var m=''; try{ m=(await r.json()).error; }catch(e){} throw new Error(src.name+': '+(m||('the relay answered '+r.status))); }
@@ -10035,26 +10064,37 @@ async function liveFetch(src){
   if(/application\/json/i.test(r.headers.get('Content-Type')||'')){ var j=await r.json(); if(!j||!j.filtered||!Array.isArray(j.tabs)) throw new Error(src.name+': the relay sent an unexpected answer');
     var wb=XLSX.utils.book_new(); j.tabs.forEach(function(t){ var nm=String(t.name||'Sheet').slice(0,31); try{ XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(t.rows||[]),nm); }catch(e){} });
     return new File([XLSX.write(wb,{type:'array',bookType:'xlsx'})],src.name); }
-  return new File([await r.arrayBuffer()],src.name);
+  if(r.status===204&&kept){ var f0=new File([kept.b],src.name); f0._ver=kept.ver; f0._same=true; f0._url=url0; return f0; }
+  var buf=await r.arrayBuffer(), ver=r.headers.get('X-KEC-Ver')||'', f1=new File([buf],src.name); f1._ver=ver; f1._url=url0;
+  if(ver) lfPut(src.name,{ver:ver,url:url0,u:lfUser(),b:buf,t:Date.now()});
+  return f1;
 }
 async function liveLoad(auto,only){
   if(LIVE_BUSY) return; if(typeof XLSX==='undefined'){ liveStatus('err','Excel reader not loaded'); return; }
   LIVE_BUSY=true; liveStatus('load','Loading live data…');
   try{
     /* V417: a user whose money figures are hidden does not load the contracts database (the relay refuses it too) */
-    await lkShared();
+    var T0=Date.now(), lkP=lkShared(); /* the links check runs beside the downloads; the links remembered from the last start are used meanwhile */
     var srcs=LIVE.sources.filter(function(s){ return !(accNoMoney()&&/contract/i.test(String(s.name||''))); });
     /* V418: Refresh on one file of the Data sources fetches that file again and reuses the other one already loaded */
     var want=srcs.map(function(s){ return only==null||s===LIVE.sources[only]||!LIVE_FILES[s.name]; });
+    var u0=srcs.map(function(s){ return s.url; });
     var got=await Promise.allSettled(srcs.map(function(s,ix){ return want[ix]?liveFetch(s):Promise.resolve(LIVE_FILES[s.name].file); })), files=[], failed=[];
+    try{ await lkP; }catch(e){}
+    for(var qi=0;qi<srcs.length;qi++){ if(want[qi]&&srcs[qi].url!==u0[qi]){ try{ got[qi]={status:'fulfilled',value:await liveFetch(srcs[qi])}; }catch(e){ got[qi]={status:'rejected',reason:e}; } } }
+    var T1=Date.now(), nSame=0, memSame=only==null&&srcs.length>0;
+    got.forEach(function(g,ix){ var s=srcs[ix], pv=LIVE_FILES[s.name]; if(g.status==='fulfilled'&&g.value._same) nSame++; if(!(g.status==='fulfilled'&&g.value._same&&pv&&pv.file&&pv.file._ver&&pv.file._ver===g.value._ver)) memSame=false; });
     got.forEach(function(g,ix){ var s=srcs[ix]; if(g.status==='fulfilled'){ files.push(g.value); if(want[ix]){ LIVE_FILES[s.name]={file:g.value,at:Date.now()}; LIVE_ST[s.name]={ok:true,at:Date.now()}; } } else { failed.push(g.reason); LIVE_ST[s.name]={ok:false,at:Date.now(),err:String((g.reason&&g.reason.message)||g.reason||'')}; } });
     if(!files.length) throw failed[0]||new Error('No workbook could be loaded');
     if(failed.some(function(f){ return /sign in again/i.test(String(f&&f.message)); })) throw failed.filter(function(f){ return /sign in again/i.test(String(f&&f.message)); })[0];
-    suUndo(); window.KEC_SHEETS={};
+    /* every file is the version already read in this session: nothing to read again, only the site updates are synced */
+    suUndo(); if(!memSame) window.KEC_SHEETS={};
     RENDER_HOLD=true;
-    try{ for(var i=0;i<files.length;i++){ var hfo={auto:true,quiet:true}; await handleFiles([files[i]],hfo); if(hfo.failed) failed.push(new Error((files[i].name||'Workbook')+' could not be read: '+hfo.failed.slice(0,2).join(' '))); }
+    try{ for(var i=0;!memSame&&i<files.length;i++){ var hfo={auto:true,quiet:true}; await handleFiles([files[i]],hfo); if(hfo.failed) failed.push(new Error((files[i].name||'Workbook')+' could not be read: '+hfo.failed.slice(0,2).join(' '))); }
+    var T2=Date.now();
     try{ await ulMasterCheck('Live DataBase'); }catch(e){}
-    await suSync(); } finally { RENDER_HOLD=false; if(RENDER_PENDING){ RENDER_PENDING=false; render(); } }
+    await suSync();
+    LIVE_T={at:Date.now(),dl:T1-T0,read:T2-T1,sync:Date.now()-T2,total:Date.now()-T0,same:nSame,n:srcs.length,skip:memSame}; try{ console.log('[KEC] live load',JSON.stringify(LIVE_T)); }catch(e){} } finally { RENDER_HOLD=false; if(RENDER_PENDING){ RENDER_PENDING=false; render(); } }
     var d=new Date(), hh=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
     if(failed.length){ liveStatus('err','Partly updated '+hh+': '+failed.map(function(f){ return String(f&&f.message||f); }).join(' · ')+'. The other figures are live; this part shows the last saved data.'); if(!auto) toast('Only part of the live data could be refreshed',true); }
     else{ var dsw=dsWarnText(); if(dsw) liveStatus('warn','Live data · updated '+hh+' · '+dsw); else liveStatus('ok','Live data · updated '+hh);
