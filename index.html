@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V453</title>
+<title>TEST · KEC Project Controls Dashboard · V454</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1605,7 +1605,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V453</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V454</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1786,7 +1786,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V453';
+var APP_VER='V454';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3343,6 +3343,18 @@ function suAfterWrite(j){ var sh=j&&j.sheet; if(!(sh&&sh.ok&&!sh.pending)||!LIVE
   var go=function(n){ if(LIVE_BUSY){ if(n<40) setTimeout(function(){ go(n+1); },500); return; } liveLoad(true).then(function(){ if(!document.querySelector('#liveSt.err')) toast('Figures updated from the Google Sheet'); }); };
   setTimeout(function(){ go(0); },600); }
 (function(){ var st=document.createElement('style'); st.textContent='.suold{border-color:#d97706!important}.suoldb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}.suoldb .btn{min-width:230px;justify-content:center}.suoldb span{font-size:12px;color:var(--muted)}@media(max-width:560px){.suoldb .btn{width:100%}}'; document.head.appendChild(st); })();
+(function(){ var st=document.createElement('style'); st.textContent='.su2 .svmb{width:min(900px,96vw)!important;padding:0!important;overflow:hidden auto}.su2 .svmb>h3{margin:0;padding:22px 26px 0;font-size:21px}'+
+ '.su2h{display:flex;align-items:flex-start;gap:12px;padding:4px 26px 16px;border-bottom:1px solid var(--line)}.su2h p{margin:0;color:var(--mut);flex:1}'+
+ '.su2b{font-size:12px;font-weight:800;border-radius:14px;padding:5px 12px;white-space:nowrap;margin-top:-30px}.su2b.g{background:#e3f3ea;color:#1a7f4b}.su2b.a{background:#fdf1dc;color:#9a5b00}.su2b.n{background:rgba(120,120,120,.14);color:var(--mut)}'+
+ '.su2s{display:grid;grid-template-columns:1fr 1fr 1fr;padding:18px 26px 8px}.su2c{padding:0 18px;border-left:1px solid var(--line);display:flex;flex-direction:column;align-items:flex-start;gap:9px}.su2c:first-child{border-left:0;padding-left:0}.su2c:last-child{padding-right:0}'+
+ '.su2c p{margin:0;font-size:12.5px;line-height:1.5;color:var(--mut)}.su2n{display:flex;align-items:center;gap:9px;font-weight:800;font-size:14px}.su2n i{font-style:normal;width:24px;height:24px;border-radius:50%;background:#0b2a5e;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px}'+
+ '.su2 .su2p{background:#0b2a5e!important;color:#fff!important;border-color:#0b2a5e!important;padding:9px 16px}.su2k{margin:0!important}'+
+ '.su2l{background:none;border:0;padding:2px 0;font:inherit;font-weight:700;font-size:13px;color:var(--accent,#2f6fd6);cursor:pointer;text-decoration:none}.su2l:hover{text-decoration:underline}'+
+ '.su2d{position:relative;align-self:stretch;min-height:120px;border:2px dashed #b9c6dd;border-radius:12px;background:rgba(47,111,214,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;cursor:pointer;padding:10px}'+
+ '.su2d input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}.su2d b{font-size:13.5px}.su2d small{color:var(--mut);word-break:break-all}.su2d.on{border-color:#2f6fd6;background:rgba(47,111,214,.12)}.su2d.has{border-style:solid;border-color:#1a7f4b;background:rgba(26,127,75,.07)}'+
+ '.su2u{width:40px;height:40px;border-radius:50%;background:rgba(47,111,214,.12);color:#2f6fd6;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800}.su2d.has .su2u{background:rgba(26,127,75,.14);color:#1a7f4b}'+
+ '.su2 #suEnt,.su2 #suRes{padding:0 26px}.su2 .svma{align-items:center;margin-top:16px;padding:14px 26px;border-top:1px solid var(--line);background:rgba(120,110,90,.05)}.su2f{flex:1;font-size:12px;line-height:1.5;color:var(--mut)}'+
+ '@media(max-width:760px){.su2s{grid-template-columns:1fr;gap:16px}.su2c{border-left:0;padding:0;border-top:1px solid var(--line);padding-top:14px}.su2c:first-child{border-top:0;padding-top:0}.su2h{flex-direction:column}.su2b{margin-top:0}.su2 .svma{flex-wrap:wrap}.su2f{flex-basis:100%}}'; document.head.appendChild(st); })();
 function suWriteToast(j,verb){ var sh=j&&j.sheet; if(j&&j.already){ toast('This update was already approved · '+suStatusText({status:'accepted',sheet:sh===undefined?undefined:sh}).t,false,9000); return; }
   if(sh===undefined){ toast(verb||'Approved'); return; }
   var x=suStatusText({status:'accepted',sheet:sh}); toast((/^Approved/.test(x.t)&&/^Approved/.test(verb||'Approved')?x.t:(verb||'Approved')+' · '+x.t)+(x.k==='r'?' · press Retry write':''),x.k==='r',x.k==='r'?15000:8000); }
@@ -5675,7 +5687,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V453',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V454',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
@@ -5980,9 +5992,25 @@ function suSummary(P){
 function suOpenUpload(){
   SU.entry='auto';
   var mode=suMode(); if(mode==='off'){ toast('You do not have the right to upload site updates',true); return; }
+  /* V454: the window in three steps (Option A): get the template, fill in and check, upload (drop the file or choose it) */
   var t={live:'Your upload goes live straight away.',review:'Your upload waits for an administrator to approve it before it shows on the dashboard.',local:'There is no sign-in on this copy: the upload is applied in this browser only.'}[mode];
-  suModal('suModal','Site update','<p>Fill the KEC Site Update Template and upload it here. '+t+'</p><p><button type="button" class="btn" data-sutpl="1">Download template</button> <button type="button" class="btn" data-suconv="1" title="For a file made on an older template: carries the information into the latest template, and checks a file before you upload it">Download converter tool</button> <a class="btn" href="KEC_Site_Team_User_Guide.pdf" download="KEC_Site_Team_User_Guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Download user guide</a></p><label class="sunod"><input type="checkbox" id="suNoDone"'+(suNoDone()?' checked':'')+'> Leave completed packages (100% actual) out of the template</label>'+(suMode()==='local'?'':'<div class="suen"><small>You do not choose "new" or "modification": every row is compared with the database and marked <b>New</b>, <b>Modified</b> or <b>Unchanged</b> automatically. In a modified row an empty cell keeps the database value; a dash (-) clears it.</small></div>')+'<input type="file" id="suFile" accept=".xlsx,.xlsm" style="margin:8px 0"><div id="suEnt"></div><div id="suRes"></div>','<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
+  var bdg={live:['g','Goes live straight away'],review:['a','Needs approval before it shows'],local:['n','Applied in this browser only']}[mode]||['n',''];
+  var m=suModal('suModal','Site update','<div class="su2h"><p>Send this week\'s figures for your project. One file = one project.</p><span class="su2b '+bdg[0]+'" title="'+esc(t)+'">● '+bdg[1]+'</span></div>'+
+    '<div class="su2s">'+
+     '<div class="su2c"><div class="su2n"><i>1</i>Get the template</div><p>Made for your projects: packages, open challenges and the values that carry over from the last report. Change only what moved.</p><button type="button" class="btn su2p" data-sutpl="1">⤓ Download template</button><label class="sunod su2k"><input type="checkbox" id="suNoDone"'+(suNoDone()?' checked':'')+'> Leave completed packages (100% actual) out</label></div>'+
+     '<div class="su2c"><div class="su2n"><i>2</i>Fill in and check</div><p>A file from an older template? The converter carries it into the current one and checks it before you upload.</p><button type="button" class="su2l" data-suconv="1" title="For a file made on an older template: carries the information into the latest template, and checks a file before you upload it">⇄ Download converter tool</button><a class="su2l" href="'+SU_GUIDE+'" download="'+SU_GUIDE+'" target="_blank" rel="noopener">▤ Download user guide</a></div>'+
+     '<div class="su2c"><div class="su2n"><i>3</i>Upload</div><label class="su2d" id="suDrop"><input type="file" id="suFile" accept=".xlsx,.xlsm"><span class="su2u">↑</span><b>Drop the file here</b><small id="suDropT">or click to choose · .xlsx</small></label></div>'+
+    '</div><div id="suEnt"></div><div id="suRes"></div>',
+    (suMode()==='local'?'<span class="su2f"></span>':'<span class="su2f">Every row is compared with the database and marked <b>New</b>, <b>Modified</b> or <b>Unchanged</b> for you. In a modified row an empty cell keeps the database value; a dash (-) clears it.</span>')+'<button type="button" class="btn pri" id="suSend" disabled>Submit update</button>');
+  m.classList.add('su2'); suDropWire();
 }
+var SU_GUIDE='KEC_Site_Team_User_Guide_V02.pdf';
+/* V454: drop a file on the upload area (it is handed to the same file box, so the usual checks run) */
+function suDropWire(){ var d=document.getElementById('suDrop'), f=document.getElementById('suFile'); if(!d||!f) return;
+  ['dragenter','dragover'].forEach(function(ev){ d.addEventListener(ev,function(e){ e.preventDefault(); d.classList.add('on'); }); });
+  ['dragleave','drop'].forEach(function(ev){ d.addEventListener(ev,function(e){ e.preventDefault(); d.classList.remove('on'); }); });
+  d.addEventListener('drop',function(e){ var fl=e.dataTransfer&&e.dataTransfer.files; if(!fl||!fl.length) return; try{ var dt=new DataTransfer(); dt.items.add(fl[0]); f.files=dt.files; }catch(x){ toast('Choose the file with a click instead',true); return; } f.dispatchEvent(new Event('change',{bubbles:true})); });
+  f.addEventListener('change',function(){ var n=f.files&&f.files[0]; var t=document.getElementById('suDropT'); if(n&&t){ t.textContent=n.name; d.classList.add('has'); } }); }
 async function suRead(file,okCode,resId){
   var out=document.getElementById(resId||'suRes'); out.innerHTML='Reading…';
   try{ var ab=await file.arrayBuffer(), wb=XLSX.read(ab,{type:'array'}); try{ wb._stub=XLSX.read(ab,{type:'array',sheetStubs:true}); }catch(_){} SU.parsed=suParse(wb,okCode); out.innerHTML=suSummary(SU.parsed); SU.chk=[]; try{ if(model&&!SU.parsed.errs.length){ SU.chk=suChkRows(SU.parsed.data).filter(function(x){ var q=jsState(x.r,x.m); return q==='open'||q==='Rejected'; }); out.innerHTML+=suChkHtml(SU.chk); } }catch(e){ console.warn('upload check',e&&e.message); } if(!SU.tok&&model&&!SU.parsed.errs.length){ try{ var pvw=ulPreview(SU.parsed.data); out.innerHTML+='<div class="ulcard" style="margin-top:10px"><b>What this update will change</b>'+ulChanges(pvw,4)+'</div>'; }catch(e){} } suBtn(); suCheckEntry(); }
