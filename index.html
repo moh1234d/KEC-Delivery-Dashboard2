@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V446</title>
+<title>TEST · KEC Project Controls Dashboard · V447</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1601,7 +1601,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V446</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V447</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1782,7 +1782,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V446';
+var APP_VER='V447';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3336,6 +3336,7 @@ document.addEventListener('change',function(e){ var t=e.target; if(t&&t.getAttri
 function suAfterWrite(j){ var sh=j&&j.sheet; if(!(sh&&sh.ok&&!sh.pending)||!LIVE.sources.length) return;
   var go=function(n){ if(LIVE_BUSY){ if(n<40) setTimeout(function(){ go(n+1); },500); return; } liveLoad(true).then(function(){ if(!document.querySelector('#liveSt.err')) toast('Figures updated from the Google Sheet'); }); };
   setTimeout(function(){ go(0); },600); }
+(function(){ var st=document.createElement('style'); st.textContent='.suold{border-color:#d97706!important}.suoldb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}.suoldb .btn{min-width:230px;justify-content:center}.suoldb span{font-size:12px;color:var(--muted)}@media(max-width:560px){.suoldb .btn{width:100%}}'; document.head.appendChild(st); })();
 function suWriteToast(j,verb){ var sh=j&&j.sheet; if(j&&j.already){ toast('This update was already approved · '+suStatusText({status:'accepted',sheet:sh===undefined?undefined:sh}).t,false,9000); return; }
   if(sh===undefined){ toast(verb||'Approved'); return; }
   var x=suStatusText({status:'accepted',sheet:sh}); toast((/^Approved/.test(x.t)&&/^Approved/.test(verb||'Approved')?x.t:(verb||'Approved')+' · '+x.t)+(x.k==='r'?' · press Retry write':''),x.k==='r',x.k==='r'?15000:8000); }
@@ -3543,7 +3544,8 @@ function rvCard(s){
   var pk=RV.pk[s.id]||{};
   return '<div class="card plain ulcard rvcard"><div class="ulh">'+ulHead(Object.assign({},s,{route:'site',by:by,n:M.n,flags:M.nAtt,status:'pending'}))+'</div>'+
     suHiddenHtml(s)+rvAutoExtra(s)+
-    '<div class="rvsum">'+rvChip(M.n,M.n===1?'change':'changes')+rvChip(M.nNew,M.nNew===1?'new row':'new rows')+rvChip(M.nDb,M.nDb===1?'row changes the database':'rows change the database')+rvChip(M.nSame,'unchanged')+(M.nAtt?rvChip(M.nAtt,M.nAtt===1?'needs attention':'need attention','w'):'')+(nf?rvChip(nf,nf===1?'failed check':'failed checks',M.nErr?'e':'w'):rvChip('✓','all checks passed','g'))+'</div>'+
+    '<div class="rvsum">'+rvChip(M.n,M.n===1?'change':'changes')+rvChip(M.nNew,M.nNew===1?'new row':'new rows')+rvChip(M.nDb,M.nDb===1?'row changes the database':'rows change the database')+rvChip(M.nSame,'unchanged')+(M.nAtt?rvChip(M.nAtt,M.nAtt===1?'needs attention':'need attention','w'):'')+(nf?rvChip(nf,nf===1?'failed check':'failed checks',M.nErr?'e':'w'):rvChip('✓','all checks passed','g'))+(s.data&&s.data.ver&&s.data.ver<parseFloat(SU_TPLV)?rvChip('v'+s.data.ver,'older template','w'):'')+'</div>'+
+    (s.data&&s.data.ver&&s.data.ver<parseFloat(SU_TPLV)?'<div class="ulsub">Sent on the older template version '+esc(String(s.data.ver))+' (current: '+SU_TPLV+'). Rows that repeat figures already in the database are not written again; ask the site team to use the current template or the converter tool next time.</div>':'')+
     '<div class="rvprj">Projects to approve: '+(s.projects||[]).map(function(c){ return '<label><input type="checkbox" class="ulpk" data-sid="'+s.id+'" value="'+esc(c)+'"'+(pk[c]===false?'':' checked')+'> '+esc(pname(c))+' <span class="rvmut">('+(M.codes[c]||0)+')</span></label>'; }).join('')+'</div>'+
     '<div class="rvtabs">'+T.map(function(t){ return '<button type="button" class="rvtb'+(t[0]==='chk'?(nf?(M.nErr?' bad':' wrn'):' okc'):'')+(tab===t[0]?' on':'')+'" data-rvtab="'+esc(s.id)+'|'+t[0]+'">'+t[1]+' ('+t[2]+')</button>'; }).join('')+'</div>'+body+
     (D.length?'<div class="ulsub bad"><b>'+D.length+' value'+(D.length===1?'':'s')+' differ from the contracts file</b> — see Site submissions for the detail.</div>':'')+rvActions(s,M)+'</div>';
@@ -5565,8 +5567,9 @@ function suParse(wb,okCode){
     var bad=0; rows.forEach(function(o,i){ var k=Object.keys(o).filter(function(q){ return /^data\s*date/i.test(String(q).trim()); })[0]; if(!k) return; var v=o[k]; if(v==null||String(v).trim()==='') return; if(!toISO(v)){ bad++; if(bad<=5&&errs.length<200) errs.push(x[1]+', row '+(i+1)+': "'+String(v).slice(0,20)+'" is not a valid Data Date.'); }
       else { var dv0=toISO(v), dmax=new Date(Date.now()+31*864e5).toISOString().slice(0,10); if((dv0>dmax||dv0<'2025-01-01')&&errs.length<200) errs.push(x[1]+', row '+(i+1)+': the Data Date '+d2(dv0)+' is '+(dv0>dmax?'more than a month in the future':'before 2025')+'. Check the year.'); } });
     if(bad>5) errs.push(x[1]+': '+(bad-5)+' more rows have a Data Date that is not a valid date.'); });
-  if(data.ver&&data.ver<2.5) warns.push('This file uses template version '+data.ver+'. Download the current template ('+SU_TPLV+'): it has the trade drop-down and the approved-package lists.');
-  return {data:data,errs:errs,warns:warns,sum:sum,codes:Object.keys(codes)};
+  /* V447: any template older than the current one is named, with the current template and the converter offered (older files led to rows written twice on 25 Nov) */
+  var oldT=data.ver&&data.ver<parseFloat(SU_TPLV)?data.ver:0;
+  return {data:data,errs:errs,warns:warns,sum:sum,codes:Object.keys(codes),old:oldT};
 }
 function sheetsSeen(){ var o=window.KEC_SHEETS||{}, k=Object.keys(o); return k.length?'<br><b>Sheets in the file(s) the dashboard received:</b> '+k.map(function(n){ return '<i>'+esc(n)+'</i> → '+(o[n].map(esc).join(', ')||'no sheets'); }).join(' · '):'<br>No workbook has been read in this session (the built-in sample data is showing).'; }
 function suUndo(){ if(!SU.pre) return; Object.keys(SU.pre).forEach(function(k){ if(cur[k]===SU.post[k]) cur[k]=SU.pre[k]; }); SU.pre=SU.post=null; }
@@ -5662,7 +5665,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V446',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V447',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
@@ -5960,6 +5963,7 @@ function suSummary(P){
   var dr=suDatesRead(P);
   var nm={prog:'Packages - Plots',con:'Areas of Concern',e1:'Technical Submittals',e2:'Material Procurement',qa:'Quality Statistics',mp:'Manpower',pc:'Contracts to be Awarded'};
   return '<p><b>Projects:</b> '+esc(P.codes.join(', ')||'—')+'</p>'+(dr.list.length?'<p><b>Data Date read as:</b> '+esc(dr.list.join(', '))+'</p>':'')+(dr.old?'<div class="sepnote" style="border-color:var(--warn)"><span class="ni">!</span><div>'+esc(dr.old)+'</div></div>':'')+'<div class="svtw"><table class="svtb"><tbody>'+P.sum.map(function(x){ return '<tr><td>'+nm[x[0]]+'</td><td class="n">'+x[1]+' rows</td></tr>'; }).join('')+'</tbody></table></div>'+
+    (P.old?'<div class="sepnote suold"><span class="ni">i</span><div style="flex:1"><b>Older template (version '+esc(String(P.old))+')</b> · the current one is '+SU_TPLV+'. Your figures can still be sent, but an older file can miss the Trade of each submittal or the newer columns, so the same figures may be counted twice. Next time, use one of these:<div class="suoldb"><button type="button" class="btn" data-sutpl="1">Download the current template</button><span>filled in with your projects and the last approved figures, so you only change what moved</span></div><div class="suoldb"><button type="button" class="btn" data-suconv="1">Download converter tool</button><span>carries this file into the current template and checks it before you upload</span></div></div></div>':'')+
     (P.errs.length?'<div class="sepnote" style="border-color:var(--bad)"><span class="ni">!</span><div style="flex:1"><b>Fix these first ('+P.errs.length+'):</b> <button type="button" class="btn" data-sucopy="1" style="margin-left:6px">Copy list</button><div style="max-height:34vh;overflow:auto;margin-top:4px">'+P.errs.map(esc).join('<br>')+'</div></div></div>':'')+
     (P.warns.length?'<div class="sepnote"><span class="ni">i</span><div style="flex:1"><b>Check ('+P.warns.length+'):</b>'+(P.errs.length?'':' <button type="button" class="btn" data-sucopy="1" style="margin-left:6px">Copy list</button>')+'<div style="max-height:24vh;overflow:auto;margin-top:4px">'+P.warns.map(esc).join('<br>')+'</div></div></div>':'');
 }
