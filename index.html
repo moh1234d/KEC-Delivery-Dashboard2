@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V448</title>
+<title>TEST · KEC Project Controls Dashboard · V450</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1490,7 +1490,11 @@ body.pf-arr .sec-bar{display:none}
 .rp-rsl .rp-vdel{background:#b9544b!important;color:#fff!important}.rp-rsl .rp-vdel.rp-dga{background:#8f2d24!important;outline:2px solid #fff}
 .svco{margin-bottom:22px}.svcoh{display:flex;align-items:baseline;gap:10px;margin:4px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink)}.svcoh span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700}.svcoh b{font-size:20px}.svcoh small{color:var(--mut);font-size:12px;margin-left:auto}
 .svpg{margin-bottom:12px}.svpgh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.svpgh b{font-size:18px}.svpgh small{display:block;color:var(--mut);font-size:12px}
-.svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}.svpb small{display:block;color:var(--mut);margin-top:3px}
+.svpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.svpb{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}.svpb:hover{border-color:var(--accent)}
+.svpb{position:relative}.svpb.done{background:rgba(26,127,75,.08);border-color:rgba(26,127,75,.45)}.svpb.done b{padding-right:26px;display:block}
+.svok{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;background:#1a7f4b;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.svdp{display:inline-block;margin-top:7px;font-size:11px;font-weight:800;color:#1a7f4b;background:rgba(26,127,75,.14);border-radius:10px;padding:2px 8px}.svdp.sm{margin:0 0 0 6px;vertical-align:1px}
+.svpgh small .svdn{display:inline;margin:0;padding:0;white-space:nowrap;color:#1a7f4b;font-weight:700}.svpb small{display:block;color:var(--mut);margin-top:3px}
 .svm{position:fixed;inset:0;background:rgba(8,16,32,.55);display:flex;align-items:center;justify-content:center;z-index:9999}.svmb{background:var(--card);color:var(--ink);border-radius:14px;padding:20px 22px;width:min(640px,94vw);max-height:92vh;overflow:auto}.svmb h3{margin:0 0 10px}
 .svmg{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}.svf{grid-column:span 2}.svf.h{grid-column:span 1}.svmg label{display:block;font-size:11px;letter-spacing:.06em;color:var(--mut);font-weight:700;text-transform:uppercase;margin:6px 0 3px}.svmg textarea,.svmg input,.svmg select{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
 .lpbox{padding:16px 18px}
@@ -1601,7 +1605,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V448</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V450</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1782,7 +1786,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V448';
+var APP_VER='V450';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -4586,7 +4590,8 @@ function pSiteGroup(rows,coreRows,cut){ SV.rep=null;
   var tb=codes.map(function(c){
     var rp=core.filter(function(r){ return r.code===c; }); if(!rp.length) rp=rows.filter(function(r){ return r.code===c; });
     var a=agg(rp,undefined,true), g=(a.act-a.plan)*100, dl=dayDiff(a.ff,a.pf), st=ST[pkgStatus(a.act,a.pv,a.ev,a.spi,a.maxDelay)]||ST.green, hi=CH[c].filter(function(x){ return x.impact==='High'; }).length;
-    return '<tr><td><b>'+esc(pname(c))+'</b><br><small>'+esc(c)+(mixedDates()?' · data date '+d2(projCut(c,state.cutoff)):'')+' · '+rows.filter(function(r){ return r.code===c; }).length+(rows.filter(function(r){ return r.code===c; }).length===1?' package':' packages')+'</small></td><td class="n">'+svPctBar(a.plan)+'</td><td class="n">'+svPctBar(a.act)+'</td><td class="n '+(g<-0.05?'bad':'good')+'">'+(Math.abs(g)<0.05?'0.0':sgn(g,1,''))+' %</td><td class="n">'+(a.spi==null?'—':a.spi.toFixed(2))+'</td><td class="n">'+d2(a.ff)+'<br><small>'+(dl<0?(-dl)+' d late':dl>0?dl+' d early':'on plan')+'</small></td><td><span class="svimp '+st[0]+'">'+st[1]+'</span></td><td class="n">'+CH[c].length+(hi?' <small class="bad">('+hi+' high)</small>':'')+'</td><td><button type="button" class="btn" data-svpj="'+esc(c)+'">Open</button></td></tr>';
+    var fdn=pdOf(c);
+    return '<tr><td><b>'+esc(pname(c))+'</b>'+(fdn?' <span class="svdp sm">✓ Completed · '+esc(d2(fdn.d))+'</span>':'')+'<br><small>'+esc(c)+(mixedDates()?' · data date '+d2(projCut(c,state.cutoff)):'')+' · '+rows.filter(function(r){ return r.code===c; }).length+(rows.filter(function(r){ return r.code===c; }).length===1?' package':' packages')+'</small></td><td class="n">'+svPctBar(a.plan)+'</td><td class="n">'+svPctBar(a.act)+'</td><td class="n '+(g<-0.05?'bad':'good')+'">'+(Math.abs(g)<0.05?'0.0':sgn(g,1,''))+' %</td><td class="n">'+(a.spi==null?'—':a.spi.toFixed(2))+'</td><td class="n">'+d2(a.ff)+'<br><small>'+(dl<0?(-dl)+' d late':dl>0?dl+' d early':'on plan')+'</small></td><td><span class="svimp '+st[0]+'">'+st[1]+'</span></td><td class="n">'+CH[c].length+(hi?' <small class="bad">('+hi+' high)</small>':'')+'</td><td><button type="button" class="btn" data-svpj="'+esc(c)+'">Open</button></td></tr>';
   }).join('');
   var PT=sec('svP','Projects',codes.length+(codes.length===1?' project':' projects')+' · status by project')+svTable(['Project','Planned','Actual','Variance','SPI','Forecast finish','Status','Open concerns',''],tb);
   /* finance */
@@ -4814,7 +4819,8 @@ function pSiteBuild(rows,coreRows,cut){
     /* V440: grouped by company (same order as the Overview), then by program */
     var pg={}, po=[], cg={}, co=[]; ps.forEach(function(c){ var g=prog(c), k=coOf(c)+'\u0001'+g; if(!pg[k]){ pg[k]=[]; po.push(k); var cc=coOf(c); if(!cg[cc]){ cg[cc]=[]; co.push(cc); } cg[cc].push(k); } pg[k].push(c); });
     co.sort(function(a,b){ var x=CO_ORDER.indexOf(a), y=CO_ORDER.indexOf(b); x=x<0?(a==='Other'?100:99):x; y=y<0?(b==='Other'?100:99):y; return x-y||(a<b?-1:1); });
-    var card=function(k){ var g=k.split('\u0001')[1]; return '<div class="card plain svpg"><div class="svpgh"><div><b>'+esc(g)+'</b><small>'+pg[k].length+(pg[k].length===1?' project':' projects')+'</small></div><button type="button" class="btn" data-svprog="'+esc(g)+'">Open program overview</button></div><div class="svpick">'+pg[k].map(function(c){ return '<button type="button" class="svpb" data-svpj="'+esc(c)+'"><b>'+esc(pname(c))+'</b><small>'+esc(c)+'</small></button>'; }).join('')+'</div></div>'; };
+    /* V449: completed projects (Option A): green card, tick and completion date; the program line counts them */
+    var card=function(k){ var g=k.split('\u0001')[1], nd=pg[k].filter(function(c){ return !!pdOf(c); }).length; return '<div class="card plain svpg"><div class="svpgh"><div><b>'+esc(g)+'</b><small>'+pg[k].length+(pg[k].length===1?' project':' projects')+(nd?' · <span class="svdn">'+nd+' completed</span>':'')+'</small></div><button type="button" class="btn" data-svprog="'+esc(g)+'">Open program overview</button></div><div class="svpick">'+pg[k].map(function(c){ return (function(){ var f=pdOf(c); return '<button type="button" class="svpb'+(f?' done':'')+'" data-svpj="'+esc(c)+'"'+(f?' title="Completed on '+esc(d2(f.d))+'"':'')+'>'+(f?'<span class="svok" aria-hidden="true">✓</span>':'')+'<b>'+esc(pname(c))+'</b><small>'+esc(c)+'</small>'+(f?'<span class="svdp">Completed · '+esc(d2(f.d))+'</span>':'')+'</button>'; })(); }).join('')+'</div></div>'; };
     return head('Site view','Open a whole program, or choose one project · grouped by company, then program')+co.map(function(c){ var ks=cg[c].sort(function(a,b){ return a<b?-1:1; }), np=ks.reduce(function(s,k){ return s+pg[k].length; },0);
       return '<div class="svco"><div class="svcoh"><span>Company</span><b>'+esc(c)+'</b><small>'+ks.length+(ks.length===1?' program':' programs')+' · '+np+(np===1?' project':' projects')+'</small></div>'+ks.map(card).join('')+'</div>'; }).join('');
   }
@@ -5593,7 +5599,9 @@ var SU_SHEET_LAG=10*60000;
 function suSheetLoadedAt(){ try{ var s0=LIVE.sources[0], st=s0&&LIVE_ST[s0.name]; return st&&st.ok&&/docs\.google\.com\/spreadsheets/.test(s0.url)?st.at:0; }catch(e){ return 0; } }
 async function suSync(){
   if(!ACC.need||!ACC.token) return;
-  try{ var j=await accCall('GET','/site-data',null,30000); if(j&&j.subs&&j.subs.length){ var L0=suSheetLoadedAt(), use=j.subs.filter(function(s){ return !(s.w&&L0&&L0>s.w+SU_SHEET_LAG); }); SU.inSheet=j.subs.length-use.length; if(use.length){ suMerge(use,true); suReload(); } SU.n=j.subs.length; } }
+  /* V450: the relay (V75) sends only the approved updates not yet in the Sheet loaded here (since = Sheet load time less the margin) */
+  var L00=suSheetLoadedAt(); try{ liveStatus('load','Loading approved site updates…'); }catch(e){}
+  try{ var j=await accCall('GET','/site-data'+(L00?'?since='+(L00-SU_SHEET_LAG):''),null,30000); if(j&&j.subs){ var L0=suSheetLoadedAt(), use=j.subs.filter(function(s){ return !(s.w&&L0&&L0>s.w+SU_SHEET_LAG); }); SU.inSheet=(j.inSheet||0)+j.subs.length-use.length; if(use.length){ suMerge(use,true); suReload(); } SU.n=j.n!=null?j.n:j.subs.length; } }
   catch(e){ if(e&&e.status&&e.status!==404) console.warn('site data',e.message); }
 }
 /* contracts file versus what the site team entered: logged for the admin */
@@ -5665,7 +5673,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V448',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V450',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
