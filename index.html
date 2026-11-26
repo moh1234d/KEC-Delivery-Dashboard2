@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V454</title>
+<title>TEST · KEC Project Controls Dashboard · V455</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1605,7 +1605,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V454</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V455</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1786,7 +1786,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V454';
+var APP_VER='V455';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -3169,7 +3169,7 @@ function svChalLoad(){
   if(ACC.need===null||(ACC.need&&!ACC.token)) return;
   if(!ACC.need||!LIVE||!LIVE.relay){ svLocalLoad(); SV.local=true; return; }
   SV.busy=true;
-  accCall('GET','/challenges',null,20000).then(function(j){ SV.chal=(j&&j.items)||[]; SV.log=(j&&j.log)||[]; SV.busy=false; if(state.page==='site') render(); })
+  accCall('GET','/challenges',null,20000).then(function(j){ SV.chal=(j&&j.items)||[]; SV.log=(j&&j.log)||[]; SV.sheet=!!(j&&j.sheet); SV.meet=(j&&j.meet)||null; SV.busy=false; if(state.page==='site') render(); })
    .catch(function(e){ SV.busy=false; SV.local=true; SV.err=(e&&e.status===404)?'The relay (Cloudflare worker) does not store challenge edits yet. Deploy relay V22. Edits are kept in this browser only.':'Could not reach the relay. Edits are kept in this browser only.'; svLocalLoad(); if(state.page==='site') render(); });
 }
 function svChalList(sc,cut){
@@ -3775,7 +3775,8 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
     if(!on.length){ toast('Tick at least one project to approve',true); return; }
     var rvk=document.getElementById('rvok-'+id); if(rvk&&!rvk.checked){ RV.tab[id]='chk'; render(); toast('Some checks failed: look at the Checks tab and tick “I checked the failed checks”, or reject the update',true,7000); return; }
     if(!suHiddenOk(suSubById(id))) return;
-    t.disabled=true; var t0=t.textContent; t.textContent='Approving… (writing to the database can take up to '+Math.round(SU_TO.review/60000)+' min)'; accCall('POST','/site-review',{id:id,action:'approve',only:on.length===all.length?undefined:on},SU_TO.review).then(function(j){ suWriteToast(j,'Approved'+(on.length<all.length?' · '+on.length+' of '+all.length+' projects':'')); suAfterWrite(j); return ulAfterReview(); }).catch(function(er){ t.disabled=false; t.textContent=t0; if(suReviewErr(er,ulAfterReview)) return; toast((er&&er.message)||'Could not approve',true); }); }
+    t.disabled=true; var t0=t.textContent; t.textContent='Checking the challenges changed in the meeting…';
+    mtGate(id,function(meet){ t.textContent='Approving… (writing to the database can take up to '+Math.round(SU_TO.review/60000)+' min)'; accCall('POST','/site-review',{id:id,action:'approve',only:on.length===all.length?undefined:on,meet:meet||undefined},SU_TO.review).then(function(j){ suWriteToast(j,'Approved'+(on.length<all.length?' · '+on.length+' of '+all.length+' projects':'')); suAfterWrite(j); return ulAfterReview(); }).catch(function(er){ t.disabled=false; t.textContent=t0; if(suReviewErr(er,ulAfterReview)) return; toast((er&&er.message)||'Could not approve',true); }); },function(){ t.disabled=false; t.textContent=t0; }); }
   else if(t.hasAttribute('data-ulrej')){ var id2=t.getAttribute('data-ulrej'), rs=(document.getElementById('ulr-'+id2)||{}).value||''; if(!rs.trim()){ toast('Write the reason that goes back to the site team',true); return; }
     t.disabled=true; accCall('POST','/site-review',{id:id2,action:'reject',reason:rs.trim()},SU_TO.review).then(function(){ toast('Rejected · the reason is shown to the site team'); return ulAfterReview(); }).catch(function(er){ t.disabled=false; toast((er&&er.message)||'Could not reject',true); }); }
 });
@@ -4890,13 +4891,13 @@ function pSiteBuild(rows,coreRows,cut){
   var O={High:0,Medium:1,Low:2}; open.sort(function(a,b){ return (O[a.impact]!=null?O[a.impact]:3)-(O[b.impact]!=null?O[b.impact]:3); });
   var can=chCan();
   var ch=sec('svC','Challenges','open concerns'+(CL.date?' · latest log '+d2(CL.date):'')+(closed?' · '+closed+' closed (hidden)':''))+
-    '<div class="svbar"><span>'+open.length+' open challenge'+(open.length===1?'':'s')+'</span><span class="sp"></span>'+(can?'<button type="button" class="btn" data-svadd="1">+ Add challenge</button>':'')+(xlCan()?'<button type="button" class="btn" data-svxl="1">Export to Excel</button>':'')+'</div>'+
+    '<div class="svbar"><span>'+open.length+' open challenge'+(open.length===1?'':'s')+'</span><span class="sp"></span>'+(can?'<button type="button" class="btn" data-svadd="1">+ Add challenge</button>':'')+(xlCan()?'<button type="button" class="btn" data-svxl="1">Export to Excel</button>':'')+'</div>'+mtBanner(CL.date)+
     (SV.err?'<div class="sepnote"><span class="ni">i</span><div>'+esc(SV.err)+'</div></div>':'')+
-    (open.length?'<div class="svchl">'+open.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b>'+(x.action?'<p>'+esc(x.action)+'</p>':'')+'<small>'+esc(dp(x.pkg)||'Project')+(x.owner?' · Owner: '+esc(x.owner):'')+(x.target?' · Target '+d2(x.target):'')+(x.id&&x.id.charAt(0)!=='k'?' · '+esc(x.id):'')+'</small></div>'+(can?'<button type="button" class="btn svedit" data-svedit="'+esc(x.id)+'">Edit</button>':'')+'</div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges for this selection.</div></div>');
+    '<div class="mtgrid'+(mtOn()&&can?'':' one')+'"><div>'+(open.length?'<div class="svchl">'+open.map(function(x){ var cl={High:'bad',Medium:'warn',Low:'good'}[x.impact]||'warn'; return '<div class="svch"><span class="svimp '+cl+'">'+esc(x.impact)+'</span><div class="svcb"><b>'+esc(x.concern)+'</b>'+mtTag(sc.code,x.id)+(x.action?'<p>'+esc(x.action)+'</p>':'')+'<small>'+esc(dp(x.pkg)||'Project')+(x.owner?' · Owner: '+esc(x.owner):'')+(x.target?' · Target '+d2(x.target):'')+(x.id&&x.id.charAt(0)!=='k'?' · '+esc(x.id):'')+'</small></div>'+(can?'<button type="button" class="btn svedit" data-svedit="'+esc(x.id)+'">Edit</button>':'')+'</div>'; }).join('')+'</div>':'<div class="card plain"><div class="empty">No open challenges for this selection.</div></div>')+(mtOn()&&can?'</div><div>'+mtPanel(sc)+'</div></div>':'</div></div>');
   var tools='<div class="svbar svtools"><span class="sp"></span>'+pkBtn()+pcutBtn()+dfixBtn()+(suMode()!=='off'?'<button type="button" class="btn" data-suopen="1">Site update</button>':'')+phBtn()+(suIsAdmin()?'<button type="button" class="btn" data-suadm="1">Site submissions</button>':'')+'<button type="button" class="btn" id="svPrint">Print report (A3)</button></div>';
   var pageHd=function(n){ return '<div class="svhd"><b>KEC · Site view</b><span>'+esc(pname(code))+(cs.length?' · '+esc(cs.join(', ')):'')+(ks.length?' · '+esc(ks.join(', ')):'')+'</span><em>Page '+n+' of 2</em></div>'; };
   var pageFt='<div class="svft"><span>Printed '+svNowTxt()+'</span><span>Cut-off '+cutTxt([code],cut)+'</span><span>KEC Project Controls Dashboard</span></div>';
-  SV.cur={sc:sc,open:open,all:CL.all,cut:cut};
+  SV.cur={sc:sc,open:open,all:CL.all,cut:cut,date:CL.date};
   /* V434: the figures for Print report (A3) */
   try{ var rpk=rows.filter(function(r){ return !isSep(r); }).slice().sort(function(a,b){ return (SEV[a.status]-SEV[b.status])||(a.pkg<b.pkg?-1:1); }).map(function(r){ var g=agg([r],cut,true); return {n:pkgL(r.code,r.pkg),cno:r.cno,ctr:r.ctr,pl:g.plan,ac:g.act,v:g.act-g.plan,pf:r.pf,ff:r.ff,dl:dayDiff(r.pf,r.ff),st:r.status}; });
     var rfin=[]; if(!accNoMoney()){ var fdv=document.createElement('div'); fdv.innerHTML=fin; [].forEach.call(fdv.querySelectorAll('.card'),function(c){ var q=function(s){ var e=c.querySelector(s); return e?e.innerHTML:''; }; rfin.push([q('.k-l'),q('.k-v'),q('.k-s')]); }); }
@@ -5385,13 +5386,13 @@ function svModal(it){
   var opts=[pname(sc.code)].concat(pk); if(x.pkg&&opts.indexOf(x.pkg)<0) opts.push(x.pkg);
   var m=document.createElement('div'); m.className='svm'; m.id='svModal';
   var f=function(id,l,inner,h){ return '<div class="svf'+(h?' h':'')+'"><label for="'+id+'">'+l+'</label>'+inner+'</div>'; };
-  m.innerHTML='<div class="svmb" role="dialog" aria-modal="true"><h3>'+(isNew?'Add challenge':'Edit challenge')+'</h3><div class="svmg">'+
+  m.innerHTML='<div class="svmb" role="dialog" aria-modal="true"><h3>'+(isNew?'Add challenge':'Edit challenge'+(x.id&&String(x.id).indexOf('k:')!==0?' · '+esc(x.id):'')+' '+esc(x.concern))+'</h3><div class="svmg">'+
     f('svfCon','Concern','<textarea id="svfCon" rows="2">'+esc(x.concern)+'</textarea>')+f('svfAct','Action taken / planned','<textarea id="svfAct" rows="3">'+esc(x.action)+'</textarea>')+
     f('svfImp','Impact','<select id="svfImp">'+['High','Medium','Low'].map(function(v){ return '<option'+(v===x.impact?' selected':'')+'>'+v+'</option>'; }).join('')+'</select>',1)+
     f('svfPkg','Package / plot','<select id="svfPkg">'+opts.map(function(v){ return '<option value="'+esc(v)+'"'+(v===(x.pkg||opts[0])?' selected':'')+'>'+esc(dp(v))+'</option>'; }).join('')+'</select>',1)+
     f('svfOwn','Owner','<input id="svfOwn" type="text" value="'+esc(x.owner)+'">',1)+f('svfTgt','Target date','<input id="svfTgt" type="date" value="'+esc(x.target||'')+'">',1)+
     f('svfSt','Status','<select id="svfSt">'+['Open','In progress','Closed'].map(function(v){ return '<option'+(v.toLowerCase()===String(x.status||'Open').toLowerCase()?' selected':'')+'>'+v+'</option>'; }).join('')+'</select>',1)+
-    '</div><div class="svma"><button type="button" class="btn" data-svcancel="1">Cancel</button><button type="button" class="btn pri" data-svsave="1">Save</button></div></div>';
+    '</div><div class="svma">'+(mtOn()?'<span class="mtsave">'+(isNew?'Adds a row to “Areas of Concern” in the '+d2(SV.cur.date)+' update with the next CH number.':'Saves to the challenge row of the '+d2(SV.cur.date)+' update in “Areas of Concern” and fills “Last Changed”.')+' The before → after is kept in the meeting record.</span>':'')+'<button type="button" class="btn" data-svcancel="1">Cancel</button><button type="button" class="btn pri" data-svsave="1">Save</button></div></div>';
   m.__item=x; m.__new=isNew; document.body.appendChild(m);
 }
 async function svSave(){
@@ -5403,12 +5404,150 @@ async function svSave(){
   Object.keys(labels).forEach(function(k){ var a=isNew?'':String(old[k]||''), b=String(it[k]||''); if(a!==b) ch.push({f:labels[k],from:a,to:b}); });
   if(!isNew&&!ch.length){ m.remove(); return; }
   var type=isNew?'Added':(/^closed/i.test(it.status)&&!/^closed/i.test(String(old.status))?'Closed':'Edited');
+  if(mtOn()){ try{ if(await mtSave(m,old,isNew,it,ch,type)) return; }catch(e){ var sb=m.querySelector('[data-svsave]'); if(sb){ sb.disabled=false; sb.textContent='Save'; } toast(e&&e.status===403?'You do not have the right to edit challenges':((e&&e.message)||'Could not save to the Sheet'),true,9000); return; } }
   try{
     if(ACC.need&&!SV.local){ var j=await accCall('POST','/challenges',{item:it,changes:ch,type:type},20000); if(j&&j.item) it=j.item; if(j&&j.log) SV.log=j.log; SV.chal=(SV.chal||[]).filter(function(o){ return o.id!==it.id; }).concat([it]); }
     else { if(!it.id) it.id='CH-L'+Date.now().toString(36).toUpperCase(); SV.chal=(SV.chal||[]).filter(function(o){ return o.id!==it.id; }).concat([it]); SV.log.push({t:it.ts,id:it.id,code:it.code,concern:it.concern,type:type,changes:ch}); svLocalSave(); }
     toast(isNew?'Challenge added':'Challenge updated'); m.remove(); render();
   }catch(e){ toast((e&&e.status===404?'The relay does not store challenge edits yet. Deploy relay V22.':(e&&e.status===403?'You do not have the right to edit challenges':(e&&e.message)||'Could not save')),true); }
 }
+/* ===== V455: challenges meeting loop. With relay V77 every edit and new challenge is written straight into the challenge rows of the last approved update in the Google Sheet,
+   the meeting record (before -> after) is listed beside the challenges, exported for the minutes, and the next site update is checked against it at approval. ===== */
+(function(){ var st=document.createElement('style'); st.textContent=
+ '.mtban{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(47,111,214,.07);border:1px solid rgba(47,111,214,.25);border-radius:11px;padding:10px 14px;margin:0 0 10px}.mtban .dot{width:10px;height:10px;border-radius:50%;background:#1a7f4b;flex:none}.mtban span{flex:1;min-width:200px;font-size:13px;color:var(--mut)}.mtban span b{color:var(--ink)}'+
+ '.mtgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;align-items:start}.mtgrid.one{grid-template-columns:1fr}@media(max-width:900px){.mtgrid{grid-template-columns:1fr}}'+
+ '.mtchip{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(47,111,214,.12);color:#2f6fd6;margin-left:8px;vertical-align:1px}.mtchip.n{background:rgba(26,127,75,.12);color:#1a7f4b}'+
+ '.mtp{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:14px 16px}.mtp h4{margin:0 0 2px;font-size:15px}.mtp .sub{font-size:12px;color:var(--mut);margin-bottom:8px}'+
+ '.mti{border-top:1px dashed var(--line);padding:8px 0}.mti .hd{display:flex;gap:8px;justify-content:space-between;font-weight:700;font-size:13px}.mti .hd small{font-weight:400;color:var(--mut)}.mti p{margin:3px 0 0;font-size:12.5px;color:var(--mut)}.mti s{color:var(--mut)}.mti b.to{color:#0b2a5e}.mti .new{color:#1a7f4b;font-weight:700}'+
+ '.mtp .act{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.mtp .act select{font:inherit;font-size:12.5px;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.mtp .nt{font-size:12px;color:var(--mut);margin-top:8px}'+
+ '.svf small.was{display:block;font-size:11.5px;color:var(--mut);margin-top:3px}.mtsave{font-size:12px;color:var(--mut);flex:1}'+
+ '.mtt{width:100%;border-collapse:collapse;font-size:13px}.mtt th{text-align:left;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);padding:8px 8px;border-bottom:1px solid var(--line)}.mtt td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}.mtt td small{display:block;color:var(--mut);font-size:11.5px}'+
+ '.mtr{display:flex;gap:8px;align-items:flex-start}.mtr i{font-style:normal;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex:none}.mtr i.g{background:#1a7f4b}.mtr i.s{background:#8a8f98}.mtr i.a{background:#c77700}'+
+ '.mtch{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.mtch button{font:inherit;font-size:12px;font-weight:700;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:#0b2a5e;cursor:pointer}.mtch button.on{background:#0b2a5e;color:#fff;border-color:#0b2a5e}'+
+ '.mtpill{font-size:12px;font-weight:800;border-radius:14px;padding:4px 11px;margin-left:8px}.mtpill.g{background:#e3f3ea;color:#1a7f4b}.mtpill.a{background:#fdf1dc;color:#9a5b00}'+
+ '.mtmv{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}.mtmv .hd{font-weight:700;font-size:13px}.mtmv .hd small{font-weight:400;color:var(--mut)}.mtmv table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}.mtmv td,.mtmv th{padding:5px 6px;border-top:1px solid var(--line);text-align:left;vertical-align:top}.mtmv th{font-size:11px;color:var(--mut);font-weight:700}.mtmv .warn{color:#9a5b00;font-size:12px}';
+ document.head.appendChild(st); })();
+var MT={day:'',stored:null};
+function mtLocalDay(t){ var d=new Date(t), p=function(n){ return String(n).padStart(2,'0'); }; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function mtOn(){ return !!(SV.sheet&&ACC.need&&!SV.local); }
+function mtLog(code){ var lc=String(code).toLowerCase(); return ((SV.meet&&SV.meet.log)||[]).filter(function(e){ return String(e.code||'').toLowerCase()===lc; }); }
+function mtDays(code){ var d={}; mtLog(code).forEach(function(e){ d[mtLocalDay(e.t)]=1; }); return Object.keys(d).sort().reverse(); }
+function mtTag(code,id){ var td=mtLocalDay(Date.now()), L=mtLog(code).filter(function(e){ return e.id===id&&mtLocalDay(e.t)===td; }); if(!L.length) return ''; return L.some(function(e){ return e.type==='Added'; })?'<span class="mtchip n">new today</span>':'<span class="mtchip">edited today</span>'; }
+function mtShortVal(f,v){ v=String(v==null?'':v); if(!v) return '(empty)'; if(/date/i.test(f)&&/^\d{4}-\d{2}-\d{2}/.test(v)) return d2(v.slice(0,10)); return v.length>70?v.slice(0,70)+'…':v; }
+function mtPanel(sc){
+  var days=mtDays(sc.code), td=mtLocalDay(Date.now()), day=MT.day&&days.indexOf(MT.day)>=0?MT.day:(days[0]===td?td:(days[0]||td));
+  var L=mtLog(sc.code).filter(function(e){ return mtLocalDay(e.t)===day; }).sort(function(a,b){ return a.t-b.t; });
+  var nE={}, nA=0, who={}; L.forEach(function(e){ if(e.type==='Added') nA++; else nE[e.id]=1; if(e.by) who[e.by]=1; });
+  var dt=new Date(day+'T00:00:00'), lab=(day===td?'Today, ':'')+dt.getDate()+' '+MON[dt.getMonth()]+' '+String(dt.getFullYear()).slice(2);
+  var h='<div class="mtp"><h4>Changes agreed in the meeting</h4><div class="sub">'+esc(lab)+(L.length?' · '+Object.keys(nE).length+' challenge'+(Object.keys(nE).length===1?'':'s')+' changed'+(nA?', '+nA+' added':'')+(Object.keys(who).length?' · by '+esc(Object.keys(who).join(', ')):''):'')+'</div>';
+  if(!L.length) h+='<div class="mti"><p>No changes yet. Edits and new challenges made here are listed as they are saved.</p></div>';
+  L.forEach(function(e){ var tm=svStamp(e.t).split(' ')[1];
+    h+='<div class="mti"><div class="hd"><span>'+esc(e.id)+' '+esc(e.concern||'')+'</span><small>'+tm+'</small></div>';
+    if(e.type==='Added') h+='<p><span class="new">New challenge</span></p>';
+    else if(e.type==='Moved') h+='<p>Edit stored before V455, moved into the Sheet</p>';
+    var C=e.changes||[]; if(e.type!=='Added'&&C.length) h+='<p>'+(C.length<=2?C.map(function(c){ return esc(c.f)+': <s>'+esc(mtShortVal(c.f,c.from))+'</s> → <b class="to">'+esc(mtShortVal(c.f,c.to))+'</b>'; }).join('<br>'):esc(C.map(function(c){ return c.f; }).join(', '))+' changed')+'</p>';
+    if(e.verified===false) h+='<p style="color:#b3261e">Not confirmed in the Sheet yet: refresh the data to check.</p>';
+    h+='</div>'; });
+  h+='<div class="act"><button type="button" class="btn pri" data-mtxl="'+esc(day)+'"'+(L.length?'':' disabled')+'>Export for the minutes (Excel)</button>'+(days.length>1||(days.length&&days[0]!==td)?'<select data-mtday="1" aria-label="Earlier meetings">'+(days.indexOf(td)<0?'<option value="'+td+'">Today</option>':'')+days.map(function(d){ var x=new Date(d+'T00:00:00'); return '<option value="'+d+'"'+(d===day?' selected':'')+'>'+(d===td?'Today':x.getDate()+' '+MON[x.getMonth()]+' '+String(x.getFullYear()).slice(2))+'</option>'; }).join('')+'</select>':'')+'</div>';
+  return h+'<div class="nt">Next week’s pre-filled template already carries these values, so the site team starts from what was agreed.</div></div>';
+}
+function mtBanner(date){
+  if(!mtOn()) return '';
+  var n=suIsAdmin()&&(SV.chal||[]).length?(SV.chal||[]).length:0;
+  return '<div class="mtban"><i class="dot"></i><span><b>Edits save straight to the Google Sheet</b> · on the challenge rows of the '+(date?d2(date):'latest')+' update (the last approved one), with your name and the time</span>'+(n?'<button type="button" class="btn" data-mtmove="1">Move stored edits into the Sheet ('+n+')</button>':'')+'</div>';
+}
+/* the original key of a challenge for the relay: its ID, or (no ID yet) package + concern as they are in the Sheet */
+function mtOrig(old){ var id=String(old.id||''); if(id.indexOf('k:')===0){ var p=id.slice(2).split('|'); return {pkg:p[1]||'',concern:p.slice(2).join('|')}; } return {pkg:old.pkg||'',concern:old.concern||''}; }
+async function mtSave(m,old,isNew,it,ch,type){
+  var sc=SV.cur.sc, inFile=!isNew&&(cur.con||[]).some(function(c){ return c.d===SV.cur.date&&String(c.code).toLowerCase()===sc.lc&&((c.id&&c.id===old.id)||('k:'+sc.code+'|'+(c.pkg||'')+'|'+c.concern)===old.id); });
+  if(!isNew&&!inFile&&old.from==='edit') type='Added'; /* a challenge added on the dashboard before V455 is not in the Sheet yet */
+  var b=m.querySelector('[data-svsave]'); if(b){ b.disabled=true; b.textContent='Saving to the Sheet…'; }
+  var body={item:Object.assign({},it,{id:type==='Added'?'':(String(it.id||'').indexOf('k:')===0?'':it.id)}),changes:ch,type:type,orig:type==='Added'?undefined:mtOrig(old),date:SV.cur.date||''};
+  var j=await accCall('POST','/challenges',body,60000);
+  if(!j||!j.sheet){ return false; }
+  /* the dashboard's copy of the Sheet follows at once; the data is then reloaded from the Sheet */
+  var x=j.item, d=j.date||SV.cur.date, hit=null;
+  (cur.con||[]).forEach(function(c){ if(hit||c.d!==d||String(c.code).toLowerCase()!==sc.lc) return; if((c.id&&(c.id===x.id||c.id===old.id))||(!c.id&&type!=='Added'&&String(c.concern)===mtOrig(old).concern&&String(c.pkg||'')===mtOrig(old).pkg)) hit=c; });
+  var vals={pkg:x.pkg||null,concern:x.concern,impact:x.impact,action:x.action||null,id:x.id,owner:x.owner||null,target:x.target||null,status:x.status||null,closed:x.closed||null,changed:mtLocalDay(Date.now())};
+  if(hit) Object.assign(hit,vals); else if(!j.same) cur.con.push(Object.assign({d:d,code:sc.code,name:pname(sc.code),raised:x.raised||mtLocalDay(Date.now())},vals));
+  SV.chal=(SV.chal||[]).filter(function(o){ return !(String(o.code).toLowerCase()===sc.lc&&(o.id===x.id||o.id===old.id)); });
+  if(j.meet) SV.meet=j.meet;
+  if(b){ b.disabled=false; b.textContent='Save'; }
+  m.remove(); render();
+  toast(j.same?'No change to save':(j.isNew?'Challenge '+x.id+' added to the Sheet (row '+j.row+')':'Saved to row '+j.row+' of Areas of Concern'+(j.gotId?' · new ID '+x.id:''))+(j.verified===false?' · not confirmed yet, refresh to check':''),j.verified===false,7000);
+  if(!j.same) suAfterWrite({sheet:{ok:true}});
+  return true;
+}
+/* the "was:" note under each field of the editor */
+document.addEventListener('input',function(e){ var m=document.getElementById('svModal'); if(!m||!m.__item||m.__new||!m.contains(e.target)) return; mtWas(m); });
+document.addEventListener('change',function(e){ var m=document.getElementById('svModal'); if(!m||!m.__item||m.__new||!m.contains(e.target)) return; mtWas(m); });
+function mtWas(m){ var o=m.__item, map={svfCon:'concern',svfAct:'action',svfImp:'impact',svfPkg:'pkg',svfOwn:'owner',svfTgt:'target',svfSt:'status'};
+  Object.keys(map).forEach(function(id){ var el=document.getElementById(id); if(!el) return; var box=el.parentNode, w=box.querySelector('small.was'), a=String(o[map[id]]||''), v=String(el.value||'');
+    if(map[id]==='status'&&a.toLowerCase()===v.toLowerCase()) v=a; if(map[id]==='pkg'&&!a) a=v;
+    if(a.trim()===v.trim()){ if(w) w.remove(); return; } if(!w){ w=document.createElement('small'); w.className='was'; box.appendChild(w); } w.textContent='was: '+(a?(map[id]==='target'?d2(a):(a.length>90?a.slice(0,90)+'…':a)):'(empty)'); }); }
+/* Export for the minutes */
+async function mtExport(day){
+  var sc=SV.cur&&SV.cur.sc; if(!sc) return; if(!await loadExcelJS()){ toast('The Excel library could not be loaded',true); return; }
+  var L=mtLog(sc.code).filter(function(e){ return mtLocalDay(e.t)===day; }).sort(function(a,b){ return a.t-b.t; });
+  var wb=new ExcelJS.Workbook(), NAVY='FF0B2A5E', GOLD='FFC8963E', ws=wb.addWorksheet('Meeting changes',{views:[{showGridLines:false}]}), dt=new Date(day+'T00:00:00');
+  ws.columns=[{width:8},{width:12},{width:44},{width:12},{width:18},{width:38},{width:38},{width:20}];
+  ws.mergeCells('A1:H1'); ws.getCell('A1').value='KEC · Progress meeting · Changes agreed'; ws.getCell('A1').font={bold:true,size:16,color:{argb:'FFFFFFFF'}}; ws.getCell('A1').fill={type:'pattern',pattern:'solid',fgColor:{argb:NAVY}}; ws.getRow(1).height=30; ws.getCell('A1').alignment={vertical:'middle',indent:1};
+  ws.mergeCells('A2:H2'); ws.getCell('A2').fill={type:'pattern',pattern:'solid',fgColor:{argb:GOLD}}; ws.getRow(2).height=4;
+  [['Project',pname(sc.code)+' ('+sc.code+')'],['Meeting date',dt.getDate()+' '+MON[dt.getMonth()]+' '+dt.getFullYear()],['Written to','Google Sheet · Areas of Concern (the update of '+d2(SV.cur.date)+')'],['Exported',svNowTxt()]].forEach(function(m,i){ var r=3+i; ws.getCell('A'+r).value=m[0]; ws.getCell('A'+r).font={bold:true,color:{argb:NAVY}}; ws.mergeCells('B'+r+':H'+r); ws.getCell('B'+r).value=m[1]; });
+  var hr=8; ['Time','Challenge ID','Concern','Change','Field','Before the meeting','Agreed in the meeting','By'].forEach(function(h,i){ var c=ws.getCell(hr,i+1); c.value=h; c.font={bold:true,color:{argb:'FFFFFFFF'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:NAVY}}; c.alignment={vertical:'middle',wrapText:true}; c.border={bottom:{style:'medium',color:{argb:GOLD}}}; }); ws.getRow(hr).height=22;
+  var r=hr+1; L.forEach(function(e){ var C=e.type==='Added'?[{f:'New challenge',from:'',to:e.concern}]:(e.changes&&e.changes.length?e.changes:[{f:'',from:'',to:''}]);
+    C.forEach(function(c){ var row=ws.getRow(r++); [svStamp(e.t).split(' ')[1],e.id,e.concern,e.type,c.f,/date/i.test(c.f)?(c.from?mtShortVal(c.f,c.from):''):c.from,/date/i.test(c.f)?mtShortVal(c.f,c.to):c.to,e.by||''].forEach(function(v,k){ var cell=row.getCell(k+1); cell.value=v; cell.alignment={vertical:'top',wrapText:true}; cell.border={bottom:{style:'thin',color:{argb:'FFE7E1D6'}}}; }); }); });
+  if(r===hr+1){ ws.mergeCells('A'+r+':H'+r); ws.getCell('A'+r).value='No changes on this day.'; ws.getCell('A'+r).font={italic:true,color:{argb:'FF6B7A8C'}}; }
+  ws.pageSetup={orientation:'landscape',paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0};
+  var buf=await wb.xlsx.writeBuffer(); if(await xpSave(buf,'KEC_Meeting_Changes_'+sc.code.replace(/[^A-Za-z0-9]+/g,'_')+'_'+day+'.xlsx')) toast('Meeting changes exported');
+}
+/* ---- approval: the site update is compared with the challenges changed in the meeting (Screen 2) ---- */
+function mtResTxt(r){ return r.res==='kept'?['g','✓','Meeting value kept ('+mtShortVal(r.l,r.meet)+')','The site file started from before the meeting (older template), so its value is the old one, not a new update.']:r.res==='same'?['s','=','Same as the meeting','Nothing to do.']:r.res==='carried'?['g','✓','Added in the meeting, carried over','The site file does not have it yet, so the meeting row is added to this update.']:['a','?','The site team changed it after the meeting','Choose which one stays:']; }
+function mtGate(id,go,cancel){
+  accCall('POST','/site-review',{id:id,action:'meetcheck'},30000).then(function(j){ var rows=(j&&j.meet)||[]; if(!rows.length){ go(null); return; } mtApproveModal(id,rows,go,cancel); })
+   .catch(function(){ go(null); }); /* a relay before V77 has no meeting check */
+}
+function mtApproveModal(id,rows,go,cancel){
+  var s=typeof suSubById==='function'?suSubById(id):null, ch={}, need=rows.filter(function(r){ return r.res==='choose'; }), auto=rows.length-need.length;
+  var body='<div style="margin:-4px 0 10px">'+(auto?'<span class="mtpill g">'+auto+' settled automatically</span>':'')+(need.length?'<span class="mtpill a">'+need.length+' need'+(need.length===1?'s':'')+' your choice</span>':'')+'</div>'+
+   '<p style="margin:0 0 10px;color:var(--mut);font-size:13px">'+(s?esc(s.by||'')+' · '+esc((s.projects||[]).map(pname).join(', '))+' · ':'')+'Each field changed in the meeting is compared with what the site team now sends. Only a real new update from site is put to you.</p>'+
+   '<div style="overflow-x:auto"><table class="mtt"><thead><tr><th>Challenge · field</th><th>Before the meeting</th><th>Meeting decision</th><th>Site team sends</th><th>Result</th></tr></thead><tbody>'+
+   rows.map(function(r){ var t=mtResTxt(r); return '<tr><td><b>'+esc(r.id)+' '+esc(r.concern||'')+'</b><small>'+esc(r.l)+'</small></td><td>'+esc(r.f?mtShortVal(r.l,r.before):'—')+'</td><td><b>'+esc(mtShortVal(r.l,r.meet))+'</b></td><td>'+esc(r.f?mtShortVal(r.l,r.site):r.site)+'</td><td><div class="mtr"><i class="'+t[0]+'">'+t[1]+'</i><div><b>'+esc(t[2])+'</b><small>'+esc(t[3])+'</small>'+
+     (r.res==='choose'?'<div class="mtch" data-mtk="'+esc(r.key)+'"><button type="button" data-mtc="meeting">Keep meeting: '+esc(mtShortVal(r.l,r.meet))+'</button><button type="button" data-mtc="site">Use site team’s: '+esc(mtShortVal(r.l,r.site))+'</button></div>':'')+'</div></div></td></tr>'; }).join('')+'</tbody></table></div>';
+  var m=suModal('mtAprModal','Challenges changed in the progress meeting',body,'<span class="mtsave" id="mtAprNote"></span><button type="button" class="btn pri" data-mtapr="1">Approve</button>');
+  m.querySelector('.svmb').style.width='min(1080px,97vw)';
+  var upd=function(){ var left=need.filter(function(r){ return !ch[r.key]; }).length, b=m.querySelector('[data-mtapr]'); b.disabled=!!left; document.getElementById('mtAprNote').textContent=left?'Choose for '+left+' item'+(left===1?'':'s')+' to approve. Your choice is written with the update and recorded in the challenge’s history.':'Ready: the meeting values and your choices are written with the update.'; };
+  m.addEventListener('click',function(e){ var b=e.target.closest('[data-mtc]'); if(b){ var k=b.parentNode.getAttribute('data-mtk'); ch[k]=b.getAttribute('data-mtc'); Array.prototype.forEach.call(b.parentNode.children,function(x){ x.classList.toggle('on',x===b); }); upd(); return; }
+    if(e.target.closest('[data-mtapr]')){ m.remove(); go(ch); return; } if(e.target.closest('[data-suclose]')){ m.remove(); if(cancel) cancel(); } });
+  upd();
+}
+/* ---- one-time move of the edits stored apart before V455 ---- */
+async function mtMoveOpen(){
+  var m=suModal('mtMoveModal','Move stored challenge edits into the Sheet','<p>Reading the stored edits and the Sheet…</p>','');
+  var j; try{ j=await accCall('GET','/challenges?stored=1',null,60000); }catch(e){ document.getElementById('mtMoveModalB').innerHTML='<p style="color:#b3261e">'+esc((e&&e.message)||'Could not read the stored edits')+'</p>'; return; }
+  var L=(j&&j.stored)||[]; MT.stored=L;
+  var h='<p style="color:var(--mut);font-size:13px;margin-top:0">These '+L.length+' edits were made on the dashboard before V455 and are kept apart from the Sheet. Tick what goes into the Sheet; everything not ticked is dropped. A field is left unticked when the site team sent a newer value after the edit.</p>';
+  L.forEach(function(s,i){ h+='<div class="mtmv"><div class="hd">'+esc(pname(s.code))+' · '+esc(String(s.id).indexOf('k:')===0?'no ID':s.id)+' · '+esc(s.concern||'')+' <small>edited '+esc(svStamp(s.ts))+'</small></div>';
+    if(!s.found) h+='<div class="warn">Not in the latest update ('+(s.date?d2(s.date):'no rows')+') of this project: it no longer matches a challenge.</div><label style="font-size:12.5px"><input type="checkbox" data-mvadd="'+i+'"> Add it as a new challenge (next CH number)</label>';
+    else if(!s.fields.length) h+='<div style="font-size:12.5px;color:var(--mut)">The Sheet row '+s.row+' already holds these values: nothing to move, the stored copy is dropped.</div>';
+    else h+=(s.siteNewer?'<div class="warn">The site team sent a newer update of this challenge ('+d2(s.date)+') after the edit.</div>':'')+'<table><thead><tr><th></th><th>Field</th><th>Sheet now (row '+s.row+', '+d2(s.date)+')</th><th>Stored edit</th></tr></thead><tbody>'+s.fields.map(function(f){ return '<tr><td><input type="checkbox" data-mvf="'+i+'" value="'+esc(f.f)+'"'+(s.siteNewer?'':' checked')+'></td><td>'+esc(f.l)+'</td><td>'+esc(mtShortVal(f.l,f.sheet))+'</td><td><b>'+esc(mtShortVal(f.l,f.edit))+'</b></td></tr>'; }).join('')+'</tbody></table>';
+    h+='</div>'; });
+  if(!L.length) h='<p>There are no stored edits left.</p>';
+  document.getElementById('mtMoveModalB').innerHTML=h;
+  if(L.length){ var b=document.createElement('button'); b.type='button'; b.className='btn pri'; b.textContent='Move ticked edits, drop the rest'; b.setAttribute('data-mtmovego','1'); var a=m.querySelector('.svma'); a.insertBefore(b,a.firstChild); }
+}
+async function mtMoveGo(btn){
+  var L=MT.stored||[], mv=L.map(function(s,i){ var fs=Array.prototype.slice.call(document.querySelectorAll('[data-mvf="'+i+'"]:checked')).map(function(x){ return x.value; }), ad=document.querySelector('[data-mvadd="'+i+'"]'); return {key:s.key,fields:fs,add:!!(ad&&ad.checked)}; });
+  btn.disabled=true; btn.textContent='Writing to the Sheet…';
+  try{ var j=await accCall('POST','/challenges',{move:mv},120000); var m=document.getElementById('mtMoveModal'); if(m) m.remove();
+    toast((j.written||0)+' edit'+(j.written===1?'':'s')+' written to the Sheet, '+(j.dropped||0)+' dropped'+(j.failed&&j.failed.length?' · '+j.failed.length+' failed: '+j.failed.map(function(f){ return f.err; }).join('; '):''),!!(j.failed&&j.failed.length),9000);
+    SV.chal=null; SV.busy=false; svChalLoad(); suAfterWrite({sheet:{ok:true}});
+  }catch(e){ btn.disabled=false; btn.textContent='Move ticked edits, drop the rest'; toast((e&&e.message)||'Could not move the edits',true); }
+}
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-mtxl],[data-mtmove],[data-mtmovego]'); if(!t) return;
+  if(t.hasAttribute('data-mtxl')) mtExport(t.getAttribute('data-mtxl')); else if(t.hasAttribute('data-mtmovego')) mtMoveGo(t); else mtMoveOpen(); });
+document.addEventListener('change',function(e){ var t=e.target; if(t&&t.hasAttribute&&t.hasAttribute('data-mtday')){ MT.day=t.value; render(); } });
+
 async function svExport(){
   if(!SV.cur) return; if(!await loadExcelJS()){ toast('The Excel library could not be loaded',true); return; }
   var sc=SV.cur.sc, ex=ExcelJS, wb=new ex.Workbook(), NAVY='FF0B2A5E', GOLD='FFC8963E', ws=wb.addWorksheet('Challenges',{views:[{showGridLines:false}]});
@@ -5687,7 +5826,7 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V454',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V455',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
@@ -6129,7 +6268,7 @@ document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.
   if(t.hasAttribute('data-suopen')) suOpenUpload(); else if(t.hasAttribute('data-suadm')) suOpenAdmin(); else if(t.hasAttribute('data-sutpl')) suTplDownload(); else if(t.hasAttribute('data-suconv')) suConvDownload(t);
   else if(t.hasAttribute('data-suclose')){ var m=document.getElementById(t.getAttribute('data-suclose')); if(m) m.remove(); }
   else if(t.id==='suSend') suSubmit();
-  else if(t.hasAttribute('data-sureview')){ var a0=t.getAttribute('data-sureview'), id0=t.getAttribute('data-id'); if(a0==='approve'&&!suHiddenOk(suSubById(id0))) return; if(a0==='approve'||a0==='rewrite'){ t.disabled=true; t.textContent=a0==='approve'?'Approving…':'Writing…'; } suAdminAct('/site-review',{id:id0,action:a0}); }
+  else if(t.hasAttribute('data-sureview')){ var a0=t.getAttribute('data-sureview'), id0=t.getAttribute('data-id'); if(a0==='approve'&&!suHiddenOk(suSubById(id0))) return; if(a0==='approve'||a0==='rewrite'){ t.disabled=true; t.textContent=a0==='approve'?'Approving…':'Writing…'; } if(a0==='approve'){ var t1=t; mtGate(id0,function(meet){ suAdminAct('/site-review',{id:id0,action:a0,meet:meet||undefined}); },function(){ t1.disabled=false; t1.textContent='Approve'; }); } else suAdminAct('/site-review',{id:id0,action:a0}); }
   else if(t.hasAttribute('data-sulrev')) suAdminAct('/site-links',{action:'revoke',tok:t.getAttribute('data-sulrev')});
   else if(t.hasAttribute('data-sulnew')){ var p=Array.prototype.map.call(document.querySelectorAll('.suLp:checked'),function(x){ return x.value; }); suAdminAct('/site-links',{action:'create',name:document.getElementById('suLn').value,mode:document.getElementById('suLm').value,days:+(document.getElementById('suLd')||{}).value||0,max:+(document.getElementById('suLx')||{}).value||0,projects:p}); }
 });
@@ -7136,7 +7275,7 @@ async function handleFiles(files,opts){
 /* template download */
 async function svEnsureChal(){
   if(SV.chal!==null) return;
-  if(ACC.need&&ACC.token&&LIVE&&LIVE.relay&&!SV.local){ try{ var j=await accCall('GET','/challenges',null,20000); SV.chal=(j&&j.items)||[]; SV.log=(j&&j.log)||[]; return; }catch(e){ SV.local=true; } }
+  if(ACC.need&&ACC.token&&LIVE&&LIVE.relay&&!SV.local){ try{ var j=await accCall('GET','/challenges',null,20000); SV.chal=(j&&j.items)||[]; SV.log=(j&&j.log)||[]; SV.sheet=!!(j&&j.sheet); SV.meet=(j&&j.meet)||null; return; }catch(e){ SV.local=true; } }
   svLocalLoad();
 }
 /* the challenge register as it stands now: the file's rows plus every edit made in the Site view, in the database's own columns */
