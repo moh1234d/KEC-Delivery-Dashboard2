@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TEST · KEC Project Controls Dashboard · V455</title>
+<title>TEST · KEC Project Controls Dashboard · V457</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Carlito:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -70,7 +70,9 @@ nav a i{font-style:normal;font-size:10px;opacity:.55;width:16px}
 .dsdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#8a97ab;margin-left:6px;vertical-align:middle}.dsdot.ok{background:#35c27a}.dsdot.warn{background:#f0b429}.dsdot.bad{background:#ff6b5b}
 body.acc-lim #dsBtn{display:none!important} body.acc-lim #hcBtn{display:none!important}
 .hchead{font-size:13px;margin:8px 0 2px}.hcrep{font-size:13px;margin:0 0 10px}.hcf{border:1px solid var(--line);border-radius:10px;margin:6px 0;overflow:hidden}.hcf.error{border-left:4px solid #b42318}.hcf.warn{border-left:4px solid #b7791f}.hcf.info{border-left:4px solid #8a97ab}
-.hcft{all:unset;box-sizing:border-box;display:block;width:100%;padding:8px 10px;cursor:pointer;font-size:13px;font-weight:600}.hcfd{padding:0 12px 10px;font-size:12.5px;display:grid;gap:6px}.hcpre{white-space:pre-line;color:var(--ink)}
+.hcft{all:unset;box-sizing:border-box;display:block;width:100%;padding:8px 10px;cursor:pointer;font-size:13px;font-weight:600}.hcfd{padding:0 12px 10px;font-size:12.5px;display:grid;gap:6px}.hcpre{white-space:pre-line;color:var(--ink)}.hcreg{margin-top:8px}.hcrh,.hcrr{display:grid;grid-template-columns:minmax(0,1fr) 92px 74px 54px 104px;gap:8px;align-items:center}.hcrh{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:0 10px 4px;border-bottom:1px solid var(--line)}.hcrr{font-size:12.5px;font-weight:500}.hcrr .c1{font-weight:600;font-size:13px}.hcr.warn .c1{color:#8a5a00}.hcr.error .c1{color:#b42318}.hcr.info .c1{color:var(--mut)}.hctag{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:6px;white-space:nowrap}.hctag.new{background:#1d4fa3;color:#fff}.hctag.chg{background:#e3ecfb;color:#1d4fa3}.hctag.old{background:var(--soft,#eef1f6);color:var(--mut);font-weight:700}
+.hcrr .c3,.hcrr .c4,.hcrr .c5{color:var(--ink);font-weight:500}
+@media (max-width:640px){.hcrh{display:none}.hcrr{display:flex;flex-wrap:wrap;gap:4px 14px}.hcrr .c1,.hcrr .c2{flex:0 0 100%}.hcrr .c3,.hcrr .c4,.hcrr .c5{white-space:nowrap;font-size:11.5px;color:var(--mut)}.hcrr .c3::before,.hcrr .c4::before,.hcrr .c5::before{content:attr(data-l) ': ';font-weight:600}}.hcmore{background:none;border:0;padding:2px 0;color:var(--accent,#0b2a5e);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;text-decoration:underline}
 .hcset{margin:12px 0 0;font-size:13px}.hcfx{display:grid;grid-template-columns:28px 1fr;gap:4px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;font-size:12.5px}.hcfx b{font-size:13px}.hcfxo{margin-top:4px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--ink);word-break:break-word}.btn.bad{background:#b42318;color:#fff;border-color:#b42318}.hcset summary{cursor:pointer;font-weight:700;color:#1f4e79}.hcset .rvset label{margin-right:8px}
 #dsModal{position:fixed;inset:0;z-index:311;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:4vh 10px;overflow:auto}#dsModal.on{display:flex}
 #dsModal .dsbox{background:var(--bg,#f3f5f9);color:var(--ink,#0f1b33);border-radius:12px;max-width:1060px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.35);box-sizing:border-box;overflow:hidden}
@@ -1605,7 +1607,7 @@ body.printsite>*:not(.app){display:none!important}
 }
 </style>
 </head>
-<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V455</div>
+<body><div id="testRibbon" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2000;background:#c0392b;color:#fff;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;padding:5px 16px;border-radius:0 0 8px 8px;pointer-events:none">TEST VERSION · V457</div>
 <div id="intro" class="optC on" aria-hidden="true"><div class="layer bw"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="layer col"><i style="background-image:var(--ph0);--bd:0.30s"></i><i style="background-image:var(--ph1);--bd:1.45s"></i><i style="background-image:var(--ph2);--bd:2.60s"></i><i style="background-image:var(--ph3);--bd:3.75s"></i></div><div class="scan"></div><div class="stage"><div class="world" id="inWorld"><div class="gnd"></div></div></div>
 <div class="hero"><div class="tilt" id="inTilt"><div class="panel"><div class="plate"><img alt="KEC" id="inLogo"></div><div class="rule"></div><h2>Projects Delivery Department</h2><div class="sub">Project Controls Dashboard</div></div></div>
 <div class="bar"><i id="inBar"></i></div><div class="st" id="inSt"></div></div><button class="skip" id="inSkip" type="button">Skip</button></div>
@@ -1786,7 +1788,7 @@ function pkgL(code,pkg){ var m=PHASE[String(code)]; var n=m&&m[String(pkg).toLow
 /* Packages with no progress information (not started and not updated at this cut-off): left out of progress percentages, SPI and counts; still in contract values */
 function isNoInfo(r){ return r.stale===true&&(r.pv||0)<=0&&(r.ev||0)<=0; }
 function isSep(r){ var c=String(r.code).toLowerCase(), p=String(r.pkg).toLowerCase(); for(var k in SEP){ if(k.toLowerCase()===c&&SEP[k].some(function(x){return x.toLowerCase()===p;})) return true; } return false; }
-var APP_VER='V455';
+var APP_VER='V457';
 /* V329: version label in the tab title and the side bar */
 try{ document.title=document.title.replace(/\s*·\s*V\d+$/,'')+' · '+APP_VER; setTimeout(function(){ var b=document.querySelector('aside .brand'); if(b&&!b.querySelector('.appver')){ var s=document.createElement('small'); s.className='appver'; s.textContent=APP_VER+' TEST'; s.style.cssText='display:block;font-size:10px;opacity:.65;letter-spacing:.04em;margin-top:2px'; b.appendChild(s); } },0); }catch(e){}
 var T = { spiRed:0.85, spiAmber:0.95, delayRed:90, delayAmber:30, critSpi:0.6, critDelay:180 };
@@ -5425,7 +5427,7 @@ async function svSave(){
  '.mtr{display:flex;gap:8px;align-items:flex-start}.mtr i{font-style:normal;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex:none}.mtr i.g{background:#1a7f4b}.mtr i.s{background:#8a8f98}.mtr i.a{background:#c77700}'+
  '.mtch{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.mtch button{font:inherit;font-size:12px;font-weight:700;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:#0b2a5e;cursor:pointer}.mtch button.on{background:#0b2a5e;color:#fff;border-color:#0b2a5e}'+
  '.mtpill{font-size:12px;font-weight:800;border-radius:14px;padding:4px 11px;margin-left:8px}.mtpill.g{background:#e3f3ea;color:#1a7f4b}.mtpill.a{background:#fdf1dc;color:#9a5b00}'+
- '.mtmv{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}.mtmv .hd{font-weight:700;font-size:13px}.mtmv .hd small{font-weight:400;color:var(--mut)}.mtmv table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}.mtmv td,.mtmv th{padding:5px 6px;border-top:1px solid var(--line);text-align:left;vertical-align:top}.mtmv th{font-size:11px;color:var(--mut);font-weight:700}.mtmv .warn{color:#9a5b00;font-size:12px}';
+ '.mtmv{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}.mtmv .hd{font-weight:700;font-size:13px}.mtmv .hd small{font-weight:400;color:var(--mut)}.mtmv table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}.mtmv td,.mtmv th{padding:5px 6px;border-top:1px solid var(--line);text-align:left;vertical-align:top}.mtmv th{font-size:11px;color:var(--mut);font-weight:700}.mtmv .warn{color:#9a5b00;font-size:12px}.mtmv .note{color:var(--mut);font-size:12px;margin-top:3px}.mtsum{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}.mtst{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--soft,#eef1f6);color:var(--ink)}.mtst.move{background:#e3f1e6;color:#1d6b33}.mtst.clash{background:#fbe4e2;color:#a3261b}.mtst.newer,.mtst.gone{background:#fdf0dc;color:#8a5200}';
  document.head.appendChild(st); })();
 var MT={day:'',stored:null};
 function mtLocalDay(t){ var d=new Date(t), p=function(n){ return String(n).padStart(2,'0'); }; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
@@ -5526,11 +5528,15 @@ async function mtMoveOpen(){
   var m=suModal('mtMoveModal','Move stored challenge edits into the Sheet','<p>Reading the stored edits and the Sheet…</p>','');
   var j; try{ j=await accCall('GET','/challenges?stored=1',null,60000); }catch(e){ document.getElementById('mtMoveModalB').innerHTML='<p style="color:#b3261e">'+esc((e&&e.message)||'Could not read the stored edits')+'</p>'; return; }
   var L=(j&&j.stored)||[]; MT.stored=L;
+  var v78=L.some(function(s){ return !!s.state; }), cnt={move:0,newer:0,same:0,clash:0,gone:0}; L.forEach(function(s){ if(s.state&&cnt[s.state]!=null) cnt[s.state]++; });
   var h='<p style="color:var(--mut);font-size:13px;margin-top:0">These '+L.length+' edits were made on the dashboard before V455 and are kept apart from the Sheet. Tick what goes into the Sheet; everything not ticked is dropped. A field is left unticked when the site team sent a newer value after the edit.</p>';
+  if(v78) h+='<div class="mtsum">'+[['move','to move'],['newer','replaced by a newer site update'],['same','already in the Sheet'],['clash','ID now used for another challenge'],['gone','no longer in the latest update']].filter(function(x){ return cnt[x[0]]; }).map(function(x){ return '<span class="mtst '+x[0]+'">'+cnt[x[0]]+' '+x[1]+'</span>'; }).join('')+'</div>';
   L.forEach(function(s,i){ h+='<div class="mtmv"><div class="hd">'+esc(pname(s.code))+' · '+esc(String(s.id).indexOf('k:')===0?'no ID':s.id)+' · '+esc(s.concern||'')+' <small>edited '+esc(svStamp(s.ts))+'</small></div>';
-    if(!s.found) h+='<div class="warn">Not in the latest update ('+(s.date?d2(s.date):'no rows')+') of this project: it no longer matches a challenge.</div><label style="font-size:12.5px"><input type="checkbox" data-mvadd="'+i+'"> Add it as a new challenge (next CH number)</label>';
-    else if(!s.fields.length) h+='<div style="font-size:12.5px;color:var(--mut)">The Sheet row '+s.row+' already holds these values: nothing to move, the stored copy is dropped.</div>';
-    else h+=(s.siteNewer?'<div class="warn">The site team sent a newer update of this challenge ('+d2(s.date)+') after the edit.</div>':'')+'<table><thead><tr><th></th><th>Field</th><th>Sheet now (row '+s.row+', '+d2(s.date)+')</th><th>Stored edit</th></tr></thead><tbody>'+s.fields.map(function(f){ return '<tr><td><input type="checkbox" data-mvf="'+i+'" value="'+esc(f.f)+'"'+(s.siteNewer?'':' checked')+'></td><td>'+esc(f.l)+'</td><td>'+esc(mtShortVal(f.l,f.sheet))+'</td><td><b>'+esc(mtShortVal(f.l,f.edit))+'</b></td></tr>'; }).join('')+'</tbody></table>';
+    if(s.state==='clash') h+='<div class="warn">'+esc(s.clash.id)+' now belongs to another challenge in the Sheet: “'+esc(s.clash.concern)+'” (row '+s.clash.row+', '+d2(s.date)+'). This edit is not written to that row.</div><label style="font-size:12.5px"><input type="checkbox" data-mvadd="'+i+'"> Add it as a new challenge (next CH number)</label>';
+    else if(!s.found) h+='<div class="warn">Not in the latest update ('+(s.date?d2(s.date):'no rows')+') of this project: it no longer matches a challenge.</div><label style="font-size:12.5px"><input type="checkbox" data-mvadd="'+i+'"> Add it as a new challenge (next CH number)</label>';
+    else { if(s.by==='similar'&&s.clash) h+='<div class="note">Found by its wording: the Sheet has it as '+esc(s.rowId||'no ID')+' (row '+s.row+'); '+esc(s.clash.id)+' is now “'+esc(s.clash.concern)+'”.</div>';
+      if(!s.fields.length) h+='<div style="font-size:12.5px;color:var(--mut)">The Sheet row '+s.row+' already holds these values: nothing to move, the stored copy is dropped.</div>';
+      else h+=(s.siteNewer?'<div class="warn">'+(s.written?'The site team\u2019s update with this challenge was written to the Sheet on '+esc(svStamp(s.written))+', after this edit. Tick a field only if the edit should still win.':'The site team sent a newer update of this challenge ('+d2(s.date)+') after the edit.')+'</div>':'')+'<table><thead><tr><th></th><th>Field</th><th>Sheet now (row '+s.row+', '+d2(s.date)+')</th><th>Stored edit</th></tr></thead><tbody>'+s.fields.map(function(f){ return '<tr><td><input type="checkbox" data-mvf="'+i+'" value="'+esc(f.f)+'"'+(s.siteNewer?'':' checked')+'></td><td>'+esc(f.l)+'</td><td>'+esc(mtShortVal(f.l,f.sheet))+'</td><td><b>'+esc(mtShortVal(f.l,f.edit))+'</b></td></tr>'; }).join('')+'</tbody></table>'; }
     h+='</div>'; });
   if(!L.length) h='<p>There are no stored edits left.</p>';
   document.getElementById('mtMoveModalB').innerHTML=h;
@@ -5767,8 +5773,19 @@ function suDiscrepancies(data){
 }
 /* ===== V427: Dashboard health check (Level 1, reads only) — shown to administrators. The relay (V66) runs the checks on the chosen days and hour or when asked,
    sends a Telegram summary, and the health agent (a Claude scheduled task) adds the full Word report in Google Drive. Settings are shared (phone and web). ===== */
-var HC={st:null,busy:'',err:'',at:0,open:{}};
+var HC={st:null,busy:'',err:'',at:0,open:{},full:{}};
 var HC_DAYS=[['6','Sat'],['0','Sun'],['1','Mon'],['2','Tue'],['3','Wed'],['4','Thu'],['5','Fri']];
+/* V457: the findings register (Option C): status, first seen, number of checks, last sent to Telegram; click a row for the details */
+function hcDay(ts){ if(!ts) return '—'; var d=new Date(ts); return d.getDate()+' '+MON[d.getMonth()]; }
+function hcSent(ts){ if(!ts) return 'not sent'; var d=new Date(ts); return d.getDate()+' '+MON[d.getMonth()]+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function hcRegister(h){
+  var tag={new:'<span class="hctag new">NEW</span>',changed:'<span class="hctag chg">CHANGED</span>',open:'<span class="hctag old">Open</span>'};
+  var x='<div class="hcreg"><div class="hcrh"><span>Problem</span><span>Status</span><span>First seen</span><span>Checks</span><span>Last sent</span></div>';
+  x+=h.findings.map(function(f,i){ var k=h.id+'|'+i, on=!!HC.open[k];
+    return '<div class="hcf hcr '+f.sev+'"><button type="button" class="hcft hcrr" data-hcf="'+k+'" aria-expanded="'+on+'"><span class="c1">'+(f.sev==='error'?'<span class="rvsv e">Error</span> ':f.sev==='info'?'<span class="rvsv n">Note</span> ':'')+esc(f.title)+' <span class="rvmut">· '+esc(f.cat)+'</span></span><span class="c2">'+(tag[f.st]||'')+'</span><span class="c3" data-l="First seen">'+hcDay(f.first)+'</span><span class="c4" data-l="Checks">'+(f.checks||1)+'</span><span class="c5" data-l="Last sent">'+hcSent(f.sent)+'</span></button>'+
+      (on?'<div class="hcfd">'+(f.st==='changed'&&f.prev?'<div><b>Before:</b> '+esc(f.prev)+'</div>':'')+(f.where?'<div><b>Where:</b> '+esc(f.where)+'</div>':'')+(f.detail?'<div class="hcpre">'+esc(HC.full[k]&&f.full?f.full:f.detail)+'</div>'+(f.full?'<button type="button" class="hcmore" data-hcfull="'+k+'">'+(HC.full[k]?'Show less':'Show all '+f.full.split('\n').length+' lines')+'</button>':''):'')+(f.fix?'<div><b>Suggested fix:</b> '+esc(f.fix)+'</div>':'')+'</div>':'')+'</div>'; }).join('');
+  return x+'</div><div class="rvmut" style="font-size:12px;margin-top:4px">Click a row for the details and the suggested fix. Solved problems are left out.</div>';
+}
 function hcWhen(ts){ if(!ts) return ''; var d=new Date(ts); return d2(d.toISOString().slice(0,10))+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
 function hcLoad(){ return accCall('GET','/agent',null,30000).then(function(j){ HC.st=j; HC.err=''; HC.at=Date.now(); hcDot(); })
   .catch(function(e){ HC.err=(e&&(e.status===404||/unknown path|not found/i.test(e.message||'')))?'The relay does not have the health check yet: deploy relay V66.':((e&&e.message)||'The health check could not be read'); }); }
@@ -5778,14 +5795,15 @@ function hcBody(){
   if(HC.err) return '<div class="ulsub bad">'+esc(HC.err)+'</div>';
   if(!HC.st) return '<div class="ulnone">Loading…</div>';
   var S=HC.st, h=S.health, c=S.cfg, rep=S.report, req=S.req, x='';
-  x+='<p class="rvmut" style="margin-top:0">The relay checks the uploads it keeps and the Google Sheet, and sends a short summary to Telegram. The health agent then writes the full Word report into Google Drive (folder “KEC Dashboard Health Agent / Reports”). Level 1: nothing is changed.</p>';
+  x+='<p class="rvmut" style="margin-top:0">The relay checks the uploads it keeps and the Google Sheet, and sends Telegram messages: after a check only the new and changed findings, and a reminder of the problems still open (see Settings). The health agent then writes the full Word report into Google Drive (folder “KEC Dashboard Health Agent / Reports”). Level 1: nothing is changed.</p>';
   if(req) x+='<div class="ulsub">A check was asked for by '+esc(req.by||'an administrator')+' at '+hcWhen(req.ts)+(req.started?' and is running…':': it starts within a few minutes.')+'</div>';
-  if(h){ x+='<div class="hchead"><b>Last check:</b> '+hcWhen(h.ts)+' · '+(h.trigger==='request'?'asked by '+esc(h.by||'an administrator'):'scheduled')+'</div>';
+  if(h){ x+='<div class="hchead"><b>Last check:</b> '+hcWhen(h.ts)+' · '+(h.trigger==='request'?'asked by '+esc(h.by||'an administrator'):'scheduled')+(h.findings.some(function(f){ return !!f.st; })?' · '+(h.sum.error+h.sum.warn)+' open problem'+(h.sum.error+h.sum.warn===1?'':'s'):'')+'</div>';
     x+='<div class="rvsum">'+hcChip(h.sum.error,h.sum.error===1?'error':'errors',h.sum.error?'e':'')+hcChip(h.sum.warn,h.sum.warn===1?'warning':'warnings',h.sum.warn?'w':'')+hcChip(h.sum.info,h.sum.info===1?'note':'notes','')+'</div>';
     x+='<div class="hcrep">'+(rep&&rep.id===h.id&&rep.url?'📄 <a href="'+esc(rep.url)+'" target="_blank" rel="noopener">Word report of this check</a>':'📄 The Word report of this check is being prepared by the health agent. It looks for new checks at 08:17, 11:17, 14:17, 17:17 and 20:17 (Riyadh time).')+'</div>';
     if(rep&&rep.log&&rep.log.url) x+='<div class="hcrep">📊 <a href="'+esc(rep.log.url)+'" target="_blank" rel="noopener">Issue log (Excel)</a> <span class="rvmut">· every error and warning, open and solved, with the fixes applied'+(rep.log.ts?' · updated '+hcWhen(rep.log.ts):'')+'</span></div>';
     if(!h.findings.length) x+='<div class="rvallok">✓ No problems found.</div>';
-    else x+=h.findings.map(function(f,i){ var on=!!HC.open[h.id+'|'+i]; return '<div class="hcf '+f.sev+'"><button type="button" class="hcft" data-hcf="'+h.id+'|'+i+'"><span class="rvsv '+(f.sev==='error'?'e':f.sev==='warn'?'w':'n')+'">'+(f.sev==='error'?'Error':f.sev==='warn'?'Warning':'Note')+'</span> '+esc(f.title)+' <span class="rvmut">· '+esc(f.cat)+'</span></button>'+(on?'<div class="hcfd">'+(f.where?'<div><b>Where:</b> '+esc(f.where)+'</div>':'')+(f.detail?'<div class="hcpre">'+esc(f.detail)+'</div>':'')+(f.fix?'<div><b>Suggested fix:</b> '+esc(f.fix)+'</div>':'')+'</div>':'')+'</div>'; }).join(''); }
+    else if(h.findings.some(function(f){ return !!f.st; })) x+=hcRegister(h);
+    else x+=h.findings.map(function(f,i){ var on=!!HC.open[h.id+'|'+i]; return '<div class="hcf '+f.sev+'"><button type="button" class="hcft" data-hcf="'+h.id+'|'+i+'"><span class="rvsv '+(f.sev==='error'?'e':f.sev==='warn'?'w':'n')+'">'+(f.sev==='error'?'Error':f.sev==='warn'?'Warning':'Note')+'</span> '+esc(f.title)+' <span class="rvmut">· '+esc(f.cat)+'</span></button>'+(on?'<div class="hcfd">'+(f.where?'<div><b>Where:</b> '+esc(f.where)+'</div>':'')+(f.detail?'<div class="hcpre">'+esc(HC.full[h.id+'|'+i]&&f.full?f.full:f.detail)+'</div>'+(f.full?'<button type="button" class="hcmore" data-hcfull="'+h.id+'|'+i+'">'+(HC.full[h.id+'|'+i]?'Show less':'Show all '+f.full.split('\n').length+' lines')+'</button>':''):'')+(f.fix?'<div><b>Suggested fix:</b> '+esc(f.fix)+'</div>':'')+'</div>':'')+'</div>'; }).join(''); }
   else x+='<div class="ulnone">No check has run yet.</div>';
   x+=hcFixes();
   x+='<details class="hcset"'+(HC.setOpen?' open':'')+'><summary>Settings (shared by every administrator)</summary>'+
@@ -5793,7 +5811,9 @@ function hcBody(){
     '<div class="rvset">Days: '+HC_DAYS.map(function(d){ return '<label><input type="checkbox" class="hcday" value="'+d[0]+'"'+(c.days.indexOf(+d[0])>=0?' checked':'')+'> '+d[1]+'</label>'; }).join(' ')+'</div>'+
     '<label class="rvset">From (Riyadh time) <select id="hcHour">'+Array.from({length:24},function(_,i){ return '<option value="'+i+'"'+(i===c.hour?' selected':'')+'>'+String(i).padStart(2,'0')+':00</option>'; }).join('')+'</select></label>'+
     '<label class="rvset">Report an update waiting for approval after <input type="number" id="hcWait" min="1" max="240" value="'+c.waitH+'"> hours</label>'+
-    '<label class="rvset"><input type="checkbox" id="hcTg"'+(c.tg?' checked':'')+'> Send the summary to Telegram'+(S.tg?'':' <span class="rvmut">(Telegram is not set up on the relay)</span>')+'</label>'+
+    '<label class="rvset"><input type="checkbox" id="hcTg"'+(c.tg?' checked':'')+'> Use Telegram'+(S.tg?'':' <span class="rvmut">(Telegram is not set up on the relay)</span>')+'</label>'+
+    (c.remH!=null?'<label class="rvset"><input type="checkbox" id="hcTgNew"'+(c.tgNew!==false?' checked':'')+'> Send the new and changed findings after each check</label>'+
+    '<div class="rvset"><label><input type="checkbox" id="hcRem"'+(c.rem!==false?' checked':'')+'> Remind the problems still open</label> every <input type="number" id="hcRemH" min="1" max="168" value="'+(c.remH||24)+'" style="width:64px"> hours, at <input type="time" id="hcRemAt" value="'+esc(c.remAt||'10:00')+'"> <span class="rvmut">(the time is used when the hours are whole days: 24, 48 …; Riyadh time)</span></div>':'')+
     '<button type="button" class="btn" data-hcsave="1">Save settings</button></details>';
   var H=(S.hist||[]).slice(0,10); if(H.length>1) x+='<details class="hcset"><summary>Earlier checks</summary>'+H.map(function(r){ return '<div class="rvpr">'+hcWhen(r.ts)+' · '+(r.trigger==='request'?'asked by '+esc(r.by||''):'scheduled')+' · '+r.sum.error+' errors, '+r.sum.warn+' warnings</div>'; }).join('')+'<div class="rvpr">All Word reports are in Google Drive, folder “KEC Dashboard Health Agent / Reports”.</div></details>';
   return x; }
@@ -5826,17 +5846,19 @@ document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest
   if(t.closest('[data-hcfxall]')){ ((HC.st&&HC.st.fixes&&HC.st.fixes.items)||[]).forEach(function(i){ if(i.status==='proposed'||i.status==='failed') HC.sel[i.id]=true; }); HC.confirm=false; hcRender(); return; } });
 
 function hcRender(){ var b=document.getElementById('hcModalB'); if(b) b.innerHTML=hcBody(); var r=document.querySelector('[data-hcrun]'); if(r){ r.disabled=!!HC.busy; r.textContent=HC.busy==='run'?'Checking…':'Run the check now'; } }
-function hcOpen(){ suModal('hcModal','Dashboard health check · V455',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
+function hcOpen(){ suModal('hcModal','Dashboard health check · V457',hcBody(),'<button type="button" class="btn pri" data-hcrun="1">Run the check now</button> <button type="button" class="btn" data-hcreload="1">Refresh</button> '); hcRender(); hcLoad().then(hcRender); }
 function hcRun(){ HC.busy='run'; hcRender(); accCall('POST','/agent',{action:'run',now:true},120000).then(function(j){ HC.st=j; HC.err=''; hcDot(); toast('Health check done'+(j.cfg&&j.cfg.tg&&j.tg?': summary sent to Telegram':'')); })
   .catch(function(e){ toast((e&&e.message)||'The check could not run',true); }).then(function(){ HC.busy=''; hcRender(); }); }
 function hcSave(){ var days=Array.prototype.slice.call(document.querySelectorAll('.hcday')).filter(function(x){ return x.checked; }).map(function(x){ return +x.value; });
   var cfg={on:document.getElementById('hcOn').checked,tg:document.getElementById('hcTg').checked,days:days,hour:+document.getElementById('hcHour').value,waitH:+document.getElementById('hcWait').value||24};
+  var tn=document.getElementById('hcTgNew'); if(tn){ cfg.tgNew=tn.checked; cfg.rem=document.getElementById('hcRem').checked; cfg.remH=+document.getElementById('hcRemH').value||24; cfg.remAt=document.getElementById('hcRemAt').value||'10:00'; }
   HC.setOpen=true; accCall('POST','/agent',{action:'cfg',cfg:cfg},30000).then(function(j){ HC.st=j; toast('Health check settings saved'); hcRender(); }).catch(function(e){ toast((e&&e.message)||'Could not save',true); }); }
 document.addEventListener('click',function(e){ var t=e.target; if(!t||!t.closest) return; var b;
   if(t.closest('#hcBtn')){ e.preventDefault(); hcOpen(); return; }
   if(t.closest('[data-hcrun]')){ hcRun(); return; }
   if(t.closest('[data-hcreload]')){ hcLoad().then(hcRender); return; }
   if(t.closest('[data-hcsave]')){ hcSave(); return; }
+  if((b=t.closest('[data-hcfull]'))){ var k2=b.getAttribute('data-hcfull'); HC.full[k2]=!HC.full[k2]; hcRender(); return; }
   if((b=t.closest('[data-hcf]'))){ var k=b.getAttribute('data-hcf'); HC.open[k]=!HC.open[k]; hcRender(); return; } });
 
 function suModal(id,title,body,foot){ var o=document.getElementById(id); if(o) o.remove(); var m=document.createElement('div'); m.className='svm'; m.id=id; m.innerHTML='<div class="svmb" role="dialog" aria-modal="true" style="width:min(880px,96vw)"><h3>'+title+'</h3><div id="'+id+'B">'+body+'</div><div class="svma">'+(foot||'')+'<button type="button" class="btn" data-suclose="'+id+'">Close</button></div></div>'; document.body.appendChild(m); return m; }
